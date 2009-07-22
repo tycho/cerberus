@@ -19,3 +19,6 @@
 [submodule "contrib/libpng"]
 	path = contrib/libpng
 	url = git://git.uplinklabs.net/pub/scm/git/tycho/libpng.git
+[submodule "contrib/SDL_ttf"]
+	path = contrib/SDL_ttf
+	url = git://git.uplinklabs.net/pub/scm/git/tycho/sdl-ttf.git
