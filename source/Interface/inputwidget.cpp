@@ -36,7 +36,7 @@ InputWidget::InputWidget ( InputCallback _callback, Widget *_callbackParam,
                            Sint32 _x, Sint32 _y, Sint32 _w, Sint32 _h )
  : Widget ( _x, _y, _w, _h )
 {
-    SetWidgetClass ( "InputWidget" );
+    m_widgetClass = WIDGET_INPUT;
     m_callback = _callback;
     m_callbackParam = _callbackParam;
 }
@@ -50,7 +50,7 @@ int InputWidget::SendEnterKey ()
         } catch ( std::exception &e ) {
             // TODO: Print out what 'e' provides.
             g_console->SetColour ( IO::Console::FG_YELLOW | IO::Console::FG_INTENSITY );
-            g_console->WriteLine ( "WARNING: InputWidget of type '%s' tried to use an invalid callback.", m_widgetClass );
+            g_console->WriteLine ( "WARNING: InputWidget of type '%d' tried to use an invalid callback.", m_widgetClass );
             g_console->WriteLine ( "         m_callback threw exception '%s'", e.what() );
             g_console->SetColour ();
         }

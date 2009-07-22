@@ -33,15 +33,17 @@
 #include "Interface/window.h"
 
 Window::Window()
- : Widget(), m_dragging(false)
+ : Widget(),
+   m_dragging(false)
 {
-    SetWidgetClass ( "Window" );
+   m_widgetClass = WIDGET_WINDOW;
 }
 
 Window::Window ( Sint16 x, Sint16 y, Uint16 w, Uint16 h )
- : Widget(x,y,w,h), m_dragging(false)
+ : Widget(x,y,w,h),
+   m_dragging(false)
 {
-    SetWidgetClass ( "Window" );
+   m_widgetClass = WIDGET_WINDOW;
 }
 
 Window::~Window()
@@ -82,8 +84,7 @@ int Window::MouseDown ( bool _mouseDown, Sint32 x, Sint32 y )
             break;
         }
     }
-    if ( !m_dragging && _mouseDown )
-    {
+    if ( !m_dragging && _mouseDown ) {
         g_interface->SetDragWindow ( this );
         m_dragging = true;
         m_mouseXOffset = x - m_position.x;
@@ -100,4 +101,8 @@ int Window::MouseDown ( bool _mouseDown, Sint32 x, Sint32 y )
 void Window::Update()
 {
     Widget::Update();
+	if (m_cachedSurfaceID == INVALID_SURFACE_ID) {
+		m_cachedSurfaceID = g_graphics->CreateSurface(m_position.w, m_position.h);
+		g_graphics->FillRect(m_cachedSurfaceID, NULL, MAKERGBA(128,200,128,255));
+	}
 }

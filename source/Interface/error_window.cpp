@@ -39,10 +39,10 @@ void ErrorWindow_OnOKClick ( Window *_window )
 }
 
 ErrorWindow::ErrorWindow ( const char *_text, bool _critical )
-: Window ( g_graphics->GetCenterX() - 136, g_graphics->GetCenterY() - 44, 256, 72 ),
+: Window (g_graphics->GetCenterX() - 136, g_graphics->GetCenterY() - 44, 256, 72),
   m_critical(_critical)
 {
-    SetWidgetClass ( "ErrorWindow" );
+	m_widgetClass = WIDGET_ERROR_WINDOW;
 
     m_caption = new TextUI ( "[null]", false, 35, 16, 600, 9 );
     AddWidget ( m_caption );

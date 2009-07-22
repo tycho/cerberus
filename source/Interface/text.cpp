@@ -34,9 +34,10 @@
 #include "Interface/text.h"
 
 TextUI::TextUI ( const char *_text, bool _smallText, Sint16 x, Sint16 y, Uint16 w, Uint16 h )
- : Widget ( x, y, w, h ), m_smallText(_smallText)
+ : Widget(x, y, w, h),
+   m_smallText(_smallText)
 {
-    SetWidgetClass ( "TextUI" );
+	m_widgetClass = WIDGET_TEXT;
     m_text = newStr ( _text );
 }
 

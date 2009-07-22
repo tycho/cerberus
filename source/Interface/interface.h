@@ -58,7 +58,7 @@ public:
     virtual void UpdateRendererWidget      ();
     virtual void RenderWidgets             ();
     virtual void RemoveWidget              ( Widget *_widget );
-    virtual Widget *GetWidgetOfType        ( const char *_widgetType );
+    virtual Widget *GetWidgetOfType        ( WidgetClass _widgetType );
     virtual int MouseDown                  ( bool _mouseDown, Sint32 x, Sint32 y );
     virtual int SendEnterKey               ();
 };

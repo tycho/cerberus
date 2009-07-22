@@ -34,7 +34,7 @@
 Button::Button ( InputCallback _callback, Widget *_callbackParam, ButtonType _buttonType, Sint32 _x, Sint32 _y )
  : InputWidget ( _callback, _callbackParam, _x, _y, 58, 19 )
 {
-    SetWidgetClass ( "Button" );
+    m_widgetClass = WIDGET_BUTTON;
     m_callback = _callback;
     m_callbackParam = _callbackParam;
     m_buttonType = _buttonType;

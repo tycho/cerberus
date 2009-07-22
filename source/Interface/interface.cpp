@@ -90,11 +90,11 @@ void Interface::AddWidget ( Widget *_widget )
     m_widgetList.insert ( _widget );
 }
 
-Widget *Interface::GetWidgetOfType ( const char *_widgetType )
+Widget *Interface::GetWidgetOfType ( WidgetClass _widgetType )
 {
     for ( int i = m_widgetList.size() - 1; i >= 0; i-- )
     {
-        if ( stricmp ( m_widgetList[i]->GetWidgetClass(), _widgetType ) == 0 )
+		if ( m_widgetList[i]->ClassID() == _widgetType )
         {
             return m_widgetList[i];
         }

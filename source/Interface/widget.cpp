@@ -34,27 +34,26 @@
 #include "Interface/widget.h"
 
 Widget::Widget()
- : m_expired(false), m_widgetClass(NULL), m_cachedSurfaceID(-1),
-   m_enterKeyDefault(NULL)
+ : m_widgetClass(WIDGET_UNKNOWN),
+   m_cachedSurfaceID(-1),
+   m_enterKeyDefault(NULL),
+   m_expired(false)
 {
-    SetWidgetClass ( "Widget" );
-    m_expired = false;
     memset ( &m_position, 0, sizeof(m_position) );
 }
 
 Widget::Widget ( Sint16 x, Sint16 y, Uint16 w, Uint16 h )
- : m_expired(false), m_widgetClass(NULL), m_cachedSurfaceID(-1),
-   m_enterKeyDefault(NULL)
+ : m_widgetClass(WIDGET_UNKNOWN),
+   m_cachedSurfaceID(-1),
+   m_enterKeyDefault(NULL),
+   m_expired(false)
 {
-    SetWidgetClass ( "Widget" );
-    m_expired = false;
     SetSize ( w, h );
     SetPosition ( x, y );
 }
 
 Widget::~Widget()
 {
-    delete [] m_widgetClass; m_widgetClass = NULL;
     if ( (int)m_cachedSurfaceID != -1 )
     {
         g_graphics->DeleteSurface ( m_cachedSurfaceID );
@@ -108,7 +107,7 @@ void Widget::Initialise()
 
 void Widget::Render ()
 {
-    if ( (int)m_cachedSurfaceID != -1 )
+    if ( m_cachedSurfaceID != INVALID_SURFACE_ID )
         g_graphics->Blit ( m_cachedSurfaceID, NULL, g_graphics->GetScreen(), &m_position ); // FLAG
     for ( size_t i = 0; i < m_widgets.size(); i++ )
     {
@@ -157,13 +156,7 @@ void Widget::SetSize ( Uint16 w, Uint16 h )
     m_position.w = w; m_position.h  = h;
 }
 
-void Widget::SetWidgetClass ( const char *_id )
-{
-    if ( m_widgetClass ) { delete [] m_widgetClass; m_widgetClass = NULL; }
-    m_widgetClass = newStr ( _id );
-}
-
-const char *Widget::GetWidgetClass ()
+WidgetClass Widget::ClassID ()
 {
     return m_widgetClass;
 }

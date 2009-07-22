@@ -28,18 +28,29 @@
 #ifndef __included_widget_h
 #define __included_widget_h
 
+typedef enum
+{
+	WIDGET_UNKNOWN,
+	WIDGET_WINDOW,
+	WIDGET_BUTTON,
+	WIDGET_INPUT,
+	WIDGET_ERROR_WINDOW,
+	WIDGET_TEXT
+} WidgetClass;
+
 class Widget
 {
 protected:
-    bool m_expired;
-    char *m_widgetClass;
+    WidgetClass m_widgetClass;
 
-    Uint32 m_cachedSurfaceID;
     SDL_Rect m_position;
+    Uint32 m_cachedSurfaceID;
 
     Data::LList<Widget *> m_widgets;
 
     Widget *m_enterKeyDefault;
+
+    bool m_expired;
 
 public:
     Widget ();
@@ -60,8 +71,7 @@ public:
     virtual void SetPosition ( Sint16 x, Sint16 y );
     virtual void SetSize ( Uint16 w, Uint16 h );
 
-    virtual void SetWidgetClass ( const char *_id );
-    virtual const char *GetWidgetClass ();
+    virtual WidgetClass ClassID();
 
     virtual bool IsInsideWidget ( int _mouseX, int _mouseY );
     virtual int MouseDown ( bool _mouseDown, Sint32 _x, Sint32 _y ) = 0;
