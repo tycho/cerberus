@@ -44,10 +44,10 @@
 #include "Sound/soundsystem.h"
 
 Game::Game()
- : m_running(true),
-   m_playing(false),
-   m_gameSpeed(5),
-   m_fps(0)
+ : m_gameSpeed(5),
+   m_fps(0),
+   m_running(true),
+   m_playing(false)
 {
 }
 
@@ -194,8 +194,6 @@ bool Game::Playing()
 
 void Game::ProcessEvents ()
 {
-    static bool chatting;
-    static char chatBuffer[1024], *chatBufPtr = NULL;
 
     SDL_Event event;
     while ( SDL_PollEvent ( &event ) )
@@ -211,12 +209,12 @@ void Game::ProcessEvents ()
             break;
         }
     }
-    
-    int arraySz = 0;
-    Uint8 *keyState = SDL_GetKeyState(&arraySz);
 
     // Handle Command+Q on Mac OS X
 #ifdef TARGET_OS_MACOSX
+    int arraySz = 0;
+    Uint8 *keyState = SDL_GetKeyState(&arraySz);
+
     static bool cmdQ = false;
     if ( !cmdQ && ( keyState[SDLK_LMETA] || keyState[SDLK_RMETA] ) && keyState[SDLK_q] )
     {
