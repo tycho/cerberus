@@ -66,6 +66,11 @@ Widget::~Widget()
     }
 }
 
+void Widget::Expire()
+{
+    m_expired = true;
+}
+
 bool Widget::Expired ()
 {
     return m_expired;
@@ -161,16 +166,6 @@ void Widget::SetWidgetClass ( const char *_id )
 const char *Widget::GetWidgetClass ()
 {
     return m_widgetClass;
-}
-
-bool Widget::GetDestroyFlag()
-{
-    return m_expired;
-}
-
-void Widget::SetDestroyFlag ( bool _destroy )
-{
-    m_expired = _destroy;
 }
 
 void Widget::Update()

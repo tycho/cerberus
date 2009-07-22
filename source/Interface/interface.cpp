@@ -187,7 +187,7 @@ void Interface::RenderWidgets()
     for ( size_t i = 0; i < m_widgetList.size(); i++ )
     {
         Widget *widget = m_widgetList[i];
-        if ( widget->GetDestroyFlag() )
+        if ( widget->Expired() )
         {
             m_widgetList.remove ( i );
             delete widget;

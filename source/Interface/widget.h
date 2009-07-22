@@ -47,10 +47,9 @@ public:
     virtual ~Widget();
 
     virtual bool HasEnterKeyDefault ();
-    virtual bool Expired ();
 
-    virtual bool GetDestroyFlag ();
-    virtual void SetDestroyFlag ( bool _destroy );
+    virtual void Expire ();
+    virtual bool Expired ();
 
     virtual void AddWidget ( Widget *_widget );
     virtual void Update ();
