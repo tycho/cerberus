@@ -1,0 +1,21 @@
+[submodule "contrib/crisscross"]
+	path = contrib/crisscross
+	url = git://github.com/tycho/crisscross.git
+[submodule "contrib/SDL"]
+	path = contrib/SDL
+	url = git://git.uplinklabs.net/pub/scm/git/tycho/sdl.git
+[submodule "contrib/SDL_mixer"]
+	path = contrib/SDL_mixer
+	url = git://git.uplinklabs.net/pub/scm/git/tycho/sdl-mixer.git
+[submodule "contrib/SDL_image"]
+	path = contrib/SDL_image
+	url = git://git.uplinklabs.net/pub/scm/git/tycho/sdl-image.git
+[submodule "contrib/zlib"]
+	path = contrib/zlib
+	url = git://git.uplinklabs.net/pub/scm/git/tycho/zlib.git
+[submodule "contrib/unrar"]
+	path = contrib/unrar
+	url = git://git.uplinklabs.net/pub/scm/git/tycho/unrar.git
+[submodule "contrib/libpng"]
+	path = contrib/libpng
+	url = git://git.uplinklabs.net/pub/scm/git/tycho/libpng.git

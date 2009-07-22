@@ -1,0 +1,7 @@
+*.vcproj.*.user
+bin
+obj
+Debug
+Release
+debug
+release

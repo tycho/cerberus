@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="Windows-1252"?>
+<VisualStudioPropertySheet
+	ProjectType="Visual C++"
+	Version="8.00"
+	Name="ARC Release"
+	>
+	<Tool
+		Name="VCLinkerTool"
+		AdditionalDependencies="libcpmt.lib libcmt.lib"
+		IgnoreDefaultLibraryNames="MSVCRT; MSVCRTD; LIBC; LIBCMTD"
+	/>
+</VisualStudioPropertySheet>
