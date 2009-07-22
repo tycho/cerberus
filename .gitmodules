@@ -22,3 +22,6 @@
 [submodule "contrib/SDL_ttf"]
 	path = contrib/SDL_ttf
 	url = git://git.uplinklabs.net/pub/scm/git/tycho/sdl-ttf.git
+[submodule "contrib/FTGL"]
+	path = contrib/FTGL
+	url = git://git.uplinklabs.net/pub/scm/git/tycho/ftgl.git
