@@ -42,7 +42,6 @@
 #include "Interface/interface.h"
 #include "Network/net.h"
 #include "Sound/soundsystem.h"
-#include "World/map.h"
 
 Game::Game()
  : m_running(true),

@@ -35,7 +35,6 @@
 #include "Interface/window.h"
 #include "Network/net.h"
 #include "Sound/soundsystem.h"
-#include "World/map.h"
 
 IO::Console *g_console;
 
