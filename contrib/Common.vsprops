@@ -4,7 +4,7 @@
 	Version="8.00"
 	Name="Common"
 	OutputDirectory="$(SolutionDir)\bin\8.0\$(PlatformName)"
-	IntermediateDirectory="$(SolutionDir)\obj\$(ProjectName)\$(ConfigurationName)"
+	IntermediateDirectory="$(SolutionDir)\obj\8.0\$(PlatformName)\$(ProjectName)\$(ConfigurationName)"
 	>
 	<Tool
 		Name="VCCLCompilerTool"
