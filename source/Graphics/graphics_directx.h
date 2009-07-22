@@ -68,6 +68,8 @@ protected:
 	IDirect3DDevice9                    *m_device;
 	IDirect3DVertexBuffer9              *m_vertexBuffer;
 
+	HICON                                m_icon;
+
 public:
     DirectXGraphics();
     virtual ~DirectXGraphics();

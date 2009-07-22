@@ -31,6 +31,8 @@
 
 #include <SDL_syswm.h>
 
+#include "resource.h"
+
 #include "App/app.h"
 #include "App/preferences.h"
 #include "App/version.h"
@@ -43,7 +45,8 @@ DirectXGraphics::DirectXGraphics()
    m_sdlScreen(NULL),
    m_d3d(NULL),
    m_device(NULL),
-   m_vertexBuffer(NULL)
+   m_vertexBuffer(NULL),
+   m_icon(NULL)
 {
     int retval = SDL_Init ( SDL_INIT_VIDEO );
     CrbReleaseAssert ( retval == 0 );
@@ -70,6 +73,9 @@ DirectXGraphics::~DirectXGraphics()
 
     delete g_openGL;
     g_openGL = NULL;
+
+	if (m_icon)
+		::DestroyIcon(m_icon);
 
     SDL_Quit ();
 }
@@ -722,6 +728,11 @@ int DirectXGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heig
 	SDL_VERSION(&wmInfo.version);
 	SDL_GetWMInfo(&wmInfo);
 	HWND hWnd = wmInfo.window;
+
+	HINSTANCE handle = ::GetModuleHandle(NULL);
+	m_icon = ::LoadIcon(handle, MAKEINTRESOURCE(IDI_MAIN_ICON));
+	if (m_icon)
+		::SetClassLong(hWnd, GCL_HICON, (LONG) m_icon);
 
 	ZeroMemory ( &m_caps, sizeof ( D3DCAPS9 ) );
 	m_d3d->GetDeviceCaps ( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, &m_caps);
