@@ -158,7 +158,7 @@
 #  endif
 #else
 #  include <GL/gl.h>
-#  include <gl/glext.h>
+#  include <GL/glext.h>
 #  ifdef ENABLE_FONTS
 #    include <FTGLTextureFont.h>
 #  endif
