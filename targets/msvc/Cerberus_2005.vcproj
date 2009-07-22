@@ -735,7 +735,7 @@
 			Name="Resources"
 			>
 			<File
-				RelativePath="..\..\source\Resources\green_bmp.ico"
+				RelativePath="..\..\source\Resources\hellhound.ico"
 				>
 			</File>
 			<File
