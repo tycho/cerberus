@@ -25,3 +25,6 @@
 [submodule "contrib/FTGL"]
 	path = contrib/FTGL
 	url = git://git.uplinklabs.net/pub/scm/git/tycho/ftgl.git
+[submodule "contrib/freetype"]
+	path = contrib/freetype
+	url = git://git.uplinklabs.net/pub/scm/git/tycho/freetype.git
