@@ -76,7 +76,6 @@
 
 #define ENABLE_DIRECT3D
 #define ENABLE_OPENGL
-#define ENABLE_SDLGRAPHICS
 
 //#define ENABLE_FONTS
 

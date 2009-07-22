@@ -110,7 +110,6 @@ public:
 extern Graphics *g_graphics;
 
 #include "Graphics/graphics_directx.h"
-#include "Graphics/graphics_sdl.h"
 #include "Graphics/graphics_opengl.h"
 #include "Graphics/texture.h"
 

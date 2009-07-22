@@ -214,16 +214,6 @@ void Init_Graphics()
 			g_console->WriteLine ( "OpenGL support not enabled." );
 #endif
 		}
-		else if ( Data::Compare<const char *> ( graphicsDriver, "sdl" ) == 0 )
-		{
-			// SDL with one of {windib, dga, directx}, etc.
-			g_console->WriteLine ( "Attempting to use SDLGraphics..." );
-#ifdef ENABLE_SDLGRAPHICS
-			g_graphics = new SDLGraphics ( g_prefsManager->GetString ( "SecondaryRenderer" ) );
-#else
-			g_console->WriteLine ( "SDL graphics support not enabled." );
-#endif
-		}
 		else if ( Data::Compare<const char *> ( graphicsDriver, "direct3d" ) == 0 )
 		{
 			// Direct3D
@@ -257,18 +247,13 @@ void Init_Graphics()
 	        
 			if ( Data::Compare<const char *> ( graphicsDriver, "opengl" ) == 0  )
 			{
-				// Well, OpenGL failed for some reason. Revert to SDL.
-				graphicsDriver = "sdl";
+				// You're screwed.
+				break;
 			}
 			else if ( Data::Compare<const char *> ( graphicsDriver, "direct3d" ) == 0  )
 			{
 				// Direct3D may not be available on this platform.
 				graphicsDriver = "opengl";
-			}
-			else if ( Data::Compare<const char *> ( graphicsDriver, "sdl" ) == 0  )
-			{
-				// You're screwed.
-				break;
 			}
 			else
 			{
