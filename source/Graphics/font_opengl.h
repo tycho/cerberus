@@ -39,13 +39,13 @@ class OpenGLFont : public Font
 protected:
 	bool			 m_bold;
 	bool			 m_italic;
-	FTGLTextureFont *m_font;
+	FTFont          *m_font;
 
 public:
     OpenGLFont(const char *_fontFilename);
     OpenGLFont(const unsigned char *_data, size_t _size);
     virtual ~OpenGLFont();
-	virtual void Draw(Uint16 _x, Uint16 _y, const char *_text, Uint32 _color, bool _center = false);
+	virtual void Draw(Uint16 _x, Uint16 _y, const char *_text, Uint32 _color);
 	virtual void SetFontSize(Uint16 _size);
 	virtual void SetBold(bool _bold);
 	virtual void SetItalic(bool _italic);

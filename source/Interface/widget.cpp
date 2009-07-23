@@ -36,6 +36,8 @@
 Widget::Widget()
  : m_widgetClass(WIDGET_UNKNOWN),
    m_cachedSurfaceID(-1),
+   m_rebuildDisplayList(true),
+   m_displayList(0),
    m_enterKeyDefault(NULL),
    m_expired(false)
 {

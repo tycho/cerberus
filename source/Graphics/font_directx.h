@@ -40,9 +40,9 @@ protected:
 	LPD3DXFONT m_font;
 
 public:
-    DirectXFont(const char *_fontFace, int _height, bool _bold, bool _italic);
+    DirectXFont(const char *_fontFace, int _height);
     virtual ~DirectXFont();
-	virtual void Draw ( Uint16 _x, Uint16 _y, const char *_text, Uint32 _color, bool _center = false );
+	virtual void Draw ( Uint16 _x, Uint16 _y, const char *_text, Uint32 _color );
 };
 
 #endif

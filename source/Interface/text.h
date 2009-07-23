@@ -33,22 +33,24 @@
 class TextUI : public Widget
 {
 protected:
-    bool            m_smallText;
+    Uint32          m_color;
     char           *m_text;
 
 protected:
     virtual int MakeText ( const char *_text );
 
 public:
-    TextUI ( const char *_text, bool _smallText, Sint16 x, Sint16 y, Uint16 w, Uint16 h );
+    TextUI ( const char *_text, Uint32 _color, Sint16 x, Sint16 y );
     virtual ~TextUI();
 
     virtual const char *GetText ();
     virtual void SetText ( const char *_text );
+    virtual void SetColor ( Uint32 _color );
     virtual int MouseDown ( bool _mouseDown, Sint32 _x, Sint32 _y );
     virtual int SendEnterKey ();
 
     virtual void Update();
+    virtual void Render();
 };
 
 #endif

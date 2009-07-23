@@ -152,11 +152,13 @@ void Interface::UpdateRendererWidget ()
 {
     char speedCaption[128];
 
-    sprintf ( speedCaption, "\1Renderer: %s", g_graphics->RendererName() );
+    sprintf ( speedCaption, "Renderer: %s", g_graphics->RendererName() );
 
     if ( !m_rendererWidget )
     {
-        m_rendererWidget = new TextUI ( speedCaption, false, 3, g_graphics->GetScreenHeight () - 29, 250, 10 );
+        m_rendererWidget = new TextUI(
+			speedCaption, MAKERGB(255,255,255),
+			3, g_graphics->GetScreenHeight () - 29 );
         m_widgetList.insert ( m_rendererWidget );
     }
     m_rendererWidget->SetText ( speedCaption );
@@ -164,21 +166,25 @@ void Interface::UpdateRendererWidget ()
 
 void Interface::UpdateFPS ( unsigned int _fps )
 {
-    char fpsCaption[32]; char c = 2;
+    char fpsCaption[32];
+	Uint32 color = 0;
 
     if ( _fps >= 50 )
-        c = 1; // GREEN
+        color = MAKERGB(0,255,0); // GREEN
     else if ( _fps < 50 && _fps >= 30 )
-        c = 4; // YELLOW
+        color = MAKERGB(255,255,0); // YELLOW
     else if ( _fps < 30 )
-        c = 2; // RED
+        color = MAKERGB(255,0,0); // RED
 
-    sprintf ( fpsCaption, "\1FPS: %c%d", c, _fps );
+    sprintf ( fpsCaption, "FPS: %d", _fps );
     if ( !m_fpsWidget )
     {
-        m_fpsWidget = new TextUI ( fpsCaption, false, 3, g_graphics->GetScreenHeight () - 40, 50, 10 );
+        m_fpsWidget = new TextUI(
+			fpsCaption, color,
+			3, g_graphics->GetScreenHeight () - 40 );
         m_widgetList.insert ( m_fpsWidget );
     }
+	m_fpsWidget->SetColor ( color );
     m_fpsWidget->SetText ( fpsCaption );
 }
 

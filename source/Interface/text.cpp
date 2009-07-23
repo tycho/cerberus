@@ -33,10 +33,13 @@
 #include "Interface/interface.h"
 #include "Interface/text.h"
 
-TextUI::TextUI ( const char *_text, bool _smallText, Sint16 x, Sint16 y, Uint16 w, Uint16 h )
- : Widget(x, y, w, h),
-   m_smallText(_smallText)
+
+TextUI::TextUI ( const char *_text, Uint32 _color, Sint16 x, Sint16 y )
+ : Widget(),
+   m_color(_color)
 {
+	m_position.x = x;
+	m_position.y = y;
 	m_widgetClass = WIDGET_TEXT;
     m_text = newStr ( _text );
 }
@@ -50,8 +53,15 @@ TextUI::~TextUI ()
 
 void TextUI::Update ()
 {
-    if ( (int)m_cachedSurfaceID == -1 )
-        MakeText ( m_text );
+	Widget::Update();
+}
+
+void TextUI::Render ()
+{
+	g_graphics->DrawText(g_graphics->DefaultFont(),
+		m_position.x, m_position.y, m_color, m_text);
+
+	Widget::Render();
 }
 
 int TextUI::SendEnterKey ()
@@ -76,18 +86,13 @@ void TextUI::SetText ( const char *_text )
     {
         delete [] m_text;
         m_text = newStr ( _text );
-        if ( (int)m_cachedSurfaceID != -1 )
-        {
-            // Instead of destroying the surface and making a new one, it's simpler to
-            // clear the existing surface and refill it with the appropriate text.
-
-            //g_graphics->DeleteSurface ( m_cachedSurfaceID );
-            //m_cachedSurfaceID = -1;
-
-            g_graphics->FillRect ( m_cachedSurfaceID, NULL, g_graphics->GetColorKey() );
-            MakeText ( m_text );
-        }
+		m_rebuildDisplayList = true;
     }
+}
+
+void TextUI::SetColor ( Uint32 _color )
+{
+	m_color = _color;
 }
 
 int TextUI::MakeText ( const char *_text )

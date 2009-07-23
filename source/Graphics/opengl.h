@@ -28,7 +28,9 @@
 #ifndef __included_opengl_h
 #define __included_opengl_h
 
+#if defined(_DEBUG) || !defined(TARGET_COMPILER_VC)
 #define CATCH_OPENGL_ERRORS
+#endif
 
 #ifdef CATCH_OPENGL_ERRORS
 #define ASSERT_OPENGL_ERRORS { \

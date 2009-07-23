@@ -58,22 +58,24 @@ Game::~Game()
 void Game::Initialise()
 {
     TextUI *text = new TextUI (
-        "\2" APP_NAME,
-        false, g_graphics->GetScreenWidth () - 290, g_graphics->GetScreenHeight () - 38, 270, 12 );
+        APP_NAME, MAKERGB(255,0,0),
+		g_graphics->GetScreenWidth () - 290,
+		g_graphics->GetScreenHeight () - 38);
     g_interface->AddWidget ( text );
 
 	char buffer[1024];
-	sprintf(buffer, "\2For testing purposes only. v%s", Cerberus::Version::LongVersion());
+	sprintf(buffer, "For testing purposes only. v%s", Cerberus::Version::LongVersion());
 
     text = new TextUI (
-        buffer,
-        false, g_graphics->GetScreenWidth () - 290, g_graphics->GetScreenHeight () - 25, 270, 12 );
+        buffer, MAKERGB(255,0,0),
+		g_graphics->GetScreenWidth () - 290,
+		g_graphics->GetScreenHeight () - 25 );
     g_interface->AddWidget ( text );
 
 #ifndef RELEASE_BUILD
     text = new TextUI (
-        "\2NOT FOR PUBLIC INSPECTION OR REDISTRIBUTION",
-        false, g_graphics->GetScreenWidth () - 290, g_graphics->GetScreenHeight () - 12, 270, 12 );
+        "NOT FOR PUBLIC INSPECTION OR REDISTRIBUTION",
+        false, g_graphics->GetScreenWidth () - 290, g_graphics->GetScreenHeight () - 12 );
     g_interface->AddWidget ( text );
 #endif
 }
@@ -105,15 +107,6 @@ void Game::Run () // TODO: Would this be better placed in the App class?
     CrbReleaseAssert ( g_graphics != NULL );
 
     SDL_EnableUNICODE ( 1 );
-
-#ifdef BENCHMARK_BUILD
-    for ( int i = 0; i < BENCHMARK_WIDGETS; i++ )
-    {
-        short xpos = rand() % (g_graphics->GetScreenWidth() - 48),
-              ypos = rand() % (g_graphics->GetScreenHeight() - 48);
-        g_interface->AddWidget ( new BouncingWindow ( xpos, ypos, 48, 48, rand() % 20 - 10, rand() % 20 - 10 ) );
-    }
-#endif
 
 	g_interface->UpdateRendererWidget();
 
@@ -167,8 +160,7 @@ void Game::Run () // TODO: Would this be better placed in the App class?
 			}
 		}
 
-        // Add a frame to the count.
-        framesThisSecond++;
+		g_graphics->FillRect(SCREEN_SURFACE_ID, NULL, MAKERGB(0,0,0));
 
         // Now make sure we haven't used up a second yet.
         m_tmrFPS.Stop();
@@ -177,7 +169,10 @@ void Game::Run () // TODO: Would this be better placed in the App class?
             g_interface->UpdateFPS ( framesThisSecond );
             framesThisSecond = 0;
             m_tmrFPS.Start();
-        }
+		} else {
+			// Add a frame to the count.
+			framesThisSecond++;
+		}
 
         // Let's hold movement speed at a constant.
         m_tmrGameSpeed.Stop();

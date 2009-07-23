@@ -56,14 +56,24 @@ protected:
     Uint32  m_colorKey;
     bool    m_colorKeySet;
 
+	Uint32  m_defaultFont;
+
 public:
     Graphics ();
     virtual ~Graphics();
 
 	virtual const char *RendererName() = 0;
 
-	virtual Uint32 CreateFont ( const char *_fontFace, int _height, bool _bold, bool _italic ) = 0;
-	virtual void   DrawText ( Uint32 _font, Uint16 _x, Uint16 _y, const char *_text, Uint32 _color, bool _center = false ) = 0;
+	virtual Uint32 CreateDisplayList() = 0;
+	virtual void   DestroyDisplayList(Uint32 _list) = 0;
+	virtual void   BeginDisplayList(Uint32 _list) = 0;
+	virtual void   EndDisplayList(Uint32 _list) = 0;
+	virtual void   CallDisplayList (Uint32 _list) = 0;
+
+	virtual Uint32 DefaultFont();
+
+	virtual Uint32 CreateFont ( const char *_fontFace, int _height) = 0;
+	virtual void   DrawText ( Uint32 _font, Uint16 _x, Uint16 _y, Uint32 _color, const char *_text ) = 0;
 
 	virtual void   DrawRect ( SDL_Rect *_pos, Uint32 _color ) = 0;
 

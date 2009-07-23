@@ -56,6 +56,7 @@ OpenGLGraphics::~OpenGLGraphics()
             delete tex;
         }
     }
+	m_fonts.flush();
     delete m_sdlScreen; m_sdlScreen = NULL;
     delete g_openGL;
     g_openGL = NULL;
@@ -73,7 +74,43 @@ const char *OpenGLGraphics::RendererName()
 	return renderer;
 }
 
-Uint32 OpenGLGraphics::CreateFont(const char *_fontFace, int _height, bool _bold, bool _italic)
+Uint32 OpenGLGraphics::CreateDisplayList()
+{
+	Uint32 ret = glGenLists(1);
+	ASSERT_OPENGL_ERRORS;
+	return ret;
+}
+
+void OpenGLGraphics::DestroyDisplayList(Uint32 _list)
+{
+	if (_list == 0) return;
+	glDeleteLists(_list, 1);
+	ASSERT_OPENGL_ERRORS;
+}
+
+void OpenGLGraphics::BeginDisplayList(Uint32 _list)
+{
+	if (_list == 0) return;
+	glNewList(_list, GL_COMPILE_AND_EXECUTE);
+	ASSERT_OPENGL_ERRORS;
+}
+
+void OpenGLGraphics::EndDisplayList(Uint32 _list)
+{
+	if (_list == 0) return;
+	glEndList();
+	ASSERT_OPENGL_ERRORS;
+}
+
+void OpenGLGraphics::CallDisplayList(Uint32 _list)
+{
+	if (_list == 0) return;
+	CrbReleaseAssert(glIsList(_list));
+	glCallLists(1, GL_UNSIGNED_INT, &_list);
+	ASSERT_OPENGL_ERRORS;
+}
+
+Uint32 OpenGLGraphics::CreateFont(const char *_fontFace, int _height)
 {
 #ifdef ENABLE_FONTS
 	char fontpath[512];
@@ -99,8 +136,6 @@ Uint32 OpenGLGraphics::CreateFont(const char *_fontFace, int _height, bool _bold
 	CoreAssert(font);
 
 	font->SetFontSize(_height);
-	font->SetBold(_italic);
-	font->SetItalic(_italic);
 
 	return m_fonts.insert(font);
 #else
@@ -108,13 +143,13 @@ Uint32 OpenGLGraphics::CreateFont(const char *_fontFace, int _height, bool _bold
 #endif
 }
 
-void OpenGLGraphics::DrawText ( Uint32 _font, Uint16 _x, Uint16 _y, const char *_text, Uint32 _color, bool _center )
+void OpenGLGraphics::DrawText ( Uint32 _font, Uint16 _x, Uint16 _y, Uint32 _color, const char *_text )
 {
 #ifdef ENABLE_FONTS
 	OpenGLFont *font = m_fonts[_font];
 	CoreAssert ( font );
 
-	font->Draw(_x, _y, _text, _color, _center);
+	font->Draw(_x, _y, _text, _color);
 #endif
 }
 
@@ -860,6 +895,8 @@ int OpenGLGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heigh
     if ( !testsPassed ) return -1;
 
     g_openGL->SetSetting ( OPENGL_TEX_FORCE_SQUARE, false );
+
+	m_defaultFont = CreateFont("Arial", 12);
 
     glDisable ( GL_CULL_FACE );
     glDisable ( GL_DEPTH_TEST );

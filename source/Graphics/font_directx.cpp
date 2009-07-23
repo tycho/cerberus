@@ -33,22 +33,19 @@
 #include "Graphics/graphics.h"
 #include "Graphics/font_directx.h"
 
-DirectXFont::DirectXFont(const char *_fontFace, int _height, bool _bold, bool _italic)
+DirectXFont::DirectXFont(const char *_fontFace, int _height)
 {
-	int nWeight;
-	DWORD dwItalic;
-
-	nWeight = _bold ? FW_BOLD : FW_NORMAL;
-	dwItalic = _italic ? 1 : 0;
-
 	D3DXFONT_DESC lf;
 	ZeroMemory(&lf, sizeof(D3DXFONT_DESC));
 
-	lf.Height = _height;
-	lf.Width = 0;
-	lf.Weight = nWeight;
-	lf.Italic = dwItalic;
+	lf.Height = (int)(_height * 1.25f);
+	lf.MipLevels = D3DX_DEFAULT;
+	lf.Width = _height * 0.5f;
+	lf.Weight = FW_NORMAL;
+	lf.Italic = 0;
 	lf.CharSet = DEFAULT_CHARSET;
+	lf.Quality = PROOF_QUALITY;
+    lf.PitchAndFamily  = DEFAULT_PITCH | FF_DONTCARE;
 	strncpy(lf.FaceName, _fontFace, 31);
 
 	D3DXCreateFontIndirect(((DirectXGraphics *)g_graphics)->m_device, &lf, &m_font);
@@ -60,7 +57,7 @@ DirectXFont::~DirectXFont()
 	m_font = NULL;
 }
 
-void DirectXFont::Draw(Uint16 _x, Uint16 _y, const char *_text, Uint32 _color, bool _center)
+void DirectXFont::Draw(Uint16 _x, Uint16 _y, const char *_text, Uint32 _color)
 {
 	RECT rect;
 	rect.left = _x;
@@ -73,17 +70,7 @@ void DirectXFont::Draw(Uint16 _x, Uint16 _y, const char *_text, Uint32 _color, b
 	CoreAssert ( m_font );
 
 	m_font->DrawText(NULL, _text, -1, &rect, DT_CALCRECT, 0);
-
-	if ( _center )
-	{
-		rect.left = _x - ((rect.right - rect.left) / 2);
-		rect.top = _y - ((rect.bottom - rect.top) / 2);
-		rect.right = _x + ((rect.right - rect.left) / 2);
-		rect.bottom = _y + ((rect.bottom - rect.top) / 2);
-
-		m_font->DrawText(NULL, _text, -1, &rect, DT_LEFT | DT_NOCLIP, color);
-	} else
-		m_font->DrawText(NULL, _text, -1, &rect, DT_LEFT | DT_NOCLIP, _color);
+	m_font->DrawText(NULL, _text, -1, &rect, DT_LEFT | DT_NOCLIP, _color);
 }
 
 #endif

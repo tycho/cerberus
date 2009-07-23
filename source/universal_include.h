@@ -59,11 +59,6 @@
 
 #define APP_NAME VERSION_NAME
 
-//#define BENCHMARK_BUILD
-#define BENCHMARK_WIDGETS 500
-
-//#define REDIRECT_STDOUT
-
 #define RELEASE_BUILD
 
 #ifdef _DEBUG
@@ -77,15 +72,13 @@
 #define ENABLE_DIRECT3D
 #define ENABLE_OPENGL
 
-//#define ENABLE_FONTS
+#define ENABLE_FONTS
 
 #if !defined(TARGET_OS_WINDOWS) || defined(DETECT_MEMORY_LEAKS)
 #	undef ENABLE_DIRECT3D
 #endif
 
-#ifndef BENCHMARK_BUILD
 //#define ENABLE_NETWORKING
-#endif
 
 /*********************** SOUND ***********************/
 //#define USE_OPENAL        // In development
@@ -108,9 +101,6 @@
 /******************** NETWORKING *********************/
 
 // #define FORCE_VSYNC
-
-// Might work...
-// #define ANTI_CHEAT_MACRO    { CrbReleaseAssert ( g_graphics->GetScreenWidth() <= 800 ); CrbReleaseAssert ( g_graphics->GetScreenHeight() <= 600 ); }
 
 #ifdef TARGET_COMPILER_VC
 #    if _MSC_VER >= 1300 && _MSC_VER < 1400
@@ -160,7 +150,7 @@
 #  include <GL/gl.h>
 #  include <GL/glext.h>
 #  ifdef ENABLE_FONTS
-#    include <FTGLTextureFont.h>
+#    include <FTGL/ftgl.h>
 #  endif
 #endif
 

@@ -91,22 +91,43 @@ const char *DirectXGraphics::RendererName()
 	return renderer;
 }
 
-Uint32 DirectXGraphics::CreateFont ( const char *_fontFace, int _height, bool _bold, bool _italic )
+Uint32 DirectXGraphics::CreateDisplayList()
+{
+	return 0;
+}
+
+void DirectXGraphics::DestroyDisplayList(Uint32 _list)
+{
+}
+
+void DirectXGraphics::BeginDisplayList(Uint32 _list)
+{
+}
+
+void DirectXGraphics::EndDisplayList(Uint32 _list)
+{
+}
+
+void DirectXGraphics::CallDisplayList(Uint32 _list)
+{
+}
+
+Uint32 DirectXGraphics::CreateFont ( const char *_fontFace, int _height)
 {
 #ifdef ENABLE_FONTS
-	return m_fonts.insert(new DirectXFont(_fontFace, _height, _bold, _italic));
+	return m_fonts.insert(new DirectXFont(_fontFace, _height));
 #else
 	return 0;
 #endif
 }
 
-void DirectXGraphics::DrawText ( Uint32 _font, Uint16 _x, Uint16 _y, const char *_text, Uint32 _color, bool _center )
+void DirectXGraphics::DrawText ( Uint32 _font, Uint16 _x, Uint16 _y, Uint32 _color, const char *_text)
 {
 #ifdef ENABLE_FONTS
 	DirectXFont *font = m_fonts[_font];
 	CoreAssert ( font );
 
-	font->Draw(_x, _y, _text, _color, _center);
+	font->Draw(_x, _y, _text, _color);
 #endif
 }
 
@@ -820,6 +841,8 @@ int DirectXGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heig
 	m_device->SetRenderState ( D3DRS_CULLMODE, D3DCULL_NONE );
 	m_device->SetRenderState ( D3DRS_ZENABLE, D3DZB_FALSE );
 	m_device->SetTextureStageState ( 0, D3DTSS_ALPHAOP, D3DTOP_MODULATE );
+
+	m_defaultFont = CreateFont("Arial", 12);
 
 	if ( FAILED(m_device->BeginScene()) ) return -1;
 	

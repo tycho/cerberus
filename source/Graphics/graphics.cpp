@@ -49,12 +49,18 @@
 
 Graphics::Graphics()
  : m_windowed(false), m_screenX(0), m_screenY(0), m_colorDepth(0),
-   m_centerX(0), m_centerY(0), m_colorKey(0), m_colorKeySet(false)
+   m_centerX(0), m_centerY(0), m_colorKey(0), m_colorKeySet(false),
+   m_defaultFont(0)
 {
 }
 
 Graphics::~Graphics()
 {
+}
+
+Uint32 Graphics::DefaultFont()
+{
+	return m_defaultFont;
 }
 
 Sint32 Graphics::GetCenterX()
