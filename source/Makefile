@@ -10,18 +10,18 @@ ifndef V
                          $(MAKE) $(PRINT_DIR) -C $$subdir
 endif
 
-CC=gcc
-CXX=g++
-LINK=$(CXX)
-LIBS=-Wl,-Bstatic -Lcontrib/crisscross/source -lCrissCross -lSDLmain -Wl,-Bdynamic -lz -lSDL -lSDL_mixer -lSDL_image -lGL -lX11 -rdynamic -fopenmp
+CC := gcc
+CXX := g++
+LINK := $(CXX)
+LIBS := -Wl,-Bstatic -Lcontrib/crisscross/source -lCrissCross -lSDLmain -Wl,-Bdynamic -lz $(shell pkg-config ftgl --libs) \
+		$(shell pkg-config sdl --libs) -lSDL_mixer -lSDL_image -lGL -lX11 -rdynamic -fopenmp
 
-CXXFLAGS=-O2 -ggdb -pipe -Wall -Wno-long-long -rdynamic -std=c++98 -pedantic -fopenmp -fno-strict-aliasing -ffast-math
-CPPFLAGS=-D_DEBUG
+CXXFLAGS = -O2 -ggdb -pipe -Wall -Wno-long-long -rdynamic -std=c++98 -pedantic -fopenmp -fno-strict-aliasing -ffast-math
 
-STRIP=:strip
-NM=:nm
+STRIP = :strip
+NM = :nm
 
-INCLUDE=-Isource -Icontrib/OpenGL/include -Icontrib/unrar -Icontrib/crisscross/source -I/opt/local/include -I/opt/local/include/SDL
+INCLUDE := -Isource -Icontrib/OpenGL/include -Icontrib/unrar -Icontrib/crisscross/source $(shell pkg-config ftgl --cflags) $(shell pkg-config sdl --cflags)
 
 # find . -name '*.cpp' | sed 's%^\./\(.*\)%\1 \\%'
 
@@ -129,15 +129,15 @@ clean:
 
 $(PCH_FILE).gch: $(PCH_FILE)
 	@scripts/gen_buildnum_h.pl $(shell pwd)/source/build_number.h
-	@$(QUIET_PCH)$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(PCH_FILE) -o $(PCH_FILE).gch
+	$(QUIET_PCH)$(CXX) $(CPPFLAGS) $(CXXFLAGS) $(PCH_FILE) -o $(PCH_FILE).gch
 
 $(OUTFILE): $(OBJECTS)
-	@$(QUIET_LINK)$(LINK) $+ $(LIBS) -o $@
+	$(QUIET_LINK)$(LINK) $+ $(LIBS) -o $@
 
 %.o: %.cpp
 	@mkdir -p $(dir $@)
-	@$(QUIET_CXX)$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
+	$(QUIET_CXX)$(CXX) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
 
 %.o: %.c
 	@mkdir -p $(dir $@)
-	@$(QUIET_CC)$(CC) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
+	$(QUIET_CC)$(CC) $(CPPFLAGS) $(CXXFLAGS) -c $< -o $@
