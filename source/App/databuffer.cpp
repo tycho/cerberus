@@ -91,13 +91,13 @@ void DataBuffer::resize ( size_t _capacity )
         setSize ( _capacity );
         return;
     }
-    
+
     char *newBuffer = (char *)malloc(_capacity);
     memcpy ( newBuffer, m_buffer, m_size );
     free ( m_buffer );
     m_buffer = newBuffer;
     m_size = _capacity;
-    
+
 }
 
 void DataBuffer::setSize ( size_t _capacity )

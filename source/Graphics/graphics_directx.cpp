@@ -190,7 +190,7 @@ void DirectXGraphics::DrawRect ( SDL_Rect *_pos, Uint32 _color )
 
 	m_device->SetTextureStageState(0, D3DTSS_ALPHAOP, D3DTOP_SELECTARG2);
 	m_device->SetTextureStageState(0, D3DTSS_ALPHAARG2, D3DTA_DIFFUSE);
- 
+
 	m_device->SetTextureStageState(1, D3DTSS_COLOROP, D3DTOP_DISABLE);
 	m_device->SetTextureStageState(1, D3DTSS_ALPHAOP, D3DTOP_DISABLE);
 
@@ -217,9 +217,9 @@ int DirectXGraphics::SetSurfaceAlpha ( Uint32 _surfaceID, Uint8 alpha )
 {
     CrbReleaseAssert ( m_sdlScreen != NULL );
     CrbReleaseAssert ( m_textures.valid ( _surfaceID ) );
-    
+
     m_textures.get ( _surfaceID )->SetAlpha ( alpha );
-    
+
     return 0;
 }
 
@@ -353,7 +353,7 @@ Uint32 DirectXGraphics::LoadImage ( const char *_filename, bool _isColorKeyed )
 int DirectXGraphics::DeleteSurface ( Uint32 _surfaceID )
 {
     if ( !m_textures.valid ( _surfaceID ) ) return -1;
-    
+
     DirectXTexture *tex = m_textures.get ( _surfaceID );
     CrbReleaseAssert ( tex != NULL );
     delete tex;
@@ -368,9 +368,9 @@ Uint32 DirectXGraphics::CreateSurface ( Uint32 _width, Uint32 _height, bool _isC
 
 	bool textureCreated = tex->Create ( _width, _height, _isColorKeyed );
 	CrbReleaseAssert ( textureCreated );
-    
+
     Uint32 ret = m_textures.insert ( tex );
-    
+
     return ret;
 }
 
@@ -381,12 +381,12 @@ Uint16 DirectXGraphics::GetMaximumTextureSize()
 }
 
 int DirectXGraphics::SetColorKey ( Uint32 _color )
-{    
+{
     CrbReleaseAssert ( m_sdlScreen != NULL );
 
     m_colorKey = _color;
     m_colorKeySet = true;
-    
+
     return 0;
 }
 
@@ -405,7 +405,7 @@ int DirectXGraphics::FillRect ( Uint32 _surfaceID, SDL_Rect *_destRect, Uint32 _
 
     if ( _color == m_colorKey )
         _color = m_colorKey & ZERO_ALPHA;
-    
+
     if ( _surfaceID == SCREEN_SURFACE_ID )
 	{
 		if ( m_deviceLost)
@@ -432,7 +432,7 @@ int DirectXGraphics::FillRect ( Uint32 _surfaceID, SDL_Rect *_destRect, Uint32 _
         CrbReleaseAssert ( tex != NULL );
 
         int r = SDL_FillRect ( tex->m_sdlSurface, _destRect, _color );
-        
+
         tex->Damage ();
 
         return r;
@@ -443,7 +443,7 @@ int DirectXGraphics::Blit ( Uint32 _sourceSurfaceID, SDL_Rect const *_sourceRect
                            Uint32 _destSurfaceID,   SDL_Rect const *_destRect )
 {
     CrbReleaseAssert ( m_sdlScreen != NULL );
-        
+
     DirectXTexture *fromSurface = NULL;
     DirectXTexture *toSurface = NULL;
 
@@ -535,12 +535,12 @@ int DirectXGraphics::Blit ( Uint32 _sourceSurfaceID, SDL_Rect const *_sourceRect
     // With SDL, you don't have to specify the dest width/height. With OpenGL, we do.
     destRect->w = sourceRect->w;
     destRect->h = sourceRect->h;
-    
+
     // Now we need to do the actual blit!
     if ( _destSurfaceID == SCREEN_SURFACE_ID )
     {
 		DXVertex *vertices;
-		
+
 		fromSurface->Upload();
 
         float texW = (float)fromSurface->m_sdlSurface->w,
@@ -619,7 +619,7 @@ int DirectXGraphics::Blit ( Uint32 _sourceSurfaceID, SDL_Rect const *_sourceRect
         // We want to upload the textures to graphics memory
         // later in order to make things fast.
         toSurface->Damage();
-        
+
         return res;
     }
 
@@ -638,10 +638,10 @@ void DirectXGraphics::ReplaceColour ( Uint32 _surfaceID, SDL_Rect *_destRect, Ui
 SDL_PixelFormat *DirectXGraphics::GetPixelFormat ( Uint32 _surfaceID )
 {
     CrbReleaseAssert ( m_sdlScreen != NULL );
-    
+
     if (_surfaceID == SCREEN_SURFACE_ID)
         return m_sdlScreen->format;
-    
+
     CrbReleaseAssert ( m_textures.valid ( _surfaceID ) );
     SDL_Surface *surface = m_textures.get ( _surfaceID )->m_sdlSurface;
     CrbReleaseAssert ( surface != NULL );
@@ -652,10 +652,10 @@ SDL_PixelFormat *DirectXGraphics::GetPixelFormat ( Uint32 _surfaceID )
 Uint32 DirectXGraphics::GetSurfaceHeight ( Uint32 _surfaceID )
 {
     CrbReleaseAssert ( m_sdlScreen != NULL );
-    
+
     if ( _surfaceID == SCREEN_SURFACE_ID )
         return GetScreenHeight();
-    
+
     CrbReleaseAssert ( m_textures.valid ( _surfaceID ) );
 
     SDL_Surface *surface = m_textures.get ( _surfaceID )->m_sdlSurface;
@@ -667,10 +667,10 @@ Uint32 DirectXGraphics::GetSurfaceHeight ( Uint32 _surfaceID )
 Uint32 DirectXGraphics::GetSurfaceWidth ( Uint32 _surfaceID )
 {
     CrbReleaseAssert ( m_sdlScreen != NULL );
-    
+
     if (_surfaceID == SCREEN_SURFACE_ID)
         return GetScreenWidth();
-    
+
     CrbReleaseAssert ( m_textures.valid ( _surfaceID ) );
 
     SDL_Surface *surface = m_textures.get ( _surfaceID )->m_sdlSurface;
@@ -702,7 +702,7 @@ int DirectXGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heig
     info = SDL_GetVideoInfo ();
     CrbReleaseAssert ( info != NULL );
 
-    m_colorDepth = _colorDepth; 
+    m_colorDepth = _colorDepth;
 
     g_console->WriteLine ( "The requested color depth is %d, and we're using %d.", _colorDepth, m_colorDepth );
     g_console->WriteLine ( "Setting display mode of %dx%dx%d...", _width, _height, m_colorDepth );
@@ -712,7 +712,7 @@ int DirectXGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heig
     if ( !m_windowed ) flags |= SDL_FULLSCREEN;
 
     m_sdlScreen = SDL_SetVideoMode ( _width, _height, m_colorDepth, flags );
-    
+
     if ( !m_sdlScreen )
     {
         g_console->WriteLine ( "SDL couldn't initialise properly: %s", SDL_GetError() );
@@ -720,7 +720,7 @@ int DirectXGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heig
     }
 
     // m_sdlScreen->m_textureID = SCREEN_SURFACE_ID;
-    
+
     char windowTitle[512];
 	sprintf(windowTitle, "%s v%s", APP_NAME, Cerberus::Version::LongVersion());
     SDL_WM_SetCaption ( windowTitle, NULL );
@@ -729,7 +729,7 @@ int DirectXGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heig
     {
         HWND hwnd = FindWindow ( NULL, windowTitle );
         RECT workArea, window;
-        GetWindowRect ( hwnd, &window ); 
+        GetWindowRect ( hwnd, &window );
         SystemParametersInfo ( SPI_GETWORKAREA, 0, &workArea, 0 );
         Uint32 left = workArea.right - (window.right - window.left) - 20;
         Uint32 top =  ( (workArea.top + workArea.bottom) - (window.bottom - window.top) ) / 2;
@@ -738,7 +738,7 @@ int DirectXGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heig
 
 
     info = SDL_GetVideoInfo();
-    
+
     g_console->WriteLine ( "Display mode set successfully (%dx%dx%d).", info->current_w, info->current_h, info->vfmt->BitsPerPixel );
     g_console->WriteLine ();
 
@@ -808,7 +808,7 @@ int DirectXGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heig
 		HRESULT Res;
 		Res = m_d3d->GetAdapterIdentifier ( Adapter, 0, &Identifier );
 		if ( strstr ( Identifier.Description, "PerfHUD" ) != 0 ) {
-			AdapterToUse = Adapter; 
+			AdapterToUse = Adapter;
 			DeviceType = D3DDEVTYPE_REF;
 			break;
 		}
@@ -833,7 +833,7 @@ int DirectXGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heig
 		return -1;
 
 	m_device->SetStreamSource ( 0, m_vertexBuffer, 0, sizeof(DXVertex) );
-	
+
 	m_device->SetRenderState ( D3DRS_LIGHTING, FALSE );
 	m_device->SetRenderState ( D3DRS_ALPHABLENDENABLE, TRUE );
 	m_device->SetRenderState ( D3DRS_SRCBLEND, D3DBLEND_SRCALPHA );
@@ -845,7 +845,7 @@ int DirectXGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heig
 	m_defaultFont = CreateFont("Arial", 12);
 
 	if ( FAILED(m_device->BeginScene()) ) return -1;
-	
+
 	if ( FAILED(m_device->Clear(0, NULL, D3DCLEAR_TARGET, 0, 0.0f, 0)) ) return -1;
 
     return 0;

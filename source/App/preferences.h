@@ -33,14 +33,14 @@ class PrefsItem
 {
 public:
     char        *m_key;
-    
+
     enum
     {
         TypeString,
         TypeFloat,
         TypeInt
     };
-    
+
     int            m_type;
     char          *m_str;
     union {
@@ -133,7 +133,7 @@ public:
 		\param _val The value to set for the preference.
 	 */
     void SetInt          ( char const *_key, int _val );
-    
+
 	//! Adds a line to the preferences file.
 	/*!
 		\param _line The text of the line to add.

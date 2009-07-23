@@ -66,12 +66,12 @@ void GenerateBlackBox ( const char *_msg )
         {
             if ( line[0] != '#' && line[0] != '\n' ) // Skip comment lines
             {
-                fprintf( _file, "%s", line );              
+                fprintf( _file, "%s", line );
             }
         }
         fclose(prefsFile);
     }
-    
+
     //
     // Print stack trace
     // Get our frame pointer, chain upwards
@@ -84,7 +84,7 @@ void GenerateBlackBox ( const char *_msg )
     CrissCross::IO::CoreIOWriter *cio_file = new CrissCross::IO::CoreIOWriter(_file,false);
     CrissCross::Debug::PrintStackTrace ( cio_file );
     delete cio_file;
-    
+
     fclose( _file );
 }
 
@@ -98,7 +98,7 @@ void CerberusReleaseAssert_Helper ( const char *_reason )
                        "blackbox.txt in the directory Cerberus is installed in.\n\n"
                        "Please report this on the Cerberus forums at\n"
                        "http://www.ferrousmoon.com/forums/\n\n"
-                       "Cerberus will now shut down.", 
+                       "Cerberus will now shut down.",
                        "Cerberus Fatal Error", MB_ICONEXCLAMATION | MB_OK );
 #endif
 #if defined ( INTERNAL_BUILD )

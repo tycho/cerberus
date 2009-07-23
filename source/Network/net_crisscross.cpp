@@ -133,7 +133,7 @@ Net_CrissCross::Connect ( const char *_hostname, unsigned short _port )
 
         }
     }
-    
+
     CrbReleaseAbort ( "Defied physics." );
     return CC_ERR_INTERNAL;
 }
@@ -174,7 +174,7 @@ int Net_CrissCross::ReceiveTCP ( int *_packetCount )
             bytesInBuffer += length;
             bufferOffset += length;
         }
-        
+
         // Figure out the expected packet size
         memcpy ( &packetSize, readBuffer, sizeof ( packetSize ) );
 
@@ -213,7 +213,7 @@ int Net_CrissCross::ReceiveTCP ( int *_packetCount )
         // Reset and prepare for the next packet.
         bytesInBuffer = 0;
         bufferOffset = readBuffer;
-        
+
     }
 
     return CC_ERR_NONE;

@@ -74,7 +74,7 @@ void CerberusReleaseAssert_Helper ( const char *_msg );
 
 
 //
-// Abort - print message then bomb out (reset the resolution, too!)    
+// Abort - print message then bomb out (reset the resolution, too!)
 //
 
 #ifdef DEBUGLOG_ENABLED

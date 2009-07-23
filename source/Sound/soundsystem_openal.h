@@ -50,7 +50,7 @@ protected:
     Data::DArray<Data::LList<std::string> *>       m_queues;
     ALCcontext*                                    m_context;
     ALCdevice*                                     m_device;
-    
+
     ALuint              AcquireSource ();
 public:
     OpenALSoundSystem();

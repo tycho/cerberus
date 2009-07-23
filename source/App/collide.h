@@ -23,7 +23,7 @@
     http://robloach.net
 */
 
-/* A simple library for collision detection using SDL */
+// A simple library for collision detection using SDL
 
 #ifndef _SDL_COLLIDE_h
 #define _SDL_COLLIDE_h
@@ -55,7 +55,7 @@ int SDL_CollideBoundingBox(SDL_Rect &a , SDL_Rect &b);
 
     circle1 : centre (x1,y1) with radius r1
     circle2 : centre (x2,y2) with radius r2
-    
+
     (allow distance between circles of offset)
 */
 int SDL_CollideBoundingCircle(int x1 , int y1 , int r1 ,
@@ -71,4 +71,4 @@ int SDL_CollideBoundingCircle(SDL_Surface *a , int x1 , int y1 ,
                               SDL_Surface *b , int x2 , int y2 ,
                               int offset);
 
-#endif /* _SDL_COLLIDE_h */
+#endif // _SDL_COLLIDE_h

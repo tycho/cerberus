@@ -73,7 +73,7 @@ Surface::Surface ( Uint16 _sizeX, Uint16 _sizeY, Uint16 _splitSections )
     m_sqrtN = _splitSections;
 
     CrbDebugAssert ( isPowerOfTwo ( _splitSections ) );
-    if ( !isPowerOfTwo ( _splitSections ) ) 
+    if ( !isPowerOfTwo ( _splitSections ) )
     {
         _splitSections = nearestPowerOfTwo ( _splitSections );
         m_nWays = _splitSections * _splitSections;
@@ -305,7 +305,7 @@ Uint32 Surface::GetPixel ( int _x, int _y )
 	destRect.x = _x;
 	destRect.y = _y;
 	destRect.w = destRect.h = 1;
-	
+
 	memset ( m_destRects, 0, sizeof(SDL_Rect) * m_nWays );
 
 	CalculateDestinationRectangles ( m_destRects, &destRect );
@@ -325,7 +325,7 @@ void Surface::SetPixel ( int _x, int _y, Uint32 _colour )
 	destRect.x = _x;
 	destRect.y = _y;
 	destRect.w = destRect.h = 1;
-	
+
 	memset ( m_destRects, 0, sizeof(SDL_Rect) * m_nWays );
 
 	CalculateDestinationRectangles ( m_destRects, &destRect );
@@ -342,7 +342,7 @@ void Surface::SetPixel ( int _x, int _y, Uint32 _colour )
 void Surface::FillRect ( SDL_Rect *_destRect, Uint32 _colour )
 {
 	memset ( m_destRects, 0, sizeof(SDL_Rect) * m_nWays );
-	
+
 	CalculateDestinationRectangles ( m_destRects, _destRect );
 
 	SDL_Rect *dest = m_destRects;
@@ -367,7 +367,7 @@ void Surface::ReplaceColour ( SDL_Rect *_destRect, Uint32 _findColour, Uint32 _r
     }
 
 	memset ( m_destRects, 0, sizeof(SDL_Rect) * m_nWays );
-	
+
 	CalculateDestinationRectangles ( m_destRects, _destRect );
 
 	SDL_Rect *dest = m_destRects;

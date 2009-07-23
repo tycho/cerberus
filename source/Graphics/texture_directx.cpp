@@ -111,7 +111,7 @@ bool DirectXTexture::Load ( const char *_filename, bool _isColorKeyed )
 bool DirectXTexture::Create ( Uint16 _width, Uint16 _height, bool _isColorKeyed )
 {
     CrbReleaseAssert ( _width > 0 ); CrbReleaseAssert ( _height > 0 );
-    
+
     Uint32 oldWidth = _width, oldHeight = _height;
     //if ( !g_openGL->GetSetting ( OPENGL_TEX_ALLOW_NPOT ) ) {
         if ( !isPowerOfTwo ( _width ) )
@@ -200,7 +200,7 @@ bool DirectXTexture::Upload()
 
     CrbReleaseAssert ( m_sdlSurface != NULL );
 	CrbReleaseAssert ( m_texture != NULL );
- 
+
 	RECT rect = {0, 0, m_sdlSurface->w, m_sdlSurface->h};
 
 	LPDIRECT3DSURFACE9 surf;
@@ -222,7 +222,7 @@ bool DirectXTexture::Upload()
 		NULL, NULL, m_sdlSurface->pixels, D3DFMT_A8B8G8R8,
 		m_sdlSurface->w * 4,
 		NULL, &rect, D3DX_FILTER_NONE, graphics->m_colorKey );
-	
+
 	if ( isLocked )
 		SDL_UnlockSurface ( m_sdlSurface );
 

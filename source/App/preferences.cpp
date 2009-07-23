@@ -72,7 +72,7 @@ PrefsItem::PrefsItem(char *_line)
     {
         // Guess that number is an int
         m_type = TypeInt;
-        
+
         // Verify that guess
         c = value;
         int numDots = 0;
@@ -131,7 +131,7 @@ PrefsItem::~PrefsItem()
 
 
 Preferences::Preferences(char const *_filename)
-{    
+{
     m_filename = newStr(_filename);
 
     Load();
@@ -182,7 +182,7 @@ void Preferences::CreateDefaultValues()
 
 	AddLine ( "IgnoreDataFiles = 0" );
 	AddLine ( "DumpOpenGLInfo = 0" );
-	
+
 	AddLine ( "\n" );
 
 #ifdef INTERNAL_BUILD
@@ -198,22 +198,22 @@ void Preferences::CreateDefaultValues()
 	AddLine( "\n" );
 
 	// AddLine( "SurfaceSplitFactor = 32" );
-    
+
     // AddLine( "\n" );
 
     AddLine( "SoundChannels = 32" );
     AddLine( "SoundMixFreq = 22050" );
     AddLine( "SoundBufferSize = 512" );
-    
+
     AddLine( "\n" );
 
     // Override the defaults above with stuff from a default preferences file
-    if ( g_app && g_app->m_resource ) 
+    if ( g_app && g_app->m_resource )
     {
         TextReader *reader = g_app->m_resource->GetTextReader( "default_preferences.txt" );
-        if ( reader && reader->IsOpen() ) 
+        if ( reader && reader->IsOpen() )
         {
-            while ( reader->ReadLine() ) 
+            while ( reader->ReadLine() )
             {
                 AddLine( reader->GetRestOfLine(), true );
             }
@@ -233,7 +233,7 @@ void Preferences::Load(char const *_filename)
             delete items->get(i);
     delete items;
     m_items.empty();
-    
+
     // Try to read preferences if they exist
     FILE *in = fopen(_filename, "r");
 
@@ -253,7 +253,7 @@ void Preferences::Load(char const *_filename)
     }
 
     if ( m_items.size() < 1 ) CreateDefaultValues();
-    
+
 #ifdef DEMOBUILD
     AddLine( OTHER_DIFFICULTY " = 1", true );
 #endif
@@ -290,7 +290,7 @@ void Preferences::Save()
     Data::DArray<PrefsItem *> *items = m_items.ConvertToDArray();
     for ( i = 0; i < items->size(); ++i )
     {
-        if ( items->valid ( i ) ) 
+        if ( items->valid ( i ) )
         {
             items->get(i)->m_hasBeenWritten = false;
         }
@@ -299,8 +299,8 @@ void Preferences::Save()
 
     // Now use m_fileText as a template to write most of the items
     FILE *out = fopen(m_filename, "w");
-    
-    // If we couldn't open the prefs file for writing then just silently fail - 
+
+    // If we couldn't open the prefs file for writing then just silently fail -
     // it's better than crashing.
     if (!out)
     {
@@ -320,7 +320,7 @@ void Preferences::Save()
             char const *c = line;
             char const *keyStart = NULL;
             char const *keyEnd = NULL;
-            while (*c != '=') 
+            while (*c != '=')
             {
                 if (keyStart)
                 {
@@ -333,7 +333,7 @@ void Preferences::Save()
                 {
                     if (isalnum(c[0]))
                     {
-                        keyStart = c; 
+                        keyStart = c;
                     }
                 }
                 ++c;
@@ -348,12 +348,12 @@ void Preferences::Save()
         }
     }
 
-    
+
     // Finally output any items that haven't already been written
     items = m_items.ConvertToDArray();
     for ( i = 0; i < items->size(); ++i )
     {
-        if ( items->valid ( i ) ) 
+        if ( items->valid ( i ) )
         {
             PrefsItem *item = items->get ( i );
             if ( !item->m_hasBeenWritten )
@@ -457,11 +457,11 @@ void Preferences::SetInt(char const *_key, int _int)
 
 void Preferences::AddLine(char const*_line, bool _overwrite)
 {
-    if ( !_line ) 
+    if ( !_line )
         return;
 
     bool saveLine = true;
-    
+
     if (!IsLineEmpty(_line))                // Skip comment lines and blank lines
     {
         char *localCopy = newStr( _line );

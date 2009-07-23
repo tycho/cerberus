@@ -48,7 +48,7 @@ private:
 #ifdef ENABLE_FONTS
 	Data::DArray<OpenGLFont *>           m_fonts;
 #endif
-        
+
     short m_vertexArray[8];
     short m_texCoordArrayi[8];
     float m_texCoordArrayf[8];

@@ -81,9 +81,9 @@ private:
     bool                                m_vboEnabled;
 
     renderPath                          m_renderPath;
-    
+
     GLuint                              m_boundTexture;
-    
+
     bool m_clientStateVertexArray;
     bool m_clientStateTexCoordArray;
 
@@ -97,10 +97,10 @@ public:
 
     void ActivateTextureRect();
     void DeactivateTextureRect();
-    
+
     void ActivateWhiteWithAlpha ( Uint8 alpha );
     void ActivateColour ( Uint32 col );
-    
+
     void VertexArrayStatePrimitive();
     void VertexArrayStateTexture();
     void VertexArrayStateOff();

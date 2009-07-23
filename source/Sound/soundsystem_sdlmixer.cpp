@@ -135,7 +135,7 @@ int SDLMixerSoundSystem::PlaySound ( const char *_soundName, short _distX, short
     // We use a box range for the maximum distance. Just off screen (left or right) sounds would play at 30% volume.
     float maxDist = (float)max(g_graphics->GetScreenHeight(),g_graphics->GetScreenWidth()) * 0.75f;
     float volumePercentage = (float)(maxDist - dist) / (float)maxDist;
-    
+
     // The volume is the percentage just calculated * maximum volume
     int newVolume = (int)(( (float)MIX_MAX_VOLUME * 0.75f ) * volumePercentage);
     if ( newVolume <= 0 ) return 1;

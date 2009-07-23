@@ -80,7 +80,7 @@ void Texture::SetPixel ( Uint16 _x, Uint16 _y, Uint32 _pixel )
 
     CrbReleaseAssert ( m_sdlSurface->pixels != NULL );
 
-    /* Here p is the address to the pixel we want to set */
+    // Here p is the address to the pixel we want to set
     Uint8 *p = (Uint8 *)m_sdlSurface->pixels + _y * m_sdlSurface->pitch + _x * bpp;
 
     switch(bpp) {
@@ -119,7 +119,7 @@ Uint32 Texture::GetPixel ( Uint16 _x, Uint16 _y )
 
     bool isLocked = false;
 
-    /* Lock only when absolutely necessary. We hate slowness. */
+    // Lock only when absolutely necessary. We hate slowness.
     if ( !m_sdlSurface->pixels )
     {
         SDL_LockSurface ( m_sdlSurface );
@@ -128,7 +128,7 @@ Uint32 Texture::GetPixel ( Uint16 _x, Uint16 _y )
 
     int bpp = m_sdlSurface->format->BytesPerPixel;
 
-    /* Here p is the address to the pixel we want to retrieve */
+    // Here p is the address to the pixel we want to retrieve
     Uint8 *p = (Uint8 *)m_sdlSurface->pixels + _y * m_sdlSurface->pitch + _x * bpp;
     Uint32 pixel = 0;
 

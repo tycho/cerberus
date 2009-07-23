@@ -42,7 +42,7 @@ App::App ()
 {
     // TODO: Make this ALL prettier...
     // TODO: Set the appPath stuff to go to the application data folder, etc.
-    
+
     char tempPath[2048];
     memset ( tempPath, 0, sizeof ( tempPath ) );
 
@@ -84,7 +84,7 @@ App::App ()
     }
     else
         strcpy ( tempPath, "./" );
-    
+
 #endif
 
     m_appPath = newStr ( tempPath );
@@ -95,11 +95,11 @@ App::App ()
     m_resourcePath = newStr ( m_appPath );
 
 #elif defined ( TARGET_OS_LINUX )
-    
+
     m_resourcePath = newStr ( m_appPath );
 
 #elif defined ( TARGET_OS_MACOSX )
-    
+
     sprintf ( tempPath, "%s../Resources/", m_appPath );
     m_resourcePath = newStr ( tempPath );
 

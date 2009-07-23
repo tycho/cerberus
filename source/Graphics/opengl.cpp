@@ -100,7 +100,7 @@ void OpenGL::SetupExtensions()
         //
         // We want to print out an OpenGL extension list along with
         // graphics card information.
-        
+
         g_console->Write ( "Saving OpenGL information... " );
 
         FILE *file = fopen ( "opengl-info.txt", "wt" );

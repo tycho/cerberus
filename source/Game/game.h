@@ -47,7 +47,7 @@ public:
     virtual void Run();
     virtual void Quit();
     virtual void Initialise();
-    
+
     virtual double GetGameSpeed();
 
     virtual bool Playing();

@@ -52,17 +52,17 @@ int main ( int argc, char **argv )
 {
     int i = 0;
     char temp[1024];
-    
+
     memset ( temp, 0, sizeof(temp) );
 
     g_console = new IO::Console ( true, true );
 	sprintf(temp, "%s v%s", APP_NAME, Cerberus::Version::LongVersion());
     g_console->SetTitle ( temp );
-    
+
 #ifdef TARGET_OS_MACOSX
     sprintf ( temp, "%s", "../Resources/" );
 #endif
-    
+
     // first find the location of the EXE.
     for (i = (int)strlen(argv[0]); i > 0; i--)
     {
@@ -133,16 +133,16 @@ int main ( int argc, char **argv )
     // deconstruct the classes
     g_console->WriteLine ( "Destroying classes...");
     g_graphics->ShowCursor ( true );
-    
+
     // free up the allocated memory
     delete g_game; g_game = NULL;
     delete g_interface; g_interface = NULL;
     delete g_graphics; g_graphics = NULL;
     delete g_soundSystem; g_soundSystem = NULL;
-    
+
     // notify that the exit operations were successful
     g_console->WriteLine ( "Program is exiting cleanly.\n");
-    
+
     g_prefsManager->Save();
 
     delete g_prefsManager; g_prefsManager = NULL;
@@ -243,7 +243,7 @@ void Init_Graphics()
 		if ( ret )
 		{
 			delete g_graphics; g_graphics = NULL;
-	        
+
 			if ( Data::Compare<const char *> ( graphicsDriver, "opengl" ) == 0  )
 			{
 				// You're screwed.
@@ -263,7 +263,7 @@ void Init_Graphics()
 			break;
 		}
 	}
-	    
+
 	// Something's terribly wrong.
 	if ( !g_graphics )
 		CrbReleaseAbort ( "Could not initialize the graphics engine." );

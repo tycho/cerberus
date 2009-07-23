@@ -40,7 +40,7 @@ class DataBuffer
 
         //! The size of the internal buffer.
         size_t m_size;
-        
+
     public:
         //! The default constructor.
         DataBuffer ();
@@ -66,7 +66,7 @@ class DataBuffer
 
         //! The destructor.
         virtual ~DataBuffer ();
-        
+
         //! Resize the data buffer while preserving the contents.
         virtual void resize ( size_t _capacity );
 
@@ -78,7 +78,7 @@ class DataBuffer
 
         //! Set the data buffer contents.
         virtual int setDataString ( const char *_newData );
-        
+
         //! Returns a pointer to the internal data buffer.
         virtual const char *getData() const;
 
@@ -92,10 +92,10 @@ class DataBuffer
 
         bool operator>  ( const DataBuffer &_buffer ) const;
         bool operator>= ( const DataBuffer &_buffer ) const;
-        
+
         bool operator<  ( const DataBuffer &_buffer ) const;
         bool operator<= ( const DataBuffer &_buffer ) const;
-        
+
         bool operator== ( const DataBuffer &_buffer ) const;
         bool operator!= ( const DataBuffer &_buffer ) const;
 
@@ -103,7 +103,7 @@ class DataBuffer
             \return Returns 'true' if the data buffer has been allocated.
          */
         inline bool operator! () const { return ( m_buffer == NULL ); }
-        
+
         //! Returns a pointer to a given location in the data buffer.
         /*!
             \param _index The index of the data requested.

@@ -80,17 +80,17 @@
 
 //#define ENABLE_NETWORKING
 
-/*********************** SOUND ***********************/
+//********************** SOUND **********************
 //#define USE_OPENAL        // In development
 #define USE_SDLMIXER        // Fully functional (best choice)
 
 #if !( defined(USE_OPENAL) ^ defined(USE_SDLMIXER) )
 #    error You must select one and ONLY one sound engine.
 #endif
-/*********************** SOUND ***********************/
+//********************** SOUND **********************
 
 
-/******************** NETWORKING *********************/
+//******************* NETWORKING ********************
 #ifdef ENABLE_NETWORKING
 #define USE_CRISSCROSS_NET    // Fully functional (best choice)
 
@@ -98,7 +98,7 @@
 #    error You must select one and ONLY one networking engine.
 #endif
 #endif
-/******************** NETWORKING *********************/
+//******************* NETWORKING ********************
 
 // #define FORCE_VSYNC
 
