@@ -169,22 +169,10 @@ void Preferences::CreateDefaultValues()
     // We default to the best possible preferences for performance and
     // so forth on the latest-and-greatest machines.
 
-	AddLine( "# PrimaryRenderer\n" );
+	AddLine( "# Renderer\n" );
 	AddLine( "#   direct3d: Experimental Direct3D 9 renderer (Windows only)\n" );
 	AddLine( "#   opengl: OpenGL renderer (recommended)\n" );
-	AddLine( "#   sdl: SDL renderer\n" );
-    AddLine( "PrimaryRenderer = direct3d" );
-	AddLine( "\n" );
-	AddLine( "# SecondaryRenderer\n" );
-	AddLine( "#  The SDL rendering engine uses this as the backend renderer.\n" );
-	AddLine( "#   windib: DIB rendering (Windows only)\n" );
-	AddLine( "#   directx: DirectDraw rendering (Windows only)\n" );
-	AddLine( "#   dga: Direct X11 framebuffer access\n" );
-#ifdef TARGET_OS_WINDOWS
-    AddLine( "SecondaryRenderer = windib" );
-#elif defined ( TARGET_OS_LINUX )
-    AddLine( "SecondaryRenderer = dga" );
-#endif
+    AddLine( "Renderer = direct3d" );
 	AddLine( "\n" );
     AddLine( "TextureCompression = 0" );
     AddLine( "TextureRectangles = 0" );

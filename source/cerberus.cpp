@@ -196,7 +196,7 @@ void Init_Game()
 
 void Init_Graphics()
 {
-    const char *graphicsDriver = g_prefsManager->GetString ( "PrimaryRenderer", "opengl" );
+    const char *graphicsDriver = g_prefsManager->GetString ( "Renderer", "opengl" );
     int ret = -1;
 
 	CrbDebugAssert ( g_graphics == NULL );
