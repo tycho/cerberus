@@ -28,3 +28,6 @@
 [submodule "contrib/freetype"]
 	path = contrib/freetype
 	url = git://git.uplinklabs.net/pub/scm/git/tycho/freetype.git
+[submodule "contrib/LuaJIT"]
+	path = contrib/LuaJIT
+	url = git://git.uplinklabs.net/pub/scm/git/tycho/luajit.git
