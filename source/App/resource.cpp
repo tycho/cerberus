@@ -228,13 +228,18 @@ MemMappedFile *Resource::GetUncompressedFile(char const *_filename)
 	MemMappedFile *file = NULL;
 
 	if (!file) {
-		sprintf(fullFilename, "%s%s", g_app->GetApplicationSupportPath(), _filename);
+		file = m_resourceFiles.find(_filename, NULL);
+	}
+
+	if (!file) {
+		sprintf(fullFilename, "%s", _filename);
 		if (FileExists(fullFilename)) {
 			IO::FileReader *fr = new IO::FileReader();
 			fr->Open(fullFilename);
 			size_t          len = fr->Length();
 
 			file = new MemMappedFile(fullFilename, len);
+			m_resourceFiles.insert(_filename, file);
 			fr->ReadBlock((char *)file->m_data, len);
 			fr->Close();
 			delete fr;
@@ -242,7 +247,18 @@ MemMappedFile *Resource::GetUncompressedFile(char const *_filename)
 	}
 
 	if (!file) {
-		file = m_resourceFiles.find(_filename, NULL);
+		sprintf(fullFilename, "%s%s", g_app->GetApplicationSupportPath(), _filename);
+		if (FileExists(fullFilename)) {
+			IO::FileReader *fr = new IO::FileReader();
+			fr->Open(fullFilename);
+			size_t          len = fr->Length();
+
+			file = new MemMappedFile(fullFilename, len);
+			m_resourceFiles.insert(_filename, file);
+			fr->ReadBlock((char *)file->m_data, len);
+			fr->Close();
+			delete fr;
+		}
 	}
 
 	return file;
