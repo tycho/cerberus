@@ -125,7 +125,9 @@ Uint32 OpenGLGraphics::CreateFont(const char *_fontFace, int _height)
 		GetWindowsDirectory(windir, 128);
 		sprintf(fontpath, "%s/fonts/%s.ttf", windir, _fontFace);
 #elif defined(TARGET_OS_MACOSX)
-		sprintf(fontpath, "/Library/Fonts/%s.ttf", windir, _fontFace);
+		sprintf(fontpath, "/Library/Fonts/%s.ttf", _fontFace);
+#else
+		sprintf(fontpath, "/usr/share/fonts/corefonts/%s.ttf", _fontFace);
 #endif
 		file = g_app->m_resource->GetUncompressedFile(fontpath);
 	}
@@ -160,7 +162,7 @@ void OpenGLGraphics::DrawRect ( SDL_Rect *_destRect, Uint32 _color )
 	g_openGL->ActivateColour ( _color );
     g_openGL->DeactivateTextureRect ();
     g_openGL->VertexArrayStatePrimitive ();
-    
+
     m_vertexArray[0] = _destRect->x;
     m_vertexArray[1] = _destRect->y;
     m_vertexArray[2] = _destRect->x + _destRect->w;
@@ -186,9 +188,9 @@ int OpenGLGraphics::SetSurfaceAlpha ( Uint32 _surfaceID, Uint8 alpha )
 {
     CrbReleaseAssert ( m_sdlScreen != NULL );
     CrbReleaseAssert ( m_textures.valid ( _surfaceID ) );
-    
+
     m_textures.get ( _surfaceID )->SetAlpha ( alpha );
-    
+
     return 0;
 }
 
@@ -249,7 +251,7 @@ void OpenGLGraphics::SetPixel ( Uint32 _surfaceID, int x, int y, Uint32 _color )
 
 Uint32 OpenGLGraphics::LoadImage ( const char *_filename, bool _isColorKeyed )
 {
-    
+
     CrbReleaseAssert ( _filename != NULL );
 
     // Load the image from RAM.
@@ -312,7 +314,7 @@ Uint32 OpenGLGraphics::LoadImage ( const char *_filename, bool _isColorKeyed )
 int OpenGLGraphics::DeleteSurface ( Uint32 _surfaceID )
 {
     if ( !m_textures.valid ( _surfaceID ) ) return -1;
-    
+
     OpenGLTexture *tex = m_textures.get ( _surfaceID );
     CrbReleaseAssert ( tex != NULL );
     delete tex;
@@ -325,9 +327,9 @@ Uint32 OpenGLGraphics::CreateSurface ( Uint32 _width, Uint32 _height, bool _isCo
 {
     OpenGLTexture *tex = new OpenGLTexture();
     tex->Create ( _width, _height, _isColorKeyed );
-    
+
     Uint32 ret = m_textures.insert ( tex );
-    
+
     return ret;
 }
 
@@ -337,12 +339,12 @@ Uint16 OpenGLGraphics::GetMaximumTextureSize()
 }
 
 int OpenGLGraphics::SetColorKey ( Uint32 _color )
-{    
+{
     CrbReleaseAssert ( m_sdlScreen != NULL );
 
     m_colorKey = _color;
     m_colorKeySet = true;
-    
+
     return 0;
 }
 
@@ -361,14 +363,14 @@ int OpenGLGraphics::FillRect ( Uint32 _surfaceID, SDL_Rect *_destRect, Uint32 _c
 
     if ( _color == m_colorKey )
         _color = m_colorKey & ZERO_ALPHA;
-    
+
     if (_surfaceID == SCREEN_SURFACE_ID)
     {
         // fill a rectangle on screen
         g_openGL->ActivateColour ( _color );
         g_openGL->DeactivateTextureRect ();
         g_openGL->VertexArrayStatePrimitive ();
-    
+
         if ( _destRect )
         {
             m_vertexArray[0] = _destRect->x;
@@ -392,7 +394,7 @@ int OpenGLGraphics::FillRect ( Uint32 _surfaceID, SDL_Rect *_destRect, Uint32 _c
 
         glDrawArrays ( GL_TRIANGLE_STRIP, 0, 4 );
         ASSERT_OPENGL_ERRORS;
-        
+
         return 0;
     }
     else
@@ -896,7 +898,7 @@ int OpenGLGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heigh
 
     g_openGL->SetSetting ( OPENGL_TEX_FORCE_SQUARE, false );
 
-	m_defaultFont = CreateFont("Arial", 12);
+	m_defaultFont = CreateFont("arial", 12);
 
     glDisable ( GL_CULL_FACE );
     glDisable ( GL_DEPTH_TEST );
