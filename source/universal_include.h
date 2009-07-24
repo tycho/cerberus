@@ -119,19 +119,24 @@
 #endif
 
 #ifdef __cplusplus
-#if !defined ( TARGET_OS_WINDOWS ) && !defined ( TARGET_OS_MACOSX )
-#    include <SDL/SDL.h>
-#    include <SDL/SDL_image.h>
-#else
+#if defined ( TARGET_OS_WINDOWS )
 #    include <SDL.h>
 #    include <SDL_image.h>
+#elif defined ( TARGET_OS_MACOSX )
+#    include <SDL/SDL.h>
+#    include <SDL_image/SDL_image.h>
+#else
+#    include <SDL/SDL.h>
+#    include <SDL/SDL_image.h>
 #endif
 
 #ifdef USE_SDLMIXER
-#if !defined ( TARGET_OS_WINDOWS ) && !defined ( TARGET_OS_MACOSX )
-#    include <SDL/SDL_mixer.h>
-#else
+#if defined ( TARGET_OS_WINDOWS )
 #    include <SDL_mixer.h>
+#elif defined ( TARGET_OS_MACOSX )
+#    include <SDL_mixer/SDL_mixer.h>
+#else
+#    include <SDL/SDL_mixer.h>
 #endif
 #endif
 
