@@ -216,15 +216,17 @@ void Game::ProcessEvents ()
         cmdQ = true;
         if ( m_playing )
         {
+#if 0
             QuitWindow *quitWindow;
-            if ( (quitWindow = (QuitWindow *)g_interface->GetWidgetOfType ( "QuitWindow" )) != NULL )
+            if ( (quitWindow = (QuitWindow *)g_interface->GetWidgetOfType ( WIDGET_QUIT_WINDOW )) != NULL )
             {
                 g_interface->RemoveWidget ( quitWindow );
             } else {
-                QuitWindow *quitWindow = new QuitWindow();
+                quitWindow = new QuitWindow();
                 g_interface->AddWidget ( quitWindow );
                 quitWindow = NULL;
             }
+#endif
         } else {
             m_running = false;
         }
