@@ -190,8 +190,8 @@ void Preferences::CreateDefaultValues()
 #else
     AddLine( "ScreenWindowed = 0" );
 #endif
-    AddLine( "ScreenWidth = 800" );
-    AddLine( "ScreenHeight = 600" );
+    AddLine( "ScreenWidth = 0" );
+    AddLine( "ScreenHeight = 0" );
     AddLine( "ScreenColourDepth = 32" );
     AddLine( "WaitVerticalRetrace = 1" );
 

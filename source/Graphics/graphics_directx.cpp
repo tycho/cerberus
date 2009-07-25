@@ -690,17 +690,17 @@ int DirectXGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heig
 
     if ( _colorDepth < 16 || _colorDepth > 32 ) _colorDepth = 16;
 
-    m_windowed = _windowed;
-
-    m_screenX = _width;
-    m_screenY = _height;
-
-    m_centerX = m_screenX / 2;
-    m_centerY = m_screenY / 2;
-
     const SDL_VideoInfo* info = NULL;
     info = SDL_GetVideoInfo ();
     CrbReleaseAssert ( info != NULL );
+
+    m_windowed = _windowed;
+
+    m_screenX = _width == 0 ? info->current_w : _width;
+    m_screenY = _height == 0 ? info->current_h : _height;
+
+    m_centerX = m_screenX / 2;
+    m_centerY = m_screenY / 2;
 
     m_colorDepth = _colorDepth;
 
@@ -741,6 +741,9 @@ int DirectXGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heig
 
     g_console->WriteLine ( "Display mode set successfully (%dx%dx%d).", info->current_w, info->current_h, info->vfmt->BitsPerPixel );
     g_console->WriteLine ();
+
+	g_prefsManager->SetInt("ScreenWidth", _width);
+	g_prefsManager->SetInt("ScreenHeight", _height);
 
 	m_d3d = Direct3DCreate9(D3D_SDK_VERSION);
 	if ( !m_d3d ) return -1;

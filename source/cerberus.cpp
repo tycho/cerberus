@@ -233,8 +233,8 @@ void Init_Graphics()
 		{
 			ret = g_graphics->SetWindowMode (
 				g_prefsManager->GetInt ( "ScreenWindowed", 0 ) == 1,
-				g_prefsManager->GetInt ( "ScreenWidth", 800 ),
-				g_prefsManager->GetInt ( "ScreenHeight", 600 ),
+				g_prefsManager->GetInt ( "ScreenWidth", 0 ),
+				g_prefsManager->GetInt ( "ScreenHeight", 0 ),
 				g_prefsManager->GetInt ( "ScreenColourDepth", 32 )
 			);
 		}

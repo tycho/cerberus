@@ -108,21 +108,21 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = B020ED7E101A262D0040E736 /* FTGL.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = B020EF83101A2B3E0040E736 /* libftgl-static.a */;
+			remoteGlobalIDString = B020EF83101A2B3E0040E736;
 			remoteInfo = "ftgl-static";
 		};
 		B020F03A101A2B960040E736 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B020ED7E101A262D0040E736 /* FTGL.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = B020EF82101A2B3E0040E736 /* ftgl-static */;
+			remoteGlobalIDString = B020EF82101A2B3E0040E736;
 			remoteInfo = "ftgl-static";
 		};
 		B020F053101A355E0040E736 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B020F04F101A355E0040E736 /* Freetype2.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = D2AAC046055464E500DB518D /* libFreetype2.a */;
+			remoteGlobalIDString = D2AAC046055464E500DB518D;
 			remoteInfo = Freetype2;
 		};
 		B09B593B0EAC2EF7003F4C0B /* PBXContainerItemProxy */ = {
@@ -746,10 +746,9 @@
 		B020EF86101A2B3F0040E736 /* libftgl-static.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			name = "libftgl-static.a";
-			path = "build/Release/libftgl-static.a";
+			path = "libftgl-static.a";
 			remoteRef = B020EF85101A2B3F0040E736 /* PBXContainerItemProxy */;
-			sourceTree = "<group>";
+			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		B020F054101A355E0040E736 /* libFreetype2.a */ = {
 			isa = PBXReferenceProxy;
