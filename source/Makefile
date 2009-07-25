@@ -10,8 +10,8 @@ ifndef V
                          $(MAKE) $(PRINT_DIR) -C $$subdir
 endif
 
-CC := gcc
-CXX := g++
+CC ?= gcc
+CXX ?= g++
 LINK := $(CXX)
 LIBS := -Wl,-Bstatic -Lcontrib/crisscross/source -lCrissCross -lSDLmain -Wl,-Bdynamic -lz $(shell pkg-config ftgl --libs) \
 		$(shell pkg-config sdl --libs) -lSDL_mixer -lSDL_image -lGL -lX11 -rdynamic -fopenmp
