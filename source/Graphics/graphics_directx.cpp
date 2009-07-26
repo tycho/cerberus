@@ -696,8 +696,13 @@ int DirectXGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heig
 
     m_windowed = _windowed;
 
-    m_screenX = _width == 0 ? info->current_w : _width;
-    m_screenY = _height == 0 ? info->current_h : _height;
+	if (!_windowed) {
+		m_screenX = _width == 0 ? info->current_w : _width;
+		m_screenY = _height == 0 ? info->current_h : _height;
+	} else {
+		m_screenX = _width == 0 ? 1024 : _width;
+		m_screenY = _height == 0 ? 768 : _height;
+	}
 
     m_centerX = m_screenX / 2;
     m_centerY = m_screenY / 2;
@@ -705,13 +710,13 @@ int DirectXGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heig
     m_colorDepth = _colorDepth;
 
     g_console->WriteLine ( "The requested color depth is %d, and we're using %d.", _colorDepth, m_colorDepth );
-    g_console->WriteLine ( "Setting display mode of %dx%dx%d...", _width, _height, m_colorDepth );
+    g_console->WriteLine ( "Setting display mode of %dx%dx%d...", m_screenX, m_screenY, m_colorDepth );
 
     Uint32 flags = SDL_RESIZABLE;
 
     if ( !m_windowed ) flags |= SDL_FULLSCREEN;
 
-    m_sdlScreen = SDL_SetVideoMode ( _width, _height, m_colorDepth, flags );
+    m_sdlScreen = SDL_SetVideoMode ( m_screenX, m_screenY, m_colorDepth, flags );
 
     if ( !m_sdlScreen )
     {
@@ -742,8 +747,8 @@ int DirectXGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heig
     g_console->WriteLine ( "Display mode set successfully (%dx%dx%d).", info->current_w, info->current_h, info->vfmt->BitsPerPixel );
     g_console->WriteLine ();
 
-	g_prefsManager->SetInt("ScreenWidth", _width);
-	g_prefsManager->SetInt("ScreenHeight", _height);
+	g_prefsManager->SetInt("ScreenWidth", info->current_w);
+	g_prefsManager->SetInt("ScreenHeight", info->current_h);
 
 	m_d3d = Direct3DCreate9(D3D_SDK_VERSION);
 	if ( !m_d3d ) return -1;
