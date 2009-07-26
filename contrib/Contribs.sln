@@ -20,6 +20,9 @@ EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SDL_image", "SDL_image\VisualC\SDL_image.vcproj", "{2BD5534E-00E2-4BEA-AC96-D9A92EA24696}"
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "libpng", "libpng\projects\visualc80\libpng.vcproj", "{1CB6FDE2-C61D-4DA5-B693-AC8E4A619A76}"
+	ProjectSection(ProjectDependencies) = postProject
+		{3D9F174B-2909-4834-A3D7-892E8D442A5D} = {3D9F174B-2909-4834-A3D7-892E8D442A5D}
+	EndProjectSection
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SDL_ttf", "SDL_ttf\VisualC\SDL_ttf.vcproj", "{DDDBD07D-DC76-4AF6-8D02-3E2DEB6EE255}"
 EndProject
