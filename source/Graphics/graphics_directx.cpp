@@ -746,10 +746,12 @@ int DirectXGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heig
 	SDL_GetWMInfo(&wmInfo);
 	HWND hWnd = wmInfo.window;
 
+#ifdef TARGET_CPU_X86
 	HINSTANCE handle = ::GetModuleHandle(NULL);
 	m_icon = ::LoadIcon(handle, MAKEINTRESOURCE(IDI_MAIN_ICON));
 	if (m_icon)
 		::SetClassLong(hWnd, GCL_HICON, (LONG) m_icon);
+#endif
 
 	ZeroMemory ( &m_caps, sizeof ( D3DCAPS9 ) );
 	m_d3d->GetDeviceCaps ( D3DADAPTER_DEFAULT, D3DDEVTYPE_HAL, &m_caps);
