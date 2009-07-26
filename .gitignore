@@ -4,3 +4,6 @@
 *.o
 *.obj
 *.gch
+bin/*.exe
+bin/*.dll
+bin/*.pdb
