@@ -14,7 +14,7 @@
 		MinimalRebuild="true"
 		ExceptionHandling="0"
 		BufferSecurityCheck="false"
-		RuntimeTypeInfo="false"
+		ProgramDataBaseFileName="$(OutDir)\$(ProjectName).pdb"
 		WarningLevel="3"
 		DebugInformationFormat="3"
 	/>

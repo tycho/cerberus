@@ -11,6 +11,6 @@
 	<Tool
 		Name="VCLinkerTool"
 		OutputFile="$(SolutionDir)\..\bin\$(ProjectName).dll"
-		ImportLibrary="$(SolutionDir)\bin\8.0\$(ProjectName).lib"
+		ImportLibrary="$(SolutionDir)\bin\8.0\$(PlatformName)\$(ProjectName).lib"
 	/>
 </VisualStudioPropertySheet>
