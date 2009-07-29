@@ -43,38 +43,53 @@ protected:
     char *m_appSupportPath;
     char *m_resourcePath;
 
+    System::Stopwatch m_tmrFPS;
+
+    short m_fps; // TODO: Make an FPS widget that manages this.
+
+    bool m_running;
+
 public:
-    Resource                      *m_resource;
+    Resource *m_resource;
 
 public:
     App ();
     virtual ~App();
+
+    virtual void Initialise ();
 
 	//! Create a directory at the specified path.
 	/*!
 		Non-recursively creates a directory.
 		\param _path The path of the directory to create.
 	 */
-    virtual void                   CreateDirectory ( const char *_path );
+    virtual void CreateDirectory ( const char *_path );
 
 	//! Gets the application's resource directory.
 	/*!
 		\return The location where application resources are stored.
 	 */
-    virtual const char            *GetResourcePath ();
+    virtual const char *GetResourcePath ();
 
 	//! Gets the application executable's directory.
 	/*!
 		\return The location where the application's executable is.
 	 */
-    virtual const char            *GetApplicationPath ();
+    virtual const char *GetApplicationPath ();
 
 	//! Gets the application support directory.
 	/*!
 		\return The location where any new application resources should be stored.
 	 */
-    virtual const char            *GetApplicationSupportPath ();
+    virtual const char *GetApplicationSupportPath ();
 
+    virtual void UpdateInputs ();
+
+    //! The main application loop.
+    virtual void Run ();
+
+    //! Terminate the application nicely.
+    virtual void Quit ();
 };
 
 extern App *g_app;

@@ -39,6 +39,7 @@ protected:
     Data::LList<Widget *> m_widgetList;
 
     Window *m_dragWindow;
+    Widget *m_focusWidget;
 
     TextUI *m_fpsWidget;
     TextUI *m_rendererWidget;
@@ -49,7 +50,6 @@ public:
 
     virtual void AddWidget                 ( Widget *_widget );
 
-    virtual void ProcessMouseEvents        ();
     virtual void SetDragWindow             ( Window *_window );
     virtual Widget *InsideWidget           ( int _mouseX, int _mouseY );
 
@@ -61,6 +61,8 @@ public:
     virtual Widget *GetWidgetOfType        ( WidgetClass _widgetType );
     virtual int MouseDown                  ( bool _mouseDown, Sint32 x, Sint32 y );
     virtual int SendEnterKey               ();
+
+    virtual void Update ();
 };
 
 extern Interface *g_interface;

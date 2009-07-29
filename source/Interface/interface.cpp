@@ -51,19 +51,19 @@ Interface::~Interface()
     m_fpsWidget = NULL; m_rendererWidget = NULL;
 }
 
-void Interface::ProcessMouseEvents ()
+void Interface::Update ()
 {
-	static Uint8 lastButtonState;
+	static Uint8 lastButtonState = 0;
     int x, y;
     Uint8 buttonState = SDL_GetMouseState ( &x, &y );
 
 	if ( buttonState & SDL_BUTTON(1) ) {
 		if (!(lastButtonState & SDL_BUTTON(1))) {
-			g_interface->MouseDown ( true, x, y );
+			MouseDown ( true, x, y );
         }
     } else {
 		if ( lastButtonState & SDL_BUTTON(1) ) {
-            g_interface->MouseDown ( false, x, y );
+            MouseDown ( false, x, y );
 		}
     }
 

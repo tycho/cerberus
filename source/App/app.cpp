@@ -28,8 +28,19 @@
 #include "universal_include.h"
 
 #include "App/app.h"
-#include "App/preferences.h"
+#include "App/file_utils.h"
 #include "App/string_utils.h"
+#include "App/preferences.h"
+#include "App/version.h"
+#include "Game/game.h"
+#include "Graphics/graphics.h"
+#include "Interface/bouncing_window.h"
+#include "Interface/error_window.h"
+#include "Interface/text.h"
+#include "Interface/button.h"
+#include "Interface/interface.h"
+#include "Network/net.h"
+#include "Sound/soundsystem.h"
 
 #ifdef TARGET_OS_MACOSX
 extern char **NXArgv; // system variable we can exploit
@@ -38,11 +49,10 @@ extern char **NXArgv; // system variable we can exploit
 App::App ()
  : m_appPath ( NULL ),
    m_appSupportPath ( NULL ),
-   m_resourcePath ( NULL )
+   m_resourcePath ( NULL ),
+   m_fps ( 0 ),
+   m_running ( true )
 {
-    // TODO: Make this ALL prettier...
-    // TODO: Set the appPath stuff to go to the application data folder, etc.
-
     char tempPath[2048];
     memset ( tempPath, 0, sizeof ( tempPath ) );
 
@@ -161,6 +171,31 @@ App::~App()
     m_resourcePath = NULL;
 }
 
+void App::Initialise()
+{
+    TextUI *text = new TextUI (
+        APP_NAME, MAKERGB(255,0,0),
+        g_graphics->GetScreenWidth () - 290,
+        g_graphics->GetScreenHeight () - 38);
+    g_interface->AddWidget ( text );
+
+    char buffer[1024];
+    sprintf(buffer, "For testing purposes only. v%s", Cerberus::Version::LongVersion());
+
+    text = new TextUI (
+        buffer, MAKERGB(255,0,0),
+        g_graphics->GetScreenWidth () - 290,
+        g_graphics->GetScreenHeight () - 25 );
+    g_interface->AddWidget ( text );
+
+#ifndef RELEASE_BUILD
+    text = new TextUI (
+        "NOT FOR PUBLIC INSPECTION OR REDISTRIBUTION",
+        false, g_graphics->GetScreenWidth () - 290, g_graphics->GetScreenHeight () - 12 );
+    g_interface->AddWidget ( text );
+#endif
+}
+
 void App::CreateDirectory ( const char *_path )
 {
 #ifdef TARGET_OS_WINDOWS
@@ -183,6 +218,142 @@ const char *App::GetApplicationPath ()
 const char *App::GetApplicationSupportPath ()
 {
     return m_appSupportPath;
+}
+
+void App::Run ()
+{
+    int framesThisSecond = 0;
+    bool deviceLost = false;
+
+    m_tmrFPS.Start();
+
+    System::Stopwatch lastFrame;
+    lastFrame.Start();
+
+    CrbReleaseAssert ( g_interface != NULL );
+    CrbReleaseAssert ( g_graphics != NULL );
+
+    SDL_EnableUNICODE ( 1 );
+
+    g_interface->UpdateRendererWidget();
+
+    while ( m_running )
+    {
+        // Force 60fps max.
+#ifndef FORCE_VSYNC
+        if ( g_prefsManager->GetInt ( "WaitVerticalRetrace", 1 ) != 0 )
+#endif
+        {
+            int sleepTime;
+            lastFrame.Stop();
+            sleepTime = (int)( ( 1000.0 / 60.0 ) - ( lastFrame.Elapsed() * 1000.0 ) );
+            if ( sleepTime > 0 )
+                System::ThreadSleep ( sleepTime );
+            lastFrame.Start();
+        }
+
+        UpdateInputs();
+
+        g_interface->Update();
+
+        if ( g_game->Playing() ) {
+            g_game->Update();
+        } else {
+
+        }
+
+        g_interface->RenderWidgets();
+
+        // Play any queued sounds.
+        if ( g_soundSystem != NULL )
+            g_soundSystem->Update();
+
+        if ( !g_graphics->Flip() )
+        {
+            if ( !deviceLost )
+            {
+                g_console->SetColour ( IO::Console::FG_YELLOW | IO::Console::FG_INTENSITY );
+                g_console->WriteLine ( "WARNING: Device lost, textures need to be recreated." );
+                g_console->SetColour ();
+                deviceLost = true;
+            }
+        } else {
+            if ( deviceLost )
+            {
+                g_console->SetColour ( IO::Console::FG_YELLOW | IO::Console::FG_INTENSITY );
+                g_console->WriteLine ( "WARNING: Device recaptured. Recreating textures." );
+                g_console->SetColour ();
+                deviceLost = false;
+            }
+        }
+
+        g_graphics->FillRect(SCREEN_SURFACE_ID, NULL, MAKERGB(0,0,0));
+
+        // Now make sure we haven't used up a second yet.
+        m_tmrFPS.Stop();
+        if ( m_tmrFPS.Elapsed() >= 1.0 )
+        {
+            g_interface->UpdateFPS ( framesThisSecond );
+            framesThisSecond = 0;
+            m_tmrFPS.Start();
+        } else {
+            // Add a frame to the count.
+            framesThisSecond++;
+        }
+    }
+}
+
+void App::Quit()
+{
+    m_running = false;
+}
+
+void App::UpdateInputs ()
+{
+    SDL_Event event;
+    while ( SDL_PollEvent ( &event ) )
+    {
+        switch ( event.type )
+        {
+        case SDL_QUIT:
+            m_running = false;
+            break;
+        case SDL_KEYDOWN:
+            {
+            }
+            break;
+        }
+    }
+
+    // Handle Command+Q on Mac OS X
+#ifdef TARGET_OS_MACOSX
+    int arraySz = 0;
+    Uint8 *keyState = SDL_GetKeyState(&arraySz);
+
+    static bool cmdQ = false;
+    if ( !cmdQ && ( keyState[SDLK_LMETA] || keyState[SDLK_RMETA] ) && keyState[SDLK_q] )
+    {
+        cmdQ = true;
+        if ( m_playing )
+        {
+#if 0
+            QuitWindow *quitWindow;
+            if ( (quitWindow = (QuitWindow *)g_interface->GetWidgetOfType ( WIDGET_QUIT_WINDOW )) != NULL )
+            {
+                g_interface->RemoveWidget ( quitWindow );
+            } else {
+                quitWindow = new QuitWindow();
+                g_interface->AddWidget ( quitWindow );
+                quitWindow = NULL;
+            }
+#endif
+        } else {
+            m_running = false;
+        }
+    } else if ( cmdQ && ( !keyState[SDLK_LMETA] && !keyState[SDLK_RMETA] ) || !keyState[SDLK_q] ) {
+        cmdQ = false;
+    }
+#endif
 }
 
 App *g_app;

@@ -27,6 +27,7 @@
 
 #include "universal_include.h"
 
+#include "App/app.h"
 #include "Game/game.h"
 #include "Graphics/graphics.h"
 #include "Interface/button.h"
@@ -61,7 +62,7 @@ ErrorWindow::~ErrorWindow()
 void ErrorWindow::OnOKClick ()
 {
     if ( m_critical )
-        g_game->Quit();
+        g_app->Quit();
     else
         m_expired = true;
 }

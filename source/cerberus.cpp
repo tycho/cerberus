@@ -128,7 +128,7 @@ int main ( int argc, char **argv )
     Init_Sound();
     Init_Game();
 
-    g_game->Run ();
+    g_app->Run ();
 
     // deconstruct the classes
     g_console->WriteLine ( "Destroying classes...");
@@ -191,7 +191,6 @@ void Init_Game()
 {
     g_game = new Game();
     CrbReleaseAssert ( g_game != NULL );
-    g_game->Initialise();
 }
 
 void Init_Graphics()

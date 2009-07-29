@@ -32,29 +32,16 @@ class Game
 {
 protected:
     System::Stopwatch m_tmrGameSpeed;
-    System::Stopwatch m_tmrFPS;
-
     double m_gameSpeed;
-
-    short m_fps; // TODO: Make an FPS widget that manages this.
-
-	bool m_running;
 	bool m_playing;
 
 public:
     Game();
     virtual ~Game();
-    virtual void Run();
-    virtual void Quit();
-    virtual void Initialise();
-
     virtual double GetGameSpeed();
-
     virtual bool Playing();
 
-    virtual void ProcessEvents ();
-
-    virtual void LoadSounds();
+    virtual void Update();
 };
 
 extern Game *g_game;
