@@ -87,7 +87,7 @@ void OpenGLFont::Draw(Uint16 _x, Uint16 _y, const char *_text, Color32 _color)
 	// TODO: Bold text is unimplemented.
 
 	glPushMatrix();
-	glTranslatef(_x, _y + m_font->LineHeight(), 0.0f);
+	glTranslatef(_x, _y + m_font->LineHeight() / 2, 0.0f);
 	glScalef(1.0f, -1.0f, 1.0f);
 	if ( m_italic )
 	{
