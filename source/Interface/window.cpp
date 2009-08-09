@@ -115,7 +115,7 @@ void Window::Render()
 	//	g_graphics->BeginDisplayList(m_displayList);
 
 	// Frame
-	g_graphics->FillRect(SCREEN_SURFACE_ID, &m_position, MAKERGB(50,25,25));
+	g_graphics->FillRect(SCREEN_SURFACE_ID, &m_position, MAKERGBA(50,25,25,191));
 	g_graphics->DrawRect(&m_position, MAKERGB(255,0,0));
 	
 	// Titlebar bottom
