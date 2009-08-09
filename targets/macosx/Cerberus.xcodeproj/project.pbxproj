@@ -25,7 +25,6 @@
 		B05708E40DB219920071B5B7 /* debug_utils.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05708DE0DB219920071B5B7 /* debug_utils.cpp */; };
 		B05708E50DB219920071B5B7 /* preferences.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05708E00DB219920071B5B7 /* preferences.cpp */; };
 		B05708E60DB219920071B5B7 /* text_stream_readers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05708E20DB219920071B5B7 /* text_stream_readers.cpp */; };
-		B05708F30DB219FF0071B5B7 /* bouncing_window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05708EF0DB219FF0071B5B7 /* bouncing_window.cpp */; };
 		B05708F40DB219FF0071B5B7 /* error_window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05708F10DB219FF0071B5B7 /* error_window.cpp */; };
 		B07EEE9E0BEEEA770005CD3D /* net_crisscross.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B07EEE940BEEEA770005CD3D /* net_crisscross.cpp */; };
 		B07EEEA20BEEEA770005CD3D /* net.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B07EEE980BEEEA770005CD3D /* net.cpp */; };
@@ -235,8 +234,6 @@
 		B05708E10DB219920071B5B7 /* preferences.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = preferences.h; path = ../../source/App/preferences.h; sourceTree = "<group>"; };
 		B05708E20DB219920071B5B7 /* text_stream_readers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = text_stream_readers.cpp; path = ../../source/App/text_stream_readers.cpp; sourceTree = "<group>"; };
 		B05708E30DB219920071B5B7 /* text_stream_readers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = text_stream_readers.h; path = ../../source/App/text_stream_readers.h; sourceTree = "<group>"; };
-		B05708EF0DB219FF0071B5B7 /* bouncing_window.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = bouncing_window.cpp; path = ../../source/Interface/bouncing_window.cpp; sourceTree = "<group>"; };
-		B05708F00DB219FF0071B5B7 /* bouncing_window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = bouncing_window.h; path = ../../source/Interface/bouncing_window.h; sourceTree = "<group>"; };
 		B05708F10DB219FF0071B5B7 /* error_window.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = error_window.cpp; path = ../../source/Interface/error_window.cpp; sourceTree = "<group>"; };
 		B05708F20DB219FF0071B5B7 /* error_window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = error_window.h; path = ../../source/Interface/error_window.h; sourceTree = "<group>"; };
 		B07EEE940BEEEA770005CD3D /* net_crisscross.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = net_crisscross.cpp; path = ../../source/Network/net_crisscross.cpp; sourceTree = "<group>"; };
@@ -608,8 +605,6 @@
 		B0B8E8CA0BDB4D68007C1576 /* Interface */ = {
 			isa = PBXGroup;
 			children = (
-				B05708EF0DB219FF0071B5B7 /* bouncing_window.cpp */,
-				B05708F00DB219FF0071B5B7 /* bouncing_window.h */,
 				B05708F10DB219FF0071B5B7 /* error_window.cpp */,
 				B05708F20DB219FF0071B5B7 /* error_window.h */,
 				B0B8E9010BDB4E1A007C1576 /* button.cpp */,
@@ -868,7 +863,6 @@
 				B05708E40DB219920071B5B7 /* debug_utils.cpp in Sources */,
 				B05708E50DB219920071B5B7 /* preferences.cpp in Sources */,
 				B05708E60DB219920071B5B7 /* text_stream_readers.cpp in Sources */,
-				B05708F30DB219FF0071B5B7 /* bouncing_window.cpp in Sources */,
 				B05708F40DB219FF0071B5B7 /* error_window.cpp in Sources */,
 				B087F3140DB98F08007568B9 /* surface.cpp in Sources */,
 				B04A58190DBDDA9F00A2F292 /* opengl.cpp in Sources */,

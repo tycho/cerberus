@@ -34,7 +34,6 @@
 #include "App/version.h"
 #include "Game/game.h"
 #include "Graphics/graphics.h"
-#include "Interface/bouncing_window.h"
 #include "Interface/error_window.h"
 #include "Interface/text.h"
 #include "Interface/button.h"

@@ -93,7 +93,6 @@ source/Graphics/surface.cpp \
 source/Graphics/texture.cpp \
 source/Graphics/texture_directx.cpp \
 source/Graphics/texture_opengl.cpp \
-source/Interface/bouncing_window.cpp \
 source/Interface/button.cpp \
 source/Interface/error_window.cpp \
 source/Interface/inputwidget.cpp \

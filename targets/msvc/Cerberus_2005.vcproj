@@ -908,14 +908,6 @@
 						Name="Windows"
 						>
 						<File
-							RelativePath="..\..\source\Interface\bouncing_window.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\source\Interface\bouncing_window.h"
-							>
-						</File>
-						<File
 							RelativePath="..\..\source\Interface\error_window.cpp"
 							>
 						</File>
