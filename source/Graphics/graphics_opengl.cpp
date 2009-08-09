@@ -161,19 +161,15 @@ void OpenGLGraphics::DrawRect ( SDL_Rect *_destRect, Uint32 _color )
 
 	g_openGL->ActivateColour ( _color );
     g_openGL->DeactivateTextureRect ();
-    g_openGL->VertexArrayStatePrimitive ();
-
-    m_vertexArray[0] = _destRect->x;
-    m_vertexArray[1] = _destRect->y;
-    m_vertexArray[2] = _destRect->x + _destRect->w;
-    m_vertexArray[3] = _destRect->y;
-    m_vertexArray[4] = _destRect->x + _destRect->w;
-    m_vertexArray[5] = _destRect->y + _destRect->h;
-    m_vertexArray[6] = _destRect->x;
-    m_vertexArray[7] = _destRect->y + _destRect->h;
 
 	glEnable(GL_BLEND);
-    glDrawArrays(GL_LINE_LOOP, 0, 4);
+	glBegin(GL_LINE_LOOP);
+		glVertex2i(_destRect->x, _destRect->y);
+		glVertex2i(_destRect->x + _destRect->w, _destRect->y);
+		glVertex2i(_destRect->x + _destRect->w, _destRect->y + _destRect->h);
+		glVertex2i(_destRect->x, _destRect->y + _destRect->h);
+	glEnd();
+
     ASSERT_OPENGL_ERRORS;
 }
 
@@ -196,16 +192,14 @@ void OpenGLGraphics::DrawLine ( Uint32 _surfaceID, Uint32 _color, int _startX, i
 {
     CoreAssert ( _surfaceID == SCREEN_SURFACE_ID );
 
-    g_openGL->VertexArrayStatePrimitive ();
-    g_openGL->DeactivateTextureRect ();
-    m_vertexArray[0] = _startX;
-    m_vertexArray[1] = _startY;
-    m_vertexArray[2] = _stopX;
-    m_vertexArray[3] = _stopY;
-    _color |= FULL_ALPHA;
     g_openGL->ActivateColour ( _color );
+    g_openGL->DeactivateTextureRect ();
+
 	glEnable(GL_BLEND);
-    glDrawArrays ( GL_LINES, 0, 2 );
+	glBegin(GL_LINES);
+		glVertex2i(_startX, _startY);
+		glVertex2i(_stopX, _stopY);
+	glEnd();
     ASSERT_OPENGL_ERRORS;
 }
 
@@ -365,33 +359,34 @@ int OpenGLGraphics::FillRect ( Uint32 _surfaceID, SDL_Rect *_destRect, Uint32 _c
 
     if (_surfaceID == SCREEN_SURFACE_ID)
     {
+		// if the color is black and there's no dest rect, then do
+		// a glClear instead. it's faster.
+		if (_color == 0 && !_destRect)
+		{
+			glClear(GL_COLOR_BUFFER_BIT);
+			return 0;
+		}
+
         // fill a rectangle on screen
         g_openGL->ActivateColour ( _color );
         g_openGL->DeactivateTextureRect ();
-        g_openGL->VertexArrayStatePrimitive ();
 
-        if ( _destRect )
-        {
-            m_vertexArray[0] = _destRect->x;
-            m_vertexArray[1] = _destRect->y;
-            m_vertexArray[2] = _destRect->x + _destRect->w;
-            m_vertexArray[3] = _destRect->y;
-            m_vertexArray[4] = _destRect->x;
-            m_vertexArray[5] = _destRect->y + _destRect->h;
-            m_vertexArray[6] = _destRect->x + _destRect->w;
-            m_vertexArray[7] = _destRect->y + _destRect->h;
-        } else {
-            m_vertexArray[0] = 0;
-            m_vertexArray[1] = 0;
-            m_vertexArray[2] = m_sdlScreen->m_sdlSurface->w;
-            m_vertexArray[3] = 0;
-            m_vertexArray[4] = 0;
-            m_vertexArray[5] = m_sdlScreen->m_sdlSurface->h;
-            m_vertexArray[6] = m_sdlScreen->m_sdlSurface->w;
-            m_vertexArray[7] = m_sdlScreen->m_sdlSurface->h;
-        }
+		SDL_Rect nullDestRect;
+		if ( !_destRect )
+		{
+			nullDestRect.x = 0; nullDestRect.y = 0;
+			nullDestRect.w = m_sdlScreen->m_sdlSurface->w;
+			nullDestRect.h = m_sdlScreen->m_sdlSurface->h;
+			_destRect = &nullDestRect;
+		}
 
-        glDrawArrays ( GL_TRIANGLE_STRIP, 0, 4 );
+		glBegin(GL_QUADS);
+			glVertex2i(_destRect->x, _destRect->y);
+			glVertex2i(_destRect->x + _destRect->w, _destRect->y);
+			glVertex2i(_destRect->x + _destRect->w, _destRect->y + _destRect->h);
+			glVertex2i(_destRect->x, _destRect->y + _destRect->h);
+		glEnd();
+
         ASSERT_OPENGL_ERRORS;
 
         return 0;
