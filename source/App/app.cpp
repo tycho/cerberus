@@ -333,7 +333,7 @@ void App::UpdateInputs ()
     if ( !cmdQ && ( keyState[SDLK_LMETA] || keyState[SDLK_RMETA] ) && keyState[SDLK_q] )
     {
         cmdQ = true;
-        if ( m_playing )
+        if ( g_game->Playing() )
         {
 #if 0
             QuitWindow *quitWindow;
