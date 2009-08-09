@@ -64,6 +64,14 @@ void TextUI::Render ()
 	Widget::Render();
 }
 
+void TextUI::Render ( Sint16 _xOffset, Sint16 _yOffset )
+{
+	g_graphics->DrawText(g_graphics->DefaultFont(),
+		m_position.x + _xOffset, m_position.y + _yOffset, m_color, m_text);
+
+	Widget::Render();
+}
+
 int TextUI::SendEnterKey ()
 {
     return 0;
