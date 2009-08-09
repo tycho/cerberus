@@ -37,7 +37,7 @@ private:
     TextUI *m_caption;
     bool m_critical;
 public:
-    ErrorWindow ( const char *_text, bool _critical );
+    ErrorWindow ( const char *_title, const char *_text, bool _critical );
     virtual ~ErrorWindow();
 
     virtual void OnOKClick();

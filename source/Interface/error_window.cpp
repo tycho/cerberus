@@ -39,8 +39,8 @@ void ErrorWindow_OnOKClick ( Window *_window )
     dynamic_cast<ErrorWindow *>(_window)->OnOKClick();
 }
 
-ErrorWindow::ErrorWindow ( const char *_text, bool _critical )
-: Window (g_graphics->GetCenterX() - 136, g_graphics->GetCenterY() - 44, 256, 72),
+ErrorWindow::ErrorWindow ( const char *_title, const char *_text, bool _critical )
+: Window (_title, g_graphics->GetCenterX() - 136, g_graphics->GetCenterY() - 44, 256, 72),
   m_critical(_critical)
 {
 	m_widgetClass = WIDGET_ERROR_WINDOW;

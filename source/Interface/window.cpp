@@ -30,20 +30,25 @@
 #include "App/app.h"
 #include "Graphics/graphics.h"
 #include "Interface/interface.h"
+#include "Interface/text.h"
 #include "Interface/window.h"
 
-Window::Window()
+Window::Window(const char *_title)
  : Widget(),
    m_dragging(false)
 {
    m_widgetClass = WIDGET_WINDOW;
+   m_title = new TextUI(_title, MAKERGB(255,0,0), 4, 0);
+   m_widgets.insert(m_title);
 }
 
-Window::Window ( Sint16 x, Sint16 y, Uint16 w, Uint16 h )
+Window::Window (const char *_title, Sint16 x, Sint16 y, Uint16 w, Uint16 h )
  : Widget(x,y,w,h),
    m_dragging(false)
 {
    m_widgetClass = WIDGET_WINDOW;
+   m_title = new TextUI(_title, MAKERGB(255,0,0), 4, 0);
+   m_widgets.insert(m_title);
 }
 
 Window::~Window()
@@ -85,6 +90,9 @@ int Window::MouseDown ( bool _mouseDown, Sint32 x, Sint32 y )
         }
     }
     if ( !m_dragging && _mouseDown ) {
+		// Must click on the titlebar to drag.
+		if (y - m_position.y > 20) return -1;
+		
         g_interface->SetDragWindow ( this );
         m_dragging = true;
         m_mouseXOffset = x - m_position.x;
@@ -98,11 +106,30 @@ int Window::MouseDown ( bool _mouseDown, Sint32 x, Sint32 y )
     return 1;
 }
 
+void Window::Render()
+{
+	// Render the window itself
+	// The display list code here doesn't work if the window is moved.
+	//if (m_displayList == 0) {
+	//	m_displayList = g_graphics->CreateDisplayList();
+	//	g_graphics->BeginDisplayList(m_displayList);
+
+	// Frame
+	g_graphics->FillRect(SCREEN_SURFACE_ID, &m_position, MAKERGB(50,25,25));
+	g_graphics->DrawRect(&m_position, MAKERGB(255,0,0));
+	
+	// Titlebar bottom
+	g_graphics->DrawLine(SCREEN_SURFACE_ID, MAKERGB(255,0,0), m_position.x, m_position.y + 21, m_position.x + m_position.w, m_position.y + 21);
+
+	//	g_graphics->EndDisplayList(m_displayList);
+	//}
+	//g_graphics->CallDisplayList(m_displayList);
+
+	// Render the window's contents
+	Widget::Render();
+}
+
 void Window::Update()
 {
     Widget::Update();
-	if (m_cachedSurfaceID == INVALID_SURFACE_ID) {
-		m_cachedSurfaceID = g_graphics->CreateSurface(m_position.w, m_position.h);
-		g_graphics->FillRect(m_cachedSurfaceID, NULL, MAKERGBA(128,200,128,255));
-	}
 }
