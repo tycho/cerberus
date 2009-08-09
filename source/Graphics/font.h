@@ -35,6 +35,7 @@ class Font
 public:
     Font();
     virtual ~Font();
+	virtual void Rect ( const char *_text, SDL_Rect &_bbox ) = 0;
 	virtual void Draw ( Uint16 _x, Uint16 _y, const char *_text, Color32 _color ) = 0;
 };
 

@@ -131,6 +131,16 @@ void DirectXGraphics::DrawText ( Uint32 _font, Uint16 _x, Uint16 _y, Color32 _co
 #endif
 }
 
+void DirectXGraphics::TextRect ( Uint32 _font, const char *_text, SDL_Rect &_pos )
+{
+#ifdef ENABLE_FONTS
+	DirectXFont *font = m_fonts[_font];
+	CoreAssert ( font );
+
+	font->Rect(_text, _pos);
+#endif
+}
+
 void DirectXGraphics::DrawRect ( SDL_Rect *_pos, Color32 _color )
 {
     CoreAssert ( _pos );

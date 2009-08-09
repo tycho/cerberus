@@ -155,6 +155,16 @@ void OpenGLGraphics::DrawText ( Uint32 _font, Uint16 _x, Uint16 _y, Color32 _col
 #endif
 }
 
+void OpenGLGraphics::TextRect ( Uint32 _font, const char *_text, SDL_Rect &_pos )
+{
+#ifdef ENABLE_FONTS
+	OpenGLFont *font = m_fonts[_font];
+	CoreAssert ( font );
+
+	font->Rect(_text, _pos);
+#endif
+}
+
 void OpenGLGraphics::DrawRect ( SDL_Rect *_destRect, Color32 _color )
 {
 	CoreAssert ( _destRect );

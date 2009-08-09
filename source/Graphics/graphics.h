@@ -74,6 +74,7 @@ public:
 
 	virtual Uint32 CreateFont ( const char *_fontFace, int _height) = 0;
 	virtual void   DrawText ( Uint32 _font, Uint16 _x, Uint16 _y, Color32 _color, const char *_text ) = 0;
+	virtual void   TextRect ( Uint32 _font, const char *_text, SDL_Rect &_rect ) = 0;
 
 	virtual void   DrawRect ( SDL_Rect *_pos, Color32 _color ) = 0;
 

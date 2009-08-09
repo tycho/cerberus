@@ -73,6 +73,15 @@ void OpenGLFont::SetItalic(bool _italic)
 	m_italic = _italic;
 }
 
+void OpenGLFont::Rect(const char *_text, SDL_Rect &_pos)
+{
+	FTBBox bbox = m_font->BBox(_text);
+	_pos.x = bbox.Lower().X();
+	_pos.y = bbox.Lower().Y();
+	_pos.w = bbox.Upper().X() - _pos.x;
+	_pos.h = bbox.Upper().Y() - _pos.y;
+}
+
 void OpenGLFont::Draw(Uint16 _x, Uint16 _y, const char *_text, Color32 _color)
 {
 	// TODO: Bold text is unimplemented.

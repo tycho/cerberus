@@ -57,6 +57,22 @@ DirectXFont::~DirectXFont()
 	m_font = NULL;
 }
 
+void DirectXFont::Rect(const char *_text, SDL_Rect &_pos)
+{
+	RECT rect;
+	rect.left = 0;
+	rect.top = 0;
+	rect.right = 0;
+	rect.bottom = 0;
+
+	m_font->DrawText(NULL, _text, -1, &rect, DT_CALCRECT, 0);
+
+	_bbox.x = rect.left;
+	_bbox.y = rect.top;
+	_bbox.w = rect.right - rect.left;
+	_bbox.h = rect.bottom - rect.top;
+}
+
 void DirectXFont::Draw(Uint16 _x, Uint16 _y, const char *_text, Color32 _color)
 {
 	RECT rect;
