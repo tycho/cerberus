@@ -58,13 +58,13 @@ void Interface::Update ()
     Uint8 buttonState = SDL_GetMouseState ( &x, &y );
 
 	if ( buttonState & SDL_BUTTON(1) ) {
-		//if (!(lastButtonState & SDL_BUTTON(1))) {
-			MouseDown ( true, x, y );
+	    //if (!(lastButtonState & SDL_BUTTON(1))) {
+            MouseUpdate ( true, x, y );
         //}
     } else {
-		//if ( lastButtonState & SDL_BUTTON(1) ) {
-            MouseDown ( false, x, y );
-		//}
+        //if ( lastButtonState & SDL_BUTTON(1) ) {
+            MouseUpdate ( false, x, y );
+        //}
     }
 
     lastButtonState = buttonState;
@@ -135,11 +135,11 @@ int Interface::SendEnterKey ()
     return 0;
 }
 
-int Interface::MouseDown ( bool _mouseDown, Sint32 x, Sint32 y )
+int Interface::MouseUpdate ( bool _mouseDown, Sint32 x, Sint32 y )
 {
     if ( m_dragWindow && _mouseDown)
     {
-        return m_dragWindow->MouseDown ( _mouseDown, x, y );
+        return m_dragWindow->MouseUpdate ( _mouseDown, x, y );
     } else {
         for ( int i = m_widgetList.size() - 1; i >= 0; i-- )
         {
@@ -149,7 +149,7 @@ int Interface::MouseDown ( bool _mouseDown, Sint32 x, Sint32 y )
             if ( x > ( widget->m_position.x + widget->m_position.w ) ||
                 y > ( widget->m_position.y + widget->m_position.h ) )
                 continue;
-            return widget->MouseDown ( _mouseDown, x, y );
+            return widget->MouseUpdate ( _mouseDown, x, y );
         }
         return 0;
     }

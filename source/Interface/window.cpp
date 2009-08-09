@@ -65,7 +65,7 @@ int Window::SendEnterKey ()
     }
 }
 
-int Window::MouseDown ( bool _mouseDown, Sint32 x, Sint32 y )
+int Window::MouseUpdate ( bool _mouseDown, Sint32 x, Sint32 y )
 {
 	if ( !m_dragging && _mouseDown )
 	{
@@ -79,20 +79,24 @@ int Window::MouseDown ( bool _mouseDown, Sint32 x, Sint32 y )
         for ( int i = m_widgets.size() - 1; i >= 0; i-- )
         {
             Widget *widget = m_widgets[i];
+
             // Window widget positions are relative to the window's position.
             actualPosition.x = widget->m_position.x + m_position.x;
             actualPosition.y = widget->m_position.y + m_position.y;
             actualPosition.w = widget->m_position.w;
             actualPosition.h = widget->m_position.h;
+
             if ( x < actualPosition.x || y < actualPosition.y )
                 continue;
             if ( x > ( actualPosition.x + actualPosition.w ) ||
                 y > ( actualPosition.y + actualPosition.h ) )
                 continue;
-            if ( !(widget->MouseDown ( _mouseDown, x, y )) )
-                break;
+
+            if ( !(widget->MouseUpdate ( _mouseDown, x, y )) )
+                break; // The sub-widget doesn't have a defined behaviour for MouseUpdate.
+
+			// The sub-widget accepted the MouseUpdate.
             return -1;
-            break;
         }
     }
     if ( !m_dragging && _mouseDown ) {

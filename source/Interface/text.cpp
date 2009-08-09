@@ -77,7 +77,7 @@ int TextUI::SendEnterKey ()
     return 0;
 }
 
-int TextUI::MouseDown ( bool _mouseDown, Sint32 _x, Sint32 _y )
+int TextUI::MouseUpdate ( bool _mouseDown, Sint32 _x, Sint32 _y )
 {
     return 0;
 }

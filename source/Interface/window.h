@@ -46,7 +46,7 @@ public:
     Window (const char *_title, Sint16 x, Sint16 y, Uint16 w, Uint16 h );
     virtual ~Window();
 
-    virtual int MouseDown ( bool _mouseDown, Sint32 _x, Sint32 _y );
+    virtual int MouseUpdate ( bool _mouseDown, Sint32 _x, Sint32 _y );
     virtual int SendEnterKey ();
 
     virtual void Update();

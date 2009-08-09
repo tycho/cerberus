@@ -78,7 +78,12 @@ public:
     virtual WidgetClass ClassID();
 
     virtual bool IsInsideWidget ( int _mouseX, int _mouseY );
-    virtual int MouseDown ( bool _mouseDown, Sint32 _x, Sint32 _y ) = 0;
+
+    // Must return one of:
+    // -1: A sub-widget accepted the _mouseDown parameter
+    // 0: This widget and its sub-widgets at the given coords don't care about _mouseDown
+    // 1: This widget accepted _mouseDown
+    virtual int MouseUpdate ( bool _mouseDown, Sint32 _x, Sint32 _y ) = 0;
     virtual int SendEnterKey () = 0;
 
     virtual Data::LList<Widget *> *GetWidgetList();

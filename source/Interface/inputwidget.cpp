@@ -61,7 +61,7 @@ int InputWidget::SendEnterKey ()
     }
 }
 
-int InputWidget::MouseDown ( bool _mouseDown, Sint32 _x, Sint32 _y )
+int InputWidget::MouseUpdate ( bool _mouseDown, Sint32 _x, Sint32 _y )
 {
     if ( m_callback )
     {
