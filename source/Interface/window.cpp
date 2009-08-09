@@ -67,6 +67,12 @@ int Window::SendEnterKey ()
 
 int Window::MouseDown ( bool _mouseDown, Sint32 x, Sint32 y )
 {
+	if ( !m_dragging && _mouseDown )
+	{
+		// The mouse click is within the window, so this window
+		// should be moved to the foreground.
+		g_interface->SetWindowFocus(this);
+	}
     if ( !m_dragging )
     {
         SDL_Rect actualPosition;
@@ -91,12 +97,12 @@ int Window::MouseDown ( bool _mouseDown, Sint32 x, Sint32 y )
     }
     if ( !m_dragging && _mouseDown ) {
 		// Must click on the titlebar to drag.
-		if (y - m_position.y > 20) return -1;
-
-        g_interface->SetDragWindow ( this );
-        m_dragging = true;
-        m_mouseXOffset = x - m_position.x;
-        m_mouseYOffset = y - m_position.y;
+		if (y - m_position.y <= 20) {
+			g_interface->SetDragWindow ( this );
+			m_dragging = true;
+			m_mouseXOffset = x - m_position.x;
+			m_mouseYOffset = y - m_position.y;
+		}
     } else if ( m_dragging && _mouseDown ) {
         SetPosition ( x - m_mouseXOffset, y - m_mouseYOffset );
     } else if ( m_dragging && !_mouseDown ) {

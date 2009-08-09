@@ -51,6 +51,7 @@ public:
     virtual void AddWidget                 ( Widget *_widget );
 
     virtual void SetDragWindow             ( Window *_window );
+    virtual void SetWindowFocus            ( Window *_window );
     virtual Widget *InsideWidget           ( int _mouseX, int _mouseY );
 
 	virtual void InitWidgets               ();

@@ -73,11 +73,13 @@ void Interface::Update ()
 void Interface::SetDragWindow ( Window *_window )
 {
     m_dragWindow = _window;
-	if (_window) {
-		int id = m_widgetList.find(_window);
-		m_widgetList.remove(id);
-		m_widgetList.insert(_window);
-	}
+}
+
+void Interface::SetWindowFocus ( Window *_window )
+{
+	int id = m_widgetList.find(_window);
+	m_widgetList.remove(id);
+	m_widgetList.insert(_window);
 }
 
 Widget *Interface::InsideWidget ( int _mouseX, int _mouseY )
