@@ -91,7 +91,7 @@ void OpenGLGraphics::DestroyDisplayList(Uint32 _list)
 void OpenGLGraphics::BeginDisplayList(Uint32 _list)
 {
 	if (_list == 0) return;
-	glNewList(_list, GL_COMPILE_AND_EXECUTE);
+	glNewList(_list, GL_COMPILE);
 	ASSERT_OPENGL_ERRORS;
 }
 
