@@ -173,7 +173,7 @@ App::~App()
 void App::Initialise()
 {
     TextUI *text = new TextUI (
-        APP_NAME, MAKERGB(255,0,0),
+        APP_NAME, Color32(255,0,0),
         g_graphics->GetScreenWidth () - 290,
         g_graphics->GetScreenHeight () - 38);
     g_interface->AddWidget ( text );
@@ -182,7 +182,7 @@ void App::Initialise()
     sprintf(buffer, "For testing purposes only. v%s", Cerberus::Version::LongVersion());
 
     text = new TextUI (
-        buffer, MAKERGB(255,0,0),
+        buffer, Color32(255,0,0),
         g_graphics->GetScreenWidth () - 290,
         g_graphics->GetScreenHeight () - 25 );
     g_interface->AddWidget ( text );
@@ -286,7 +286,7 @@ void App::Run ()
             }
         }
 
-        g_graphics->FillRect(SCREEN_SURFACE_ID, NULL, MAKERGB(0,0,0));
+        g_graphics->FillRect(SCREEN_SURFACE_ID, NULL, Color32(0,0,0));
 
         // Now make sure we haven't used up a second yet.
         m_tmrFPS.Stop();

@@ -38,7 +38,7 @@ Window::Window(const char *_title)
    m_dragging(false)
 {
    m_widgetClass = WIDGET_WINDOW;
-   m_title = new TextUI(_title, MAKERGB(255,0,0), 4, 0);
+   m_title = new TextUI(_title, Color32(255,0,0), 4, 0);
    m_widgets.insert(m_title);
 }
 
@@ -47,7 +47,7 @@ Window::Window (const char *_title, Sint16 x, Sint16 y, Uint16 w, Uint16 h )
    m_dragging(false)
 {
    m_widgetClass = WIDGET_WINDOW;
-   m_title = new TextUI(_title, MAKERGB(255,0,0), 4, 0);
+   m_title = new TextUI(_title, Color32(255,0,0), 4, 0);
    m_widgets.insert(m_title);
 }
 
@@ -124,11 +124,11 @@ void Window::Render()
 		}
 
 		// Frame
-		g_graphics->FillRect(SCREEN_SURFACE_ID, &pos, MAKERGBA(50,25,25,191));
-		g_graphics->DrawRect(&pos, MAKERGB(255,0,0));
+		g_graphics->FillRect(SCREEN_SURFACE_ID, &pos, Color32(50,25,25,191));
+		g_graphics->DrawRect(&pos, Color32(255,0,0));
 
 		// Titlebar bottom
-		g_graphics->DrawLine(SCREEN_SURFACE_ID, MAKERGB(255,0,0), pos.x, pos.y + 21, pos.x + pos.w, pos.y + 21);
+		g_graphics->DrawLine(SCREEN_SURFACE_ID, Color32(255,0,0), pos.x, pos.y + 21, pos.x + pos.w, pos.y + 21);
 
 		g_graphics->EndDisplayList(m_displayList);
 	}

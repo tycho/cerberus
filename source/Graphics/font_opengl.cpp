@@ -73,7 +73,7 @@ void OpenGLFont::SetItalic(bool _italic)
 	m_italic = _italic;
 }
 
-void OpenGLFont::Draw(Uint16 _x, Uint16 _y, const char *_text, Uint32 _color)
+void OpenGLFont::Draw(Uint16 _x, Uint16 _y, const char *_text, Color32 _color)
 {
 	// TODO: Bold text is unimplemented.
 
@@ -91,7 +91,7 @@ void OpenGLFont::Draw(Uint16 _x, Uint16 _y, const char *_text, Uint32 _color)
 		};
 		glMultMatrixf(matrix);
 	}
-	glColor4ub(GET_R(_color), GET_G(_color), GET_B(_color), GET_A(_color));
+	glColor4f(_color.R(), _color.G(), _color.B(), _color.A());
 	m_font->Render(_text);
 	ASSERT_OPENGL_ERRORS;
 	glPopMatrix();

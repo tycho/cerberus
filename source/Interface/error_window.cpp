@@ -45,7 +45,7 @@ ErrorWindow::ErrorWindow ( const char *_title, const char *_text, bool _critical
 {
 	m_widgetClass = WIDGET_ERROR_WINDOW;
 
-    m_caption = new TextUI ( "[null]", MAKERGB(255,0,0), 35, 16 );
+    m_caption = new TextUI ( "[null]", Color32(255,0,0), 35, 30 );
     AddWidget ( m_caption );
 
     Button *button = new Button ( (InputCallback)ErrorWindow_OnOKClick, this, BUTTON_TYPE_OK, (m_position.w / 2) - (58 / 2), 40 );

@@ -35,7 +35,7 @@ class Font
 public:
     Font();
     virtual ~Font();
-	virtual void Draw ( Uint16 _x, Uint16 _y, const char *_text, Uint32 _color ) = 0;
+	virtual void Draw ( Uint16 _x, Uint16 _y, const char *_text, Color32 _color ) = 0;
 };
 
 #include "Graphics/font_directx.h"

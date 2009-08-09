@@ -99,7 +99,7 @@ public:
     void DeactivateTextureRect();
 
     void ActivateWhiteWithAlpha ( Uint8 alpha );
-    void ActivateColour ( Uint32 col );
+    void ActivateColour ( Color32 col );
 
     void VertexArrayStatePrimitive();
     void VertexArrayStateTexture();

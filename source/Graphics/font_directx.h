@@ -42,7 +42,7 @@ protected:
 public:
     DirectXFont(const char *_fontFace, int _height);
     virtual ~DirectXFont();
-	virtual void Draw ( Uint16 _x, Uint16 _y, const char *_text, Uint32 _color );
+	virtual void Draw ( Uint16 _x, Uint16 _y, const char *_text, Color32 _color );
 };
 
 #endif

@@ -55,9 +55,9 @@ public:
     bool IsDamaged ();
     void Damage ();
 
-    Uint32 GetPixel ( Uint16 _x, Uint16 _y );
-    void   SetPixel ( Uint16 _x, Uint16 _y, Uint32 _pixel );
-    void   ReplaceColour ( SDL_Rect *_rect, Uint32 _find, Uint32 _replace );
+    Color32 GetPixel ( Uint16 _x, Uint16 _y );
+    void   SetPixel ( Uint16 _x, Uint16 _y, Color32 _color );
+    void   ReplaceColour ( SDL_Rect *_rect, Color32 _find, Color32 _replace );
 
     void SetAlpha ( Uint8 _alpha );
 

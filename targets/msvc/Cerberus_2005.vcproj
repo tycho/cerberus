@@ -787,6 +787,10 @@
 			Name="Graphics"
 			>
 			<File
+				RelativePath="..\..\source\Graphics\color.h"
+				>
+			</File>
+			<File
 				RelativePath="..\..\source\Graphics\font.cpp"
 				>
 			</File>

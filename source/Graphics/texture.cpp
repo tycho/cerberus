@@ -67,7 +67,7 @@ void Texture::Damage()
     m_damaged = true;
 }
 
-void Texture::SetPixel ( Uint16 _x, Uint16 _y, Uint32 _pixel )
+void Texture::SetPixel ( Uint16 _x, Uint16 _y, Color32 _pixel )
 {
     CrbReleaseAssert ( m_sdlSurface != NULL );
 
@@ -84,26 +84,11 @@ void Texture::SetPixel ( Uint16 _x, Uint16 _y, Uint32 _pixel )
     Uint8 *p = (Uint8 *)m_sdlSurface->pixels + _y * m_sdlSurface->pitch + _x * bpp;
 
     switch(bpp) {
-    case 1:
-        *p = _pixel;
-        break;
-    case 2:
-        *(Uint16 *)p = _pixel;
-        break;
-    case 3:
-        if(SDL_BYTEORDER == SDL_BIG_ENDIAN) {
-            p[0] = (_pixel >> 16) & 0xff;
-            p[1] = (_pixel >> 8) & 0xff;
-            p[2] = _pixel & 0xff;
-        } else {
-            p[0] = _pixel & 0xff;
-            p[1] = (_pixel >> 8) & 0xff;
-            p[2] = (_pixel >> 16) & 0xff;
-        }
-        break;
     case 4:
-        *(Uint32 *)p = _pixel;
+        *(Uint32 *)p = _pixel.rgba;
         break;
+	default:
+		CrbReleaseAbort("Whoops, we don't have < 32-bit color implemented.");
     }
 
     SDL_UnlockSurface ( m_sdlSurface );
@@ -111,7 +96,7 @@ void Texture::SetPixel ( Uint16 _x, Uint16 _y, Uint32 _pixel )
 	m_damaged = true;
 }
 
-Uint32 Texture::GetPixel ( Uint16 _x, Uint16 _y )
+Color32 Texture::GetPixel ( Uint16 _x, Uint16 _y )
 {
     CrbReleaseAssert ( m_sdlSurface != NULL );
     if ( (Sint16)_x < 0 || (Sint16)_y < 0 ) return 0;
@@ -156,7 +141,7 @@ Uint32 Texture::GetPixel ( Uint16 _x, Uint16 _y )
     return pixel;
 }
 
-void Texture::ReplaceColour ( SDL_Rect *_destRect, Uint32 _find, Uint32 _replace )
+void Texture::ReplaceColour ( SDL_Rect *_destRect, Color32 _find, Color32 _replace )
 {
     int x1 = _destRect->x,
         x2 = _destRect->x + _destRect->w,

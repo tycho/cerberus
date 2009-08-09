@@ -271,15 +271,10 @@ void OpenGL::ActivateWhiteWithAlpha ( Uint8 alpha )
     ASSERT_OPENGL_ERRORS;
 }
 
-void OpenGL::ActivateColour ( Uint32 col )
+void OpenGL::ActivateColour ( Color32 col )
 {
 	CrbDebugAssert ( this );
-#if SDL_BYTEORDER == SDL_LIL_ENDIAN
-    // Needs RGBA. SDL uses BGRA??
-    col = (col & 0xFF00FF00) | ((col & 0x00FF0000) >> 16) | ((col & 0x000000FF) << 16);
-#endif
-
-    glColor4ubv ( (GLubyte *)&col );
+	glColor4f(col.R(), col.G(), col.B(), col.A());
     ASSERT_OPENGL_ERRORS;
 }
 

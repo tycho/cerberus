@@ -145,7 +145,7 @@ Uint32 OpenGLGraphics::CreateFont(const char *_fontFace, int _height)
 #endif
 }
 
-void OpenGLGraphics::DrawText ( Uint32 _font, Uint16 _x, Uint16 _y, Uint32 _color, const char *_text )
+void OpenGLGraphics::DrawText ( Uint32 _font, Uint16 _x, Uint16 _y, Color32 _color, const char *_text )
 {
 #ifdef ENABLE_FONTS
 	OpenGLFont *font = m_fonts[_font];
@@ -155,7 +155,7 @@ void OpenGLGraphics::DrawText ( Uint32 _font, Uint16 _x, Uint16 _y, Uint32 _colo
 #endif
 }
 
-void OpenGLGraphics::DrawRect ( SDL_Rect *_destRect, Uint32 _color )
+void OpenGLGraphics::DrawRect ( SDL_Rect *_destRect, Color32 _color )
 {
 	CoreAssert ( _destRect );
 
@@ -188,7 +188,7 @@ int OpenGLGraphics::SetSurfaceAlpha ( Uint32 _surfaceID, Uint8 alpha )
     return 0;
 }
 
-void OpenGLGraphics::DrawLine ( Uint32 _surfaceID, Uint32 _color, int _startX, int _startY, int _stopX, int _stopY )
+void OpenGLGraphics::DrawLine ( Uint32 _surfaceID, Color32 _color, int _startX, int _startY, int _stopX, int _stopY )
 {
     CoreAssert ( _surfaceID == SCREEN_SURFACE_ID );
 
@@ -204,13 +204,13 @@ void OpenGLGraphics::DrawLine ( Uint32 _surfaceID, Uint32 _color, int _startX, i
 }
 
 
-Uint32 OpenGLGraphics::GetPixel ( Uint32 _surfaceID, int x, int y )
+Color32 OpenGLGraphics::GetPixel ( Uint32 _surfaceID, int x, int y )
 {
     OpenGLTexture *tex = m_textures.get ( _surfaceID );
     return tex->GetPixel ( x, y );
 }
 
-void OpenGLGraphics::SetPixel ( Uint32 _surfaceID, int x, int y, Uint32 _color )
+void OpenGLGraphics::SetPixel ( Uint32 _surfaceID, int x, int y, Color32 _color )
 {
     if ( _surfaceID == SCREEN_SURFACE_ID )
     {
@@ -221,7 +221,7 @@ void OpenGLGraphics::SetPixel ( Uint32 _surfaceID, int x, int y, Uint32 _color )
 #ifndef TARGET_OS_WINDOWS
         m_vertexArray[0] = x;
         m_vertexArray[1] = y;
-        _color |= FULL_ALPHA;
+        _color.c.a = 255;
         g_openGL->ActivateColour ( _color );
         glDrawArrays ( GL_POINTS, 0, 1 );
 #else
@@ -289,10 +289,12 @@ Uint32 OpenGLGraphics::LoadImage ( const char *_filename, bool _isColorKeyed )
 
     CrbReleaseAssert ( tex->m_sdlSurface != NULL );
 
+	m_colorKey.c.a = 0;
+
 	if ( _isColorKeyed && m_colorKeySet )
     {
-		SDL_FillRect ( tex->m_sdlSurface, NULL, ZERO_ALPHA & m_colorKey );
-        SDL_SetColorKey ( tex->m_sdlSurface, SDL_SRCCOLORKEY | SDL_RLEACCEL, m_colorKey );
+		SDL_FillRect ( tex->m_sdlSurface, NULL, m_colorKey.rgba );
+        SDL_SetColorKey ( tex->m_sdlSurface, SDL_SRCCOLORKEY | SDL_RLEACCEL, m_colorKey.rgba );
     }
     SDL_SetAlpha ( tex->m_sdlSurface, 0, SDL_ALPHA_OPAQUE );
 
@@ -331,7 +333,7 @@ Uint16 OpenGLGraphics::GetMaximumTextureSize()
     return g_openGL->GetMaximumTextureSize();
 }
 
-int OpenGLGraphics::SetColorKey ( Uint32 _color )
+int OpenGLGraphics::SetColorKey ( Color32 _color )
 {
     CrbReleaseAssert ( m_sdlScreen != NULL );
 
@@ -347,15 +349,12 @@ void OpenGLGraphics::ApplyColorKey ( Uint32 _surfaceID )
     CrbReleaseAssert ( m_textures.valid ( _surfaceID ) );
 
 	OpenGLTexture *surface = m_textures.get ( _surfaceID );
-	SDL_SetColorKey ( surface->m_sdlSurface, SDL_SRCCOLORKEY | SDL_RLEACCEL, m_colorKey );
+	SDL_SetColorKey ( surface->m_sdlSurface, SDL_SRCCOLORKEY | SDL_RLEACCEL, m_colorKey.rgba );
 }
 
-int OpenGLGraphics::FillRect ( Uint32 _surfaceID, SDL_Rect *_destRect, Uint32 _color )
+int OpenGLGraphics::FillRect ( Uint32 _surfaceID, SDL_Rect *_destRect, Color32 _color )
 {
     CrbReleaseAssert ( m_sdlScreen != NULL );
-
-    if ( _color == m_colorKey )
-        _color = m_colorKey & ZERO_ALPHA;
 
     if (_surfaceID == SCREEN_SURFACE_ID)
     {
@@ -397,7 +396,7 @@ int OpenGLGraphics::FillRect ( Uint32 _surfaceID, SDL_Rect *_destRect, Uint32 _c
         OpenGLTexture *tex = m_textures.get ( _surfaceID );
         CrbReleaseAssert ( tex != NULL );
 
-        int r = SDL_FillRect ( tex->m_sdlSurface, _destRect, _color );
+        int r = SDL_FillRect ( tex->m_sdlSurface, _destRect, _color.rgba );
 
         tex->Damage ();
 
@@ -572,7 +571,7 @@ int OpenGLGraphics::Blit ( Uint32 _sourceSurfaceID, SDL_Rect const *_sourceRect,
 
 }
 
-void OpenGLGraphics::ReplaceColour ( Uint32 _surfaceID, SDL_Rect *_destRect, Uint32 findcolor, Uint32 replacecolor )
+void OpenGLGraphics::ReplaceColour ( Uint32 _surfaceID, SDL_Rect *_destRect, Color32 findcolor, Color32 replacecolor )
 {
     CrbReleaseAssert ( m_sdlScreen != NULL );
     CrbReleaseAssert ( _surfaceID != SCREEN_SURFACE_ID );

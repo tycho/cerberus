@@ -24,69 +24,86 @@
  * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
+ 
+#ifndef __included_color32_h
+#define __included_color32_h
 
-#include "universal_include.h"
+#include <crisscross/platform_detect.h>
 
-#include "Graphics/graphics.h"
-#include "App/app.h"
-
-#if defined ( TARGET_COMPILER_VC ) || defined ( TARGET_COMPILER_ICC )
-// SDL Dependencies
-#    pragma comment (lib, "advapi32.lib")
-#    pragma comment (lib, "gdi32.lib")
-#    pragma comment (lib, "shell32.lib")
-#    pragma comment (lib, "user32.lib")
-
-// SDL
-#    pragma comment (lib, "SDL.lib")
-#    pragma comment (lib, "SDLmain.lib")
-#    pragma comment (lib, "SDL_image.lib")
-#    pragma comment (lib, "dxguid.lib")
-#    pragma comment (lib, "libpng.lib")
-#    pragma comment (lib, "winmm.lib")
-#    pragma comment (lib, "zlib.lib")
+class Color32
+{
+public:
+    union {
+        Uint32 rgba;
+        struct {
+#ifdef TARGET_LITTLE_ENDIAN
+            Uint8 a;
+            Uint8 b;
+            Uint8 g;
+            Uint8 r;
+#else
+            Uint8 r;
+            Uint8 g;
+            Uint8 b;
+            Uint8 a;
 #endif
+        } c;
+    };
+    float R() const { return (float)c.r / 255.0f; }
+    float G() const { return (float)c.g / 255.0f; }
+    float B() const { return (float)c.b / 255.0f; }
+    float A() const { return (float)c.a / 255.0f; }
+	
+	Color32()
+	{
+		rgba = 0;
+	}
+	
+	Color32(Uint32 _rgba)
+	{
+		rgba = _rgba;
+	}
 
-Graphics::Graphics()
- : m_windowed(false), m_screenX(0), m_screenY(0), m_colorDepth(0),
-   m_centerX(0), m_centerY(0), m_colorKey(0), m_colorKeySet(false),
-   m_defaultFont(0)
-{
-}
+    Color32(Uint8 _r, Uint8 _g, Uint8 _b, Uint8 _a = 255)
+    {
+        Set(_r,_g,_b,_a);
+    }
+	
+	Color32(Color32 const &_copy)
+	{
+		rgba = _copy.rgba;
+	}
 
-Graphics::~Graphics()
-{
-}
+    void Set(Uint8 _r, Uint8 _g, Uint8 _b, Uint8 _a = 255)
+    {
+        c.r = _r;
+        c.g = _g;
+        c.b = _b;
+        c.a = _a;
+    }
+	
+	Color32 const &operator = (Color32 const &_rhs)
+	{
+		rgba = _rhs.rgba;
+		return *this;
+	}
+	
+	Color32 const &operator = (Uint32 const &_rhs)
+	{
+		rgba = _rhs;
+		return *this;
+	}
+	
+	Color32 const &operator = (Sint32 const &_rhs)
+	{
+		rgba = _rhs;
+		return *this;
+	}
+	
+	bool operator==(Color32 const &_rhs) const
+	{
+		return _rhs.rgba == rgba;
+	}
+};
 
-Uint32 Graphics::DefaultFont()
-{
-	return m_defaultFont;
-}
-
-Sint32 Graphics::GetCenterX()
-{
-    return m_centerX;
-}
-
-Sint32 Graphics::GetCenterY()
-{
-    return m_centerY;
-}
-
-Sint32 Graphics::GetScreenWidth()
-{
-    return m_screenX;
-}
-
-Sint32 Graphics::GetScreenHeight()
-{
-    return m_screenY;
-}
-
-Color32 Graphics::GetColorKey()
-{
-    CrbReleaseAssert ( m_colorKeySet );
-    return m_colorKey;
-}
-
-Graphics *g_graphics;
+#endif

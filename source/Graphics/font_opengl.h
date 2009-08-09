@@ -45,7 +45,7 @@ public:
     OpenGLFont(const char *_fontFilename);
     OpenGLFont(const unsigned char *_data, size_t _size);
     virtual ~OpenGLFont();
-	virtual void Draw(Uint16 _x, Uint16 _y, const char *_text, Uint32 _color);
+	virtual void Draw(Uint16 _x, Uint16 _y, const char *_text, Color32 _color);
 	virtual void SetFontSize(Uint16 _size);
 	virtual void SetBold(bool _bold);
 	virtual void SetItalic(bool _italic);

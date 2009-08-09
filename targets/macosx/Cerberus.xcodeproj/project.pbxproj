@@ -160,6 +160,7 @@
 		49B2FEC10BE3928500386500 /* soundsystem_sdlmixer.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = soundsystem_sdlmixer.cpp; path = ../../source/Sound/soundsystem_sdlmixer.cpp; sourceTree = "<group>"; };
 		49B2FEC20BE3928500386500 /* soundsystem_openal.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = soundsystem_openal.h; path = ../../source/Sound/soundsystem_openal.h; sourceTree = "<group>"; };
 		49B2FEC30BE3928500386500 /* soundsystem_openal.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = soundsystem_openal.cpp; path = ../../source/Sound/soundsystem_openal.cpp; sourceTree = "<group>"; };
+		B019F7A0102F736D008A3A8A /* color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = color.h; path = ../../source/Graphics/color.h; sourceTree = SOURCE_ROOT; };
 		B01BDEA60FF2C66B00626AD7 /* version.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = version.cpp; path = ../../source/App/version.cpp; sourceTree = SOURCE_ROOT; };
 		B01BDEA70FF2C66B00626AD7 /* version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = version.h; path = ../../source/App/version.h; sourceTree = SOURCE_ROOT; };
 		B01BDEAD0FF2C6E300626AD7 /* archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = archive.h; path = ../../contrib/unrar/archive.h; sourceTree = SOURCE_ROOT; };
@@ -576,28 +577,29 @@
 		B0B8E8C90BDB4D64007C1576 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				B019F7A0102F736D008A3A8A /* color.h */,
 				B0F90D140F02E7BB005446D6 /* font.cpp */,
 				B0F90D150F02E7BB005446D6 /* font.h */,
 				B0F90D160F02E7BB005446D6 /* font_directx.cpp */,
 				B0F90D170F02E7BC005446D6 /* font_directx.h */,
 				B0F90D180F02E7BC005446D6 /* font_opengl.cpp */,
 				B0F90D190F02E7BC005446D6 /* font_opengl.h */,
+				B0B8E8FF0BDB4E0D007C1576 /* graphics.cpp */,
+				B0B8E9000BDB4E0D007C1576 /* graphics.h */,
 				B0AC6D190DD2EE5100976666 /* graphics_directx.cpp */,
 				B0AC6D1A0DD2EE5100976666 /* graphics_directx.h */,
+				490780CA0BDE747700504827 /* graphics_opengl.cpp */,
+				490780C90BDE747700504827 /* graphics_opengl.h */,
+				B087F3120DB98F08007568B9 /* surface.cpp */,
+				B087F3130DB98F08007568B9 /* surface.h */,
+				B04A58170DBDDA9F00A2F292 /* texture.cpp */,
+				B04A58180DBDDA9F00A2F292 /* texture.h */,
 				B0AC6D1B0DD2EE5100976666 /* texture_directx.cpp */,
 				B0AC6D1C0DD2EE5100976666 /* texture_directx.h */,
 				B0AC6D1D0DD2EE5100976666 /* texture_opengl.cpp */,
 				B0AC6D1E0DD2EE5100976666 /* texture_opengl.h */,
 				B04A58150DBDDA9F00A2F292 /* opengl.cpp */,
 				B04A58160DBDDA9F00A2F292 /* opengl.h */,
-				B04A58170DBDDA9F00A2F292 /* texture.cpp */,
-				B04A58180DBDDA9F00A2F292 /* texture.h */,
-				B087F3120DB98F08007568B9 /* surface.cpp */,
-				B087F3130DB98F08007568B9 /* surface.h */,
-				490780C90BDE747700504827 /* graphics_opengl.h */,
-				490780CA0BDE747700504827 /* graphics_opengl.cpp */,
-				B0B8E8FF0BDB4E0D007C1576 /* graphics.cpp */,
-				B0B8E9000BDB4E0D007C1576 /* graphics.h */,
 			);
 			name = Graphics;
 			sourceTree = "<group>";
@@ -920,6 +922,10 @@
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
 				MACOSX_DEPLOYMENT_TARGET_ppc64 = 10.4;
 				MACOSX_DEPLOYMENT_TARGET_x86_64 = 10.4;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-std=gnu++98",
+				);
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 				SDKROOT_i386 = /Developer/SDKs/MacOSX10.4u.sdk;
 				SDKROOT_ppc = /Developer/SDKs/MacOSX10.4u.sdk;
@@ -956,6 +962,10 @@
 				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
 				MACOSX_DEPLOYMENT_TARGET_ppc64 = 10.4;
 				MACOSX_DEPLOYMENT_TARGET_x86_64 = 10.4;
+				OTHER_CPLUSPLUSFLAGS = (
+					"$(OTHER_CFLAGS)",
+					"-std=gnu++98",
+				);
 				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
 				SDKROOT_i386 = /Developer/SDKs/MacOSX10.4u.sdk;
 				SDKROOT_ppc = /Developer/SDKs/MacOSX10.4u.sdk;

@@ -162,7 +162,7 @@ void Interface::UpdateRendererWidget ()
     if ( !m_rendererWidget )
     {
         m_rendererWidget = new TextUI(
-			speedCaption, MAKERGB(255,255,255),
+			speedCaption, Color32(255,255,255),
 			3, g_graphics->GetScreenHeight () - 29 );
         m_widgetList.insert ( m_rendererWidget );
     }
@@ -172,14 +172,14 @@ void Interface::UpdateRendererWidget ()
 void Interface::UpdateFPS ( unsigned int _fps )
 {
     char fpsCaption[32];
-	Uint32 color = 0;
+	Color32 color = 0;
 
     if ( _fps >= 50 )
-        color = MAKERGB(0,255,0); // GREEN
+        color = Color32(0,255,0); // GREEN
     else if ( _fps < 50 && _fps >= 30 )
-        color = MAKERGB(255,255,0); // YELLOW
+        color = Color32(255,255,0); // YELLOW
     else if ( _fps < 30 )
-        color = MAKERGB(255,0,0); // RED
+        color = Color32(255,0,0); // RED
 
     sprintf ( fpsCaption, "FPS: %d", _fps );
     if ( !m_fpsWidget )

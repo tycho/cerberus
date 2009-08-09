@@ -48,11 +48,11 @@ protected:
 public:
 	Surface                                      ( Uint16 _sizeX, Uint16 _sizeY, Uint16 _splitSections = 16 );
 	virtual ~Surface                             ();
-    virtual Uint32             GetPixel          ( int x, int y );
-    virtual void               SetPixel          ( int x, int y, Uint32 _colour );
+    virtual Color32            GetPixel          ( int x, int y );
+    virtual void               SetPixel          ( int x, int y, Color32 _colour );
     virtual SDL_PixelFormat   *GetPixelFormat    ();
-    virtual void               ReplaceColour     ( SDL_Rect *_destRect, Uint32 _findColour, Uint32 _replaceColour );
-    virtual void               FillRect          ( SDL_Rect *_destRect, Uint32 _colour );
+    virtual void               ReplaceColour     ( SDL_Rect *_destRect, Color32 _findColour, Color32 _replaceColour );
+    virtual void               FillRect          ( SDL_Rect *_destRect, Color32 _colour );
     virtual void               Blit              ( Uint32 _sourceSurfaceID, const SDL_Rect *_sourceRect, const SDL_Rect *_destRect );
     virtual void               Render            ( SDL_Rect *_sourceRect, Uint32 _destSurfaceID, SDL_Rect *_destRect ) const;
     virtual void               PrintStatistics   () const;

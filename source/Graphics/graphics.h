@@ -53,7 +53,7 @@ protected:
     Uint16  m_centerX;
     Uint16  m_centerY;
 
-    Uint32  m_colorKey;
+    Color32  m_colorKey;
     bool    m_colorKeySet;
 
 	Uint32  m_defaultFont;
@@ -73,9 +73,9 @@ public:
 	virtual Uint32 DefaultFont();
 
 	virtual Uint32 CreateFont ( const char *_fontFace, int _height) = 0;
-	virtual void   DrawText ( Uint32 _font, Uint16 _x, Uint16 _y, Uint32 _color, const char *_text ) = 0;
+	virtual void   DrawText ( Uint32 _font, Uint16 _x, Uint16 _y, Color32 _color, const char *_text ) = 0;
 
-	virtual void   DrawRect ( SDL_Rect *_pos, Uint32 _color ) = 0;
+	virtual void   DrawRect ( SDL_Rect *_pos, Color32 _color ) = 0;
 
     virtual Uint16 GetMaximumTextureSize() = 0;
 
@@ -89,24 +89,24 @@ public:
 
     virtual Uint32 GetSurfaceWidth ( Uint32 _surfaceID ) = 0;
     virtual Uint32 GetSurfaceHeight ( Uint32 _surfaceID ) = 0;
-    virtual Uint32 GetPixel ( Uint32 _surfaceID, int x, int y ) = 0;
-    virtual void   SetPixel ( Uint32 _surfaceID, int x, int y, Uint32 color ) = 0;
-    virtual void   DrawLine ( Uint32 _surfaceID, Uint32 _color, int _startX, int _startY, int _stopX, int _stopY ) = 0;
+    virtual Color32 GetPixel ( Uint32 _surfaceID, int x, int y ) = 0;
+    virtual void   SetPixel ( Uint32 _surfaceID, int x, int y, Color32 _color ) = 0;
+    virtual void   DrawLine ( Uint32 _surfaceID, Color32 _color, int _startX, int _startY, int _stopX, int _stopY ) = 0;
 
     virtual int    SetSurfaceAlpha ( Uint32 _surfaceID, Uint8 alpha ) = 0;
 
     virtual void   ShowCursor ( bool _show ) = 0;
 
     virtual SDL_PixelFormat *GetPixelFormat ( Uint32 _surfaceID ) = 0;
-    virtual void   ReplaceColour(Uint32 _surfaceID, SDL_Rect *_destRect, Uint32 findcolor, Uint32 replacecolor) = 0;
+    virtual void   ReplaceColour(Uint32 _surfaceID, SDL_Rect *_destRect, Color32 findcolor, Color32 replacecolor) = 0;
 
     virtual Uint32 LoadImage ( const char *_filename, bool _isColorKeyed = false ) = 0;
-    virtual Uint32 GetColorKey ();
-    virtual int    SetColorKey ( Uint32 _colour ) = 0;
+    virtual Color32 GetColorKey ();
+    virtual int    SetColorKey ( Color32 _color ) = 0;
 	virtual void   ApplyColorKey ( Uint32 _surfaceID ) = 0;
     virtual Uint32 CreateSurface ( Uint32 _width, Uint32 _height, bool _isColorKeyed = false ) = 0;
     virtual int    DeleteSurface ( Uint32 _surfaceID ) = 0;
-    virtual int    FillRect ( Uint32 _surfaceID, SDL_Rect *_destRect, Uint32 _color ) = 0;
+    virtual int    FillRect ( Uint32 _surfaceID, SDL_Rect *_destRect, Color32 _color ) = 0;
     virtual int    Blit ( Uint32 _sourceSurfaceID, SDL_Rect const *_sourceRect,
                           Uint32 _destSurfaceID,   SDL_Rect const *_destRect ) = 0;
     virtual int    SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _height, Uint8 _colorDepth ) = 0;

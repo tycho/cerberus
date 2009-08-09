@@ -34,7 +34,7 @@
 #include "Interface/text.h"
 
 
-TextUI::TextUI ( const char *_text, Uint32 _color, Sint16 x, Sint16 y )
+TextUI::TextUI ( const char *_text, Color32 _color, Sint16 x, Sint16 y )
  : Widget(),
    m_color(_color)
 {
@@ -98,7 +98,7 @@ void TextUI::SetText ( const char *_text )
     }
 }
 
-void TextUI::SetColor ( Uint32 _color )
+void TextUI::SetColor ( Color32 _color )
 {
 	m_color = _color;
 }

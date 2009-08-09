@@ -299,7 +299,7 @@ SDL_PixelFormat *Surface::GetPixelFormat()
 	return g_graphics->GetPixelFormat ( i );
 }
 
-Uint32 Surface::GetPixel ( int _x, int _y )
+Color32 Surface::GetPixel ( int _x, int _y )
 {
 	SDL_Rect destRect;
 	destRect.x = _x;
@@ -319,7 +319,7 @@ Uint32 Surface::GetPixel ( int _x, int _y )
 	return g_graphics->GetPixel ( surfaceID, dest->x, dest->y );
 }
 
-void Surface::SetPixel ( int _x, int _y, Uint32 _colour )
+void Surface::SetPixel ( int _x, int _y, Color32 _colour )
 {
 	SDL_Rect destRect;
 	destRect.x = _x;
@@ -339,7 +339,7 @@ void Surface::SetPixel ( int _x, int _y, Uint32 _colour )
 	g_graphics->SetPixel ( surfaceID, dest->x, dest->y, _colour );
 }
 
-void Surface::FillRect ( SDL_Rect *_destRect, Uint32 _colour )
+void Surface::FillRect ( SDL_Rect *_destRect, Color32 _colour )
 {
 	memset ( m_destRects, 0, sizeof(SDL_Rect) * m_nWays );
 
@@ -356,7 +356,7 @@ void Surface::FillRect ( SDL_Rect *_destRect, Uint32 _colour )
 	}
 }
 
-void Surface::ReplaceColour ( SDL_Rect *_destRect, Uint32 _findColour, Uint32 _replaceColour )
+void Surface::ReplaceColour ( SDL_Rect *_destRect, Color32 _findColour, Color32 _replaceColour )
 {
 	SDL_Rect internalDstRect;
     if ( !_destRect )

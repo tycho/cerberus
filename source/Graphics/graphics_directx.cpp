@@ -121,7 +121,7 @@ Uint32 DirectXGraphics::CreateFont ( const char *_fontFace, int _height)
 #endif
 }
 
-void DirectXGraphics::DrawText ( Uint32 _font, Uint16 _x, Uint16 _y, Uint32 _color, const char *_text)
+void DirectXGraphics::DrawText ( Uint32 _font, Uint16 _x, Uint16 _y, Color32 _color, const char *_text)
 {
 #ifdef ENABLE_FONTS
 	DirectXFont *font = m_fonts[_font];
@@ -131,7 +131,7 @@ void DirectXGraphics::DrawText ( Uint32 _font, Uint16 _x, Uint16 _y, Uint32 _col
 #endif
 }
 
-void DirectXGraphics::DrawRect ( SDL_Rect *_pos, Uint32 _color )
+void DirectXGraphics::DrawRect ( SDL_Rect *_pos, Color32 _color )
 {
     CoreAssert ( _pos );
 	DXVertex *vertices;
@@ -223,7 +223,7 @@ int DirectXGraphics::SetSurfaceAlpha ( Uint32 _surfaceID, Uint8 alpha )
     return 0;
 }
 
-void DirectXGraphics::DrawLine ( Uint32 _surfaceID, Uint32 _color, int _startX, int _startY, int _stopX, int _stopY )
+void DirectXGraphics::DrawLine ( Uint32 _surfaceID, Color32 _color, int _startX, int _startY, int _stopX, int _stopY )
 {
     CoreAssert ( _surfaceID == SCREEN_SURFACE_ID );
 	DXVertex *vertices;
@@ -285,7 +285,7 @@ Uint32 DirectXGraphics::GetPixel ( Uint32 _surfaceID, int x, int y )
     return tex->GetPixel ( x, y );
 }
 
-void DirectXGraphics::SetPixel ( Uint32 _surfaceID, int x, int y, Uint32 _color )
+void DirectXGraphics::SetPixel ( Uint32 _surfaceID, int x, int y, Color32 _color )
 {
     if ( _surfaceID == SCREEN_SURFACE_ID )
     {
@@ -380,7 +380,7 @@ Uint16 DirectXGraphics::GetMaximumTextureSize()
 	return (Uint16)m_caps.MaxTextureWidth;
 }
 
-int DirectXGraphics::SetColorKey ( Uint32 _color )
+int DirectXGraphics::SetColorKey ( Color32 _color )
 {
     CrbReleaseAssert ( m_sdlScreen != NULL );
 
@@ -399,7 +399,7 @@ void DirectXGraphics::ApplyColorKey ( Uint32 _surfaceID )
 	SDL_SetColorKey ( surface->m_sdlSurface, SDL_SRCCOLORKEY | SDL_RLEACCEL, m_colorKey );
 }
 
-int DirectXGraphics::FillRect ( Uint32 _surfaceID, SDL_Rect *_destRect, Uint32 _color )
+int DirectXGraphics::FillRect ( Uint32 _surfaceID, SDL_Rect *_destRect, Color32 _color )
 {
     CrbReleaseAssert ( m_sdlScreen != NULL );
 
