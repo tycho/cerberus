@@ -58,13 +58,13 @@ void Interface::Update ()
     Uint8 buttonState = SDL_GetMouseState ( &x, &y );
 
 	if ( buttonState & SDL_BUTTON(1) ) {
-		if (!(lastButtonState & SDL_BUTTON(1))) {
+		//if (!(lastButtonState & SDL_BUTTON(1))) {
 			MouseDown ( true, x, y );
-        }
+        //}
     } else {
-		if ( lastButtonState & SDL_BUTTON(1) ) {
+		//if ( lastButtonState & SDL_BUTTON(1) ) {
             MouseDown ( false, x, y );
-		}
+		//}
     }
 
     lastButtonState = buttonState;
