@@ -172,10 +172,8 @@ void OpenGLGraphics::DrawRect ( SDL_Rect *_destRect, Uint32 _color )
     m_vertexArray[6] = _destRect->x;
     m_vertexArray[7] = _destRect->y + _destRect->h;
 
-	glDisable(GL_BLEND);
-	glDisable(GL_LINE_SMOOTH);
+	glEnable(GL_BLEND);
     glDrawArrays(GL_LINE_LOOP, 0, 4);
-	glEnable(GL_LINE_SMOOTH);
     ASSERT_OPENGL_ERRORS;
 }
 
@@ -206,6 +204,7 @@ void OpenGLGraphics::DrawLine ( Uint32 _surfaceID, Uint32 _color, int _startX, i
     m_vertexArray[3] = _stopY;
     _color |= FULL_ALPHA;
     g_openGL->ActivateColour ( _color );
+	glEnable(GL_BLEND);
     glDrawArrays ( GL_LINES, 0, 2 );
     ASSERT_OPENGL_ERRORS;
 }
