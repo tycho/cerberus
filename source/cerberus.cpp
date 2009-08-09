@@ -275,6 +275,8 @@ void Init_Interface()
 {
     g_interface = new Interface();
     CrbReleaseAssert ( g_interface != NULL );
+
+	g_app->Initialise();
 }
 
 void Init_Sound()
