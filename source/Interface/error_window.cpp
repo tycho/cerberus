@@ -34,13 +34,13 @@
 #include "Interface/error_window.h"
 #include "Interface/text.h"
 
-void ErrorWindow_OnOKClick ( Window *_window )
+static void ErrorWindow_OnOKClick ( Window *_window )
 {
     dynamic_cast<ErrorWindow *>(_window)->OnOKClick();
 }
 
 ErrorWindow::ErrorWindow ( const char *_title, const char *_text, bool _critical )
-: Window (_title, g_graphics->GetCenterX() - 136, g_graphics->GetCenterY() - 44, 256, 72),
+: Window (_title, g_graphics->GetCenterX() - 150, g_graphics->GetCenterY() - 50, 300, 100),
   m_critical(_critical)
 {
 	m_widgetClass = WIDGET_ERROR_WINDOW;
@@ -48,7 +48,12 @@ ErrorWindow::ErrorWindow ( const char *_title, const char *_text, bool _critical
     m_caption = new TextUI ( "[null]", Color32(255,0,0), 35, 30 );
     AddWidget ( m_caption );
 
-    Button *button = new Button ( (InputCallback)ErrorWindow_OnOKClick, this, BUTTON_TYPE_OK, (m_position.w / 2) - (58 / 2), 40 );
+	SDL_Rect pos;
+	pos.w = 50;
+	pos.h = 20;
+	pos.x = (m_position.w / 2) - (pos.w / 2);
+	pos.y = 60;
+    Button *button = new Button ( (InputCallback)ErrorWindow_OnOKClick, this, "OK", pos );
     m_enterKeyDefault = button;
     AddWidget ( button ); button = NULL;
 
@@ -79,8 +84,12 @@ void ErrorWindow::SetCaption ( const char *_caption )
         {
             g_graphics->DeleteSurface ( m_cachedSurfaceID ); m_cachedSurfaceID = -1;
         }
-        m_caption->SetPosition ( (Sint16)((m_position.w / 2) - ( (strlen ( _caption ) * 5.8 ) / 2 )), 20 );
         m_caption->SetText ( _caption );
-        m_enterKeyDefault->SetPosition ( (m_position.w / 2) - (58 / 2), 40 );
+        m_caption->SetPosition ( (m_position.w / 2), 30, true );
+
+		SDL_Rect pos;
+		pos.x = (m_position.w / 2) - (50 / 2);
+		pos.y = 60;
+        m_enterKeyDefault->SetPosition ( pos.x, pos.y );
     }
 }

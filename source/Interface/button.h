@@ -30,28 +30,23 @@
 
 #include "Interface/inputwidget.h"
 
-typedef enum
-{
-    BUTTON_TYPE_BLANK = 0,
-    BUTTON_TYPE_BACK = 1,
-    BUTTON_TYPE_NEXT = 2,
-    BUTTON_TYPE_OK = 3,
-    BUTTON_TYPE_CANCEL = 4,
-    BUTTON_TYPE_YES = 5,
-    BUTTON_TYPE_NO = 6
-} ButtonType;
-
 class Button : public InputWidget
 {
-protected:
-    ButtonType m_buttonType;
+private:
+	const char *m_caption;
+	Color32 m_color;
+	Color32 m_inactiveColor;
+	Color32 m_hoverColor;
+	Color32 m_clickColor;
 
 public:
-    Button ( InputCallback _callback, Widget *_callbackParam, ButtonType _buttonType, Sint32 _x, Sint32 _y );
+    Button ( InputCallback _callback, Widget *_callbackParam, const char *_caption, SDL_Rect &_position );
     virtual ~Button();
 
-    virtual ButtonType GetButtonType();
+    virtual Widget *MouseUpdate();
 
+    virtual void Render();
+    virtual void Render ( Sint16 _xOffset, Sint16 _yOffset );
     virtual void Update();
 };
 
