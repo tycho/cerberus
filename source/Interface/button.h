@@ -29,11 +29,12 @@
 #define __included_button_h
 
 #include "Interface/inputwidget.h"
+#include "Interface/text.h"
 
 class Button : public InputWidget
 {
 private:
-	const char *m_caption;
+	TextUI *m_caption;
 	Color32 m_color;
 	Color32 m_inactiveColor;
 	Color32 m_hoverColor;

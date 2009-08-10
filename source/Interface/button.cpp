@@ -35,7 +35,11 @@ Button::Button ( InputCallback _callback, Widget *_callbackParam, const char *_c
  : InputWidget ( _callback, _callbackParam, _pos.x, _pos.y, _pos.w, _pos.h )
 {
     m_widgetClass = WIDGET_BUTTON;
-    m_caption = cc_newstr(_caption);
+    m_caption = new TextUI(_caption, Color32(255,0,0), 0, 0);
+    AddWidget(m_caption);
+
+    // Forces a position recalculation for m_caption.
+    m_damaged = true;
 
     m_inactiveColor = Color32(20,0,0);
     m_hoverColor = Color32(128,0,0);
@@ -44,8 +48,6 @@ Button::Button ( InputCallback _callback, Widget *_callbackParam, const char *_c
 
 Button::~Button()
 {
-    delete [] m_caption;
-    m_caption = NULL;
 }
 
 void Button::Render()
@@ -56,15 +58,7 @@ void Button::Render()
     g_graphics->FillRect(SCREEN_SURFACE_ID, &absolutePosition, m_color);
     g_graphics->DrawRect(&absolutePosition, Color32(255,0,0));
 
-    // Figure out where the text should be
-    SDL_Rect attr;
-    g_graphics->TextRect(g_graphics->DefaultFont(), m_caption, attr);
-    SDL_Rect txtpos;
-    txtpos.x = absolutePosition.x + (absolutePosition.w / 2 - (attr.w / 2));
-    txtpos.y = absolutePosition.y + (absolutePosition.h / 2 - (attr.h / 2));
-
-    // Render the caption
-    g_graphics->DrawText(g_graphics->DefaultFont(), txtpos.x, txtpos.y, Color32(255,0,0), m_caption);
+    Widget::Render();
 }
 
 Widget *Button::MouseUpdate()
@@ -79,5 +73,19 @@ Widget *Button::MouseUpdate()
 
 void Button::Update()
 {
+    if (m_damaged)
+    {
+        SDL_Rect absolutePosition = GetAbsolutePosition();
+
+        // Figure out where the text should be
+        SDL_Rect attr;
+        g_graphics->TextRect(g_graphics->DefaultFont(), m_caption->GetText(), attr);
+        SDL_Rect txtpos;
+        txtpos.y = m_position.h / 2 - (attr.h / 2);
+
+        m_caption->SetPosition(absolutePosition.w / 2, txtpos.y, true);
+
+        m_damaged = false;
+    }
     Widget::Update();
 }
