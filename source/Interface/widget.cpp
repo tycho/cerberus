@@ -96,6 +96,22 @@ bool Widget::HasWidget ( Widget *_widget )
     return false;
 }
 
+SDL_Rect Widget::GetAbsolutePosition ()
+{
+    SDL_Rect pos;
+    Widget *w = this;
+    pos.x = 0;
+    pos.y = 0;
+    pos.w = m_position.w;
+    pos.h = m_position.h;
+    do {
+        pos.x += w->m_position.x;
+        pos.y += w->m_position.y;
+        w = w->m_parentWidget;
+    } while (w);
+    return pos;
+}
+
 Data::LList<Widget *> *Widget::GetWidgetList()
 {
     return &m_widgets;
@@ -107,7 +123,8 @@ bool Widget::IsInsideWidget ( int _mouseX, int _mouseY )
     mousePos.x = _mouseX;
     mousePos.y = _mouseY;
     mousePos.w = 1; mousePos.h = 1;
-    return ( SDL_CollideBoundingBox ( mousePos, m_position ) != 0 );
+    SDL_Rect absolutePosition = GetAbsolutePosition();
+    return ( SDL_CollideBoundingBox ( mousePos, absolutePosition ) != 0 );
 }
 
 void Widget::Initialise()

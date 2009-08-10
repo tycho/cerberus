@@ -74,6 +74,7 @@ public:
     virtual void Render ();
     virtual void Render ( Sint16 _xOffset, Sint16 _yOffset );
 
+    virtual SDL_Rect GetAbsolutePosition();
     virtual void SetPosition ( Sint16 x, Sint16 y );
     virtual void SetSize ( Uint16 w, Uint16 h );
 
