@@ -57,6 +57,7 @@ protected:
     Widget *m_parentWidget;
 
     bool m_expired;
+    bool m_damaged;
 
 public:
     Widget ();

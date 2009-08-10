@@ -40,7 +40,8 @@ Widget::Widget()
    m_displayList(0),
    m_enterKeyDefault(NULL),
    m_parentWidget(NULL),
-   m_expired(false)
+   m_expired(false),
+   m_damaged(false)
 {
     memset ( &m_position, 0, sizeof(m_position) );
 }
