@@ -88,6 +88,21 @@ const char *TextUI::GetText ()
     return m_text;
 }
 
+void TextUI::SetPosition ( Sint16 x, Sint16 y, bool _centered )
+{
+    if ( !_centered )
+    {
+        Widget::SetPosition(x, y);
+        return;
+    }
+
+    SDL_Rect attr;
+    g_graphics->TextRect(g_graphics->DefaultFont(), m_text, attr);
+
+    m_position.x = x - (attr.w / 2);
+    m_position.y = y;
+}
+
 void TextUI::SetText ( const char *_text )
 {
     if ( !m_text || strcmp ( _text, m_text ) != 0 )
