@@ -33,12 +33,15 @@
 #include "Interface/text.h"
 #include "Interface/window.h"
 
+#define TITLE_X 4
+#define TITLE_Y 6
+
 Window::Window(const char *_title)
  : Widget(),
    m_dragging(false)
 {
    m_widgetClass = WIDGET_WINDOW;
-   m_title = new TextUI(_title, Color32(255,0,0), 4, 0);
+   m_title = new TextUI(_title, Color32(255,0,0), TITLE_X, TITLE_Y);
    m_widgets.insert(m_title);
 }
 
@@ -47,7 +50,7 @@ Window::Window (const char *_title, Sint16 x, Sint16 y, Uint16 w, Uint16 h )
    m_dragging(false)
 {
    m_widgetClass = WIDGET_WINDOW;
-   m_title = new TextUI(_title, Color32(255,0,0), 4, 0);
+   m_title = new TextUI(_title, Color32(255,0,0), TITLE_X, TITLE_Y);
    m_widgets.insert(m_title);
 }
 
