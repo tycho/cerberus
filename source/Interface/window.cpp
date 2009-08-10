@@ -65,9 +65,11 @@ int Window::SendEnterKey ()
     }
 }
 
-int Window::MouseUpdate ( bool _mouseDown, Sint32 x, Sint32 y )
+Widget *Window::MouseUpdate ()
 {
-	if ( !m_dragging && _mouseDown )
+	int x = g_interface->MouseX(),
+	    y = g_interface->MouseY();
+	if ( !m_dragging && g_interface->MouseLeft() )
 	{
 		// The mouse click is within the window, so this window
 		// should be moved to the foreground.
@@ -92,14 +94,18 @@ int Window::MouseUpdate ( bool _mouseDown, Sint32 x, Sint32 y )
                 y > ( actualPosition.y + actualPosition.h ) )
                 continue;
 
-            if ( !(widget->MouseUpdate ( _mouseDown, x, y )) )
+            Widget *active = widget->MouseUpdate();
+            if ( !active )
                 break; // The sub-widget doesn't have a defined behaviour for MouseUpdate.
 
 			// The sub-widget accepted the MouseUpdate.
-            return -1;
+            return active;
         }
     }
-    if ( !m_dragging && _mouseDown ) {
+    if ( !m_dragging &&
+          g_interface->MouseLeft() &&
+          g_interface->MouseLeftEdge() )
+    {
 		// Must click on the titlebar to drag.
 		if (y - m_position.y <= 20) {
 			g_interface->SetDragWindow ( this );
@@ -107,13 +113,15 @@ int Window::MouseUpdate ( bool _mouseDown, Sint32 x, Sint32 y )
 			m_mouseXOffset = x - m_position.x;
 			m_mouseYOffset = y - m_position.y;
 		}
-    } else if ( m_dragging && _mouseDown ) {
-        SetPosition ( x - m_mouseXOffset, y - m_mouseYOffset );
-    } else if ( m_dragging && !_mouseDown ) {
-        g_interface->SetDragWindow ( NULL );
-        m_dragging = false;
+    } else if ( m_dragging ) {
+		if ( g_interface->MouseLeft() ) {
+            SetPosition ( x - m_mouseXOffset, y - m_mouseYOffset );
+		} else {
+            g_interface->SetDragWindow ( NULL );
+            m_dragging = false;
+        }
     }
-    return 1;
+    return this;
 }
 
 void Window::Render()

@@ -77,9 +77,9 @@ int TextUI::SendEnterKey ()
     return 0;
 }
 
-int TextUI::MouseUpdate ( bool _mouseDown, Sint32 _x, Sint32 _y )
+Widget *TextUI::MouseUpdate ()
 {
-    return 0;
+    return NULL;
 }
 
 const char *TextUI::GetText ()

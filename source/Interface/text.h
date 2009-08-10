@@ -46,7 +46,7 @@ public:
     virtual const char *GetText ();
     virtual void SetText ( const char *_text );
     virtual void SetColor ( Color32 _color );
-    virtual int MouseUpdate ( bool _mouseDown, Sint32 _x, Sint32 _y );
+    virtual Widget *MouseUpdate ();
     virtual int SendEnterKey ();
 
     virtual void Update();

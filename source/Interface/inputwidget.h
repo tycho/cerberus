@@ -39,7 +39,7 @@ protected:
     Widget *m_callbackParam;
 public:
     InputWidget ( InputCallback _callback, Widget *_callbackParam, Sint32 _x, Sint32 _y, Sint32 _w, Sint32 _h );
-    virtual int MouseUpdate ( bool _mouseDown, Sint32 _x, Sint32 _y );
+    virtual Widget *MouseUpdate ();
     virtual int SendEnterKey ();
 };
 

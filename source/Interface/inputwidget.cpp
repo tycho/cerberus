@@ -30,6 +30,7 @@
 #include <typeinfo>
 
 #include "App/app.h"
+#include "Interface/interface.h"
 #include "Interface/inputwidget.h"
 
 InputWidget::InputWidget ( InputCallback _callback, Widget *_callbackParam,
@@ -61,12 +62,12 @@ int InputWidget::SendEnterKey ()
     }
 }
 
-int InputWidget::MouseUpdate ( bool _mouseDown, Sint32 _x, Sint32 _y )
+Widget *InputWidget::MouseUpdate ()
 {
     if ( m_callback )
     {
-        // It feels too reactive if it reacts on _mouseDown rather than !_mouseDown
-        if ( !_mouseDown )
+        // It feels weird if it reacts on MouseDown instead of MouseUp
+        if ( g_interface->MouseLeftEdge() && !g_interface->MouseLeft() )
         {
             try {
                 m_callback ( m_callbackParam );
@@ -80,9 +81,9 @@ int InputWidget::MouseUpdate ( bool _mouseDown, Sint32 _x, Sint32 _y )
         }
         // Even if the click wasn't used, we return -1 because this
         // widget does have a callback defined for !_mouseDown calls.
-        return -1;
+        return this;
     } else {
         // This widget has no callbacks defined.
-        return 0;
+        return NULL;
     }
 }

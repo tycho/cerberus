@@ -34,8 +34,13 @@
 
 Interface::Interface()
  : m_dragWindow(NULL),
+   m_activeWidget(NULL),
    m_fpsWidget(NULL),
-   m_rendererWidget(NULL)
+   m_rendererWidget(NULL),
+   m_mouseX(0),
+   m_mouseY(0),
+   m_lastButtonState(0),
+   m_buttonState(0)
 {
 }
 
@@ -53,21 +58,9 @@ Interface::~Interface()
 
 void Interface::Update ()
 {
-	static Uint8 lastButtonState = 0;
-    int x, y;
-    Uint8 buttonState = SDL_GetMouseState ( &x, &y );
-
-	if ( buttonState & SDL_BUTTON(1) ) {
-	    //if (!(lastButtonState & SDL_BUTTON(1))) {
-            MouseUpdate ( true, x, y );
-        //}
-    } else {
-        //if ( lastButtonState & SDL_BUTTON(1) ) {
-            MouseUpdate ( false, x, y );
-        //}
-    }
-
-    lastButtonState = buttonState;
+    m_buttonState = SDL_GetMouseState ( &m_mouseX, &m_mouseY );
+    SetWidgetFocus(MouseUpdate());
+    m_lastButtonState = m_buttonState;
 }
 
 void Interface::SetDragWindow ( Window *_window )
@@ -80,6 +73,13 @@ void Interface::SetWindowFocus ( Window *_window )
 	int id = m_widgetList.find(_window);
 	m_widgetList.remove(id);
 	m_widgetList.insert(_window);
+}
+
+void Interface::SetWidgetFocus ( Widget *_widget )
+{
+    if (m_activeWidget)
+        m_activeWidget->MouseUpdate();
+    m_activeWidget = _widget;
 }
 
 Widget *Interface::InsideWidget ( int _mouseX, int _mouseY )
@@ -111,6 +111,9 @@ Widget *Interface::GetWidgetOfType ( WidgetClass _widgetType )
 
 void Interface::RemoveWidget ( Widget *_widget )
 {
+    if ( _widget->HasWidget(m_activeWidget) )
+        m_activeWidget = NULL;
+
     int id = m_widgetList.find ( _widget );
     if ( id == -1 )
     {
@@ -135,11 +138,13 @@ int Interface::SendEnterKey ()
     return 0;
 }
 
-int Interface::MouseUpdate ( bool _mouseDown, Sint32 x, Sint32 y )
+Widget *Interface::MouseUpdate ()
 {
-    if ( m_dragWindow && _mouseDown)
+	int x = g_interface->MouseX(),
+	    y = g_interface->MouseY();
+    if ( m_dragWindow)
     {
-        return m_dragWindow->MouseUpdate ( _mouseDown, x, y );
+        return m_dragWindow->MouseUpdate ();
     } else {
         for ( int i = m_widgetList.size() - 1; i >= 0; i-- )
         {
@@ -149,10 +154,42 @@ int Interface::MouseUpdate ( bool _mouseDown, Sint32 x, Sint32 y )
             if ( x > ( widget->m_position.x + widget->m_position.w ) ||
                 y > ( widget->m_position.y + widget->m_position.h ) )
                 continue;
-            return widget->MouseUpdate ( _mouseDown, x, y );
+            return widget->MouseUpdate ();
         }
-        return 0;
+        return NULL;
     }
+}
+
+int Interface::MouseX () const
+{
+    return m_mouseX;
+}
+
+int Interface::MouseY () const
+{
+    return m_mouseY;
+}
+
+bool Interface::MouseLeft () const
+{
+    return (m_buttonState & SDL_BUTTON(1)) != 0;
+}
+
+bool Interface::MouseRight () const
+{
+    return (m_buttonState & SDL_BUTTON(3)) != 0;
+}
+
+bool Interface::MouseLeftEdge () const
+{
+    return (m_buttonState & SDL_BUTTON(1)) !=
+            (m_lastButtonState & SDL_BUTTON(1));
+}
+
+bool Interface::MouseRightEdge () const
+{
+    return (m_buttonState & SDL_BUTTON(3)) !=
+           (m_lastButtonState & SDL_BUTTON(3));
 }
 
 void Interface::UpdateRendererWidget ()
@@ -202,8 +239,7 @@ void Interface::RenderWidgets()
         Widget *widget = m_widgetList[i];
         if ( widget->Expired() )
         {
-            m_widgetList.remove ( i );
-            delete widget;
+            RemoveWidget ( widget );
             i--;
             continue;
         }

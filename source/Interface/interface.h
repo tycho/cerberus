@@ -39,10 +39,15 @@ protected:
     Data::LList<Widget *> m_widgetList;
 
     Window *m_dragWindow;
-    Widget *m_focusWidget;
+    Widget *m_activeWidget;
 
     TextUI *m_fpsWidget;
     TextUI *m_rendererWidget;
+
+	int   m_mouseX;
+	int   m_mouseY;
+	Uint8 m_lastButtonState;
+	Uint8 m_buttonState;
 
 public:
     Interface();
@@ -52,6 +57,7 @@ public:
 
     virtual void SetDragWindow             ( Window *_window );
     virtual void SetWindowFocus            ( Window *_window );
+    virtual void SetWidgetFocus            ( Widget *_widget );
     virtual Widget *InsideWidget           ( int _mouseX, int _mouseY );
 
 	virtual void InitWidgets               ();
@@ -60,8 +66,15 @@ public:
     virtual void RenderWidgets             ();
     virtual void RemoveWidget              ( Widget *_widget );
     virtual Widget *GetWidgetOfType        ( WidgetClass _widgetType );
-    virtual int MouseUpdate                ( bool _mouseDown, Sint32 x, Sint32 y );
+    virtual Widget *MouseUpdate            ();
     virtual int SendEnterKey               ();
+
+	virtual int MouseX                     () const;
+	virtual int MouseY                     () const;
+	virtual bool MouseLeft                 () const;
+	virtual bool MouseRight                () const;
+	virtual bool MouseLeftEdge             () const;
+	virtual bool MouseRightEdge            () const;
 
     virtual void Update ();
 };
