@@ -50,37 +50,18 @@ Button::~Button()
 
 void Button::Render()
 {
+    SDL_Rect absolutePosition = GetAbsolutePosition();
+
     // Draw the background and border
-    g_graphics->FillRect(SCREEN_SURFACE_ID, &m_position, m_color);
-    g_graphics->DrawRect(&m_position, Color32(255,0,0));
+    g_graphics->FillRect(SCREEN_SURFACE_ID, &absolutePosition, m_color);
+    g_graphics->DrawRect(&absolutePosition, Color32(255,0,0));
 
     // Figure out where the text should be
     SDL_Rect attr;
     g_graphics->TextRect(g_graphics->DefaultFont(), m_caption, attr);
     SDL_Rect txtpos;
-    txtpos.x = m_position.x + (m_position.w / 2 - (attr.w / 2));
-    txtpos.y = m_position.y + (m_position.h / 2 - (attr.h / 2));
-
-    // Render the caption
-    g_graphics->DrawText(g_graphics->DefaultFont(), txtpos.x, txtpos.y, Color32(255,0,0), m_caption);
-}
-
-void Button::Render ( Sint16 _xOffset, Sint16 _yOffset )
-{
-    SDL_Rect pos = m_position;
-    pos.x += _xOffset;
-    pos.y += _yOffset;
-
-    // Draw the background and border
-    g_graphics->FillRect(SCREEN_SURFACE_ID, &pos, m_color);
-    g_graphics->DrawRect(&pos, Color32(255,0,0));
-
-    // Figure out where the text should be
-    SDL_Rect attr;
-    g_graphics->TextRect(g_graphics->DefaultFont(), m_caption, attr);
-    SDL_Rect txtpos;
-    txtpos.x = pos.x + (pos.w / 2 - (attr.w / 2));
-    txtpos.y = pos.y + (pos.h / 2 - (attr.h / 2));
+    txtpos.x = absolutePosition.x + (absolutePosition.w / 2 - (attr.w / 2));
+    txtpos.y = absolutePosition.y + (absolutePosition.h / 2 - (attr.h / 2));
 
     // Render the caption
     g_graphics->DrawText(g_graphics->DefaultFont(), txtpos.x, txtpos.y, Color32(255,0,0), m_caption);

@@ -42,7 +42,7 @@ Window::Window(const char *_title)
 {
    m_widgetClass = WIDGET_WINDOW;
    m_title = new TextUI(_title, Color32(255,0,0), TITLE_X, TITLE_Y);
-   m_widgets.insert(m_title);
+   AddWidget(m_title);
 }
 
 Window::Window (const char *_title, Sint16 x, Sint16 y, Uint16 w, Uint16 h )
@@ -51,7 +51,7 @@ Window::Window (const char *_title, Sint16 x, Sint16 y, Uint16 w, Uint16 h )
 {
    m_widgetClass = WIDGET_WINDOW;
    m_title = new TextUI(_title, Color32(255,0,0), TITLE_X, TITLE_Y);
-   m_widgets.insert(m_title);
+   AddWidget(m_title);
 }
 
 Window::~Window()

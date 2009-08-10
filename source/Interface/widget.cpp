@@ -140,8 +140,10 @@ void Widget::Initialise()
 
 void Widget::Render ()
 {
+    SDL_Rect absolutePosition = GetAbsolutePosition();
+
     if ( m_cachedSurfaceID != INVALID_SURFACE_ID )
-        g_graphics->Blit ( m_cachedSurfaceID, NULL, g_graphics->GetScreen(), &m_position ); // FLAG
+        g_graphics->Blit ( m_cachedSurfaceID, NULL, g_graphics->GetScreen(), &absolutePosition ); // FLAG
     for ( size_t i = 0; i < m_widgets.size(); i++ )
     {
         Widget *widget = m_widgets[i];
@@ -153,23 +155,13 @@ void Widget::Render ()
             delete widget;
             continue;
         }
-        widget->Render ( m_position.x, m_position.y );
+        widget->Render();
     }
 }
 
 bool Widget::HasEnterKeyDefault ()
 {
     return m_enterKeyDefault != NULL;
-}
-
-void Widget::Render ( Sint16 _xOffset, Sint16 _yOffset )
-{
-    CrbReleaseAssert ( (int)m_cachedSurfaceID != -1 );
-    SDL_Rect newPos;
-    memcpy ( &newPos, &m_position, sizeof ( SDL_Rect ) );
-    newPos.x += _xOffset;
-    newPos.y += _yOffset;
-    g_graphics->Blit ( m_cachedSurfaceID, NULL, g_graphics->GetScreen(), &newPos );
 }
 
 void Widget::SetPosition ( Sint16 x, Sint16 y )

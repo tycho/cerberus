@@ -52,7 +52,6 @@ public:
 
     virtual void Update();
     virtual void Render();
-    virtual void Render ( Sint16 _xOffset, Sint16 _yOffset );
 };
 
 #endif

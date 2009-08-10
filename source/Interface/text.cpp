@@ -58,16 +58,10 @@ void TextUI::Update ()
 
 void TextUI::Render ()
 {
-	g_graphics->DrawText(g_graphics->DefaultFont(),
-		m_position.x, m_position.y, m_color, m_text);
+    SDL_Rect absolutePosition = GetAbsolutePosition();
 
-	Widget::Render();
-}
-
-void TextUI::Render ( Sint16 _xOffset, Sint16 _yOffset )
-{
 	g_graphics->DrawText(g_graphics->DefaultFont(),
-		m_position.x + _xOffset, m_position.y + _yOffset, m_color, m_text);
+		absolutePosition.x, absolutePosition.y, m_color, m_text);
 
 	Widget::Render();
 }

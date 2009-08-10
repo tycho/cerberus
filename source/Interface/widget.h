@@ -41,6 +41,9 @@ typedef enum
 
 class Widget
 {
+private:
+    Data::LList<Widget *> m_widgets;
+
 protected:
     WidgetClass m_widgetClass;
 
@@ -49,8 +52,6 @@ protected:
     Uint32 m_cachedSurfaceID;
 	bool   m_rebuildDisplayList;
 	Uint32 m_displayList;
-
-    Data::LList<Widget *> m_widgets;
 
     Widget *m_enterKeyDefault;
     Widget *m_parentWidget;
@@ -72,7 +73,6 @@ public:
     virtual void Update ();
 	virtual void Initialise ();
     virtual void Render ();
-    virtual void Render ( Sint16 _xOffset, Sint16 _yOffset );
 
     virtual SDL_Rect GetAbsolutePosition();
     virtual void SetPosition ( Sint16 x, Sint16 y );
