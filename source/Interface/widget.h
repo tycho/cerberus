@@ -53,6 +53,7 @@ protected:
     Data::LList<Widget *> m_widgets;
 
     Widget *m_enterKeyDefault;
+    Widget *m_parentWidget;
 
     bool m_expired;
 
@@ -67,6 +68,7 @@ public:
     virtual bool Expired ();
 
     virtual void AddWidget ( Widget *_widget );
+    virtual bool HasWidget ( Widget *_widget );
     virtual void Update ();
 	virtual void Initialise ();
     virtual void Render ();

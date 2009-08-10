@@ -39,6 +39,7 @@ Widget::Widget()
    m_rebuildDisplayList(true),
    m_displayList(0),
    m_enterKeyDefault(NULL),
+   m_parentWidget(NULL),
    m_expired(false)
 {
     memset ( &m_position, 0, sizeof(m_position) );
@@ -79,7 +80,20 @@ bool Widget::Expired ()
 
 void Widget::AddWidget ( Widget *_widget )
 {
+    _widget->m_parentWidget = this;
     m_widgets.insert ( _widget );
+}
+
+bool Widget::HasWidget ( Widget *_widget )
+{
+    if ( this == _widget ) return true;
+    for ( size_t i = 0; i < m_widgets.size(); i++ )
+    {
+        Widget *widget = m_widgets[i];
+        if ( widget == _widget) return true;
+        if ( widget->HasWidget(_widget)) return true;
+    }
+    return false;
 }
 
 Data::LList<Widget *> *Widget::GetWidgetList()
