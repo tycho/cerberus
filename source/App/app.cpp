@@ -187,12 +187,6 @@ void App::Initialise()
         g_graphics->GetScreenHeight () - 25 );
     g_interface->AddWidget ( text );
 
-#ifndef RELEASE_BUILD
-    text = new TextUI (
-        "NOT FOR PUBLIC INSPECTION OR REDISTRIBUTION",
-        false, g_graphics->GetScreenWidth () - 290, g_graphics->GetScreenHeight () - 12 );
-    g_interface->AddWidget ( text );
-#endif
 }
 
 void App::CreateDirectory ( const char *_path )
