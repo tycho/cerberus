@@ -50,7 +50,6 @@ protected:
     SDL_Rect m_position;
 
     Uint32 m_cachedSurfaceID;
-	Uint32 m_displayList;
 
     Widget *m_enterKeyDefault;
     Widget *m_parentWidget;

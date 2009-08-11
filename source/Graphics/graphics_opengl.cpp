@@ -74,42 +74,6 @@ const char *OpenGLGraphics::RendererName()
 	return renderer;
 }
 
-Uint32 OpenGLGraphics::CreateDisplayList()
-{
-	Uint32 ret = glGenLists(1);
-	ASSERT_OPENGL_ERRORS;
-	return ret;
-}
-
-void OpenGLGraphics::DestroyDisplayList(Uint32 _list)
-{
-	if (_list == 0) return;
-	glDeleteLists(_list, 1);
-	ASSERT_OPENGL_ERRORS;
-}
-
-void OpenGLGraphics::BeginDisplayList(Uint32 _list)
-{
-	if (_list == 0) return;
-	glNewList(_list, GL_COMPILE);
-	ASSERT_OPENGL_ERRORS;
-}
-
-void OpenGLGraphics::EndDisplayList(Uint32 _list)
-{
-	if (_list == 0) return;
-	glEndList();
-	ASSERT_OPENGL_ERRORS;
-}
-
-void OpenGLGraphics::CallDisplayList(Uint32 _list)
-{
-	if (_list == 0) return;
-	CrbReleaseAssert(glIsList(_list));
-	glCallLists(1, GL_UNSIGNED_INT, &_list);
-	ASSERT_OPENGL_ERRORS;
-}
-
 Uint32 OpenGLGraphics::CreateFont(const char *_fontFace, int _height)
 {
 #ifdef ENABLE_FONTS

@@ -130,35 +130,18 @@ Widget *Window::MouseUpdate ()
 void Window::Render()
 {
 	// Render the window itself
-	if (!m_displayList) {
-		m_displayList = g_graphics->CreateDisplayList();
-		g_graphics->BeginDisplayList(m_displayList);
 
-		SDL_Rect pos;
-		if (m_displayList) {
-			pos.x = 0;
-			pos.y = 0;
-			pos.w = m_position.w;
-			pos.h = m_position.h;
-		} else {
-			memcpy(&pos, &m_position, sizeof(SDL_Rect));
-		}
+	// Frame
+	Color32 fillColor(50,25,25,191),
+			borderColor(255,0,0);
 
-		// Frame
-		g_graphics->FillRect(SCREEN_SURFACE_ID, &pos, Color32(50,25,25,191));
-		g_graphics->DrawRect(&pos, Color32(255,0,0));
+	g_graphics->FillRect(SCREEN_SURFACE_ID, &m_position, fillColor);
+	g_graphics->DrawRect(&m_position, borderColor);
 
-		// Titlebar bottom
-		g_graphics->DrawLine(SCREEN_SURFACE_ID, Color32(255,0,0), pos.x, pos.y + 21, pos.x + pos.w, pos.y + 21);
-
-		g_graphics->EndDisplayList(m_displayList);
-	}
-	if (m_displayList) {
-		glPushMatrix();
-		glTranslatef((float)m_position.x, (float)m_position.y, 0.0f);
-		g_graphics->CallDisplayList(m_displayList);
-		glPopMatrix();
-	}
+	// Titlebar bottom
+	g_graphics->DrawLine(SCREEN_SURFACE_ID, borderColor,
+		m_position.x, m_position.y + 21,
+		m_position.x + m_position.w, m_position.y + 21);
 
 	// Render the window's contents
 	Widget::Render();

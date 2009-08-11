@@ -53,12 +53,6 @@ public:
 
 	virtual const char *RendererName() = 0;
 
-	virtual Uint32 CreateDisplayList() = 0;
-	virtual void   DestroyDisplayList(Uint32 _list) = 0;
-	virtual void   BeginDisplayList(Uint32 _list) = 0;
-	virtual void   EndDisplayList(Uint32 _list) = 0;
-	virtual void   CallDisplayList (Uint32 _list) = 0;
-
 	virtual Uint32 DefaultFont();
 
 	virtual Uint32 CreateFont ( const char *_fontFace, int _height) = 0;

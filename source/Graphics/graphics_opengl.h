@@ -59,12 +59,6 @@ public:
 
 	virtual const char *RendererName();
 
-	virtual Uint32 CreateDisplayList();
-	virtual void   DestroyDisplayList(Uint32 _list);
-	virtual void   BeginDisplayList(Uint32 _list);
-	virtual void   EndDisplayList(Uint32 _list);
-	virtual void   CallDisplayList (Uint32 _list);
-
 	virtual Uint32 CreateFont ( const char *_fontFace, int _height );
 	virtual void   DrawText ( Uint32 _font, Uint16 _x, Uint16 _y, Color32 _color, const char *_text );
 	virtual void   TextRect ( Uint32 _font, const char *_text, SDL_Rect &_rect );

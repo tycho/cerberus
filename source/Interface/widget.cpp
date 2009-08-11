@@ -36,7 +36,6 @@
 Widget::Widget()
  : m_widgetClass(WIDGET_UNKNOWN),
    m_cachedSurfaceID(-1),
-   m_displayList(0),
    m_enterKeyDefault(NULL),
    m_parentWidget(NULL),
    m_expired(false),
@@ -48,7 +47,6 @@ Widget::Widget()
 Widget::Widget ( Sint16 x, Sint16 y, Uint16 w, Uint16 h )
  : m_widgetClass(WIDGET_UNKNOWN),
    m_cachedSurfaceID(-1),
-   m_displayList(0),
    m_enterKeyDefault(NULL),
    m_parentWidget(NULL),
    m_expired(false),

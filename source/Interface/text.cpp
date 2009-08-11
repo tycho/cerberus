@@ -53,41 +53,15 @@ TextUI::~TextUI ()
 
 void TextUI::Update ()
 {
-    if (m_damaged) {
-        g_graphics->DestroyDisplayList(m_displayList);
-        m_displayList = 0;
-    }
 	Widget::Update();
 }
 
 void TextUI::Render ()
 {
-	if (!m_displayList) {
-        SDL_Rect absolutePosition = GetAbsolutePosition();
+	SDL_Rect absolutePosition = GetAbsolutePosition();
 
-		m_displayList = g_graphics->CreateDisplayList();
-		g_graphics->BeginDisplayList(m_displayList);
-
-        if (m_displayList) {
-            // We are successfully generating a display list, so we
-            // need to set the coordinates to 0, because it will later
-            // be translated to the appropriate position.
-            absolutePosition.x = 0;
-            absolutePosition.y = 0;
-        }
-
-        g_graphics->DrawText(g_graphics->DefaultFont(),
-            absolutePosition.x, absolutePosition.y, m_color, m_text);
-
-		g_graphics->EndDisplayList(m_displayList);
-    }
-	if (m_displayList) {
-        SDL_Rect absolutePosition = GetAbsolutePosition();
-		glPushMatrix();
-		glTranslatef((float)absolutePosition.x, (float)absolutePosition.y, 0.0f);
-		g_graphics->CallDisplayList(m_displayList);
-		glPopMatrix();
-	}
+	g_graphics->DrawText(g_graphics->DefaultFont(),
+	absolutePosition.x, absolutePosition.y, m_color, m_text);
 
 	Widget::Render();
 }
