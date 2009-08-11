@@ -51,7 +51,7 @@ void OpenGLTexture::Dispose()
     if ( m_textureID != INVALID_SURFACE_ID &&
          m_textureID != SCREEN_SURFACE_ID )
     {
-	    g_openGL->ActivateTextureRect();
+	    glEnable(g_openGL->GetTextureTarget());
         Bind();
         glTexImage2D ( g_openGL->GetTextureTarget(), 0, g_openGL->GetInternalFormat32(), 0, 0, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL );
         ASSERT_OPENGL_ERRORS;
@@ -166,7 +166,7 @@ bool OpenGLTexture::Upload()
 	}
 #endif
 
-	g_openGL->ActivateTextureRect();
+	glEnable(g_openGL->GetTextureTarget());
     Bind();
     glPixelStorei ( GL_UNPACK_ROW_LENGTH, m_sdlSurface->pitch / m_sdlSurface->format->BytesPerPixel );
     ASSERT_OPENGL_ERRORS;

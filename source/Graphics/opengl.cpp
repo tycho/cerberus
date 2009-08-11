@@ -41,11 +41,8 @@
 OpenGL *g_openGL = NULL;
 
 OpenGL::OpenGL()
-:  m_textureEnabled(false),
-   m_renderPath(RENDER_PATH_VERTEX_ARRAY),
-   m_boundTexture(0),
-   m_clientStateVertexArray(false),
-   m_clientStateTexCoordArray(false)
+:  m_renderPath(RENDER_PATH_VERTEX_ARRAY),
+   m_boundTexture(0)
 {
     CrbReleaseAssert ( g_openGL == NULL );
     m_vendorString     = cc_strdup((const char *)glGetString ( GL_VENDOR     ));
@@ -216,88 +213,22 @@ renderPath OpenGL::GetRenderPath() const
 void OpenGL::VertexArrayStatePrimitive ()
 {
 	CrbDebugAssert ( this );
-    if (!m_clientStateVertexArray)
-    {
-        glEnableClientState ( GL_VERTEX_ARRAY );
-        ASSERT_OPENGL_ERRORS;
-        m_clientStateVertexArray = true;
-    }
-    if (m_clientStateTexCoordArray)
-    {
-        glDisableClientState ( GL_TEXTURE_COORD_ARRAY );
-        ASSERT_OPENGL_ERRORS;
-        m_clientStateTexCoordArray = false;
-    }
+    glEnableClientState ( GL_VERTEX_ARRAY );
+    glDisableClientState ( GL_TEXTURE_COORD_ARRAY );
 }
 
 void OpenGL::VertexArrayStateTexture ()
 {
 	CrbDebugAssert ( this );
-    if (!m_clientStateVertexArray)
-    {
-        glEnableClientState ( GL_VERTEX_ARRAY );
-        ASSERT_OPENGL_ERRORS;
-        m_clientStateVertexArray = true;
-    }
-    if (!m_clientStateTexCoordArray)
-    {
-        glEnableClientState ( GL_TEXTURE_COORD_ARRAY );
-        ASSERT_OPENGL_ERRORS;
-        m_clientStateTexCoordArray = true;
-    }
+    glEnableClientState ( GL_VERTEX_ARRAY );
+    glEnableClientState ( GL_TEXTURE_COORD_ARRAY );
 }
 
 void OpenGL::VertexArrayStateOff ()
 {
 	CrbDebugAssert ( this );
-    if (m_clientStateVertexArray)
-    {
-        glDisableClientState ( GL_VERTEX_ARRAY );
-        ASSERT_OPENGL_ERRORS;
-        m_clientStateVertexArray = false;
-    }
-    if (m_clientStateTexCoordArray)
-    {
-        glDisableClientState ( GL_TEXTURE_COORD_ARRAY );
-        ASSERT_OPENGL_ERRORS;
-        m_clientStateTexCoordArray = false;
-    }
-}
-
-void OpenGL::ActivateWhiteWithAlpha ( Uint8 alpha )
-{
-	CrbDebugAssert ( this );
-    glColor4ub ( 0xFF, 0xFF, 0xFF, alpha );
-    ASSERT_OPENGL_ERRORS;
-}
-
-void OpenGL::ActivateColour ( Color32 col )
-{
-	CrbDebugAssert ( this );
-	glColor4f(col.R(), col.G(), col.B(), col.A());
-    ASSERT_OPENGL_ERRORS;
-}
-
-void OpenGL::ActivateTextureRect ()
-{
-	CrbDebugAssert ( this );
-    if (!m_textureEnabled)
-    {
-        glEnable ( GetTextureTarget() );
-        ASSERT_OPENGL_ERRORS;
-        m_textureEnabled = true;
-    }
-}
-
-void OpenGL::DeactivateTextureRect ()
-{
-	CrbDebugAssert ( this );
-    if (m_textureEnabled)
-    {
-        glDisable ( GetTextureTarget() );
-        ASSERT_OPENGL_ERRORS;
-        m_textureEnabled = false;
-    }
+    glDisableClientState ( GL_VERTEX_ARRAY );
+    glDisableClientState ( GL_TEXTURE_COORD_ARRAY );
 }
 
 void OpenGL::BindTexture ( GLuint _textureID )
@@ -306,12 +237,7 @@ void OpenGL::BindTexture ( GLuint _textureID )
     CrbReleaseAssert ( _textureID != SCREEN_SURFACE_ID );
     CrbReleaseAssert ( _textureID != INVALID_SURFACE_ID );
     CrbReleaseAssert ( _textureID != 0 );
-    if ( _textureID != m_boundTexture )
-    {
-        glBindTexture ( GetTextureTarget(), _textureID );
-        ASSERT_OPENGL_ERRORS;
-        m_boundTexture = _textureID;
-    }
+    glBindTexture ( GetTextureTarget(), _textureID );
 }
 
 GLenum OpenGL::GetTextureTarget() const

@@ -169,8 +169,8 @@ void OpenGLGraphics::DrawRect ( SDL_Rect *_destRect, Color32 _color )
 {
 	CoreAssert ( _destRect );
 
-	g_openGL->ActivateColour ( _color );
-    g_openGL->DeactivateTextureRect ();
+    glColor4f(_color.R(), _color.G(), _color.B(), _color.A());
+    glDisable(g_openGL->GetTextureTarget());
 
 	glEnable(GL_BLEND);
 	glBegin(GL_LINE_LOOP);
@@ -202,8 +202,8 @@ void OpenGLGraphics::DrawLine ( Uint32 _surfaceID, Color32 _color, int _startX, 
 {
     CoreAssert ( _surfaceID == SCREEN_SURFACE_ID );
 
-    g_openGL->ActivateColour ( _color );
-    g_openGL->DeactivateTextureRect ();
+    glColor4f(_color.R(), _color.G(), _color.B(), _color.A());
+    glDisable(g_openGL->GetTextureTarget());
 
 	glEnable(GL_BLEND);
 	glBegin(GL_LINES);
@@ -225,14 +225,14 @@ void OpenGLGraphics::SetPixel ( Uint32 _surfaceID, int x, int y, Color32 _color 
     if ( _surfaceID == SCREEN_SURFACE_ID )
     {
         g_openGL->VertexArrayStatePrimitive ();
-        g_openGL->DeactivateTextureRect ();
+        glDisable(g_openGL->GetTextureTarget());
         glDisable ( GL_BLEND );
         ASSERT_OPENGL_ERRORS;
 #ifndef TARGET_OS_WINDOWS
         m_vertexArray[0] = x;
         m_vertexArray[1] = y;
         _color.c.a = 255;
-        g_openGL->ActivateColour ( _color );
+        glColor4f(_color.R(), _color.G(), _color.B(), _color.A());
         glDrawArrays ( GL_POINTS, 0, 1 );
 #else
         glRasterPos2i ( x, y );
@@ -336,8 +336,8 @@ int OpenGLGraphics::FillRect ( Uint32 _surfaceID, SDL_Rect *_destRect, Color32 _
 		}
 
         // fill a rectangle on screen
-        g_openGL->ActivateColour ( _color );
-        g_openGL->DeactivateTextureRect ();
+        glColor4f(_color.R(), _color.G(), _color.B(), _color.A());
+        glDisable(g_openGL->GetTextureTarget());
 
 		SDL_Rect nullDestRect;
 		if ( !_destRect )
@@ -464,9 +464,9 @@ int OpenGLGraphics::Blit ( Uint32 _sourceSurfaceID, SDL_Rect const *_sourceRect,
         fromSurface->Upload();
 
         // draw from sourceSurfaceID
-        g_openGL->ActivateTextureRect();
+        glEnable ( g_openGL->GetTextureTarget() );
         fromSurface->Bind();
-        g_openGL->ActivateWhiteWithAlpha ( fromSurface->m_alpha );
+        glColor4f ( 1.0f, 1.0f, 1.0f, (float)fromSurface->m_alpha / 255.0f );
         g_openGL->VertexArrayStateTexture ();
 
         short *vertexArray = m_vertexArray, *texCoordArrayi = m_texCoordArrayi;

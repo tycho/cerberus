@@ -70,7 +70,6 @@ class OpenGL
 {
 private:
     Uint16                              m_version[8];
-    bool                                m_textureEnabled;
     char                               *m_extensionsString;
     char                               *m_versionString;
     char                               *m_vendorString;
@@ -84,9 +83,6 @@ private:
 
     GLuint                              m_boundTexture;
 
-    bool m_clientStateVertexArray;
-    bool m_clientStateTexCoordArray;
-
     void FillTextureStack();
     void SetupExtensions();
     void SetupVersion();
@@ -94,12 +90,6 @@ private:
 public:
     OpenGL();
     ~OpenGL();
-
-    void ActivateTextureRect();
-    void DeactivateTextureRect();
-
-    void ActivateWhiteWithAlpha ( Uint8 alpha );
-    void ActivateColour ( Color32 col );
 
     void VertexArrayStatePrimitive();
     void VertexArrayStateTexture();
