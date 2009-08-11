@@ -680,6 +680,13 @@ int OpenGLGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heigh
 
     bool testsPassed = true;
 
+    GLenum err = glewInit();
+    if (err != GLEW_OK) {
+        char buffer[256];
+        sprintf(buffer, "glewInit failed: %s", glewGetErrorString(err));
+        CrbReleaseAbort(buffer);
+    }
+
     g_console->Write ( "OpenGL vendor: " );
     g_console->SetColour ( IO::Console::FG_CYAN | IO::Console::FG_INTENSITY );
     g_console->WriteLine ( "%s", g_openGL->GetVendor() );
@@ -728,9 +735,7 @@ int OpenGLGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heigh
 
     g_console->Write ( "Supports texture rectangles? " );
 
-    if ( g_openGL->ExtensionIsSupported ( "GL_EXT_texture_rectangle" ) ||
-         g_openGL->ExtensionIsSupported ( "GL_ARB_texture_rectangle" ) ||
-         g_openGL->ExtensionIsSupported ( "GL_NV_texture_rectangle" ) )
+    if (GLEW_ARB_texture_rectangle)
     {
         g_console->SetColour ( IO::Console::FG_GREEN | IO::Console::FG_INTENSITY );
         g_console->WriteLine ( "Yes" );
@@ -772,7 +777,7 @@ int OpenGLGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heigh
 
 	// Support for this on ATI hardware seems dodgy at best.
     g_console->Write ( "Supports non power-of-two textures? " );
-    if ( g_openGL->ExtensionIsSupported ( "ARB_texture_non_power_of_two" ) &&
+    if ( GLEW_ARB_texture_non_power_of_two &&
         !strstr ( g_openGL->GetVendor(), "ATI" ) )
     {
         g_console->SetColour ( IO::Console::FG_GREEN | IO::Console::FG_INTENSITY );
@@ -787,7 +792,7 @@ int OpenGLGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heigh
 	}
 
     g_console->Write ( "Supports 3DFX texture compression? " );
-    if ( g_openGL->ExtensionIsSupported ( "GL_3DFX_texture_compression_FXT1" ) )
+    if ( GLEW_3DFX_texture_compression_FXT1 )
     {
         g_console->SetColour ( IO::Console::FG_GREEN | IO::Console::FG_INTENSITY );
         g_console->WriteLine ( "Yes" );
@@ -808,7 +813,7 @@ int OpenGLGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heigh
     }
 
     g_console->Write ( "Supports S3 texture compression? " );
-    if ( g_openGL->ExtensionIsSupported ( "GL_EXT_texture_compression_s3tc" ) )
+    if ( GLEW_EXT_texture_compression_s3tc )
     {
         g_console->SetColour ( IO::Console::FG_GREEN | IO::Console::FG_INTENSITY );
         g_console->WriteLine ( "Yes" );
@@ -828,22 +833,8 @@ int OpenGLGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heigh
         g_openGL->SetSetting ( OPENGL_TEX_S3_COMPRESSION, false );
     }
 
-    g_console->Write ( "Supports compiled vertex arrays? " );
-    if ( g_openGL->ExtensionIsSupported ( "GL_EXT_compiled_vertex_array" ) )
-    {
-        g_console->SetColour ( IO::Console::FG_GREEN | IO::Console::FG_INTENSITY );
-        g_console->WriteLine ( "Yes" );
-        g_console->SetColour ();
-        extensionIsSupported = true;
-    } else {
-        g_console->SetColour ( IO::Console::FG_RED |IO::Console::FG_INTENSITY );
-        g_console->WriteLine ( "No" );
-        g_console->SetColour ();
-        extensionIsSupported = false;
-    }
-
     g_console->Write ( "Supports vertex buffer objects? " );
-    if ( g_openGL->ExtensionIsSupported ( "GL_ARB_vertex_buffer_object" ) )
+    if ( GLEW_ARB_vertex_buffer_object )
     {
         g_console->SetColour ( IO::Console::FG_GREEN | IO::Console::FG_INTENSITY );
         g_console->WriteLine ( "Yes" );

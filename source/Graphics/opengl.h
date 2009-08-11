@@ -98,7 +98,6 @@ public:
     bool IsTextureBound ( GLuint _textureID ) const;
     void BindTexture ( GLuint _textureID );
 
-    bool ExtensionIsSupported ( const char *_extension );
     const char *GetVendor() const;
     const char *GetRenderer() const;
     const char *GetVersion() const;

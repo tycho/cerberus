@@ -144,19 +144,20 @@
 #  define FTGL_LIBRARY_STATIC
 #endif
 
+#define GLEW_STATIC
+
 #ifdef TARGET_OS_MACOSX
-#  define GL_3DFX_texture_compression_FXT1 1
+#  include <GL/glew.h>
 #  include <OpenGL/GL.h>
 #  include <OpenGL/glext.h>
-#  ifdef ENABLE_FONTS
-#    include <FTGL/FTGLTextureFont.h>
-#  endif
 #else
+#  include <GL/glew.h>
 #  include <GL/gl.h>
 #  include <GL/glext.h>
-#  ifdef ENABLE_FONTS
-#    include <FTGL/ftgl.h>
-#  endif
+#endif
+
+#ifdef ENABLE_FONTS
+#  include <FTGL/ftgl.h>
 #endif
 
 #include <zlib.h>

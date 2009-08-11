@@ -26,6 +26,8 @@
 		B05708E50DB219920071B5B7 /* preferences.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05708E00DB219920071B5B7 /* preferences.cpp */; };
 		B05708E60DB219920071B5B7 /* text_stream_readers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05708E20DB219920071B5B7 /* text_stream_readers.cpp */; };
 		B05708F40DB219FF0071B5B7 /* error_window.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B05708F10DB219FF0071B5B7 /* error_window.cpp */; };
+		B065FA841031FF89006D7A4F /* data in Resources */ = {isa = PBXBuildFile; fileRef = B065FA7D1031FF88006D7A4F /* data */; };
+		B065FBDE10321FFA006D7A4F /* libGLEW.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B065FBC610321F7B006D7A4F /* libGLEW.a */; };
 		B07EEE9E0BEEEA770005CD3D /* net_crisscross.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B07EEE940BEEEA770005CD3D /* net_crisscross.cpp */; };
 		B07EEEA20BEEEA770005CD3D /* net.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B07EEE980BEEEA770005CD3D /* net.cpp */; };
 		B07EEEA40BEEEA770005CD3D /* packet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B07EEE9A0BEEEA770005CD3D /* packet.cpp */; };
@@ -123,6 +125,20 @@
 			proxyType = 2;
 			remoteGlobalIDString = D2AAC046055464E500DB518D;
 			remoteInfo = Freetype2;
+		};
+		B065FBC510321F7B006D7A4F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B065FBBE10321F7B006D7A4F /* GLEW.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC046055464E500DB518D;
+			remoteInfo = GLEW;
+		};
+		B065FBD710321FEB006D7A4F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B065FBBE10321F7B006D7A4F /* GLEW.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC045055464E500DB518D;
+			remoteInfo = GLEW;
 		};
 		B09B593B0EAC2EF7003F4C0B /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -237,6 +253,8 @@
 		B05708E30DB219920071B5B7 /* text_stream_readers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = text_stream_readers.h; path = ../../source/App/text_stream_readers.h; sourceTree = "<group>"; };
 		B05708F10DB219FF0071B5B7 /* error_window.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = error_window.cpp; path = ../../source/Interface/error_window.cpp; sourceTree = "<group>"; };
 		B05708F20DB219FF0071B5B7 /* error_window.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = error_window.h; path = ../../source/Interface/error_window.h; sourceTree = "<group>"; };
+		B065FA7D1031FF88006D7A4F /* data */ = {isa = PBXFileReference; lastKnownFileType = folder; name = data; path = ../../bin/data; sourceTree = SOURCE_ROOT; };
+		B065FBBE10321F7B006D7A4F /* GLEW.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = GLEW.xcodeproj; path = ../../contrib/glew/build/xcode/GLEW.xcodeproj; sourceTree = SOURCE_ROOT; };
 		B07EEE940BEEEA770005CD3D /* net_crisscross.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = net_crisscross.cpp; path = ../../source/Network/net_crisscross.cpp; sourceTree = "<group>"; };
 		B07EEE950BEEEA770005CD3D /* net_crisscross.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = net_crisscross.h; path = ../../source/Network/net_crisscross.h; sourceTree = "<group>"; };
 		B07EEE980BEEEA770005CD3D /* net.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = net.cpp; path = ../../source/Network/net.cpp; sourceTree = "<group>"; };
@@ -351,6 +369,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B065FBDE10321FFA006D7A4F /* libGLEW.a in Frameworks */,
 				B020F055101A35630040E736 /* libFreetype2.a in Frameworks */,
 				B020F04D101A35450040E736 /* libftgl-static.a in Frameworks */,
 				B09B59400EAC2F36003F4C0B /* libCrissCross Static.a in Frameworks */,
@@ -393,6 +412,22 @@
 			isa = PBXGroup;
 			children = (
 				B020F054101A355E0040E736 /* libFreetype2.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		B065FA851031FF98006D7A4F /* Data */ = {
+			isa = PBXGroup;
+			children = (
+				B065FA7D1031FF88006D7A4F /* data */,
+			);
+			name = Data;
+			sourceTree = "<group>";
+		};
+		B065FBBF10321F7B006D7A4F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B065FBC610321F7B006D7A4F /* libGLEW.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -511,11 +546,13 @@
 		B0B8E8B50BDB4D36007C1576 = {
 			isa = PBXGroup;
 			children = (
+				B09B59330EAC2EF7003F4C0B /* CrissCross.xcodeproj */,
 				B020F04F101A355E0040E736 /* Freetype2.xcodeproj */,
 				B020ED7E101A262D0040E736 /* FTGL.xcodeproj */,
-				B09B59330EAC2EF7003F4C0B /* CrissCross.xcodeproj */,
+				B065FBBE10321F7B006D7A4F /* GLEW.xcodeproj */,
 				B0B8E8C30BDB4D4C007C1576 /* App */,
 				B0BD2DA00BE26FD000F71A26 /* Build */,
+				B065FA851031FF98006D7A4F /* Data */,
 				B020E4EB101A156B0040E736 /* Frameworks */,
 				B0B8E8C80BDB4D5E007C1576 /* Game */,
 				B0B8E8C90BDB4D64007C1576 /* Graphics */,
@@ -701,6 +738,7 @@
 			dependencies = (
 				B09B593E0EAC2F23003F4C0B /* PBXTargetDependency */,
 				B020F03B101A2B960040E736 /* PBXTargetDependency */,
+				B065FBD810321FEB006D7A4F /* PBXTargetDependency */,
 			);
 			name = Cerberus;
 			productName = Cerberus;
@@ -731,6 +769,10 @@
 					ProductGroup = B020ED7F101A262D0040E736 /* Products */;
 					ProjectRef = B020ED7E101A262D0040E736 /* FTGL.xcodeproj */;
 				},
+				{
+					ProductGroup = B065FBBF10321F7B006D7A4F /* Products */;
+					ProjectRef = B065FBBE10321F7B006D7A4F /* GLEW.xcodeproj */;
+				},
 			);
 			projectRoot = "";
 			targets = (
@@ -754,6 +796,13 @@
 			remoteRef = B020F053101A355E0040E736 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		B065FBC610321F7B006D7A4F /* libGLEW.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libGLEW.a;
+			remoteRef = B065FBC510321F7B006D7A4F /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		B09B593C0EAC2EF7003F4C0B /* libCrissCross Static.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
@@ -769,6 +818,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				B0A2002F0DB0B47A00C9BD5C /* cerberus.icns in Resources */,
+				B065FA841031FF89006D7A4F /* data in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -889,6 +939,11 @@
 			name = "ftgl-static";
 			targetProxy = B020F03A101A2B960040E736 /* PBXContainerItemProxy */;
 		};
+		B065FBD810321FEB006D7A4F /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = GLEW;
+			targetProxy = B065FBD710321FEB006D7A4F /* PBXContainerItemProxy */;
+		};
 		B09B593E0EAC2F23003F4C0B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = "CrissCross Static";
@@ -910,6 +965,7 @@
 					"$(PROJECT_DIR)/../../source",
 					"$(PROJECT_DIR)/../../contrib/crisscross/source",
 					"$(PROJECT_DIR)/../../contrib/unrar",
+					"$(PROJECT_DIR)/../../contrib/glew/include",
 					"$(PROJECT_DIR)/../../contrib/OpenGL/include/",
 					"$(PROJECT_DIR)/../../contrib/FTGL/src",
 					"$(PROJECT_DIR)/../../contrib/freetype/include",
@@ -941,7 +997,7 @@
 					i386,
 					ppc,
 				);
-				COPY_PHASE_STRIP = YES;
+				COPY_PHASE_STRIP = NO;
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.framework *.gch *.xcode* (*) CVS .svn .git";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ../../source/macosx.pch;
@@ -950,6 +1006,7 @@
 					"$(PROJECT_DIR)/../../source",
 					"$(PROJECT_DIR)/../../contrib/crisscross/source",
 					"$(PROJECT_DIR)/../../contrib/unrar",
+					"$(PROJECT_DIR)/../../contrib/glew/include",
 					"$(PROJECT_DIR)/../../contrib/OpenGL/include/",
 					"$(PROJECT_DIR)/../../contrib/FTGL/src",
 					"$(PROJECT_DIR)/../../contrib/freetype/include",
@@ -1020,14 +1077,12 @@
 					"-Wno-long-long",
 				);
 				WRAPPER_EXTENSION = app;
-				ZERO_LINK = YES;
 			};
 			name = Debug;
 		};
 		B0B8E9250BDB4E72007C1576 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				COPY_PHASE_STRIP = YES;
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(FRAMEWORK_SEARCH_PATHS_QUOTED_1)",

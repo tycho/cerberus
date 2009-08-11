@@ -34,10 +34,6 @@
 #    pragma comment (lib, "opengl32.lib")
 #endif
 
-#ifndef GL_TEXTURE_RECTANGLE_ARB
-#    define GL_TEXTURE_RECTANGLE_ARB            0x84F5
-#endif
-
 OpenGL *g_openGL = NULL;
 
 OpenGL::OpenGL()
@@ -130,12 +126,6 @@ void OpenGL::SetupExtensions()
     {
         m_renderPath = (renderPath)renderPreference;
     }
-}
-
-bool OpenGL::ExtensionIsSupported ( const char *_extension )
-{
-	CrbDebugAssert ( this );
-    return m_extensions.exists ( _extension );
 }
 
 void OpenGL::FillTextureStack ()
