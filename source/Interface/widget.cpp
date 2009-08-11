@@ -117,14 +117,13 @@ Data::LList<Widget *> *Widget::GetWidgetList()
     return &m_widgets;
 }
 
-bool Widget::IsInsideWidget ( int _mouseX, int _mouseY )
+bool Widget::IsInsideWidget ( int _x, int _y )
 {
-    SDL_Rect mousePos;
-    mousePos.x = _mouseX;
-    mousePos.y = _mouseY;
-    mousePos.w = 1; mousePos.h = 1;
     SDL_Rect absolutePosition = GetAbsolutePosition();
-    return ( SDL_CollideBoundingBox ( mousePos, absolutePosition ) != 0 );
+    return _x >= absolutePosition.x &&
+           _x <  absolutePosition.x + absolutePosition.w &&
+           _y >= absolutePosition.y &&
+           _y <  absolutePosition.y + absolutePosition.h;
 }
 
 void Widget::Initialise()
