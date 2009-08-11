@@ -14,7 +14,7 @@ CC ?= gcc
 CXX ?= g++
 LINK := $(CXX)
 LIBS := -Wl,-Bstatic -Lcontrib/crisscross/source -lCrissCross -lSDLmain -Wl,-Bdynamic -lz $(shell pkg-config ftgl --libs) \
-		$(shell pkg-config sdl --libs) -lSDL_mixer -lSDL_image -lGL -lX11 -rdynamic -fopenmp
+		$(shell pkg-config sdl --libs) -lSDL_mixer -lSDL_image -lGL -lGLEW -lX11 -rdynamic -fopenmp
 
 CXXFLAGS = -O2 -ggdb -pipe -Wall -Wno-long-long -rdynamic -std=c++98 -pedantic -fopenmp -fno-strict-aliasing -ffast-math
 
