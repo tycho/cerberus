@@ -53,9 +53,6 @@ protected:
     Uint16  m_centerX;
     Uint16  m_centerY;
 
-    Color32  m_colorKey;
-    bool    m_colorKeySet;
-
 	Uint32  m_defaultFont;
 
 public:
@@ -101,11 +98,8 @@ public:
     virtual SDL_PixelFormat *GetPixelFormat ( Uint32 _surfaceID ) = 0;
     virtual void   ReplaceColour(Uint32 _surfaceID, SDL_Rect *_destRect, Color32 findcolor, Color32 replacecolor) = 0;
 
-    virtual Uint32 LoadImage ( const char *_filename, bool _isColorKeyed = false ) = 0;
-    virtual Color32 GetColorKey ();
-    virtual int    SetColorKey ( Color32 _color ) = 0;
-	virtual void   ApplyColorKey ( Uint32 _surfaceID ) = 0;
-    virtual Uint32 CreateSurface ( Uint32 _width, Uint32 _height, bool _isColorKeyed = false ) = 0;
+    virtual Uint32 LoadImage ( const char *_filename ) = 0;
+    virtual Uint32 CreateSurface ( Uint32 _width, Uint32 _height ) = 0;
     virtual int    DeleteSurface ( Uint32 _surfaceID ) = 0;
     virtual int    FillRect ( Uint32 _surfaceID, SDL_Rect *_destRect, Color32 _color ) = 0;
     virtual int    Blit ( Uint32 _sourceSurfaceID, SDL_Rect const *_sourceRect,

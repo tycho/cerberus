@@ -401,7 +401,7 @@ void Surface::FindLocalSurfaceRect ( SDL_Rect *_destRect, Uint32 &_surfaceID )
     if ( !m_sectionIDs.valid ( surfaceIndex ) )
     {
         // Not yet. Create it.
-        m_sectionIDs.insert ( g_graphics->CreateSurface ( m_pixelWH, m_pixelWH, true ), surfaceIndex );
+        m_sectionIDs.insert ( g_graphics->CreateSurface ( m_pixelWH, m_pixelWH ), surfaceIndex );
     }
 
 	memcpy ( _destRect, &dstRect, sizeof(SDL_Rect) );

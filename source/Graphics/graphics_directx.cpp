@@ -351,11 +351,11 @@ void DirectXGraphics::SetPixel ( Uint32 _surfaceID, int x, int y, Color32 _color
     }
 }
 
-Uint32 DirectXGraphics::LoadImage ( const char *_filename, bool _isColorKeyed )
+Uint32 DirectXGraphics::LoadImage ( const char *_filename )
 {
     CrbReleaseAssert ( _filename != NULL );
     DirectXTexture *tex = new DirectXTexture();
-	tex->Load ( _filename, _isColorKeyed );
+	tex->Load ( _filename );
     Uint32 ret = m_textures.insert ( tex );
     return ret;
 }
@@ -372,11 +372,11 @@ int DirectXGraphics::DeleteSurface ( Uint32 _surfaceID )
     return 0;
 }
 
-Uint32 DirectXGraphics::CreateSurface ( Uint32 _width, Uint32 _height, bool _isColorKeyed )
+Uint32 DirectXGraphics::CreateSurface ( Uint32 _width, Uint32 _height )
 {
     DirectXTexture *tex = new DirectXTexture();
 
-	bool textureCreated = tex->Create ( _width, _height, _isColorKeyed );
+	bool textureCreated = tex->Create ( _width, _height );
 	CrbReleaseAssert ( textureCreated );
 
     Uint32 ret = m_textures.insert ( tex );
@@ -390,31 +390,9 @@ Uint16 DirectXGraphics::GetMaximumTextureSize()
 	return (Uint16)m_caps.MaxTextureWidth;
 }
 
-int DirectXGraphics::SetColorKey ( Color32 _color )
-{
-    CrbReleaseAssert ( m_sdlScreen != NULL );
-
-    m_colorKey = _color;
-    m_colorKeySet = true;
-
-    return 0;
-}
-
-void DirectXGraphics::ApplyColorKey ( Uint32 _surfaceID )
-{
-    CrbReleaseAssert ( m_sdlScreen != NULL );
-    CrbReleaseAssert ( m_textures.valid ( _surfaceID ) );
-
-	DirectXTexture *surface = m_textures.get ( _surfaceID );
-	SDL_SetColorKey ( surface->m_sdlSurface, SDL_SRCCOLORKEY | SDL_RLEACCEL, m_colorKey );
-}
-
 int DirectXGraphics::FillRect ( Uint32 _surfaceID, SDL_Rect *_destRect, Color32 _color )
 {
     CrbReleaseAssert ( m_sdlScreen != NULL );
-
-    if ( _color == m_colorKey )
-        _color = m_colorKey & ZERO_ALPHA;
 
     if ( _surfaceID == SCREEN_SURFACE_ID )
 	{

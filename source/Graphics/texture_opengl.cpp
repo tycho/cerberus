@@ -63,7 +63,7 @@ void OpenGLTexture::Dispose()
 	Texture::Dispose();
 }
 
-bool OpenGLTexture::Create ( Uint16 _width, Uint16 _height, bool _isColorKeyed )
+bool OpenGLTexture::Create ( Uint16 _width, Uint16 _height )
 {
     CrbReleaseAssert ( m_textureID != SCREEN_SURFACE_ID );
     CrbReleaseAssert ( _width > 0 ); CrbReleaseAssert ( _height > 0 );

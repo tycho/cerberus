@@ -42,8 +42,8 @@ public:
     DirectXTexture();
     ~DirectXTexture();
 
-	bool Load ( const char *_filename, bool _isColorKeyed );
-    bool Create ( Uint16 _width, Uint16 _height, bool _isColorKeyed );
+	bool Load ( const char *_filename );
+    bool Create ( Uint16 _width, Uint16 _height);
     void Dispose ();
 
     void Bind ();

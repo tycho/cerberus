@@ -58,7 +58,7 @@ void DirectXTexture::Dispose()
 	Texture::Dispose();
 }
 
-bool DirectXTexture::Load ( const char *_filename, bool _isColorKeyed )
+bool DirectXTexture::Load ( const char *_filename )
 {
 	m_sdlSurface = g_app->m_resource->GetImage ( _filename );
 	if ( !m_sdlSurface ) return false;
@@ -76,11 +76,6 @@ bool DirectXTexture::Load ( const char *_filename, bool _isColorKeyed )
     amask = 0xff000000;
 #endif
 	SDL_Surface *copy = SDL_CreateRGBSurface ( SDL_SWSURFACE, m_sdlSurface->w, m_sdlSurface->h, 32, rmask, gmask, bmask, amask );
-    if ( _isColorKeyed && graphics->m_colorKeySet )
-    {
-		SDL_FillRect ( copy, NULL, ZERO_ALPHA & graphics->m_colorKey );
-        SDL_SetColorKey ( copy, SDL_SRCCOLORKEY | SDL_RLEACCEL, g_graphics->m_colorKey );
-    }
     SDL_SetAlpha ( copy, 0, SDL_ALPHA_OPAQUE );
 	SDL_BlitSurface ( m_sdlSurface, NULL, copy, NULL );
 	SDL_FreeSurface ( m_sdlSurface );
@@ -108,7 +103,7 @@ bool DirectXTexture::Load ( const char *_filename, bool _isColorKeyed )
 	return true;
 }
 
-bool DirectXTexture::Create ( Uint16 _width, Uint16 _height, bool _isColorKeyed )
+bool DirectXTexture::Create ( Uint16 _width, Uint16 _height )
 {
     CrbReleaseAssert ( _width > 0 ); CrbReleaseAssert ( _height > 0 );
 
@@ -137,11 +132,6 @@ bool DirectXTexture::Create ( Uint16 _width, Uint16 _height, bool _isColorKeyed 
     m_sdlSurface = SDL_CreateRGBSurface ( SDL_SWSURFACE, _width, _height, 32, rmask, gmask, bmask, amask );
     CrbReleaseAssert ( m_sdlSurface != NULL );
 
-    /*if ( _isColorKeyed && graphics->m_colorKeySet )
-    {
-		SDL_FillRect ( m_sdlSurface, NULL, ZERO_ALPHA & g_graphics->m_colorKey );
-        SDL_SetColorKey ( m_sdlSurface, SDL_SRCCOLORKEY | SDL_RLEACCEL, g_graphics->m_colorKey );
-    } */
     SDL_SetAlpha ( m_sdlSurface, 0, SDL_ALPHA_OPAQUE );
 
 	if (FAILED(D3DXCreateTexture(

@@ -42,7 +42,7 @@ public:
     OpenGLTexture ( SDL_Surface *_surface );
     ~OpenGLTexture();
 
-    bool Create ( Uint16 _width, Uint16 _height, bool _isColorKeyed );
+    bool Create ( Uint16 _width, Uint16 _height );
     void Dispose ();
 
     void Bind ();

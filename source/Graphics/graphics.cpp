@@ -49,8 +49,7 @@
 
 Graphics::Graphics()
  : m_windowed(false), m_screenX(0), m_screenY(0), m_colorDepth(0),
-   m_centerX(0), m_centerY(0), m_colorKey(0), m_colorKeySet(false),
-   m_defaultFont(0)
+   m_centerX(0), m_centerY(0), m_defaultFont(0)
 {
 }
 
@@ -81,12 +80,6 @@ Sint32 Graphics::GetScreenWidth()
 Sint32 Graphics::GetScreenHeight()
 {
     return m_screenY;
-}
-
-Color32 Graphics::GetColorKey()
-{
-    CrbReleaseAssert ( m_colorKeySet );
-    return m_colorKey;
 }
 
 Graphics *g_graphics;

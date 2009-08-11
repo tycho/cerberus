@@ -49,7 +49,7 @@ public:
     Texture ( SDL_Surface *_surface );
     virtual ~Texture();
 
-    virtual bool Create ( Uint16 _width, Uint16 _height, bool _isColorKeyed ) = 0;
+    virtual bool Create ( Uint16 _width, Uint16 _height ) = 0;
     virtual void Dispose ();
 
     bool IsDamaged ();

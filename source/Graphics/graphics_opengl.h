@@ -71,9 +71,9 @@ public:
 
 	virtual void   DrawRect ( SDL_Rect *_pos, Color32 _color );
 
-    virtual Uint32 CreateSurface ( Uint32 _width, Uint32 _height, bool _isColorKeyed = false );
+    virtual Uint32 CreateSurface ( Uint32 _width, Uint32 _height );
     virtual int    DeleteSurface ( Uint32 _surfaceID );
-    virtual Uint32 LoadImage ( const char *_filename, bool _isColorKeyed = false );
+    virtual Uint32 LoadImage ( const char *_filename );
 
     virtual void   DrawLine ( Uint32 _surfaceID, Color32 _color, int _startX, int _startY, int _stopX, int _stopY );
     virtual int    FillRect ( Uint32 _surfaceID, SDL_Rect *_destRect, Color32 _color );
@@ -90,8 +90,6 @@ public:
     virtual void   ShowCursor ( bool _show );
 
     virtual int    SetSurfaceAlpha ( Uint32 _surfaceID, Uint8 alpha );
-    virtual int    SetColorKey ( Color32 _color );
-	virtual void   ApplyColorKey ( Uint32 _surfaceID );
     virtual int    Blit ( Uint32 _sourceSurfaceID, SDL_Rect const *_sourceRect,
                           Uint32 _destSurfaceID,   SDL_Rect const *_destRect );
     virtual int    SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _height, Uint8 _colorDepth );

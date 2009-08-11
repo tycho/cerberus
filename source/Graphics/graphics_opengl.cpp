@@ -252,7 +252,7 @@ void OpenGLGraphics::SetPixel ( Uint32 _surfaceID, int x, int y, Color32 _color 
     }
 }
 
-Uint32 OpenGLGraphics::LoadImage ( const char *_filename, bool _isColorKeyed )
+Uint32 OpenGLGraphics::LoadImage ( const char *_filename )
 {
 
     CrbReleaseAssert ( _filename != NULL );
@@ -261,19 +261,6 @@ Uint32 OpenGLGraphics::LoadImage ( const char *_filename, bool _isColorKeyed )
     SDL_Surface* src = g_app->m_resource->GetImage ( _filename ); // use SDL_Image to load the image
     CrbReleaseAssert ( src != NULL );
     Uint32 oldWidth = 0, oldHeight = 0;
-
-    Uint32 rmask, gmask, bmask, amask;
-#if SDL_BYTEORDER == SDL_BIG_ENDIAN
-    rmask = 0xff000000;
-    gmask = 0x00ff0000;
-    bmask = 0x0000ff00;
-    amask = 0x000000ff;
-#else
-    rmask = 0x000000ff;
-    gmask = 0x0000ff00;
-    bmask = 0x00ff0000;
-    amask = 0xff000000;
-#endif
 
     Uint32 targetW = src->w, targetH = src->h;
 
@@ -295,17 +282,8 @@ Uint32 OpenGLGraphics::LoadImage ( const char *_filename, bool _isColorKeyed )
     Uint32 ret = m_textures.insert ( tex );
 
     tex->Dispose();
-    tex->Create ( targetW, targetH, _isColorKeyed );
+    tex->Create ( targetW, targetH );
 
-    CrbReleaseAssert ( tex->m_sdlSurface != NULL );
-
-	m_colorKey.c.a = 0;
-
-	if ( _isColorKeyed && m_colorKeySet )
-    {
-		SDL_FillRect ( tex->m_sdlSurface, NULL, m_colorKey.rgba );
-        SDL_SetColorKey ( tex->m_sdlSurface, SDL_SRCCOLORKEY | SDL_RLEACCEL, m_colorKey.rgba );
-    }
     SDL_SetAlpha ( tex->m_sdlSurface, 0, SDL_ALPHA_OPAQUE );
 
     SDL_BlitSurface ( src, NULL, tex->m_sdlSurface, NULL );
@@ -328,10 +306,10 @@ int OpenGLGraphics::DeleteSurface ( Uint32 _surfaceID )
     return 0;
 }
 
-Uint32 OpenGLGraphics::CreateSurface ( Uint32 _width, Uint32 _height, bool _isColorKeyed )
+Uint32 OpenGLGraphics::CreateSurface ( Uint32 _width, Uint32 _height )
 {
     OpenGLTexture *tex = new OpenGLTexture();
-    tex->Create ( _width, _height, _isColorKeyed );
+    tex->Create ( _width, _height );
 
     Uint32 ret = m_textures.insert ( tex );
 
@@ -341,25 +319,6 @@ Uint32 OpenGLGraphics::CreateSurface ( Uint32 _width, Uint32 _height, bool _isCo
 Uint16 OpenGLGraphics::GetMaximumTextureSize()
 {
     return g_openGL->GetMaximumTextureSize();
-}
-
-int OpenGLGraphics::SetColorKey ( Color32 _color )
-{
-    CrbReleaseAssert ( m_sdlScreen != NULL );
-
-    m_colorKey = _color;
-    m_colorKeySet = true;
-
-    return 0;
-}
-
-void OpenGLGraphics::ApplyColorKey ( Uint32 _surfaceID )
-{
-    CrbReleaseAssert ( m_sdlScreen != NULL );
-    CrbReleaseAssert ( m_textures.valid ( _surfaceID ) );
-
-	OpenGLTexture *surface = m_textures.get ( _surfaceID );
-	SDL_SetColorKey ( surface->m_sdlSurface, SDL_SRCCOLORKEY | SDL_RLEACCEL, m_colorKey.rgba );
 }
 
 int OpenGLGraphics::FillRect ( Uint32 _surfaceID, SDL_Rect *_destRect, Color32 _color )
