@@ -31,6 +31,7 @@
 #include "Graphics/opengl.h"
 
 #if defined ( TARGET_COMPILER_VC ) || defined ( TARGET_COMPILER_ICC )
+#    pragma comment (lib, "GLEW.lib")
 #    pragma comment (lib, "opengl32.lib")
 #endif
 
