@@ -255,6 +255,7 @@ void App::Run ()
 
         }
 
+        g_interface->RenderMouse();
         g_interface->RenderWidgets();
 
         // Play any queued sounds.

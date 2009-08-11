@@ -138,10 +138,12 @@ int Interface::SendEnterKey ()
     return 0;
 }
 
+void Interface::RenderMouse()
+{
+}
+
 Widget *Interface::MouseUpdate ()
 {
-	int x = g_interface->MouseX(),
-	    y = g_interface->MouseY();
     if ( m_dragWindow)
     {
         return m_dragWindow->MouseUpdate ();
@@ -149,10 +151,7 @@ Widget *Interface::MouseUpdate ()
         for ( int i = m_widgetList.size() - 1; i >= 0; i-- )
         {
             Widget *widget = m_widgetList[i];
-            if ( x < widget->m_position.x || y < widget->m_position.y )
-                continue;
-            if ( x > ( widget->m_position.x + widget->m_position.w ) ||
-                y > ( widget->m_position.y + widget->m_position.h ) )
+            if ( !widget->IsInsideWidget(m_mouseX, m_mouseY) )
                 continue;
             return widget->MouseUpdate ();
         }

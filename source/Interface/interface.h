@@ -44,6 +44,8 @@ protected:
     TextUI *m_fpsWidget;
     TextUI *m_rendererWidget;
 
+    Uint32 m_mousePointer;
+
 	int   m_mouseX;
 	int   m_mouseY;
 	Uint8 m_lastButtonState;
@@ -63,6 +65,7 @@ public:
 	virtual void InitWidgets               ();
     virtual void UpdateFPS                 ( unsigned int _fps );
     virtual void UpdateRendererWidget      ();
+    virtual void RenderMouse               ();
     virtual void RenderWidgets             ();
     virtual void RemoveWidget              ( Widget *_widget );
     virtual Widget *GetWidgetOfType        ( WidgetClass _widgetType );
