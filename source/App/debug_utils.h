@@ -33,7 +33,7 @@
 	\param _msg The error message to print along with the crash log.
  */
 void GenerateBlackBox ( const char *_msg );
-void CerberusReleaseAssert_Helper ( const char *_msg );
+void CerberusReleaseAssert_Helper ( const char *_format, ... );
 
 #if defined ( NDEBUG ) && defined ( TARGET_OS_WINDOWS )
 #define PAUSE_COMMAND "PAUSE"
@@ -44,15 +44,11 @@ void CerberusReleaseAssert_Helper ( const char *_msg );
 
 #define  CrbReleaseAssert(x)  {                                             \
         if (!(x)) {                                                         \
-            g_stderr->WriteLine  ( "\n"                                     \
-                     "A Cerberus assertion failure has occurred\n"          \
-                     "=========================================\n"          \
-                     " Condition : %s\n"                                    \
-                     " Location  : %s, line %d\n\n",                        \
+            CerberusReleaseAssert_Helper (                                  \
+                     "Assertion failure\n"                                  \
+                     "Condition : %s\n"                                     \
+                     "Location  : %s, line %d\n",                           \
                      #x, __FILE__, __LINE__ );                              \
-            CrissCross::Debug::PrintStackTrace ( g_stderr );                \
-            g_stderr->WriteLine ();                                         \
-            CerberusReleaseAssert_Helper ( "Assertion failure" );                \
         }                                                                   \
     }
 
@@ -79,7 +75,7 @@ void CerberusReleaseAssert_Helper ( const char *_msg );
 
 #ifdef DEBUGLOG_ENABLED
 
-    #define  CrbReleaseAbort(msg) {                                                \
+    #define  CrbReleaseAbort(msg) {                                         \
         char message[1024];                                                 \
         sprintf ( message,  "\n"                                            \
                  "Cerberus has been forced to abort\n"                      \

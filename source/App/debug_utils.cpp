@@ -41,7 +41,7 @@ void GenerateBlackBox ( const char *_msg )
 
 	fprintf( _file, "VERSION : %s v%s\n", APP_NAME, Cerberus::Version::LongVersion() );
 
-    if( _msg ) fprintf( _file, "ERROR   : '%s'\n", _msg );
+    if( _msg ) fprintf( _file, "%s\n", _msg );
 
 
     //
@@ -88,10 +88,23 @@ void GenerateBlackBox ( const char *_msg )
     fclose( _file );
 }
 
-void CerberusReleaseAssert_Helper ( const char *_reason )
+void CerberusReleaseAssert_Helper ( const char *_format, ... )
 {
+    va_list list;
+    char buffer[512];
+    va_start(list, _format);
+    vsprintf(buffer, _format, list);
+    va_end(list);
+
+    g_stderr->WriteLine ( "\n\n"
+         "A Cerberus assertion failure has occurred\n"
+         "=========================================\n"
+         "%s\n", buffer);
+    CrissCross::Debug::PrintStackTrace ( g_stderr );
+    g_stderr->WriteLine ();
+
     SDL_Quit();
-    GenerateBlackBox(_reason);
+    GenerateBlackBox(buffer);
 #if defined ( TARGET_OS_WINDOWS )
     MessageBox ( NULL, "A fatal error occured in Cerberus.\n\n"
                        "The details of this error have been written to\n"
