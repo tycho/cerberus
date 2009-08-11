@@ -39,7 +39,6 @@ public:
 	virtual void Draw ( Uint16 _x, Uint16 _y, const char *_text, Color32 _color ) = 0;
 };
 
-#include "Graphics/font_directx.h"
 #include "Graphics/font_opengl.h"
 
 #endif

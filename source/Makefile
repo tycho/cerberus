@@ -83,15 +83,12 @@ source/App/text_stream_readers.cpp \
 source/App/version.cpp \
 source/Game/game.cpp \
 source/Graphics/font.cpp \
-source/Graphics/font_directx.cpp \
 source/Graphics/font_opengl.cpp \
 source/Graphics/graphics.cpp \
-source/Graphics/graphics_directx.cpp \
 source/Graphics/graphics_opengl.cpp \
 source/Graphics/opengl.cpp \
 source/Graphics/surface.cpp \
 source/Graphics/texture.cpp \
-source/Graphics/texture_directx.cpp \
 source/Graphics/texture_opengl.cpp \
 source/Interface/button.cpp \
 source/Interface/error_window.cpp \

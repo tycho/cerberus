@@ -799,14 +799,6 @@
 				>
 			</File>
 			<File
-				RelativePath="..\..\source\Graphics\font_directx.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\Graphics\font_directx.h"
-				>
-			</File>
-			<File
 				RelativePath="..\..\source\Graphics\font_opengl.cpp"
 				>
 			</File>
@@ -820,14 +812,6 @@
 			</File>
 			<File
 				RelativePath="..\..\source\Graphics\graphics.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\Graphics\graphics_directx.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\Graphics\graphics_directx.h"
 				>
 			</File>
 			<File
@@ -860,14 +844,6 @@
 			</File>
 			<File
 				RelativePath="..\..\source\Graphics\texture.h"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\Graphics\texture_directx.cpp"
-				>
-			</File>
-			<File
-				RelativePath="..\..\source\Graphics\texture_directx.h"
 				>
 			</File>
 			<File

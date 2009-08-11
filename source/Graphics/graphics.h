@@ -28,14 +28,6 @@
 #ifndef __graphics_h_included
 #define __graphics_h_included
 
-#if SDL_BYTEORDER == SDL_LIL_ENDIAN
-#  define FULL_ALPHA 0xFF000000
-#  define ZERO_ALPHA 0x00FFFFFF
-#else
-#  define FULL_ALPHA 0x000000FF
-#  define ZERO_ALPHA 0xFFFFFF00
-#endif
-
 class Texture;
 class OpenGLTexture;
 class DirectXTexture;
@@ -114,7 +106,6 @@ public:
 
 extern Graphics *g_graphics;
 
-#include "Graphics/graphics_directx.h"
 #include "Graphics/graphics_opengl.h"
 #include "Graphics/texture.h"
 

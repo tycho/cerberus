@@ -66,7 +66,6 @@ public:
     virtual bool Upload () = 0;
 };
 
-#include "Graphics/texture_directx.h"
 #include "Graphics/texture_opengl.h"
 
 #endif

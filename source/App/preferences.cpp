@@ -169,11 +169,6 @@ void Preferences::CreateDefaultValues()
     // We default to the best possible preferences for performance and
     // so forth on the latest-and-greatest machines.
 
-	AddLine( "# Renderer\n" );
-	AddLine( "#   direct3d: Experimental Direct3D 9 renderer (Windows only)\n" );
-	AddLine( "#   opengl: OpenGL renderer (recommended)\n" );
-    AddLine( "Renderer = direct3d" );
-	AddLine( "\n" );
     AddLine( "TextureCompression = 0" );
     AddLine( "TextureRectangles = 0" );
 	// AddLine ( "RenderMode = 0" );
