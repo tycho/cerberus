@@ -31,3 +31,6 @@
 [submodule "contrib/LuaJIT"]
 	path = contrib/LuaJIT
 	url = git://git.uplinklabs.net/pub/scm/git/tycho/luajit.git
+[submodule "contrib/glew"]
+	path = contrib/glew
+	url = git://git.uplinklabs.net/pub/scm/git/tycho/glew.git
