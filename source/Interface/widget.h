@@ -39,10 +39,13 @@ typedef enum
 	WIDGET_TEXT
 } WidgetClass;
 
+class Animation;
+
 class Widget
 {
 private:
     Data::LList<Widget *> m_widgets;
+    Data::LList<Animation *> m_anims;
 
 protected:
     WidgetClass m_widgetClass;
@@ -56,6 +59,9 @@ protected:
 
     bool m_expired;
     bool m_damaged;
+
+	void BeginAnims();
+	void EndAnims();
 
 public:
     Widget ();
@@ -89,9 +95,9 @@ public:
 
     virtual Data::LList<Widget *> *GetWidgetList();
 
-    friend class Interface;
+	friend class Animation;
+	friend class ExpireWidget;
     friend class Window;
-    friend class QuitWindow;
 };
 
 #endif

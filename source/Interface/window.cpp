@@ -28,6 +28,9 @@
 #include "universal_include.h"
 
 #include "App/app.h"
+#include "Graphics/Animation/expirewidget.h"
+#include "Graphics/Animation/fade.h"
+#include "Graphics/Animation/rotate.h"
 #include "Graphics/graphics.h"
 #include "Interface/interface.h"
 #include "Interface/text.h"
@@ -127,15 +130,23 @@ Widget *Window::MouseUpdate ()
     return this;
 }
 
+void Window::Close()
+{
+	m_anims.insert(new Rotate(&m_position,0.0f, 45.0f, 0.75f));
+	m_anims.insert(new Fade());
+	m_anims.insert(new ExpireWidget(this, 5.0f));
+}
+
 void Window::Render()
 {
-	// Render the window itself
+	BeginAnims();
 
 	// Frame
 	Color32 fillColor(50,25,25,191),
 			borderColor(255,0,0);
 
 	g_graphics->FillRect(SCREEN_SURFACE_ID, &m_position, fillColor);
+
 	g_graphics->DrawRect(&m_position, borderColor);
 
 	// Titlebar bottom
@@ -145,9 +156,11 @@ void Window::Render()
 
 	// Render the window's contents
 	Widget::Render();
+
+	Widget::EndAnims();
 }
 
 void Window::Update()
 {
-    Widget::Update();
+	Widget::Update();
 }

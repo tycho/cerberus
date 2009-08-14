@@ -30,6 +30,7 @@
 #include "App/app.h"
 #include "App/collide.h"
 #include "App/string_utils.h"
+#include "Graphics/Animation/animation.h"
 #include "Graphics/graphics.h"
 #include "Interface/widget.h"
 
@@ -138,6 +139,22 @@ void Widget::Initialise()
 	}
 }
 
+void Widget::BeginAnims()
+{
+    for ( size_t i = 0; i < m_anims.size(); i++ )
+    {
+        m_anims[i]->Begin();
+    }
+}
+
+void Widget::EndAnims()
+{
+    for ( size_t i = m_anims.size() - 1; i < m_anims.size(); i-- )
+    {
+        m_anims[i]->End();
+    }
+}
+
 void Widget::Render ()
 {
     SDL_Rect absolutePosition = GetAbsolutePosition();
@@ -198,5 +215,16 @@ void Widget::Update()
             continue;
         }
         m_widgets[i]->Update();
+    }
+    for ( size_t i = 0; i < m_anims.size(); i++ )
+    {
+        Animation *anim = m_anims[i];
+        if ( anim->IsFinished() )
+        {
+            m_anims.remove ( i-- );
+            delete anim;
+            continue;
+        }
+        m_anims[i]->Update();
     }
 }

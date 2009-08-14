@@ -69,7 +69,7 @@ void ErrorWindow::OnOKClick ()
     if ( m_critical )
         g_app->Quit();
     else
-        m_expired = true;
+        Close();
 }
 
 void ErrorWindow::SetCaption ( const char *_caption )

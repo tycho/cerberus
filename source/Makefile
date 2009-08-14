@@ -82,6 +82,9 @@ source/App/string_utils.cpp \
 source/App/text_stream_readers.cpp \
 source/App/version.cpp \
 source/Game/game.cpp \
+source/Graphics/Animation/animation.cpp \
+source/Graphics/Animation/fade.cpp \
+source/Graphics/Animation/rotate.cpp \
 source/Graphics/font.cpp \
 source/Graphics/font_opengl.cpp \
 source/Graphics/graphics.cpp \

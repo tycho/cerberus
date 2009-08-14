@@ -25,35 +25,33 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __window_h_included
-#define __window_h_included
+#include "universal_include.h"
 
-#include "Graphics/graphics_opengl.h"
+#include "App/app.h"
+#include "Graphics/Animation/fade.h"
 
-#include "Interface/widget.h"
-#include "Interface/text.h"
-
-class Window : public Widget
+Fade::Fade()
+ : m_alpha(1.0f)
 {
-protected:
-	static int s_borderTexture;
+}
 
-    bool m_dragging;
-    int m_mouseXOffset, m_mouseYOffset;
+Fade::~Fade()
+{
+}
 
-	TextUI *m_title;
+void Fade::Update()
+{
+	m_alpha -= 0.01f * (float)g_app->Speed();
+	if (m_alpha <= 0.0f) {
+		//m_finished = true;
+		m_alpha = 0.0f;
+	}
+}
 
-public:
-    Window (const char *_title);
-    Window (const char *_title, Sint16 x, Sint16 y, Uint16 w, Uint16 h );
-    virtual ~Window();
+void Fade::Begin()
+{
+}
 
-    virtual Widget *MouseUpdate ();
-    virtual int SendEnterKey ();
-
-	virtual void Close();
-    virtual void Update();
-	virtual void Render();
-};
-
-#endif
+void Fade::End()
+{
+}

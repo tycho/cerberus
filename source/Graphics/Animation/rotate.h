@@ -25,35 +25,30 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __window_h_included
-#define __window_h_included
+#ifndef __rotate_h_included
+#define __rotate_h_included
 
 #include "Graphics/graphics_opengl.h"
 
-#include "Interface/widget.h"
-#include "Interface/text.h"
+#include "Graphics/Animation/animation.h"
 
-class Window : public Widget
+class Rotate : public Animation
 {
 protected:
-	static int s_borderTexture;
-
-    bool m_dragging;
-    int m_mouseXOffset, m_mouseYOffset;
-
-	TextUI *m_title;
+	float m_rot;
+	float m_end;
+	float m_rate;
+	SDL_Rect *m_pivot;
 
 public:
-    Window (const char *_title);
-    Window (const char *_title, Sint16 x, Sint16 y, Uint16 w, Uint16 h );
-    virtual ~Window();
+	// _start and _end are in degrees
+    Rotate (SDL_Rect *_pivot, float _start, float _end, float _rate);
+    virtual ~Rotate();
 
-    virtual Widget *MouseUpdate ();
-    virtual int SendEnterKey ();
+	virtual void Update();
 
-	virtual void Close();
-    virtual void Update();
-	virtual void Render();
+	virtual void Begin();
+	virtual void End();
 };
 
 #endif

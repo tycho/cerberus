@@ -25,35 +25,26 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __window_h_included
-#define __window_h_included
+#ifndef __fade_h_included
+#define __fade_h_included
 
 #include "Graphics/graphics_opengl.h"
 
-#include "Interface/widget.h"
-#include "Interface/text.h"
+#include "Graphics/Animation/animation.h"
 
-class Window : public Widget
+class Fade : public Animation
 {
 protected:
-	static int s_borderTexture;
-
-    bool m_dragging;
-    int m_mouseXOffset, m_mouseYOffset;
-
-	TextUI *m_title;
+	float m_alpha;
 
 public:
-    Window (const char *_title);
-    Window (const char *_title, Sint16 x, Sint16 y, Uint16 w, Uint16 h );
-    virtual ~Window();
+    Fade ();
+    virtual ~Fade();
 
-    virtual Widget *MouseUpdate ();
-    virtual int SendEnterKey ();
+	virtual void Update();
 
-	virtual void Close();
-    virtual void Update();
-	virtual void Render();
+	virtual void Begin();
+	virtual void End();
 };
 
 #endif

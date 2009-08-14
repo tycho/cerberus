@@ -25,35 +25,38 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __window_h_included
-#define __window_h_included
+#include "universal_include.h"
 
-#include "Graphics/graphics_opengl.h"
+#include "App/app.h"
+#include "Graphics/Animation/rotate.h"
 
-#include "Interface/widget.h"
-#include "Interface/text.h"
-
-class Window : public Widget
+Rotate::Rotate(SDL_Rect *_pivot, float _start, float _end, float _rate)
+: m_pivot(_pivot), m_rot(_start), m_end(_end), m_rate(_rate)
 {
-protected:
-	static int s_borderTexture;
+}
 
-    bool m_dragging;
-    int m_mouseXOffset, m_mouseYOffset;
+Rotate::~Rotate()
+{
+}
 
-	TextUI *m_title;
+void Rotate::Update()
+{
+	if (m_rot >= m_end) {
+		m_rot = m_end;
+	} else {
+		m_rot += m_rate * g_app->Speed();
+	}
+}
 
-public:
-    Window (const char *_title);
-    Window (const char *_title, Sint16 x, Sint16 y, Uint16 w, Uint16 h );
-    virtual ~Window();
+void Rotate::Begin()
+{
+	glPushMatrix();
+	glTranslatef(m_pivot->x + (m_pivot->w / 2), m_pivot->y + (m_pivot->h / 2), 0.0f);
+	glRotatef(m_rot, 0.0f, 0.0f, 1.0f);
+	glTranslatef(-(m_pivot->x + (m_pivot->w / 2)), -(m_pivot->y + (m_pivot->h / 2)), 0.0f);
+}
 
-    virtual Widget *MouseUpdate ();
-    virtual int SendEnterKey ();
-
-	virtual void Close();
-    virtual void Update();
-	virtual void Render();
-};
-
-#endif
+void Rotate::End()
+{
+	glPopMatrix();
+}

@@ -25,35 +25,31 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __window_h_included
-#define __window_h_included
+#include "universal_include.h"
 
-#include "Graphics/graphics_opengl.h"
+#include "Graphics/Animation/expirewidget.h"
 
-#include "Interface/widget.h"
-#include "Interface/text.h"
-
-class Window : public Widget
+ExpireWidget::ExpireWidget(Widget *_widget, float _seconds)
+: m_widget(_widget), m_expireAt(_seconds)
 {
-protected:
-	static int s_borderTexture;
+	m_timer.Start();
+}
 
-    bool m_dragging;
-    int m_mouseXOffset, m_mouseYOffset;
+ExpireWidget::~ExpireWidget()
+{
+}
 
-	TextUI *m_title;
+void ExpireWidget::Update()
+{
+	m_timer.Stop();
+	if (m_timer.Elapsed() >= m_expireAt)
+		m_widget->m_expired = true;
+}
 
-public:
-    Window (const char *_title);
-    Window (const char *_title, Sint16 x, Sint16 y, Uint16 w, Uint16 h );
-    virtual ~Window();
+void ExpireWidget::Begin()
+{
+}
 
-    virtual Widget *MouseUpdate ();
-    virtual int SendEnterKey ();
-
-	virtual void Close();
-    virtual void Update();
-	virtual void Render();
-};
-
-#endif
+void ExpireWidget::End()
+{
+}

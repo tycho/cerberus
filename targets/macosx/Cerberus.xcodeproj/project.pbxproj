@@ -78,8 +78,6 @@
 		B0A2FFFA0DB0B0A100C9BD5C /* global.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FF950DB0B0A100C9BD5C /* global.cpp */; };
 		B0A2FFFC0DB0B0A100C9BD5C /* isnt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FF9A0DB0B0A100C9BD5C /* isnt.cpp */; };
 		B0A2FFFE0DB0B0A100C9BD5C /* list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FF9D0DB0B0A100C9BD5C /* list.cpp */; };
-		B0AC6D1F0DD2EE5100976666 /* graphics_directx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0AC6D190DD2EE5100976666 /* graphics_directx.cpp */; };
-		B0AC6D200DD2EE5100976666 /* texture_directx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0AC6D1B0DD2EE5100976666 /* texture_directx.cpp */; };
 		B0AC6D210DD2EE5100976666 /* texture_opengl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0AC6D1D0DD2EE5100976666 /* texture_opengl.cpp */; };
 		B0B8E92C0BDB4F3A007C1576 /* app.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B8E8CF0BDB4DDF007C1576 /* app.cpp */; };
 		B0B8E92D0BDB4F59007C1576 /* cerberus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B8E9190BDB4E51007C1576 /* cerberus.cpp */; };
@@ -98,9 +96,12 @@
 		B0B8EB9B0BDB6227007C1576 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0B8EB9A0BDB6227007C1576 /* OpenGL.framework */; };
 		B0B8ECFA0BDB6337007C1576 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B0B8ECF90BDB6337007C1576 /* libz.dylib */; };
 		B0BD2E160BE2745E00F71A26 /* SDLMain.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BD2E140BE2745E00F71A26 /* SDLMain.m */; };
+		B0ED6F8D10357A2F008D004F /* animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ED6F8510357A2F008D004F /* animation.cpp */; };
+		B0ED6F8E10357A2F008D004F /* expirewidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ED6F8710357A2F008D004F /* expirewidget.cpp */; };
+		B0ED6F8F10357A2F008D004F /* fade.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ED6F8910357A2F008D004F /* fade.cpp */; };
+		B0ED6F9010357A2F008D004F /* rotate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ED6F8B10357A2F008D004F /* rotate.cpp */; };
 		B0F90D130F02E7AA005446D6 /* soundsystem_null.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F90D110F02E7AA005446D6 /* soundsystem_null.cpp */; };
 		B0F90D1A0F02E7BC005446D6 /* font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F90D140F02E7BB005446D6 /* font.cpp */; };
-		B0F90D1B0F02E7BC005446D6 /* font_directx.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F90D160F02E7BB005446D6 /* font_directx.cpp */; };
 		B0F90D1C0F02E7BC005446D6 /* font_opengl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F90D180F02E7BC005446D6 /* font_opengl.cpp */; };
 /* End PBXBuildFile section */
 
@@ -314,10 +315,6 @@
 		B0A2FFDF0DB0B0A100C9BD5C /* unrar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = unrar.cpp; path = ../../contrib/unrar/unrar.cpp; sourceTree = "<group>"; };
 		B0A2FFE00DB0B0A100C9BD5C /* unrar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unrar.h; path = ../../contrib/unrar/unrar.h; sourceTree = "<group>"; };
 		B0A2FFE30DB0B0A100C9BD5C /* volume.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = volume.cpp; path = ../../contrib/unrar/volume.cpp; sourceTree = "<group>"; };
-		B0AC6D190DD2EE5100976666 /* graphics_directx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = graphics_directx.cpp; path = ../../source/Graphics/graphics_directx.cpp; sourceTree = "<group>"; };
-		B0AC6D1A0DD2EE5100976666 /* graphics_directx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = graphics_directx.h; path = ../../source/Graphics/graphics_directx.h; sourceTree = "<group>"; };
-		B0AC6D1B0DD2EE5100976666 /* texture_directx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = texture_directx.cpp; path = ../../source/Graphics/texture_directx.cpp; sourceTree = "<group>"; };
-		B0AC6D1C0DD2EE5100976666 /* texture_directx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = texture_directx.h; path = ../../source/Graphics/texture_directx.h; sourceTree = "<group>"; };
 		B0AC6D1D0DD2EE5100976666 /* texture_opengl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = texture_opengl.cpp; path = ../../source/Graphics/texture_opengl.cpp; sourceTree = "<group>"; };
 		B0AC6D1E0DD2EE5100976666 /* texture_opengl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = texture_opengl.h; path = ../../source/Graphics/texture_opengl.h; sourceTree = "<group>"; };
 		B0B8E8CF0BDB4DDF007C1576 /* app.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = app.cpp; path = ../../source/App/app.cpp; sourceTree = "<group>"; };
@@ -354,12 +351,18 @@
 		B0B8ECF90BDB6337007C1576 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = /usr/lib/libz.dylib; sourceTree = "<absolute>"; };
 		B0BD2E130BE2745E00F71A26 /* SDLMain.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SDLMain.h; path = ../../source/SDLMain.h; sourceTree = "<group>"; };
 		B0BD2E140BE2745E00F71A26 /* SDLMain.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = SDLMain.m; path = ../../source/SDLMain.m; sourceTree = "<group>"; };
+		B0ED6F8510357A2F008D004F /* animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = animation.cpp; path = ../../source/Graphics/Animation/animation.cpp; sourceTree = SOURCE_ROOT; };
+		B0ED6F8610357A2F008D004F /* animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = animation.h; path = ../../source/Graphics/Animation/animation.h; sourceTree = SOURCE_ROOT; };
+		B0ED6F8710357A2F008D004F /* expirewidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = expirewidget.cpp; path = ../../source/Graphics/Animation/expirewidget.cpp; sourceTree = SOURCE_ROOT; };
+		B0ED6F8810357A2F008D004F /* expirewidget.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = expirewidget.h; path = ../../source/Graphics/Animation/expirewidget.h; sourceTree = SOURCE_ROOT; };
+		B0ED6F8910357A2F008D004F /* fade.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = fade.cpp; path = ../../source/Graphics/Animation/fade.cpp; sourceTree = SOURCE_ROOT; };
+		B0ED6F8A10357A2F008D004F /* fade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fade.h; path = ../../source/Graphics/Animation/fade.h; sourceTree = SOURCE_ROOT; };
+		B0ED6F8B10357A2F008D004F /* rotate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rotate.cpp; path = ../../source/Graphics/Animation/rotate.cpp; sourceTree = SOURCE_ROOT; };
+		B0ED6F8C10357A2F008D004F /* rotate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rotate.h; path = ../../source/Graphics/Animation/rotate.h; sourceTree = SOURCE_ROOT; };
 		B0F90D110F02E7AA005446D6 /* soundsystem_null.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = soundsystem_null.cpp; path = ../../source/Sound/soundsystem_null.cpp; sourceTree = SOURCE_ROOT; };
 		B0F90D120F02E7AA005446D6 /* soundsystem_null.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = soundsystem_null.h; path = ../../source/Sound/soundsystem_null.h; sourceTree = SOURCE_ROOT; };
 		B0F90D140F02E7BB005446D6 /* font.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = font.cpp; path = ../../source/Graphics/font.cpp; sourceTree = SOURCE_ROOT; };
 		B0F90D150F02E7BB005446D6 /* font.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = font.h; path = ../../source/Graphics/font.h; sourceTree = SOURCE_ROOT; };
-		B0F90D160F02E7BB005446D6 /* font_directx.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = font_directx.cpp; path = ../../source/Graphics/font_directx.cpp; sourceTree = SOURCE_ROOT; };
-		B0F90D170F02E7BC005446D6 /* font_directx.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = font_directx.h; path = ../../source/Graphics/font_directx.h; sourceTree = SOURCE_ROOT; };
 		B0F90D180F02E7BC005446D6 /* font_opengl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = font_opengl.cpp; path = ../../source/Graphics/font_opengl.cpp; sourceTree = SOURCE_ROOT; };
 		B0F90D190F02E7BC005446D6 /* font_opengl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = font_opengl.h; path = ../../source/Graphics/font_opengl.h; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
@@ -614,25 +617,20 @@
 		B0B8E8C90BDB4D64007C1576 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				B0ED6F8410357A10008D004F /* Animation */,
 				B019F7A0102F736D008A3A8A /* color.h */,
 				B0F90D140F02E7BB005446D6 /* font.cpp */,
 				B0F90D150F02E7BB005446D6 /* font.h */,
-				B0F90D160F02E7BB005446D6 /* font_directx.cpp */,
-				B0F90D170F02E7BC005446D6 /* font_directx.h */,
 				B0F90D180F02E7BC005446D6 /* font_opengl.cpp */,
 				B0F90D190F02E7BC005446D6 /* font_opengl.h */,
 				B0B8E8FF0BDB4E0D007C1576 /* graphics.cpp */,
 				B0B8E9000BDB4E0D007C1576 /* graphics.h */,
-				B0AC6D190DD2EE5100976666 /* graphics_directx.cpp */,
-				B0AC6D1A0DD2EE5100976666 /* graphics_directx.h */,
 				490780CA0BDE747700504827 /* graphics_opengl.cpp */,
 				490780C90BDE747700504827 /* graphics_opengl.h */,
 				B087F3120DB98F08007568B9 /* surface.cpp */,
 				B087F3130DB98F08007568B9 /* surface.h */,
 				B04A58170DBDDA9F00A2F292 /* texture.cpp */,
 				B04A58180DBDDA9F00A2F292 /* texture.h */,
-				B0AC6D1B0DD2EE5100976666 /* texture_directx.cpp */,
-				B0AC6D1C0DD2EE5100976666 /* texture_directx.h */,
 				B0AC6D1D0DD2EE5100976666 /* texture_opengl.cpp */,
 				B0AC6D1E0DD2EE5100976666 /* texture_opengl.h */,
 				B04A58150DBDDA9F00A2F292 /* opengl.cpp */,
@@ -718,6 +716,21 @@
 			children = (
 			);
 			name = Build;
+			sourceTree = "<group>";
+		};
+		B0ED6F8410357A10008D004F /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				B0ED6F8510357A2F008D004F /* animation.cpp */,
+				B0ED6F8610357A2F008D004F /* animation.h */,
+				B0ED6F8710357A2F008D004F /* expirewidget.cpp */,
+				B0ED6F8810357A2F008D004F /* expirewidget.h */,
+				B0ED6F8910357A2F008D004F /* fade.cpp */,
+				B0ED6F8A10357A2F008D004F /* fade.h */,
+				B0ED6F8B10357A2F008D004F /* rotate.cpp */,
+				B0ED6F8C10357A2F008D004F /* rotate.h */,
+			);
+			name = Animation;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -919,15 +932,16 @@
 				B087F3140DB98F08007568B9 /* surface.cpp in Sources */,
 				B04A58190DBDDA9F00A2F292 /* opengl.cpp in Sources */,
 				B04A581A0DBDDA9F00A2F292 /* texture.cpp in Sources */,
-				B0AC6D1F0DD2EE5100976666 /* graphics_directx.cpp in Sources */,
-				B0AC6D200DD2EE5100976666 /* texture_directx.cpp in Sources */,
 				B0AC6D210DD2EE5100976666 /* texture_opengl.cpp in Sources */,
 				B0F90D130F02E7AA005446D6 /* soundsystem_null.cpp in Sources */,
 				B0F90D1A0F02E7BC005446D6 /* font.cpp in Sources */,
-				B0F90D1B0F02E7BC005446D6 /* font_directx.cpp in Sources */,
 				B0F90D1C0F02E7BC005446D6 /* font_opengl.cpp in Sources */,
 				B01BDEA80FF2C66B00626AD7 /* version.cpp in Sources */,
 				B020F059101A359A0040E736 /* collide.cpp in Sources */,
+				B0ED6F8D10357A2F008D004F /* animation.cpp in Sources */,
+				B0ED6F8E10357A2F008D004F /* expirewidget.cpp in Sources */,
+				B0ED6F8F10357A2F008D004F /* fade.cpp in Sources */,
+				B0ED6F9010357A2F008D004F /* rotate.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

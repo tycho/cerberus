@@ -855,76 +855,40 @@
 				>
 			</File>
 			<Filter
-				Name="Interface"
+				Name="Animation"
 				>
 				<File
-					RelativePath="..\..\source\Interface\interface.cpp"
+					RelativePath="..\..\source\Graphics\Animation\animation.cpp"
 					>
 				</File>
 				<File
-					RelativePath="..\..\source\Interface\interface.h"
+					RelativePath="..\..\source\Graphics\Animation\animation.h"
 					>
 				</File>
-				<Filter
-					Name="Widgets"
+				<File
+					RelativePath="..\..\source\Graphics\Animation\expirewidget.cpp"
 					>
-					<File
-						RelativePath="..\..\source\Interface\text.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\source\Interface\text.h"
-						>
-					</File>
-					<File
-						RelativePath="..\..\source\Interface\widget.cpp"
-						>
-					</File>
-					<File
-						RelativePath="..\..\source\Interface\widget.h"
-						>
-					</File>
-					<Filter
-						Name="Windows"
-						>
-						<File
-							RelativePath="..\..\source\Interface\error_window.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\source\Interface\error_window.h"
-							>
-						</File>
-						<File
-							RelativePath="..\..\source\Interface\window.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\source\Interface\window.h"
-							>
-						</File>
-					</Filter>
-					<Filter
-						Name="Inputs"
-						>
-						<File
-							RelativePath="..\..\source\Interface\button.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\source\Interface\button.h"
-							>
-						</File>
-						<File
-							RelativePath="..\..\source\Interface\inputwidget.cpp"
-							>
-						</File>
-						<File
-							RelativePath="..\..\source\Interface\inputwidget.h"
-							>
-						</File>
-					</Filter>
-				</Filter>
+				</File>
+				<File
+					RelativePath="..\..\source\Graphics\Animation\expirewidget.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Graphics\Animation\fade.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Graphics\Animation\fade.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Graphics\Animation\rotate.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Graphics\Animation\rotate.h"
+					>
+				</File>
 			</Filter>
 		</Filter>
 		<Filter
@@ -938,6 +902,78 @@
 				RelativePath="..\..\source\Game\game.h"
 				>
 			</File>
+		</Filter>
+		<Filter
+			Name="Interface"
+			>
+			<File
+				RelativePath="..\..\source\Interface\interface.cpp"
+				>
+			</File>
+			<File
+				RelativePath="..\..\source\Interface\interface.h"
+				>
+			</File>
+			<Filter
+				Name="Widgets"
+				>
+				<File
+					RelativePath="..\..\source\Interface\text.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Interface\text.h"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Interface\widget.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\source\Interface\widget.h"
+					>
+				</File>
+				<Filter
+					Name="Windows"
+					>
+					<File
+						RelativePath="..\..\source\Interface\error_window.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\source\Interface\error_window.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\source\Interface\window.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\source\Interface\window.h"
+						>
+					</File>
+				</Filter>
+				<Filter
+					Name="Inputs"
+					>
+					<File
+						RelativePath="..\..\source\Interface\button.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\source\Interface\button.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\source\Interface\inputwidget.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\source\Interface\inputwidget.h"
+						>
+					</File>
+				</Filter>
+			</Filter>
 		</Filter>
 		<File
 			RelativePath="..\..\source\build_number.h"

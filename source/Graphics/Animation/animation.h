@@ -25,35 +25,26 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __window_h_included
-#define __window_h_included
+#ifndef __animation_h_included
+#define __animation_h_included
 
 #include "Graphics/graphics_opengl.h"
 
-#include "Interface/widget.h"
-#include "Interface/text.h"
-
-class Window : public Widget
+class Animation
 {
 protected:
-	static int s_borderTexture;
-
-    bool m_dragging;
-    int m_mouseXOffset, m_mouseYOffset;
-
-	TextUI *m_title;
+	bool m_finished;
 
 public:
-    Window (const char *_title);
-    Window (const char *_title, Sint16 x, Sint16 y, Uint16 w, Uint16 h );
-    virtual ~Window();
+    Animation ();
+    virtual ~Animation();
 
-    virtual Widget *MouseUpdate ();
-    virtual int SendEnterKey ();
+	virtual bool IsFinished();
 
-	virtual void Close();
-    virtual void Update();
-	virtual void Render();
+	virtual void Update() = 0;
+
+	virtual void Begin() = 0;
+	virtual void End() = 0;
 };
 
 #endif
