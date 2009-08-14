@@ -31,14 +31,11 @@
 class Game
 {
 protected:
-    System::Stopwatch m_tmrGameSpeed;
-    double m_gameSpeed;
 	bool m_playing;
 
 public:
     Game();
     virtual ~Game();
-    virtual double GetGameSpeed();
     virtual bool Playing();
 
     virtual void Update();

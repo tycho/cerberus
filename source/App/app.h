@@ -39,6 +39,9 @@
 class App {
 
 protected:
+    System::Stopwatch m_tmrGameSpeed;
+    double m_gameSpeed;
+
     char *m_appPath;
     char *m_appSupportPath;
     char *m_resourcePath;
@@ -84,6 +87,8 @@ public:
     virtual const char *GetApplicationSupportPath ();
 
     virtual void UpdateInputs ();
+
+    virtual double Speed();
 
     //! The main application loop.
     virtual void Run ();

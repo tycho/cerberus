@@ -46,7 +46,8 @@ extern char **NXArgv; // system variable we can exploit
 #endif
 
 App::App ()
- : m_appPath ( NULL ),
+ : m_gameSpeed(5),
+   m_appPath ( NULL ),
    m_appSupportPath ( NULL ),
    m_resourcePath ( NULL ),
    m_fps ( 0 ),
@@ -230,6 +231,8 @@ void App::Run ()
 
     g_interface->UpdateRendererWidget();
 
+    m_tmrGameSpeed.Start();
+
     while ( m_running )
     {
         // Force 60fps max.
@@ -283,6 +286,13 @@ void App::Run ()
 
         g_graphics->FillRect(SCREEN_SURFACE_ID, NULL, Color32(0,0,0));
 
+		// We don't want the frame rate to affect game speed, so we use
+		// a timer to throttle it.
+		m_tmrGameSpeed.Stop();
+		m_gameSpeed = 71.5 * m_tmrGameSpeed.Elapsed();
+		if ( m_gameSpeed > 50.0 ) m_gameSpeed = 50.0;
+		m_tmrGameSpeed.Start();
+
         // Now make sure we haven't used up a second yet.
         m_tmrFPS.Stop();
         if ( m_tmrFPS.Elapsed() >= 1.0 )
@@ -300,6 +310,11 @@ void App::Run ()
 void App::Quit()
 {
     m_running = false;
+}
+
+double App::Speed()
+{
+    return m_gameSpeed;
 }
 
 void App::UpdateInputs ()

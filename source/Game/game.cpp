@@ -30,10 +30,8 @@
 #include "Game/game.h"
 
 Game::Game()
- : m_gameSpeed(5),
-   m_playing(false)
+ :  m_playing(false)
 {
-    m_tmrGameSpeed.Start();
 }
 
 Game::~Game()
@@ -45,19 +43,8 @@ bool Game::Playing()
     return m_playing;
 }
 
-double Game::GetGameSpeed()
-{
-    return m_gameSpeed;
-}
-
 void Game::Update()
 {
-    // We don't want the frame rate to affect game speed, so we use
-    // a timer to throttle it.
-    m_tmrGameSpeed.Stop();
-    m_gameSpeed = 71.5 * m_tmrGameSpeed.Elapsed();
-    if ( m_gameSpeed > 50.0 ) m_gameSpeed = 50.0;
-    m_tmrGameSpeed.Start();
 }
 
 Game *g_game;
