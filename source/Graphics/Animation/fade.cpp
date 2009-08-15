@@ -59,16 +59,16 @@ void Fade::Begin()
      * so, we set glColor to only set the ambient color (via glColorMaterial), and let
      * the lighting manage the alpha value.
      */
-	GLfloat global_ambient[] = {0.7f, 0.7f, 0.7f, m_alpha};
-	glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient);
+    GLfloat global_ambient[] = {0.7f, 0.7f, 0.7f, m_alpha};
+    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient);
     glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT);
     glMaterialfv(GL_FRONT, GL_DIFFUSE, global_ambient);
     glEnable(GL_COLOR_MATERIAL);
-	glEnable(GL_LIGHTING);
+    glEnable(GL_LIGHTING);
 }
 
 void Fade::End()
 {
-	glDisable(GL_LIGHTING);
+    glDisable(GL_LIGHTING);
     glDisable(GL_COLOR_MATERIAL);
 }
