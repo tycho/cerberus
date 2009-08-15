@@ -153,7 +153,9 @@ Widget *Interface::MouseUpdate ()
             Widget *widget = m_widgetList[i];
             if ( !widget->IsInsideWidget(m_mouseX, m_mouseY) )
                 continue;
-            return widget->MouseUpdate ();
+            Widget *acceptedMessage = widget->MouseUpdate ();
+            if (acceptedMessage)
+                return acceptedMessage;
         }
         return NULL;
     }
