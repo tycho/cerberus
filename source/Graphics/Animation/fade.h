@@ -36,9 +36,12 @@ class Fade : public Animation
 {
 protected:
 	float m_alpha;
+	float m_end;
+	float m_rate;
+    char m_dir;
 
 public:
-    Fade ();
+    Fade (float _start, float _end, float _rate);
     virtual ~Fade();
 
 	virtual void Update();

@@ -30,9 +30,10 @@
 #include "App/app.h"
 #include "Graphics/Animation/fade.h"
 
-Fade::Fade()
- : m_alpha(1.0f)
+Fade::Fade(float _start, float _end, float _rate)
+ : m_alpha(_start), m_end(_end), m_rate(_rate)
 {
+    m_dir = (_start > _end) ? -1 : 1;
 }
 
 Fade::~Fade()
@@ -41,9 +42,12 @@ Fade::~Fade()
 
 void Fade::Update()
 {
-	m_alpha -= 0.03f * (float)g_app->Speed();
-	if (m_alpha <= 0.0f) {
-		m_alpha = 0.0f;
+	m_alpha += (float)m_dir * m_rate * 0.1f * (float)g_app->Speed();
+	if (m_dir < 0 && m_alpha <= m_end) {
+		m_alpha = m_end;
+	}
+	if (m_dir > 0 && m_alpha >= m_end) {
+		m_alpha = m_end;
 	}
 }
 

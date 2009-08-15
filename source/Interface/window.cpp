@@ -133,7 +133,7 @@ Widget *Window::MouseUpdate ()
 void Window::Close()
 {
 	m_anims.insert(new Rotate(&m_position,0.0f, 45.0f, 0.9f));
-	m_anims.insert(new Fade());
+	m_anims.insert(new Fade(1.0f, 0.0f, 0.375f));
 	m_anims.insert(new ExpireWidget(this, 2.0f));
 }
 
