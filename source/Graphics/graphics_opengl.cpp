@@ -666,9 +666,10 @@ int OpenGLGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heigh
 
     g_console->WriteLine ();
 
-    g_console->Write ( "Supports OpenGL v1.1? " );
+    g_console->Write ( "Supports OpenGL 1.1? " );
 
-    bool ogl11Support = false;
+    bool ogl11Support = false,
+         ogl20Support = false;
     if ( g_openGL->GetVersionMajor() == 1 ) {
         if ( g_openGL->GetVersionMinor() >= 1 ) {
             ogl11Support = true;
@@ -677,6 +678,7 @@ int OpenGLGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heigh
         }
     } else if ( g_openGL->GetVersionMajor() > 1 ) {
         ogl11Support = true;
+        ogl20Support = true;
     } else {
         ogl11Support = false;
     }
@@ -693,6 +695,21 @@ int OpenGLGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heigh
         g_console->WriteLine ( "No" );
         g_console->SetColour ();
         testsPassed = false;
+    }
+
+    g_console->Write ( "Supports OpenGL 2.0? " );
+
+    if ( ogl20Support )
+    {
+        g_console->SetColour ( IO::Console::FG_GREEN | IO::Console::FG_INTENSITY );
+        g_console->WriteLine ( "Yes" );
+        g_console->SetColour ();
+    }
+    else
+    {
+        g_console->SetColour ( IO::Console::FG_RED | IO::Console::FG_INTENSITY );
+        g_console->WriteLine ( "No" );
+        g_console->SetColour ();
     }
 
     bool extensionIsSupported = false;
@@ -809,6 +826,30 @@ int OpenGLGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heigh
         g_console->WriteLine ( "No" );
         g_console->SetColour ();
         extensionIsSupported = false;
+    }
+
+    g_console->Write ( "Supports vertex shaders? " );
+    if ( GLEW_ARB_vertex_shader )
+    {
+        g_console->SetColour ( IO::Console::FG_GREEN | IO::Console::FG_INTENSITY );
+        g_console->WriteLine ( "Yes" );
+        g_console->SetColour ();
+    } else {
+        g_console->SetColour ( IO::Console::FG_RED |IO::Console::FG_INTENSITY );
+        g_console->WriteLine ( "No" );
+        g_console->SetColour ();
+    }
+
+    g_console->Write ( "Supports fragment shaders? " );
+    if ( GLEW_ARB_fragment_shader )
+    {
+        g_console->SetColour ( IO::Console::FG_GREEN | IO::Console::FG_INTENSITY );
+        g_console->WriteLine ( "Yes" );
+        g_console->SetColour ();
+    } else {
+        g_console->SetColour ( IO::Console::FG_RED |IO::Console::FG_INTENSITY );
+        g_console->WriteLine ( "No" );
+        g_console->SetColour ();
     }
 
     if ( !testsPassed ) return -1;
