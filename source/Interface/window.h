@@ -42,6 +42,8 @@ protected:
     int m_mouseXOffset, m_mouseYOffset;
 
 	TextUI *m_title;
+    
+    bool m_closing;
 
 public:
     Window (const char *_title);

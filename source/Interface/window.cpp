@@ -41,7 +41,8 @@
 
 Window::Window(const char *_title)
  : Widget(),
-   m_dragging(false)
+   m_dragging(false),
+   m_closing(false)
 {
    m_widgetClass = WIDGET_WINDOW;
    m_title = new TextUI(_title, Color32(255,0,0), TITLE_X, TITLE_Y);
@@ -50,7 +51,8 @@ Window::Window(const char *_title)
 
 Window::Window (const char *_title, Sint16 x, Sint16 y, Uint16 w, Uint16 h )
  : Widget(x,y,w,h),
-   m_dragging(false)
+   m_dragging(false),
+   m_closing(false)
 {
    m_widgetClass = WIDGET_WINDOW;
    m_title = new TextUI(_title, Color32(255,0,0), TITLE_X, TITLE_Y);
@@ -73,6 +75,9 @@ int Window::SendEnterKey ()
 
 Widget *Window::MouseUpdate ()
 {
+    // We don't accept messages while closing.
+    if (m_closing) return NULL;
+
 	int x = g_interface->MouseX(),
 	    y = g_interface->MouseY();
 	if ( !m_dragging && g_interface->MouseLeft() )
@@ -132,6 +137,7 @@ Widget *Window::MouseUpdate ()
 
 void Window::Close()
 {
+    m_closing = true;
 	m_anims.insert(new Rotate(&m_position,0.0f, 45.0f, 0.9f));
 	m_anims.insert(new Fade(1.0f, 0.0f, 0.375f));
 	m_anims.insert(new ExpireWidget(this, 2.0f));
