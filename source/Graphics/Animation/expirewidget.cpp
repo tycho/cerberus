@@ -30,7 +30,7 @@
 #include "Graphics/Animation/expirewidget.h"
 
 ExpireWidget::ExpireWidget(Widget *_widget, float _seconds)
-: m_widget(_widget), m_expireAt(_seconds)
+: m_expireAt(_seconds), m_widget(_widget)
 {
 	m_timer.Start();
 }
