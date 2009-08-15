@@ -83,6 +83,7 @@ source/App/text_stream_readers.cpp \
 source/App/version.cpp \
 source/Game/game.cpp \
 source/Graphics/Animation/animation.cpp \
+source/Graphics/Animation/expirewidget.cpp \
 source/Graphics/Animation/fade.cpp \
 source/Graphics/Animation/rotate.cpp \
 source/Graphics/font.cpp \
