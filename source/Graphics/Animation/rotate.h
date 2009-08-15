@@ -35,6 +35,7 @@
 class Rotate : public Animation
 {
 protected:
+    char m_dir;
 	float m_rot;
 	float m_end;
 	float m_rate;

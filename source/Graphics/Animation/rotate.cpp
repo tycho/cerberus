@@ -33,6 +33,7 @@
 Rotate::Rotate(SDL_Rect *_pivot, float _start, float _end, float _rate)
 : m_rot(_start), m_end(_end), m_rate(_rate), m_pivot(_pivot)
 {
+    m_dir = (_start > _end) ? -1 : 1;
 }
 
 Rotate::~Rotate()
@@ -41,10 +42,10 @@ Rotate::~Rotate()
 
 void Rotate::Update()
 {
-	if (m_rot >= m_end) {
+	if ((m_dir > 0 && m_rot >= m_end) || (m_dir < 0 && m_rot <= m_end)) {
 		m_rot = m_end;
 	} else {
-		m_rot += m_rate * g_app->Speed();
+		m_rot += (float)m_dir * m_rate * g_app->Speed();
 	}
 }
 
