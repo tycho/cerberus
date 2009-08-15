@@ -88,29 +88,16 @@ Widget *Window::MouseUpdate ()
 	}
     if ( !m_dragging )
     {
-        SDL_Rect actualPosition;
         for ( int i = m_widgets.size() - 1; i >= 0; i-- )
         {
             Widget *widget = m_widgets[i];
 
-            // Window widget positions are relative to the window's position.
-            actualPosition.x = widget->m_position.x + m_position.x;
-            actualPosition.y = widget->m_position.y + m_position.y;
-            actualPosition.w = widget->m_position.w;
-            actualPosition.h = widget->m_position.h;
-
-            if ( x < actualPosition.x || y < actualPosition.y )
-                continue;
-            if ( x > ( actualPosition.x + actualPosition.w ) ||
-                y > ( actualPosition.y + actualPosition.h ) )
+            if ( !widget->IsInsideWidget(x, y) )
                 continue;
 
             Widget *active = widget->MouseUpdate();
-            if ( !active )
-                break; // The sub-widget doesn't have a defined behaviour for MouseUpdate.
-
-			// The sub-widget accepted the MouseUpdate.
-            return active;
+            if ( active )
+                return active; // The sub-widget doesn't have a defined behaviour for MouseUpdate.
         }
     }
     if ( !m_dragging &&
