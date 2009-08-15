@@ -142,7 +142,7 @@ void Window::Render()
 	BeginAnims();
 
 	// Frame
-	Color32 fillColor(50,25,25,191),
+	Color32 fillColor(50,0,0,191),
 			borderColor(255,0,0);
 
 	g_graphics->FillRect(SCREEN_SURFACE_ID, &m_position, fillColor);
