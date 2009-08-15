@@ -31,7 +31,7 @@
 #include "Graphics/Animation/rotate.h"
 
 Rotate::Rotate(SDL_Rect *_pivot, float _start, float _end, float _rate)
-: m_pivot(_pivot), m_rot(_start), m_end(_end), m_rate(_rate)
+: m_rot(_start), m_end(_end), m_rate(_rate), m_pivot(_pivot)
 {
 }
 
