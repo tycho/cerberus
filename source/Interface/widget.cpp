@@ -63,10 +63,15 @@ Widget::~Widget()
     {
         g_graphics->DeleteSurface ( m_cachedSurfaceID );
     }
-    while ( m_widgets.get(0) )
+    while ( m_widgets.size() > 0 )
     {
         delete m_widgets.get(0);
         m_widgets.remove(0);
+    }
+    while ( m_anims.size() > 0 )
+    {
+        delete m_anims.get(0);
+        m_anims.remove(0);
     }
 }
 
