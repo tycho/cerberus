@@ -33,51 +33,9 @@
 		B07EEEA40BEEEA770005CD3D /* packet.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B07EEE9A0BEEEA770005CD3D /* packet.cpp */; };
 		B087F3140DB98F08007568B9 /* surface.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B087F3120DB98F08007568B9 /* surface.cpp */; };
 		B09B59400EAC2F36003F4C0B /* libCrissCross Static.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B09B593C0EAC2EF7003F4C0B /* libCrissCross Static.a */; };
-		B0A200000DB0B0A100C9BD5C /* match.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FFA20DB0B0A100C9BD5C /* match.cpp */; };
-		B0A200020DB0B0A100C9BD5C /* options.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FFA60DB0B0A100C9BD5C /* options.cpp */; };
-		B0A200040DB0B0A100C9BD5C /* pathfn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FFAA0DB0B0A100C9BD5C /* pathfn.cpp */; };
-		B0A200060DB0B0A100C9BD5C /* rarvm.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FFB40DB0B0A100C9BD5C /* rarvm.cpp */; };
-		B0A200080DB0B0A100C9BD5C /* rawread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FFB70DB0B0A100C9BD5C /* rawread.cpp */; };
-		B0A200090DB0B0A100C9BD5C /* rdwrfn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FFB90DB0B0A100C9BD5C /* rdwrfn.cpp */; };
-		B0A2000B0DB0B0A100C9BD5C /* recvol.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FFBC0DB0B0A100C9BD5C /* recvol.cpp */; };
-		B0A2000C0DB0B0A100C9BD5C /* resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FFBE0DB0B0A100C9BD5C /* resource.cpp */; };
-		B0A2000D0DB0B0A100C9BD5C /* rijndael.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FFC00DB0B0A100C9BD5C /* rijndael.cpp */; };
-		B0A2000E0DB0B0A100C9BD5C /* rs.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FFC20DB0B0A100C9BD5C /* rs.cpp */; };
-		B0A2000F0DB0B0A100C9BD5C /* savepos.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FFC40DB0B0A100C9BD5C /* savepos.cpp */; };
-		B0A200100DB0B0A100C9BD5C /* scantree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FFC60DB0B0A100C9BD5C /* scantree.cpp */; };
-		B0A200110DB0B0A100C9BD5C /* sha1.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FFC80DB0B0A100C9BD5C /* sha1.cpp */; };
-		B0A200130DB0B0A100C9BD5C /* strfn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FFCC0DB0B0A100C9BD5C /* strfn.cpp */; };
-		B0A200140DB0B0A100C9BD5C /* strlist.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FFCE0DB0B0A100C9BD5C /* strlist.cpp */; };
-		B0A200160DB0B0A100C9BD5C /* system.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FFD20DB0B0A100C9BD5C /* system.cpp */; };
-		B0A200170DB0B0A100C9BD5C /* timefn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FFD40DB0B0A100C9BD5C /* timefn.cpp */; };
-		B0A200180DB0B0A100C9BD5C /* ulinks.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FFD60DB0B0A100C9BD5C /* ulinks.cpp */; };
-		B0A200190DB0B0A100C9BD5C /* unicode.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FFD80DB0B0A100C9BD5C /* unicode.cpp */; };
-		B0A2001B0DB0B0A100C9BD5C /* unpack.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FFDB0DB0B0A100C9BD5C /* unpack.cpp */; };
-		B0A2001E0DB0B0A100C9BD5C /* unrar.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FFDF0DB0B0A100C9BD5C /* unrar.cpp */; };
-		B0A200200DB0B0A100C9BD5C /* volume.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FFE30DB0B0A100C9BD5C /* volume.cpp */; };
-		B0A2002B0DB0B28A00C9BD5C /* smallfn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A200290DB0B28A00C9BD5C /* smallfn.cpp */; };
 		B0A2002F0DB0B47A00C9BD5C /* cerberus.icns in Resources */ = {isa = PBXBuildFile; fileRef = B0A2002E0DB0B47A00C9BD5C /* cerberus.icns */; };
 		B0A2FF660DB0AEEE00C9BD5C /* binary_stream_readers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FF620DB0AEEE00C9BD5C /* binary_stream_readers.cpp */; };
 		B0A2FF670DB0AEEE00C9BD5C /* resource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FF640DB0AEEE00C9BD5C /* resource.cpp */; };
-		B0A2FFE60DB0B0A100C9BD5C /* archive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FF6E0DB0B0A100C9BD5C /* archive.cpp */; };
-		B0A2FFE70DB0B0A100C9BD5C /* arcread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FF700DB0B0A100C9BD5C /* arcread.cpp */; };
-		B0A2FFE90DB0B0A100C9BD5C /* cmddata.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FF730DB0B0A100C9BD5C /* cmddata.cpp */; };
-		B0A2FFEB0DB0B0A100C9BD5C /* consio.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FF780DB0B0A100C9BD5C /* consio.cpp */; };
-		B0A2FFEC0DB0B0A100C9BD5C /* crc.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FF7A0DB0B0A100C9BD5C /* crc.cpp */; };
-		B0A2FFED0DB0B0A100C9BD5C /* crypt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FF7C0DB0B0A100C9BD5C /* crypt.cpp */; };
-		B0A2FFF00DB0B0A100C9BD5C /* encname.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FF810DB0B0A100C9BD5C /* encname.cpp */; };
-		B0A2FFF10DB0B0A100C9BD5C /* errhnd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FF830DB0B0A100C9BD5C /* errhnd.cpp */; };
-		B0A2FFF20DB0B0A100C9BD5C /* extinfo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FF850DB0B0A100C9BD5C /* extinfo.cpp */; };
-		B0A2FFF30DB0B0A100C9BD5C /* extract.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FF870DB0B0A100C9BD5C /* extract.cpp */; };
-		B0A2FFF40DB0B0A100C9BD5C /* filcreat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FF890DB0B0A100C9BD5C /* filcreat.cpp */; };
-		B0A2FFF50DB0B0A100C9BD5C /* file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FF8B0DB0B0A100C9BD5C /* file.cpp */; };
-		B0A2FFF60DB0B0A100C9BD5C /* filefn.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FF8D0DB0B0A100C9BD5C /* filefn.cpp */; };
-		B0A2FFF70DB0B0A100C9BD5C /* filestr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FF8F0DB0B0A100C9BD5C /* filestr.cpp */; };
-		B0A2FFF80DB0B0A100C9BD5C /* find.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FF910DB0B0A100C9BD5C /* find.cpp */; };
-		B0A2FFF90DB0B0A100C9BD5C /* getbits.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FF930DB0B0A100C9BD5C /* getbits.cpp */; };
-		B0A2FFFA0DB0B0A100C9BD5C /* global.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FF950DB0B0A100C9BD5C /* global.cpp */; };
-		B0A2FFFC0DB0B0A100C9BD5C /* isnt.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FF9A0DB0B0A100C9BD5C /* isnt.cpp */; };
-		B0A2FFFE0DB0B0A100C9BD5C /* list.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0A2FF9D0DB0B0A100C9BD5C /* list.cpp */; };
 		B0AC6D210DD2EE5100976666 /* texture_opengl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0AC6D1D0DD2EE5100976666 /* texture_opengl.cpp */; };
 		B0B8E92C0BDB4F3A007C1576 /* app.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B8E8CF0BDB4DDF007C1576 /* app.cpp */; };
 		B0B8E92D0BDB4F59007C1576 /* cerberus.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0B8E9190BDB4E51007C1576 /* cerberus.cpp */; };
@@ -96,6 +54,7 @@
 		B0B8EB9B0BDB6227007C1576 /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B0B8EB9A0BDB6227007C1576 /* OpenGL.framework */; };
 		B0B8ECFA0BDB6337007C1576 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = B0B8ECF90BDB6337007C1576 /* libz.dylib */; };
 		B0BD2E160BE2745E00F71A26 /* SDLMain.m in Sources */ = {isa = PBXBuildFile; fileRef = B0BD2E140BE2745E00F71A26 /* SDLMain.m */; };
+		B0DFF863103785C2009D479E /* libunrar.a in Frameworks */ = {isa = PBXBuildFile; fileRef = B0DFF862103785B8009D479E /* libunrar.a */; };
 		B0ED6F8D10357A2F008D004F /* animation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ED6F8510357A2F008D004F /* animation.cpp */; };
 		B0ED6F8E10357A2F008D004F /* expirewidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ED6F8710357A2F008D004F /* expirewidget.cpp */; };
 		B0ED6F8F10357A2F008D004F /* fade.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ED6F8910357A2F008D004F /* fade.cpp */; };
@@ -155,6 +114,20 @@
 			remoteGlobalIDString = B0BD2C470BE26BDB00F71A26;
 			remoteInfo = "CrissCross Static";
 		};
+		B0DFF861103785B8009D479E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B0DFF85A103785B8009D479E /* unrar.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = D2AAC046055464E500DB518D /* libunrar.a */;
+			remoteInfo = unrar;
+		};
+		B0DFF864103785CD009D479E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = B0DFF85A103785B8009D479E /* unrar.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC045055464E500DB518D /* unrar */;
+			remoteInfo = unrar;
+		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -180,57 +153,6 @@
 		B019F7A0102F736D008A3A8A /* color.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = color.h; path = ../../source/Graphics/color.h; sourceTree = SOURCE_ROOT; };
 		B01BDEA60FF2C66B00626AD7 /* version.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = version.cpp; path = ../../source/App/version.cpp; sourceTree = SOURCE_ROOT; };
 		B01BDEA70FF2C66B00626AD7 /* version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = version.h; path = ../../source/App/version.h; sourceTree = SOURCE_ROOT; };
-		B01BDEAD0FF2C6E300626AD7 /* archive.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = archive.h; path = ../../contrib/unrar/archive.h; sourceTree = SOURCE_ROOT; };
-		B01BDEAE0FF2C6E300626AD7 /* array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = array.h; path = ../../contrib/unrar/array.h; sourceTree = SOURCE_ROOT; };
-		B01BDEAF0FF2C6E300626AD7 /* cmddata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = cmddata.h; path = ../../contrib/unrar/cmddata.h; sourceTree = SOURCE_ROOT; };
-		B01BDEB00FF2C6E300626AD7 /* compress.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = compress.h; path = ../../contrib/unrar/compress.h; sourceTree = SOURCE_ROOT; };
-		B01BDEB10FF2C6E300626AD7 /* consio.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = consio.h; path = ../../contrib/unrar/consio.h; sourceTree = SOURCE_ROOT; };
-		B01BDEB20FF2C6E300626AD7 /* crc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = crc.h; path = ../../contrib/unrar/crc.h; sourceTree = SOURCE_ROOT; };
-		B01BDEB30FF2C6E300626AD7 /* crypt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = crypt.h; path = ../../contrib/unrar/crypt.h; sourceTree = SOURCE_ROOT; };
-		B01BDEB40FF2C6E300626AD7 /* encname.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = encname.h; path = ../../contrib/unrar/encname.h; sourceTree = SOURCE_ROOT; };
-		B01BDEB50FF2C6E300626AD7 /* errhnd.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = errhnd.h; path = ../../contrib/unrar/errhnd.h; sourceTree = SOURCE_ROOT; };
-		B01BDEB60FF2C6E300626AD7 /* extinfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = extinfo.h; path = ../../contrib/unrar/extinfo.h; sourceTree = SOURCE_ROOT; };
-		B01BDEB70FF2C6E300626AD7 /* extract.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = extract.h; path = ../../contrib/unrar/extract.h; sourceTree = SOURCE_ROOT; };
-		B01BDEB80FF2C6E300626AD7 /* filcreat.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = filcreat.h; path = ../../contrib/unrar/filcreat.h; sourceTree = SOURCE_ROOT; };
-		B01BDEB90FF2C6E300626AD7 /* file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = file.h; path = ../../contrib/unrar/file.h; sourceTree = SOURCE_ROOT; };
-		B01BDEBA0FF2C6E300626AD7 /* filefn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = filefn.h; path = ../../contrib/unrar/filefn.h; sourceTree = SOURCE_ROOT; };
-		B01BDEBB0FF2C6E300626AD7 /* filestr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = filestr.h; path = ../../contrib/unrar/filestr.h; sourceTree = SOURCE_ROOT; };
-		B01BDEBC0FF2C6E300626AD7 /* find.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = find.h; path = ../../contrib/unrar/find.h; sourceTree = SOURCE_ROOT; };
-		B01BDEBD0FF2C6E300626AD7 /* getbits.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = getbits.h; path = ../../contrib/unrar/getbits.h; sourceTree = SOURCE_ROOT; };
-		B01BDEBE0FF2C6E300626AD7 /* global.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = global.h; path = ../../contrib/unrar/global.h; sourceTree = SOURCE_ROOT; };
-		B01BDEBF0FF2C6E300626AD7 /* headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = headers.h; path = ../../contrib/unrar/headers.h; sourceTree = SOURCE_ROOT; };
-		B01BDEC00FF2C6E300626AD7 /* isnt.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = isnt.h; path = ../../contrib/unrar/isnt.h; sourceTree = SOURCE_ROOT; };
-		B01BDEC10FF2C6E300626AD7 /* list.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = list.h; path = ../../contrib/unrar/list.h; sourceTree = SOURCE_ROOT; };
-		B01BDEC20FF2C6E300626AD7 /* loclang.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = loclang.h; path = ../../contrib/unrar/loclang.h; sourceTree = SOURCE_ROOT; };
-		B01BDEC30FF2C6E300626AD7 /* match.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = match.h; path = ../../contrib/unrar/match.h; sourceTree = SOURCE_ROOT; };
-		B01BDEC40FF2C6E300626AD7 /* options.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = options.h; path = ../../contrib/unrar/options.h; sourceTree = SOURCE_ROOT; };
-		B01BDEC50FF2C6E300626AD7 /* os.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = os.h; path = ../../contrib/unrar/os.h; sourceTree = SOURCE_ROOT; };
-		B01BDEC60FF2C6E300626AD7 /* pathfn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pathfn.h; path = ../../contrib/unrar/pathfn.h; sourceTree = SOURCE_ROOT; };
-		B01BDEC70FF2C6E300626AD7 /* rardefs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rardefs.h; path = ../../contrib/unrar/rardefs.h; sourceTree = SOURCE_ROOT; };
-		B01BDEC80FF2C6E300626AD7 /* rarlang.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rarlang.h; path = ../../contrib/unrar/rarlang.h; sourceTree = SOURCE_ROOT; };
-		B01BDEC90FF2C6E300626AD7 /* raros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = raros.h; path = ../../contrib/unrar/raros.h; sourceTree = SOURCE_ROOT; };
-		B01BDECB0FF2C6E300626AD7 /* rartypes.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rartypes.h; path = ../../contrib/unrar/rartypes.h; sourceTree = SOURCE_ROOT; };
-		B01BDECC0FF2C6E300626AD7 /* rarvm.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rarvm.h; path = ../../contrib/unrar/rarvm.h; sourceTree = SOURCE_ROOT; };
-		B01BDECD0FF2C6E300626AD7 /* rawread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rawread.h; path = ../../contrib/unrar/rawread.h; sourceTree = SOURCE_ROOT; };
-		B01BDECE0FF2C6E300626AD7 /* rdwrfn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rdwrfn.h; path = ../../contrib/unrar/rdwrfn.h; sourceTree = SOURCE_ROOT; };
-		B01BDECF0FF2C6E300626AD7 /* recvol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = recvol.h; path = ../../contrib/unrar/recvol.h; sourceTree = SOURCE_ROOT; };
-		B01BDED00FF2C6E300626AD7 /* resource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = resource.h; path = ../../contrib/unrar/resource.h; sourceTree = SOURCE_ROOT; };
-		B01BDED20FF2C6E300626AD7 /* rijndael.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rijndael.h; path = ../../contrib/unrar/rijndael.h; sourceTree = SOURCE_ROOT; };
-		B01BDED30FF2C6E300626AD7 /* rs.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rs.h; path = ../../contrib/unrar/rs.h; sourceTree = SOURCE_ROOT; };
-		B01BDED40FF2C6E300626AD7 /* savepos.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = savepos.h; path = ../../contrib/unrar/savepos.h; sourceTree = SOURCE_ROOT; };
-		B01BDED50FF2C6E300626AD7 /* scantree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = scantree.h; path = ../../contrib/unrar/scantree.h; sourceTree = SOURCE_ROOT; };
-		B01BDED60FF2C6E300626AD7 /* sha1.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = sha1.h; path = ../../contrib/unrar/sha1.h; sourceTree = SOURCE_ROOT; };
-		B01BDED70FF2C6E300626AD7 /* smallfn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = smallfn.h; path = ../../contrib/unrar/smallfn.h; sourceTree = SOURCE_ROOT; };
-		B01BDED80FF2C6E300626AD7 /* strfn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = strfn.h; path = ../../contrib/unrar/strfn.h; sourceTree = SOURCE_ROOT; };
-		B01BDED90FF2C6E300626AD7 /* strlist.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = strlist.h; path = ../../contrib/unrar/strlist.h; sourceTree = SOURCE_ROOT; };
-		B01BDEDA0FF2C6E300626AD7 /* suballoc.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = suballoc.h; path = ../../contrib/unrar/suballoc.h; sourceTree = SOURCE_ROOT; };
-		B01BDEDB0FF2C6E300626AD7 /* system.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = system.h; path = ../../contrib/unrar/system.h; sourceTree = SOURCE_ROOT; };
-		B01BDEDC0FF2C6E300626AD7 /* timefn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = timefn.h; path = ../../contrib/unrar/timefn.h; sourceTree = SOURCE_ROOT; };
-		B01BDEDD0FF2C6E300626AD7 /* ulinks.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ulinks.h; path = ../../contrib/unrar/ulinks.h; sourceTree = SOURCE_ROOT; };
-		B01BDEDE0FF2C6E300626AD7 /* unicode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unicode.h; path = ../../contrib/unrar/unicode.h; sourceTree = SOURCE_ROOT; };
-		B01BDEDF0FF2C6E300626AD7 /* unpack.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unpack.h; path = ../../contrib/unrar/unpack.h; sourceTree = SOURCE_ROOT; };
-		B01BDEE00FF2C6E300626AD7 /* version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = version.h; path = ../../contrib/unrar/version.h; sourceTree = SOURCE_ROOT; };
-		B01BDEE10FF2C6E300626AD7 /* volume.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = volume.h; path = ../../contrib/unrar/volume.h; sourceTree = SOURCE_ROOT; };
 		B020E66C101A157F0040E736 /* SDL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL.framework; path = /Library/Frameworks/SDL.framework; sourceTree = "<absolute>"; };
 		B020E66D101A157F0040E736 /* SDL_image.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL_image.framework; path = /Library/Frameworks/SDL_image.framework; sourceTree = "<absolute>"; };
 		B020E66E101A157F0040E736 /* SDL_mixer.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SDL_mixer.framework; path = /Library/Frameworks/SDL_mixer.framework; sourceTree = "<absolute>"; };
@@ -265,56 +187,11 @@
 		B087F3120DB98F08007568B9 /* surface.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = surface.cpp; path = ../../source/Graphics/surface.cpp; sourceTree = "<group>"; };
 		B087F3130DB98F08007568B9 /* surface.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = surface.h; path = ../../source/Graphics/surface.h; sourceTree = "<group>"; };
 		B09B59330EAC2EF7003F4C0B /* CrissCross.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CrissCross.xcodeproj; path = ../../contrib/crisscross/targets/xcode/CrissCross.xcodeproj; sourceTree = SOURCE_ROOT; };
-		B0A200290DB0B28A00C9BD5C /* smallfn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = smallfn.cpp; path = ../../contrib/unrar/smallfn.cpp; sourceTree = "<group>"; };
 		B0A2002E0DB0B47A00C9BD5C /* cerberus.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; name = cerberus.icns; path = ../../source/cerberus.icns; sourceTree = "<group>"; };
 		B0A2FF620DB0AEEE00C9BD5C /* binary_stream_readers.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = binary_stream_readers.cpp; path = ../../source/App/binary_stream_readers.cpp; sourceTree = "<group>"; };
 		B0A2FF630DB0AEEE00C9BD5C /* binary_stream_readers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = binary_stream_readers.h; path = ../../source/App/binary_stream_readers.h; sourceTree = "<group>"; };
 		B0A2FF640DB0AEEE00C9BD5C /* resource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = resource.cpp; path = ../../source/App/resource.cpp; sourceTree = "<group>"; };
 		B0A2FF650DB0AEEE00C9BD5C /* resource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = resource.h; path = ../../source/App/resource.h; sourceTree = "<group>"; };
-		B0A2FF6E0DB0B0A100C9BD5C /* archive.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = archive.cpp; path = ../../contrib/unrar/archive.cpp; sourceTree = "<group>"; };
-		B0A2FF700DB0B0A100C9BD5C /* arcread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = arcread.cpp; path = ../../contrib/unrar/arcread.cpp; sourceTree = "<group>"; };
-		B0A2FF730DB0B0A100C9BD5C /* cmddata.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = cmddata.cpp; path = ../../contrib/unrar/cmddata.cpp; sourceTree = "<group>"; };
-		B0A2FF780DB0B0A100C9BD5C /* consio.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = consio.cpp; path = ../../contrib/unrar/consio.cpp; sourceTree = "<group>"; };
-		B0A2FF7A0DB0B0A100C9BD5C /* crc.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = crc.cpp; path = ../../contrib/unrar/crc.cpp; sourceTree = "<group>"; };
-		B0A2FF7C0DB0B0A100C9BD5C /* crypt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = crypt.cpp; path = ../../contrib/unrar/crypt.cpp; sourceTree = "<group>"; };
-		B0A2FF810DB0B0A100C9BD5C /* encname.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = encname.cpp; path = ../../contrib/unrar/encname.cpp; sourceTree = "<group>"; };
-		B0A2FF830DB0B0A100C9BD5C /* errhnd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = errhnd.cpp; path = ../../contrib/unrar/errhnd.cpp; sourceTree = "<group>"; };
-		B0A2FF850DB0B0A100C9BD5C /* extinfo.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = extinfo.cpp; path = ../../contrib/unrar/extinfo.cpp; sourceTree = "<group>"; };
-		B0A2FF870DB0B0A100C9BD5C /* extract.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = extract.cpp; path = ../../contrib/unrar/extract.cpp; sourceTree = "<group>"; };
-		B0A2FF890DB0B0A100C9BD5C /* filcreat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = filcreat.cpp; path = ../../contrib/unrar/filcreat.cpp; sourceTree = "<group>"; };
-		B0A2FF8B0DB0B0A100C9BD5C /* file.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = file.cpp; path = ../../contrib/unrar/file.cpp; sourceTree = "<group>"; };
-		B0A2FF8D0DB0B0A100C9BD5C /* filefn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = filefn.cpp; path = ../../contrib/unrar/filefn.cpp; sourceTree = "<group>"; };
-		B0A2FF8F0DB0B0A100C9BD5C /* filestr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = filestr.cpp; path = ../../contrib/unrar/filestr.cpp; sourceTree = "<group>"; };
-		B0A2FF910DB0B0A100C9BD5C /* find.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = find.cpp; path = ../../contrib/unrar/find.cpp; sourceTree = "<group>"; };
-		B0A2FF930DB0B0A100C9BD5C /* getbits.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = getbits.cpp; path = ../../contrib/unrar/getbits.cpp; sourceTree = "<group>"; };
-		B0A2FF950DB0B0A100C9BD5C /* global.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = global.cpp; path = ../../contrib/unrar/global.cpp; sourceTree = "<group>"; };
-		B0A2FF9A0DB0B0A100C9BD5C /* isnt.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = isnt.cpp; path = ../../contrib/unrar/isnt.cpp; sourceTree = "<group>"; };
-		B0A2FF9C0DB0B0A100C9BD5C /* license.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = license.txt; path = ../../contrib/unrar/license.txt; sourceTree = "<group>"; };
-		B0A2FF9D0DB0B0A100C9BD5C /* list.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = list.cpp; path = ../../contrib/unrar/list.cpp; sourceTree = "<group>"; };
-		B0A2FFA20DB0B0A100C9BD5C /* match.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = match.cpp; path = ../../contrib/unrar/match.cpp; sourceTree = "<group>"; };
-		B0A2FFA60DB0B0A100C9BD5C /* options.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = options.cpp; path = ../../contrib/unrar/options.cpp; sourceTree = "<group>"; };
-		B0A2FFAA0DB0B0A100C9BD5C /* pathfn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pathfn.cpp; path = ../../contrib/unrar/pathfn.cpp; sourceTree = "<group>"; };
-		B0A2FFB40DB0B0A100C9BD5C /* rarvm.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rarvm.cpp; path = ../../contrib/unrar/rarvm.cpp; sourceTree = "<group>"; };
-		B0A2FFB70DB0B0A100C9BD5C /* rawread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rawread.cpp; path = ../../contrib/unrar/rawread.cpp; sourceTree = "<group>"; };
-		B0A2FFB90DB0B0A100C9BD5C /* rdwrfn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rdwrfn.cpp; path = ../../contrib/unrar/rdwrfn.cpp; sourceTree = "<group>"; };
-		B0A2FFBB0DB0B0A100C9BD5C /* readme.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = readme.txt; path = ../../contrib/unrar/readme.txt; sourceTree = "<group>"; };
-		B0A2FFBC0DB0B0A100C9BD5C /* recvol.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = recvol.cpp; path = ../../contrib/unrar/recvol.cpp; sourceTree = "<group>"; };
-		B0A2FFBE0DB0B0A100C9BD5C /* resource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = resource.cpp; path = ../../contrib/unrar/resource.cpp; sourceTree = "<group>"; };
-		B0A2FFC00DB0B0A100C9BD5C /* rijndael.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rijndael.cpp; path = ../../contrib/unrar/rijndael.cpp; sourceTree = "<group>"; };
-		B0A2FFC20DB0B0A100C9BD5C /* rs.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rs.cpp; path = ../../contrib/unrar/rs.cpp; sourceTree = "<group>"; };
-		B0A2FFC40DB0B0A100C9BD5C /* savepos.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = savepos.cpp; path = ../../contrib/unrar/savepos.cpp; sourceTree = "<group>"; };
-		B0A2FFC60DB0B0A100C9BD5C /* scantree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = scantree.cpp; path = ../../contrib/unrar/scantree.cpp; sourceTree = "<group>"; };
-		B0A2FFC80DB0B0A100C9BD5C /* sha1.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = sha1.cpp; path = ../../contrib/unrar/sha1.cpp; sourceTree = "<group>"; };
-		B0A2FFCC0DB0B0A100C9BD5C /* strfn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = strfn.cpp; path = ../../contrib/unrar/strfn.cpp; sourceTree = "<group>"; };
-		B0A2FFCE0DB0B0A100C9BD5C /* strlist.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = strlist.cpp; path = ../../contrib/unrar/strlist.cpp; sourceTree = "<group>"; };
-		B0A2FFD20DB0B0A100C9BD5C /* system.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = system.cpp; path = ../../contrib/unrar/system.cpp; sourceTree = "<group>"; };
-		B0A2FFD40DB0B0A100C9BD5C /* timefn.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = timefn.cpp; path = ../../contrib/unrar/timefn.cpp; sourceTree = "<group>"; };
-		B0A2FFD60DB0B0A100C9BD5C /* ulinks.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ulinks.cpp; path = ../../contrib/unrar/ulinks.cpp; sourceTree = "<group>"; };
-		B0A2FFD80DB0B0A100C9BD5C /* unicode.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = unicode.cpp; path = ../../contrib/unrar/unicode.cpp; sourceTree = "<group>"; };
-		B0A2FFDB0DB0B0A100C9BD5C /* unpack.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = unpack.cpp; path = ../../contrib/unrar/unpack.cpp; sourceTree = "<group>"; };
-		B0A2FFDF0DB0B0A100C9BD5C /* unrar.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = unrar.cpp; path = ../../contrib/unrar/unrar.cpp; sourceTree = "<group>"; };
-		B0A2FFE00DB0B0A100C9BD5C /* unrar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = unrar.h; path = ../../contrib/unrar/unrar.h; sourceTree = "<group>"; };
-		B0A2FFE30DB0B0A100C9BD5C /* volume.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = volume.cpp; path = ../../contrib/unrar/volume.cpp; sourceTree = "<group>"; };
 		B0AC6D1D0DD2EE5100976666 /* texture_opengl.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = texture_opengl.cpp; path = ../../source/Graphics/texture_opengl.cpp; sourceTree = "<group>"; };
 		B0AC6D1E0DD2EE5100976666 /* texture_opengl.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = texture_opengl.h; path = ../../source/Graphics/texture_opengl.h; sourceTree = "<group>"; };
 		B0B8E8CF0BDB4DDF007C1576 /* app.cpp */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.cpp.cpp; name = app.cpp; path = ../../source/App/app.cpp; sourceTree = "<group>"; };
@@ -351,6 +228,7 @@
 		B0B8ECF90BDB6337007C1576 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = /usr/lib/libz.dylib; sourceTree = "<absolute>"; };
 		B0BD2E130BE2745E00F71A26 /* SDLMain.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; name = SDLMain.h; path = ../../source/SDLMain.h; sourceTree = "<group>"; };
 		B0BD2E140BE2745E00F71A26 /* SDLMain.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; name = SDLMain.m; path = ../../source/SDLMain.m; sourceTree = "<group>"; };
+		B0DFF85A103785B8009D479E /* unrar.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = unrar.xcodeproj; path = ../../contrib/unrar/xcode/unrar.xcodeproj; sourceTree = SOURCE_ROOT; };
 		B0ED6F8510357A2F008D004F /* animation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = animation.cpp; path = ../../source/Graphics/Animation/animation.cpp; sourceTree = SOURCE_ROOT; };
 		B0ED6F8610357A2F008D004F /* animation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = animation.h; path = ../../source/Graphics/Animation/animation.h; sourceTree = SOURCE_ROOT; };
 		B0ED6F8710357A2F008D004F /* expirewidget.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = expirewidget.cpp; path = ../../source/Graphics/Animation/expirewidget.cpp; sourceTree = SOURCE_ROOT; };
@@ -372,6 +250,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B0DFF863103785C2009D479E /* libunrar.a in Frameworks */,
 				B065FBDE10321FFA006D7A4F /* libGLEW.a in Frameworks */,
 				B020F055101A35630040E736 /* libFreetype2.a in Frameworks */,
 				B020F04D101A35450040E736 /* libftgl-static.a in Frameworks */,
@@ -443,109 +322,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		B0A2FF6C0DB0B05E00C9BD5C /* Unrar */ = {
-			isa = PBXGroup;
-			children = (
-				B01BDEAD0FF2C6E300626AD7 /* archive.h */,
-				B01BDEAE0FF2C6E300626AD7 /* array.h */,
-				B01BDEAF0FF2C6E300626AD7 /* cmddata.h */,
-				B01BDEB00FF2C6E300626AD7 /* compress.h */,
-				B01BDEB10FF2C6E300626AD7 /* consio.h */,
-				B01BDEB20FF2C6E300626AD7 /* crc.h */,
-				B01BDEB30FF2C6E300626AD7 /* crypt.h */,
-				B01BDEB40FF2C6E300626AD7 /* encname.h */,
-				B01BDEB50FF2C6E300626AD7 /* errhnd.h */,
-				B01BDEB60FF2C6E300626AD7 /* extinfo.h */,
-				B01BDEB70FF2C6E300626AD7 /* extract.h */,
-				B01BDEB80FF2C6E300626AD7 /* filcreat.h */,
-				B01BDEB90FF2C6E300626AD7 /* file.h */,
-				B01BDEBA0FF2C6E300626AD7 /* filefn.h */,
-				B01BDEBB0FF2C6E300626AD7 /* filestr.h */,
-				B01BDEBC0FF2C6E300626AD7 /* find.h */,
-				B01BDEBD0FF2C6E300626AD7 /* getbits.h */,
-				B01BDEBE0FF2C6E300626AD7 /* global.h */,
-				B01BDEBF0FF2C6E300626AD7 /* headers.h */,
-				B01BDEC00FF2C6E300626AD7 /* isnt.h */,
-				B01BDEC10FF2C6E300626AD7 /* list.h */,
-				B01BDEC20FF2C6E300626AD7 /* loclang.h */,
-				B01BDEC30FF2C6E300626AD7 /* match.h */,
-				B01BDEC40FF2C6E300626AD7 /* options.h */,
-				B01BDEC50FF2C6E300626AD7 /* os.h */,
-				B01BDEC60FF2C6E300626AD7 /* pathfn.h */,
-				B01BDEC70FF2C6E300626AD7 /* rardefs.h */,
-				B01BDEC80FF2C6E300626AD7 /* rarlang.h */,
-				B01BDEC90FF2C6E300626AD7 /* raros.h */,
-				B01BDECB0FF2C6E300626AD7 /* rartypes.h */,
-				B01BDECC0FF2C6E300626AD7 /* rarvm.h */,
-				B01BDECD0FF2C6E300626AD7 /* rawread.h */,
-				B01BDECE0FF2C6E300626AD7 /* rdwrfn.h */,
-				B01BDECF0FF2C6E300626AD7 /* recvol.h */,
-				B01BDED00FF2C6E300626AD7 /* resource.h */,
-				B01BDED20FF2C6E300626AD7 /* rijndael.h */,
-				B01BDED30FF2C6E300626AD7 /* rs.h */,
-				B01BDED40FF2C6E300626AD7 /* savepos.h */,
-				B01BDED50FF2C6E300626AD7 /* scantree.h */,
-				B01BDED60FF2C6E300626AD7 /* sha1.h */,
-				B01BDED70FF2C6E300626AD7 /* smallfn.h */,
-				B01BDED80FF2C6E300626AD7 /* strfn.h */,
-				B01BDED90FF2C6E300626AD7 /* strlist.h */,
-				B01BDEDA0FF2C6E300626AD7 /* suballoc.h */,
-				B01BDEDB0FF2C6E300626AD7 /* system.h */,
-				B01BDEDC0FF2C6E300626AD7 /* timefn.h */,
-				B01BDEDD0FF2C6E300626AD7 /* ulinks.h */,
-				B01BDEDE0FF2C6E300626AD7 /* unicode.h */,
-				B01BDEDF0FF2C6E300626AD7 /* unpack.h */,
-				B01BDEE00FF2C6E300626AD7 /* version.h */,
-				B01BDEE10FF2C6E300626AD7 /* volume.h */,
-				B0A200290DB0B28A00C9BD5C /* smallfn.cpp */,
-				B0A2FF6E0DB0B0A100C9BD5C /* archive.cpp */,
-				B0A2FF700DB0B0A100C9BD5C /* arcread.cpp */,
-				B0A2FF730DB0B0A100C9BD5C /* cmddata.cpp */,
-				B0A2FF780DB0B0A100C9BD5C /* consio.cpp */,
-				B0A2FF7A0DB0B0A100C9BD5C /* crc.cpp */,
-				B0A2FF7C0DB0B0A100C9BD5C /* crypt.cpp */,
-				B0A2FF810DB0B0A100C9BD5C /* encname.cpp */,
-				B0A2FF830DB0B0A100C9BD5C /* errhnd.cpp */,
-				B0A2FF850DB0B0A100C9BD5C /* extinfo.cpp */,
-				B0A2FF870DB0B0A100C9BD5C /* extract.cpp */,
-				B0A2FF890DB0B0A100C9BD5C /* filcreat.cpp */,
-				B0A2FF8B0DB0B0A100C9BD5C /* file.cpp */,
-				B0A2FF8D0DB0B0A100C9BD5C /* filefn.cpp */,
-				B0A2FF8F0DB0B0A100C9BD5C /* filestr.cpp */,
-				B0A2FF910DB0B0A100C9BD5C /* find.cpp */,
-				B0A2FF930DB0B0A100C9BD5C /* getbits.cpp */,
-				B0A2FF950DB0B0A100C9BD5C /* global.cpp */,
-				B0A2FF9A0DB0B0A100C9BD5C /* isnt.cpp */,
-				B0A2FF9C0DB0B0A100C9BD5C /* license.txt */,
-				B0A2FF9D0DB0B0A100C9BD5C /* list.cpp */,
-				B0A2FFA20DB0B0A100C9BD5C /* match.cpp */,
-				B0A2FFA60DB0B0A100C9BD5C /* options.cpp */,
-				B0A2FFAA0DB0B0A100C9BD5C /* pathfn.cpp */,
-				B0A2FFB40DB0B0A100C9BD5C /* rarvm.cpp */,
-				B0A2FFB70DB0B0A100C9BD5C /* rawread.cpp */,
-				B0A2FFB90DB0B0A100C9BD5C /* rdwrfn.cpp */,
-				B0A2FFBB0DB0B0A100C9BD5C /* readme.txt */,
-				B0A2FFBC0DB0B0A100C9BD5C /* recvol.cpp */,
-				B0A2FFBE0DB0B0A100C9BD5C /* resource.cpp */,
-				B0A2FFC00DB0B0A100C9BD5C /* rijndael.cpp */,
-				B0A2FFC20DB0B0A100C9BD5C /* rs.cpp */,
-				B0A2FFC40DB0B0A100C9BD5C /* savepos.cpp */,
-				B0A2FFC60DB0B0A100C9BD5C /* scantree.cpp */,
-				B0A2FFC80DB0B0A100C9BD5C /* sha1.cpp */,
-				B0A2FFCC0DB0B0A100C9BD5C /* strfn.cpp */,
-				B0A2FFCE0DB0B0A100C9BD5C /* strlist.cpp */,
-				B0A2FFD20DB0B0A100C9BD5C /* system.cpp */,
-				B0A2FFD40DB0B0A100C9BD5C /* timefn.cpp */,
-				B0A2FFD60DB0B0A100C9BD5C /* ulinks.cpp */,
-				B0A2FFD80DB0B0A100C9BD5C /* unicode.cpp */,
-				B0A2FFDB0DB0B0A100C9BD5C /* unpack.cpp */,
-				B0A2FFDF0DB0B0A100C9BD5C /* unrar.cpp */,
-				B0A2FFE00DB0B0A100C9BD5C /* unrar.h */,
-				B0A2FFE30DB0B0A100C9BD5C /* volume.cpp */,
-			);
-			name = Unrar;
-			sourceTree = "<group>";
-		};
 		B0B8E8B50BDB4D36007C1576 = {
 			isa = PBXGroup;
 			children = (
@@ -553,6 +329,7 @@
 				B020F04F101A355E0040E736 /* Freetype2.xcodeproj */,
 				B020ED7E101A262D0040E736 /* FTGL.xcodeproj */,
 				B065FBBE10321F7B006D7A4F /* GLEW.xcodeproj */,
+				B0DFF85A103785B8009D479E /* unrar.xcodeproj */,
 				B0B8E8C30BDB4D4C007C1576 /* App */,
 				B0BD2DA00BE26FD000F71A26 /* Build */,
 				B065FA851031FF98006D7A4F /* Data */,
@@ -565,7 +342,6 @@
 				B0B8E8CD0BDB4D8A007C1576 /* Sound */,
 				B0B8E8CC0BDB4D7F007C1576 /* World */,
 				B0B8E9200BDB4E71007C1576 /* Products */,
-				B0A2FF6C0DB0B05E00C9BD5C /* Unrar */,
 				B0B8E9220BDB4E71007C1576 /* Cerberus-Info.plist */,
 				B0B8E9190BDB4E51007C1576 /* cerberus.cpp */,
 				B0BD2E130BE2745E00F71A26 /* SDLMain.h */,
@@ -718,6 +494,14 @@
 			name = Build;
 			sourceTree = "<group>";
 		};
+		B0DFF85B103785B8009D479E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				B0DFF862103785B8009D479E /* libunrar.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		B0ED6F8410357A10008D004F /* Animation */ = {
 			isa = PBXGroup;
 			children = (
@@ -752,6 +536,7 @@
 				B09B593E0EAC2F23003F4C0B /* PBXTargetDependency */,
 				B020F03B101A2B960040E736 /* PBXTargetDependency */,
 				B065FBD810321FEB006D7A4F /* PBXTargetDependency */,
+				B0DFF865103785CD009D479E /* PBXTargetDependency */,
 			);
 			name = Cerberus;
 			productName = Cerberus;
@@ -785,6 +570,10 @@
 				{
 					ProductGroup = B065FBBF10321F7B006D7A4F /* Products */;
 					ProjectRef = B065FBBE10321F7B006D7A4F /* GLEW.xcodeproj */;
+				},
+				{
+					ProductGroup = B0DFF85B103785B8009D479E /* Products */;
+					ProjectRef = B0DFF85A103785B8009D479E /* unrar.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -821,6 +610,13 @@
 			fileType = archive.ar;
 			path = "libCrissCross Static.a";
 			remoteRef = B09B593B0EAC2EF7003F4C0B /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		B0DFF862103785B8009D479E /* libunrar.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libunrar.a;
+			remoteRef = B0DFF861103785B8009D479E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -883,48 +679,6 @@
 				B04270280DA96C18005A0E89 /* databuffer.cpp in Sources */,
 				B0A2FF660DB0AEEE00C9BD5C /* binary_stream_readers.cpp in Sources */,
 				B0A2FF670DB0AEEE00C9BD5C /* resource.cpp in Sources */,
-				B0A2FFE60DB0B0A100C9BD5C /* archive.cpp in Sources */,
-				B0A2FFE70DB0B0A100C9BD5C /* arcread.cpp in Sources */,
-				B0A2FFE90DB0B0A100C9BD5C /* cmddata.cpp in Sources */,
-				B0A2FFEB0DB0B0A100C9BD5C /* consio.cpp in Sources */,
-				B0A2FFEC0DB0B0A100C9BD5C /* crc.cpp in Sources */,
-				B0A2FFED0DB0B0A100C9BD5C /* crypt.cpp in Sources */,
-				B0A2FFF00DB0B0A100C9BD5C /* encname.cpp in Sources */,
-				B0A2FFF10DB0B0A100C9BD5C /* errhnd.cpp in Sources */,
-				B0A2FFF20DB0B0A100C9BD5C /* extinfo.cpp in Sources */,
-				B0A2FFF30DB0B0A100C9BD5C /* extract.cpp in Sources */,
-				B0A2FFF40DB0B0A100C9BD5C /* filcreat.cpp in Sources */,
-				B0A2FFF50DB0B0A100C9BD5C /* file.cpp in Sources */,
-				B0A2FFF60DB0B0A100C9BD5C /* filefn.cpp in Sources */,
-				B0A2FFF70DB0B0A100C9BD5C /* filestr.cpp in Sources */,
-				B0A2FFF80DB0B0A100C9BD5C /* find.cpp in Sources */,
-				B0A2FFF90DB0B0A100C9BD5C /* getbits.cpp in Sources */,
-				B0A2FFFA0DB0B0A100C9BD5C /* global.cpp in Sources */,
-				B0A2FFFC0DB0B0A100C9BD5C /* isnt.cpp in Sources */,
-				B0A2FFFE0DB0B0A100C9BD5C /* list.cpp in Sources */,
-				B0A200000DB0B0A100C9BD5C /* match.cpp in Sources */,
-				B0A200020DB0B0A100C9BD5C /* options.cpp in Sources */,
-				B0A200040DB0B0A100C9BD5C /* pathfn.cpp in Sources */,
-				B0A200060DB0B0A100C9BD5C /* rarvm.cpp in Sources */,
-				B0A200080DB0B0A100C9BD5C /* rawread.cpp in Sources */,
-				B0A200090DB0B0A100C9BD5C /* rdwrfn.cpp in Sources */,
-				B0A2000B0DB0B0A100C9BD5C /* recvol.cpp in Sources */,
-				B0A2000C0DB0B0A100C9BD5C /* resource.cpp in Sources */,
-				B0A2000D0DB0B0A100C9BD5C /* rijndael.cpp in Sources */,
-				B0A2000E0DB0B0A100C9BD5C /* rs.cpp in Sources */,
-				B0A2000F0DB0B0A100C9BD5C /* savepos.cpp in Sources */,
-				B0A200100DB0B0A100C9BD5C /* scantree.cpp in Sources */,
-				B0A200110DB0B0A100C9BD5C /* sha1.cpp in Sources */,
-				B0A200130DB0B0A100C9BD5C /* strfn.cpp in Sources */,
-				B0A200140DB0B0A100C9BD5C /* strlist.cpp in Sources */,
-				B0A200160DB0B0A100C9BD5C /* system.cpp in Sources */,
-				B0A200170DB0B0A100C9BD5C /* timefn.cpp in Sources */,
-				B0A200180DB0B0A100C9BD5C /* ulinks.cpp in Sources */,
-				B0A200190DB0B0A100C9BD5C /* unicode.cpp in Sources */,
-				B0A2001B0DB0B0A100C9BD5C /* unpack.cpp in Sources */,
-				B0A2001E0DB0B0A100C9BD5C /* unrar.cpp in Sources */,
-				B0A200200DB0B0A100C9BD5C /* volume.cpp in Sources */,
-				B0A2002B0DB0B28A00C9BD5C /* smallfn.cpp in Sources */,
 				B05708E40DB219920071B5B7 /* debug_utils.cpp in Sources */,
 				B05708E50DB219920071B5B7 /* preferences.cpp in Sources */,
 				B05708E60DB219920071B5B7 /* text_stream_readers.cpp in Sources */,
@@ -962,6 +716,11 @@
 			isa = PBXTargetDependency;
 			name = "CrissCross Static";
 			targetProxy = B09B593D0EAC2F23003F4C0B /* PBXContainerItemProxy */;
+		};
+		B0DFF865103785CD009D479E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = unrar;
+			targetProxy = B0DFF864103785CD009D479E /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
