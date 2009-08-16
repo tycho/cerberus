@@ -182,27 +182,6 @@ TextReader *Resource::GetTextReader(char const *_filename)
     TextReader *reader = NULL;
     char fullFilename[256];
 
-    fullFilename[0] = 0;
-
-#if 0
-    if( m_modName )
-    {
-        sprintf( fullFilename, "%smods/%s/%s", g_app->GetProfileDirectory(), m_modName, _filename );
-        if( DoesFileExist(fullFilename) )
-            reader = new TextFileReader(fullFilename);
-
-#ifdef TARGET_OS_VISTA
-        // The Oberon build bundles the Perdition mod
-        if( !reader )
-        {
-            sprintf( fullFilename, "mods/%s/%s", m_modName, _filename );
-            if( DoesFileExist(fullFilename) )
-                reader = new TextFileReader(fullFilename);
-        }
-#endif
-    }
-#endif
-
     if( !reader )
     {
         sprintf( fullFilename, "data/%s", _filename );
