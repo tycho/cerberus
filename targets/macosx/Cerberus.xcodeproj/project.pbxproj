@@ -59,6 +59,7 @@
 		B0ED6F8E10357A2F008D004F /* expirewidget.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ED6F8710357A2F008D004F /* expirewidget.cpp */; };
 		B0ED6F8F10357A2F008D004F /* fade.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ED6F8910357A2F008D004F /* fade.cpp */; };
 		B0ED6F9010357A2F008D004F /* rotate.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0ED6F8B10357A2F008D004F /* rotate.cpp */; };
+		B0F71A4F1048837100AD8DAA /* themes in Resources */ = {isa = PBXBuildFile; fileRef = B0F71A401048837100AD8DAA /* themes */; };
 		B0F90D130F02E7AA005446D6 /* soundsystem_null.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F90D110F02E7AA005446D6 /* soundsystem_null.cpp */; };
 		B0F90D1A0F02E7BC005446D6 /* font.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F90D140F02E7BB005446D6 /* font.cpp */; };
 		B0F90D1C0F02E7BC005446D6 /* font_opengl.cpp in Sources */ = {isa = PBXBuildFile; fileRef = B0F90D180F02E7BC005446D6 /* font_opengl.cpp */; };
@@ -118,14 +119,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = B0DFF85A103785B8009D479E /* unrar.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = D2AAC046055464E500DB518D /* libunrar.a */;
+			remoteGlobalIDString = D2AAC046055464E500DB518D;
 			remoteInfo = unrar;
 		};
 		B0DFF864103785CD009D479E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = B0DFF85A103785B8009D479E /* unrar.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = D2AAC045055464E500DB518D /* unrar */;
+			remoteGlobalIDString = D2AAC045055464E500DB518D;
 			remoteInfo = unrar;
 		};
 /* End PBXContainerItemProxy section */
@@ -237,6 +238,7 @@
 		B0ED6F8A10357A2F008D004F /* fade.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = fade.h; path = ../../source/Graphics/Animation/fade.h; sourceTree = SOURCE_ROOT; };
 		B0ED6F8B10357A2F008D004F /* rotate.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = rotate.cpp; path = ../../source/Graphics/Animation/rotate.cpp; sourceTree = SOURCE_ROOT; };
 		B0ED6F8C10357A2F008D004F /* rotate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = rotate.h; path = ../../source/Graphics/Animation/rotate.h; sourceTree = SOURCE_ROOT; };
+		B0F71A401048837100AD8DAA /* themes */ = {isa = PBXFileReference; lastKnownFileType = folder; name = themes; path = ../../bin/themes; sourceTree = SOURCE_ROOT; };
 		B0F90D110F02E7AA005446D6 /* soundsystem_null.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = soundsystem_null.cpp; path = ../../source/Sound/soundsystem_null.cpp; sourceTree = SOURCE_ROOT; };
 		B0F90D120F02E7AA005446D6 /* soundsystem_null.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = soundsystem_null.h; path = ../../source/Sound/soundsystem_null.h; sourceTree = SOURCE_ROOT; };
 		B0F90D140F02E7BB005446D6 /* font.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = font.cpp; path = ../../source/Graphics/font.cpp; sourceTree = SOURCE_ROOT; };
@@ -325,6 +327,7 @@
 		B0B8E8B50BDB4D36007C1576 = {
 			isa = PBXGroup;
 			children = (
+				B0F71A401048837100AD8DAA /* themes */,
 				B09B59330EAC2EF7003F4C0B /* CrissCross.xcodeproj */,
 				B020F04F101A355E0040E736 /* Freetype2.xcodeproj */,
 				B020ED7E101A262D0040E736 /* FTGL.xcodeproj */,
@@ -628,6 +631,7 @@
 			files = (
 				B0A2002F0DB0B47A00C9BD5C /* cerberus.icns in Resources */,
 				B065FA841031FF89006D7A4F /* data in Resources */,
+				B0F71A4F1048837100AD8DAA /* themes in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -733,7 +737,6 @@
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.framework *.gch *.xcode* (*) CVS .svn .git";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ../../source/macosx.pch;
-				GCC_VERSION = 4.0;
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/../../source",
 					"$(PROJECT_DIR)/../../contrib/crisscross/source",
@@ -747,19 +750,19 @@
 					/Library/Frameworks/SDL_mixer.framework/Headers,
 					/Library/Frameworks/SDL_image.framework/Headers,
 				);
-				MACOSX_DEPLOYMENT_TARGET_i386 = 10.4;
-				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
-				MACOSX_DEPLOYMENT_TARGET_ppc64 = 10.4;
-				MACOSX_DEPLOYMENT_TARGET_x86_64 = 10.4;
+				MACOSX_DEPLOYMENT_TARGET_i386 = 10.5;
+				MACOSX_DEPLOYMENT_TARGET_ppc = 10.5;
+				MACOSX_DEPLOYMENT_TARGET_ppc64 = 10.5;
+				MACOSX_DEPLOYMENT_TARGET_x86_64 = 10.5;
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-std=gnu++98",
 				);
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
-				SDKROOT_i386 = /Developer/SDKs/MacOSX10.4u.sdk;
-				SDKROOT_ppc = /Developer/SDKs/MacOSX10.4u.sdk;
-				SDKROOT_ppc64 = /Developer/SDKs/MacOSX10.4u.sdk;
-				SDKROOT_x86_64 = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
+				SDKROOT_i386 = /Developer/SDKs/MacOSX10.5.sdk;
+				SDKROOT_ppc = /Developer/SDKs/MacOSX10.5.sdk;
+				SDKROOT_ppc64 = /Developer/SDKs/MacOSX10.5.sdk;
+				SDKROOT_x86_64 = /Developer/SDKs/MacOSX10.5.sdk;
 			};
 			name = Debug;
 		};
@@ -774,7 +777,6 @@
 				EXCLUDED_RECURSIVE_SEARCH_PATH_SUBDIRECTORIES = "*.nib *.lproj *.framework *.gch *.xcode* (*) CVS .svn .git";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = ../../source/macosx.pch;
-				GCC_VERSION = 4.0;
 				HEADER_SEARCH_PATHS = (
 					"$(PROJECT_DIR)/../../source",
 					"$(PROJECT_DIR)/../../contrib/crisscross/source",
@@ -788,19 +790,19 @@
 					/Library/Frameworks/SDL_mixer.framework/Headers,
 					/Library/Frameworks/SDL_image.framework/Headers,
 				);
-				MACOSX_DEPLOYMENT_TARGET_i386 = 10.4;
-				MACOSX_DEPLOYMENT_TARGET_ppc = 10.4;
-				MACOSX_DEPLOYMENT_TARGET_ppc64 = 10.4;
-				MACOSX_DEPLOYMENT_TARGET_x86_64 = 10.4;
+				MACOSX_DEPLOYMENT_TARGET_i386 = 10.5;
+				MACOSX_DEPLOYMENT_TARGET_ppc = 10.5;
+				MACOSX_DEPLOYMENT_TARGET_ppc64 = 10.5;
+				MACOSX_DEPLOYMENT_TARGET_x86_64 = 10.5;
 				OTHER_CPLUSPLUSFLAGS = (
 					"$(OTHER_CFLAGS)",
 					"-std=gnu++98",
 				);
-				SDKROOT = /Developer/SDKs/MacOSX10.4u.sdk;
-				SDKROOT_i386 = /Developer/SDKs/MacOSX10.4u.sdk;
-				SDKROOT_ppc = /Developer/SDKs/MacOSX10.4u.sdk;
-				SDKROOT_ppc64 = /Developer/SDKs/MacOSX10.4u.sdk;
-				SDKROOT_x86_64 = /Developer/SDKs/MacOSX10.4u.sdk;
+				SDKROOT = /Developer/SDKs/MacOSX10.5.sdk;
+				SDKROOT_i386 = /Developer/SDKs/MacOSX10.5.sdk;
+				SDKROOT_ppc = /Developer/SDKs/MacOSX10.5.sdk;
+				SDKROOT_ppc64 = /Developer/SDKs/MacOSX10.5.sdk;
+				SDKROOT_x86_64 = /Developer/SDKs/MacOSX10.5.sdk;
 			};
 			name = Release;
 		};
