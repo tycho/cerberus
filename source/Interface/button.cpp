@@ -31,19 +31,32 @@
 #include "Interface/interface.h"
 #include "Interface/button.h"
 
+enum {
+	BUTTON_STATE_INACTIVE = 0,
+	BUTTON_STATE_ACTIVE,
+	BUTTON_STATE_HOVER,
+	BUTTON_STATE_PRESSED
+};
+
+Uint32 Button::s_images[4] = { INVALID_SURFACE_ID, INVALID_SURFACE_ID, INVALID_SURFACE_ID, INVALID_SURFACE_ID };
+
 Button::Button ( InputCallback _callback, Widget *_callbackParam, const char *_caption, SDL_Rect &_pos )
- : InputWidget ( _callback, _callbackParam, _pos.x, _pos.y, _pos.w, _pos.h )
+ : InputWidget ( _callback, _callbackParam, _pos.x, _pos.y, _pos.w, _pos.h ),
+   m_state(BUTTON_STATE_ACTIVE)
 {
+	if (Button::s_images[0] == INVALID_SURFACE_ID) {
+		Button::s_images[BUTTON_STATE_INACTIVE] = g_graphics->LoadImage("themes/default/button/inactive.png");
+		Button::s_images[BUTTON_STATE_ACTIVE] = g_graphics->LoadImage("themes/default/button/active.png");
+		Button::s_images[BUTTON_STATE_HOVER] = g_graphics->LoadImage("themes/default/button/hover.png");
+		Button::s_images[BUTTON_STATE_PRESSED] = g_graphics->LoadImage("themes/default/button/pressed.png");
+	}
+
     m_widgetClass = WIDGET_BUTTON;
     m_caption = new TextUI(_caption, Color32(255,0,0), 0, 0);
     AddWidget(m_caption);
 
     // Forces a position recalculation for m_caption.
     m_damaged = true;
-
-    m_inactiveColor = Color32(20,0,0);
-    m_hoverColor = Color32(128,0,0);
-    m_color = m_inactiveColor;
 }
 
 Button::~Button()
@@ -55,7 +68,7 @@ void Button::Render()
     SDL_Rect absolutePosition = GetAbsolutePosition();
 
     // Draw the background and border
-    g_graphics->FillRect(SCREEN_SURFACE_ID, &absolutePosition, m_color);
+	g_graphics->Blit(s_images[m_state], NULL, SCREEN_SURFACE_ID, &absolutePosition, Color32(255,0,0,128));
     g_graphics->DrawRect(&absolutePosition, Color32(255,0,0));
 
     Widget::Render();
@@ -64,9 +77,13 @@ void Button::Render()
 Widget *Button::MouseUpdate()
 {
     if ( IsInsideWidget(g_interface->MouseX(), g_interface->MouseY()) ) {
-        m_color = m_hoverColor;
+		if (g_interface->MouseLeft()) {
+			m_state = BUTTON_STATE_PRESSED;
+		} else {
+			m_state = BUTTON_STATE_HOVER;
+		}
     } else {
-        m_color = m_inactiveColor;
+        m_state = BUTTON_STATE_ACTIVE;
     }
     return InputWidget::MouseUpdate();
 }

@@ -34,11 +34,10 @@
 class Button : public InputWidget
 {
 private:
+	static Uint32 s_images[4];
+
 	TextUI *m_caption;
-	Color32 m_color;
-	Color32 m_inactiveColor;
-	Color32 m_hoverColor;
-	Color32 m_clickColor;
+	Uint32  m_state;
 
 public:
     Button ( InputCallback _callback, Widget *_callbackParam, const char *_caption, SDL_Rect &_position );
