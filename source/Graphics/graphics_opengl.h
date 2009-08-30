@@ -85,7 +85,7 @@ public:
 
     virtual int    SetSurfaceAlpha ( Uint32 _surfaceID, Uint8 alpha );
     virtual int    Blit ( Uint32 _sourceSurfaceID, SDL_Rect const *_sourceRect,
-                          Uint32 _destSurfaceID,   SDL_Rect const *_destRect );
+                          Uint32 _destSurfaceID,   SDL_Rect const *_destRect, Color32 _color );
     virtual int    SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _height, Uint8 _colorDepth );
     virtual inline bool Flip();
 };

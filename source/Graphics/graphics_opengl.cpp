@@ -338,7 +338,8 @@ int OpenGLGraphics::FillRect ( Uint32 _surfaceID, SDL_Rect *_destRect, Color32 _
 }
 
 int OpenGLGraphics::Blit ( Uint32 _sourceSurfaceID, SDL_Rect const *_sourceRect,
-                           Uint32 _destSurfaceID,   SDL_Rect const *_destRect )
+                           Uint32 _destSurfaceID,   SDL_Rect const *_destRect,
+						   Color32 _color )
 {
     CrbReleaseAssert ( m_sdlScreen != NULL );
 
@@ -418,9 +419,6 @@ int OpenGLGraphics::Blit ( Uint32 _sourceSurfaceID, SDL_Rect const *_sourceRect,
     if ( destRect->y + sourceRect->h > toSurface->m_sdlSurface->h )
         sourceRect->h = toSurface->m_sdlSurface->h - destRect->y;
 
-    // With SDL, you don't have to specify the dest width/height. With OpenGL, we do.
-    destRect->w = sourceRect->w;
-    destRect->h = sourceRect->h;
 
     // Now we need to do the actual blit!
     if ( _destSurfaceID == SCREEN_SURFACE_ID )
@@ -430,7 +428,7 @@ int OpenGLGraphics::Blit ( Uint32 _sourceSurfaceID, SDL_Rect const *_sourceRect,
         // draw from sourceSurfaceID
         glEnable ( g_openGL->GetTextureTarget() );
         fromSurface->Bind();
-        glColor4f ( 1.0f, 1.0f, 1.0f, (float)fromSurface->m_alpha / 255.0f );
+        glColor4f ( _color.R(), _color.G(), _color.B(), _color.A() );
         g_openGL->VertexArrayStateTexture ();
 
         short *vertexArray = m_vertexArray, *texCoordArrayi = m_texCoordArrayi;
@@ -472,9 +470,10 @@ int OpenGLGraphics::Blit ( Uint32 _sourceSurfaceID, SDL_Rect const *_sourceRect,
             texCoordArrayf[6] = x / w + (float)sourceRect->w / w;
             texCoordArrayf[7] = y / h + (float)sourceRect->h / h;
         }
-
         glDrawArrays ( GL_TRIANGLE_STRIP, 0, 4 );
         ASSERT_OPENGL_ERRORS;
+
+        glDisable ( g_openGL->GetTextureTarget() );
 
         return 0;
     }

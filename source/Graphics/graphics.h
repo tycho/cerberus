@@ -89,7 +89,7 @@ public:
     virtual int    DeleteSurface ( Uint32 _surfaceID ) = 0;
     virtual int    FillRect ( Uint32 _surfaceID, SDL_Rect *_destRect, Color32 _color ) = 0;
     virtual int    Blit ( Uint32 _sourceSurfaceID, SDL_Rect const *_sourceRect,
-                          Uint32 _destSurfaceID,   SDL_Rect const *_destRect ) = 0;
+                          Uint32 _destSurfaceID,   SDL_Rect const *_destRect, Color32 _color = Color32(255,255,255,255) ) = 0;
     virtual int    SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _height, Uint8 _colorDepth ) = 0;
     virtual bool Flip() = 0;
 
