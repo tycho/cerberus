@@ -170,7 +170,7 @@ void Preferences::CreateDefaultValues()
     // so forth on the latest-and-greatest machines.
 
     AddLine( "TextureCompression = 0" );
-    AddLine( "TextureRectangles = 0" );
+    AddLine( "TextureRectangles = 1" );
 	// AddLine ( "RenderMode = 0" );
 
     AddLine( "\n" );
