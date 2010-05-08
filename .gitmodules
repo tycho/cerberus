@@ -1,36 +1,36 @@
 [submodule "contrib/crisscross"]
 	path = contrib/crisscross
 	url = git://github.com/tycho/crisscross.git
-[submodule "contrib/SDL"]
-	path = contrib/SDL
-	url = git://git.uplinklabs.net/pub/scm/git/tycho/sdl.git
-[submodule "contrib/SDL_mixer"]
-	path = contrib/SDL_mixer
-	url = git://git.uplinklabs.net/pub/scm/git/tycho/sdl-mixer.git
-[submodule "contrib/SDL_image"]
-	path = contrib/SDL_image
-	url = git://git.uplinklabs.net/pub/scm/git/tycho/sdl-image.git
 [submodule "contrib/zlib"]
 	path = contrib/zlib
-	url = git://git.uplinklabs.net/pub/scm/git/tycho/zlib.git
+	url = git://git.uplinklabs.net/pub/scm/git/tycho/gamelibs/zlib.git
 [submodule "contrib/unrar"]
 	path = contrib/unrar
-	url = git://git.uplinklabs.net/pub/scm/git/tycho/unrar.git
-[submodule "contrib/libpng"]
-	path = contrib/libpng
-	url = git://git.uplinklabs.net/pub/scm/git/tycho/libpng.git
-[submodule "contrib/SDL_ttf"]
-	path = contrib/SDL_ttf
-	url = git://git.uplinklabs.net/pub/scm/git/tycho/sdl-ttf.git
+	url = git://git.uplinklabs.net/pub/scm/git/tycho/gamelibs/unrar.git
 [submodule "contrib/FTGL"]
 	path = contrib/FTGL
-	url = git://git.uplinklabs.net/pub/scm/git/tycho/ftgl.git
-[submodule "contrib/freetype"]
-	path = contrib/freetype
-	url = git://git.uplinklabs.net/pub/scm/git/tycho/freetype.git
+	url = git://git.uplinklabs.net/pub/scm/git/tycho/gamelibs/ftgl.git
 [submodule "contrib/LuaJIT"]
 	path = contrib/LuaJIT
 	url = git://git.uplinklabs.net/pub/scm/git/tycho/luajit.git
 [submodule "contrib/glew"]
 	path = contrib/glew
 	url = git://git.uplinklabs.net/pub/scm/git/tycho/glew.git
+[submodule "contrib/SDL"]
+	path = contrib/SDL
+	url = git://git.uplinklabs.net/pub/scm/git/tycho/gamelibs/sdl.git
+[submodule "contrib/SDL_image"]
+	path = contrib/SDL_image
+	url = git://git.uplinklabs.net/pub/scm/git/tycho/gamelibs/sdl-image.git
+[submodule "contrib/SDL_mixer"]
+	path = contrib/SDL_mixer
+	url = git://git.uplinklabs.net/pub/scm/git/tycho/gamelibs/sdl-mixer.git
+[submodule "contrib/SDL_ttf"]
+	path = contrib/SDL_ttf
+	url = git://git.uplinklabs.net/pub/scm/git/tycho/sdl-ttf.git
+[submodule "contrib/freetype"]
+	path = contrib/freetype
+	url = git://git.uplinklabs.net/pub/scm/git/tycho/freetype.git
+[submodule "contrib/libpng"]
+	path = contrib/libpng
+	url = git://git.uplinklabs.net/pub/scm/git/tycho/libpng.git
