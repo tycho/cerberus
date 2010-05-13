@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2009 Steven Noonan <steven@uplinklabs.net>
+ * Copyright (c) 2010 Steven Noonan <steven@uplinklabs.net>
  *                and Miah Clayton <miah@ferrousmoon.com>
  * All rights reserved.
  *
@@ -79,7 +79,7 @@ int main ( int argc, char **argv )
     g_console->WriteLine ( "=  Codename Cerberus  =" );
     g_console->WriteLine ( "=======================" );
     g_console->SetColour ();
-	g_console->WriteLine ( "Copyright (c) 2009 Steven Noonan <steven@uplinklabs.net>" );
+	g_console->WriteLine ( "Copyright (c) 2010 Steven Noonan <steven@uplinklabs.net>" );
 	g_console->WriteLine ( "               and Miah Clayton <miah@ferrousmoon.com>");
 	g_console->WriteLine ( "All rights reserved." );
 	g_console->WriteLine ( "Licensed under the terms of the New BSD License.\n" );
