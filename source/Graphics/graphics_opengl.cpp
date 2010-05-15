@@ -42,6 +42,22 @@ OpenGLGraphics::OpenGLGraphics()
 {
     int retval = SDL_Init ( SDL_INIT_VIDEO );
     CrbReleaseAssert ( retval == 0 );
+
+    #ifdef ENABLE_FONTS
+    #ifdef TARGET_OS_LINUX
+    m_fontpaths.insert("/usr/share/fonts");
+    m_fontpaths.insert("/usr/share/fonts/corefonts");
+    m_fontpaths.insert("/usr/share/fonts/truetype/msttcorefonts");
+    #endif
+    #ifdef TARGET_OS_WINDOWS
+    char tmp[1024];
+    sprintf(tmp, "%s/Fonts", getenv("windir"));
+    m_fontpaths.insert(strdup(tmp));
+    #endif
+    #ifdef TARGET_OS_MACOSX
+    m_fontpaths.insert("/Library/Fonts");
+    #endif
+    #endif
 }
 
 OpenGLGraphics::~OpenGLGraphics()
@@ -84,16 +100,11 @@ Uint32 OpenGLGraphics::CreateFont(const char *_fontFace, int _height)
 	file = g_app->m_resource->GetUncompressedFile(fontpath);
 
 	if ( !file ) {
-#ifdef TARGET_OS_WINDOWS
-		char windir[128];
-		GetWindowsDirectory(windir, 128);
-		sprintf(fontpath, "%s/fonts/%s.ttf", windir, _fontFace);
-#elif defined(TARGET_OS_MACOSX)
-		sprintf(fontpath, "/Library/Fonts/%s.ttf", _fontFace);
-#else
-		sprintf(fontpath, "/usr/share/fonts/corefonts/%s.ttf", _fontFace);
-#endif
-		file = g_app->m_resource->GetUncompressedFile(fontpath);
+        for (Uint32 i = 0; i < m_fontpaths.size(); i++) {
+            sprintf(fontpath, "%s/%s.ttf", m_fontpaths.get(i), _fontFace);
+            if ((file = g_app->m_resource->GetUncompressedFile(fontpath)))
+                break;
+        }
 	}
 
 	CoreAssert(file);

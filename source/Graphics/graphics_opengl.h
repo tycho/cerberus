@@ -47,6 +47,7 @@ private:
 
 #ifdef ENABLE_FONTS
 	Data::DArray<OpenGLFont *>           m_fonts;
+	Data::LList<const char *>                  m_fontpaths;
 #endif
 
     short m_vertexArray[8];
