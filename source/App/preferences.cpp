@@ -373,7 +373,7 @@ void Preferences::Clear()
     m_items.empty();
     for ( i = 0; i < m_fileText.size(); i++ )
         if ( m_fileText.valid ( i ) )
-            delete m_fileText.get ( i );
+            delete[] m_fileText.get ( i );
 }
 
 float Preferences::GetFloat(char const *_key, float _default) const
