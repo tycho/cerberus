@@ -1,9 +1,10 @@
 *.DS_Store
 *.ncb
 *.suo
-*.o
+*.[oad]
 *.obj
 *.gch
 bin/*.exe
 bin/*.dll
 bin/*.pdb
+source/.cflags

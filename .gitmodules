@@ -10,9 +10,12 @@
 [submodule "contrib/FTGL"]
 	path = contrib/FTGL
 	url = git://git.uplinklabs.net/pub/scm/git/tycho/gamelibs/ftgl.git
-[submodule "contrib/LuaJIT"]
-	path = contrib/LuaJIT
-	url = git://git.uplinklabs.net/pub/scm/git/tycho/luajit.git
+[submodule "contrib/lua"]
+	path = contrib/lua
+	url = git://git.uplinklabs.net/pub/scm/git/tycho/lua.git
+[submodule "contrib/luajit"]
+	path = contrib/luajit
+	url = git://git.uplinklabs.net/pub/scm/git/tycho/luajit-2.x.git
 [submodule "contrib/glew"]
 	path = contrib/glew
 	url = git://git.uplinklabs.net/pub/scm/git/tycho/glew.git
@@ -34,3 +37,6 @@
 [submodule "contrib/libpng"]
 	path = contrib/libpng
 	url = git://git.uplinklabs.net/pub/scm/git/tycho/libpng.git
+[submodule "contrib/smpeg"]
+	path = contrib/smpeg
+	url = git://git.uplinklabs.net/pub/scm/git/tycho/gamelibs/smpeg.git

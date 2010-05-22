@@ -1,14 +1,8 @@
 all:
-	cd contrib/crisscross; cmake .; cd ../..
-	$(MAKE) -C contrib/crisscross CrissCross
-#	$(MAKE) -C contrib/crisscross check
-	$(MAKE) -f source/Makefile
+	@$(MAKE) -C source
 
 clean:
-	$(MAKE) -f source/Makefile clean
+	@$(MAKE) -C source clean
 
-distclean: clean
-	$(MAKE) -C contrib/crisscross clean
-
-contrib:
-	$(MAKE) -C contrib/crisscross
+distclean:
+	@$(MAKE) -C source distclean
