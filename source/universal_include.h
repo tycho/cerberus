@@ -183,6 +183,8 @@ extern IO::Console *g_console;
 #    define stricmp _stricmp
 #endif
 
+#include <cmath>
+
 __inline bool isPowerOfTwo ( Uint32 v ) { return !(v & (v - 1)) && v; }
 __inline Uint32 nearestPowerOfTwo ( Uint32 v ) { return (Uint32)pow( 2.0, ceil( log( (double)v ) / log( 2.0 ) ) ); }
 

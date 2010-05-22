@@ -239,7 +239,7 @@ Uint32 OpenGLGraphics::LoadImage ( const char *_filename )
     }
     if ( g_openGL->GetSetting ( OPENGL_TEX_FORCE_SQUARE, false ) )
 	{
-		targetH = targetW = cc_max ( targetW, targetH );
+		targetH = targetW = std::max ( targetW, targetH );
 	}
 
     OpenGLTexture *tex = new OpenGLTexture();

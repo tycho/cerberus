@@ -27,6 +27,10 @@
 
 #include "universal_include.h"
 
+#ifndef TARGET_OS_WINDOWS
+#	include <sys/stat.h>
+#endif
+
 #include "App/app.h"
 #include "App/file_utils.h"
 #include "App/string_utils.h"

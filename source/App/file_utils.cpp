@@ -27,6 +27,8 @@
 
 #include "universal_include.h"
 
+#include <sys/stat.h>
+
 #include "App/file_utils.h"
 
 bool FileExists ( const char *_file )
