@@ -157,6 +157,8 @@ ifneq (,$(findstring CYGWIN,$(uname_S)))
 endif
 
 BUILD_CRISSCROSS = YesPlease
+BUILD_FREETYPE = YesPlease
+BUILD_FTGL = YesPlease
 BUILD_GLEW = YesPlease
 BUILD_UNRAR = YesPlease
 
@@ -420,13 +422,13 @@ ifdef BUILD_CRISSCROSS
 CONTRIBS += crisscross/source
 CONTRIB_LIBS += $(LIBCRISSCROSS)
 endif
-ifdef BUILD_FREETYPE
-CONTRIBS += freetype
-CONTRIB_LIBS += $(LIBFREETYPE)
-endif
 ifdef BUILD_FTGL
 CONTRIBS += FTGL
 CONTRIB_LIBS += $(LIBFTGL)
+endif
+ifdef BUILD_FREETYPE
+CONTRIBS += freetype
+CONTRIB_LIBS += $(LIBFREETYPE)
 endif
 ifdef BUILD_GLEW
 CONTRIBS += glew
