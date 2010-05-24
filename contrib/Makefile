@@ -1,6 +1,6 @@
 PREFIX := install
 
-SUBDIRS = SDL SDL_image SDL_mixer glew smpeg crisscross/source FTGL freetype libpng zlib unrar
+SUBDIRS = DirectX SDL SDL_image SDL_mixer glew smpeg crisscross/source FTGL freetype libpng zlib unrar
 
 ifdef USE_LUAJIT
 SUBDIRS += luajit/src
@@ -43,6 +43,7 @@ $(SUBDIRS):
 
 FTGL: freetype
 libpng freetype: zlib
+SDL: DirectX
 SDL_image: SDL libpng
 SDL_mixer: smpeg
 
