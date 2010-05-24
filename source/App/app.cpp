@@ -29,6 +29,8 @@
 
 #ifndef TARGET_OS_WINDOWS
 #	include <sys/stat.h>
+#else
+#	include <shlobj.h>
 #endif
 
 #include "App/app.h"
