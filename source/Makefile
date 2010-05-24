@@ -124,7 +124,13 @@ ifneq (,$(findstring MINGW,$(uname_S)))
 	bin_prefix = .
 	WIN32 = Yes
 	NO_RDYNAMIC = YesPlease
-	EXTRA_LIBS += -lmingw32 -lgdi32 -lwinmm $(CONTRIB)/install/lib/libSDLmain.a -mwindows
+	INCLUDES_L += -I$(CONTRIB)/DirectX/include
+	EXTRA_LIBS += -lmingw32 -lgdi32 -lwinmm $(CONTRIB)/install/lib/libSDLmain.a -lopengl32 -lglu32 -ldxguid -mwindows
+	BUILD_FREETYPE = YesPlease
+	BUILD_FTGL = YesPlease
+	BUILD_SDL = YesPlease
+	BUILD_SDLMIXER = YesPlease
+	BUILD_SDLIMAGE = YesPlease
 else
 	EXTRA_LIBS += -lpthread
 	INCLUDES_L += -Ilib/irclib/linux
@@ -153,7 +159,11 @@ endif
 ifneq (,$(findstring CYGWIN,$(uname_S)))
 	GAME = Cerberus.exe
 	NO_RDYNAMIC = YesPlease
-	BUILD_PCRE = YesPlease
+	BUILD_FREETYPE = YesPlease
+	BUILD_FTGL = YesPlease
+	BUILD_SDL = YesPlease
+	BUILD_SDLMIXER = YesPlease
+	BUILD_SDLIMAGE = YesPlease
 endif
 
 BUILD_CRISSCROSS = YesPlease
@@ -338,8 +348,6 @@ endif
 ifneq ($(uname_S),Darwin)
 ifeq (,$(findstring MINGW,$(uname_S)))
 LIBS += -lGL -lGLU
-else
-LIBS += -lopengl32 -lglu32
 endif
 endif
 
@@ -440,13 +448,13 @@ ifdef BUILD_SDLIMAGE
 CONTRIBS += SDL_image
 CONTRIB_LIBS += $(LIBSDLIMAGE)
 else
-CONTRIB_LIBS += -lSDL_image
+EXTRA_LIBS += -lSDL_image
 endif
 ifdef BUILD_SDLMIXER
 CONTRIBS += SDL_mixer
 CONTRIB_LIBS += $(LIBSDLMIXER)
 else
-CONTRIB_LIBS += -lSDL_mixer
+EXTRA_LIBS += -lSDL_mixer
 endif
 ifdef BUILD_SMPEG
 CONTRIBS += smpeg
