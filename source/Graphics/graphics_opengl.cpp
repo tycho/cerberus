@@ -102,7 +102,8 @@ Uint32 OpenGLGraphics::CreateFont(const char *_fontFace, int _height)
 	if ( !file ) {
         for (Uint32 i = 0; i < m_fontpaths.size(); i++) {
             sprintf(fontpath, "%s/%s.ttf", m_fontpaths.get(i), _fontFace);
-            if ((file = g_app->m_resource->GetUncompressedFile(fontpath)))
+			file = g_app->m_resource->GetUncompressedFile(fontpath);
+            if (file)
                 break;
         }
 	}

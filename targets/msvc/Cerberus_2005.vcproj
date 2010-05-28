@@ -5,6 +5,7 @@
 	Name="Cerberus"
 	ProjectGUID="{222AA662-C3B2-411A-97EB-4267536DEEFF}"
 	RootNamespace="Cerberus"
+	TargetFrameworkVersion="131072"
 	>
 	<Platforms>
 		<Platform
@@ -29,7 +30,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Generating build number..."
-				CommandLine="&quot;$(ProjectDir)\..\..\scripts\gen_buildnum_h_helper.cmd&quot; $(ProjectDir)\..\.."
+				CommandLine="cd &quot;$(ProjectDir)&quot;&#x0D;&#x0A;perl.exe ../../scripts/gen_ver.pl build_number.h"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -86,8 +87,10 @@
 				GenerateDebugInformation="true"
 				GenerateMapFile="false"
 				SubSystem="2"
-				TargetMachine="1"
+				RandomizedBaseAddress="1"
 				FixedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -109,9 +112,6 @@
 				Name="VCAppVerifierTool"
 			/>
 			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
@@ -127,7 +127,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Generating build number..."
-				CommandLine="&quot;$(ProjectDir)\..\..\scripts\gen_buildnum_h_helper.cmd&quot; $(ProjectDir)\..\.."
+				CommandLine="cd &quot;$(ProjectDir)&quot;&#x0D;&#x0A;perl.exe ../../scripts/gen_ver.pl build_number.h"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -184,8 +184,10 @@
 				GenerateDebugInformation="true"
 				GenerateMapFile="false"
 				SubSystem="2"
-				TargetMachine="17"
+				RandomizedBaseAddress="1"
 				FixedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="17"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -207,9 +209,6 @@
 				Name="VCAppVerifierTool"
 			/>
 			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
@@ -225,7 +224,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Generating build number..."
-				CommandLine="&quot;$(ProjectDir)\..\..\scripts\gen_buildnum_h_helper.cmd&quot; $(ProjectDir)\..\.."
+				CommandLine="cd &quot;$(ProjectDir)&quot;&#x0D;&#x0A;perl.exe ../../scripts/gen_ver.pl build_number.h"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -281,6 +280,8 @@
 				GenerateDebugInformation="true"
 				GenerateMapFile="false"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="1"
 			/>
 			<Tool
@@ -303,9 +304,6 @@
 				Name="VCAppVerifierTool"
 			/>
 			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
@@ -321,7 +319,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Generating build number..."
-				CommandLine="&quot;$(ProjectDir)\..\..\scripts\gen_buildnum_h_helper.cmd&quot; $(ProjectDir)\..\.."
+				CommandLine="cd &quot;$(ProjectDir)&quot;&#x0D;&#x0A;perl.exe ../../scripts/gen_ver.pl build_number.h"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -377,6 +375,8 @@
 				GenerateDebugInformation="true"
 				GenerateMapFile="false"
 				SubSystem="2"
+				RandomizedBaseAddress="1"
+				DataExecutionPrevention="0"
 				TargetMachine="17"
 			/>
 			<Tool
@@ -399,9 +399,6 @@
 				Name="VCAppVerifierTool"
 			/>
 			<Tool
-				Name="VCWebDeploymentTool"
-			/>
-			<Tool
 				Name="VCPostBuildEventTool"
 			/>
 		</Configuration>
@@ -417,7 +414,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Generating build number..."
-				CommandLine="&quot;$(ProjectDir)\..\..\scripts\gen_buildnum_h_helper.cmd&quot; $(ProjectDir)\..\.."
+				CommandLine="cd &quot;$(ProjectDir)&quot;&#x0D;&#x0A;perl.exe ../../scripts/gen_ver.pl build_number.h"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -475,8 +472,10 @@
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
-				TargetMachine="1"
+				RandomizedBaseAddress="1"
 				FixedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="1"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -496,9 +495,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"
@@ -518,7 +514,7 @@
 			<Tool
 				Name="VCPreBuildEventTool"
 				Description="Generating build number..."
-				CommandLine="&quot;$(ProjectDir)\..\..\scripts\gen_buildnum_h_helper.cmd&quot; $(ProjectDir)\..\.."
+				CommandLine="cd &quot;$(ProjectDir)&quot;&#x0D;&#x0A;perl.exe ../../scripts/gen_ver.pl build_number.h"
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
@@ -576,8 +572,10 @@
 				OptimizeReferences="2"
 				EnableCOMDATFolding="2"
 				OptimizeForWindows98="1"
-				TargetMachine="17"
+				RandomizedBaseAddress="1"
 				FixedBaseAddress="1"
+				DataExecutionPrevention="0"
+				TargetMachine="17"
 			/>
 			<Tool
 				Name="VCALinkTool"
@@ -597,9 +595,6 @@
 			/>
 			<Tool
 				Name="VCAppVerifierTool"
-			/>
-			<Tool
-				Name="VCWebDeploymentTool"
 			/>
 			<Tool
 				Name="VCPostBuildEventTool"

@@ -130,7 +130,9 @@
 #endif
 
 #ifdef TARGET_OS_WINDOWS
-#  define FTGL_LIBRARY_STATIC
+#	define FTGL_LIBRARY_STATIC
+#	define NOMINMAX
+#	include <windows.h>
 #endif
 
 #define GLEW_STATIC

@@ -6,5 +6,8 @@
 *.gch
 bin/*.exe
 bin/*.dll
+bin/*.idb
+bin/*.ilk
 bin/*.pdb
+bin/preferences.txt
 source/.cflags
