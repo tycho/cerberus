@@ -33,6 +33,7 @@
 #    pragma comment (lib, "SDL_mixer.lib")
 #    pragma comment (lib, "timidity.lib")
 #    pragma comment (lib, "native_midi.lib")
+#    pragma comment (lib, "smpeg.lib")
 #endif
 
 #include "App/app.h"
