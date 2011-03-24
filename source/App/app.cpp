@@ -65,8 +65,7 @@ App::App ()
     // Set up the Application Path variable
 #if defined ( TARGET_OS_WINDOWS )
 
-    int retval = GetModuleFileName ( NULL, tempPath, sizeof ( tempPath ) );
-    CrbDebugAssert ( retval != 0 );
+    CrbDebugAssert ( GetModuleFileName ( NULL, tempPath, sizeof ( tempPath ) ) != 0 );
     if ( strlen(tempPath) )
     {
         char *ptr = &tempPath[strlen(tempPath)];
@@ -78,8 +77,7 @@ App::App ()
 
 #elif defined ( TARGET_OS_LINUX )
 
-    int retval = readlink ( "/proc/self/exe", tempPath, sizeof ( tempPath ) );
-    CrbDebugAssert ( retval != -1 );
+    CrbDebugAssert ( readlink ( "/proc/self/exe", tempPath, sizeof ( tempPath ) ) != -1 );
     if ( strlen(tempPath) )
     {
         char *ptr = &tempPath[strlen(tempPath)];
@@ -125,8 +123,7 @@ App::App ()
 #if defined ( TARGET_OS_WINDOWS )
 
     memset ( tempPath, 0, sizeof(tempPath) );
-    retval = SHGetFolderPath ( NULL, CSIDL_LOCAL_APPDATA | CSIDL_FLAG_CREATE, NULL, 0, tempPath );
-    CrbDebugAssert ( retval != E_FAIL );
+    CrbDebugAssert ( SHGetFolderPath ( NULL, CSIDL_LOCAL_APPDATA | CSIDL_FLAG_CREATE, NULL, 0, tempPath ) != E_FAIL );
     strcat ( tempPath, "\\Cerberus\\" );
     m_appSupportPath = newStr ( tempPath );
 
