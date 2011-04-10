@@ -34,6 +34,7 @@
 #include "Interface/interface.h"
 #include "Interface/window.h"
 #include "Network/net.h"
+#include "Scripting/scripting.h"
 #include "Sound/soundsystem.h"
 
 IO::Console *g_console;
@@ -46,6 +47,7 @@ void Init_App( char *apppath );
 void Init_Game();
 void Init_Graphics();
 void Init_Interface();
+void Init_Scripting();
 void Init_Sound();
 
 int main ( int argc, char **argv )
@@ -126,6 +128,7 @@ int main ( int argc, char **argv )
     Init_Graphics();
     Init_Interface();
     Init_Sound();
+    Init_Scripting();
     Init_Game();
 
     g_app->Run ();
@@ -139,6 +142,7 @@ int main ( int argc, char **argv )
     delete g_interface; g_interface = NULL;
     delete g_graphics; g_graphics = NULL;
     delete g_soundSystem; g_soundSystem = NULL;
+    delete g_scripting; g_scripting = NULL;
 
     // notify that the exit operations were successful
     g_console->WriteLine ( "Program is exiting cleanly.\n");
@@ -263,6 +267,15 @@ void Init_Interface()
     CrbReleaseAssert ( g_interface != NULL );
 
 	g_app->Initialise();
+}
+
+void Init_Scripting()
+{
+#if defined(USE_LUA)
+    g_scripting = new LuaScripting();
+#endif
+    if ( !g_scripting )
+        g_scripting = new Scripting();
 }
 
 void Init_Sound()

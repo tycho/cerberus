@@ -28,6 +28,8 @@
 #ifndef __game_h_included
 #define __game_h_included
 
+#include <universal_include.h>
+
 class Game
 {
 protected:

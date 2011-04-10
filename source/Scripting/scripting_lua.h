@@ -25,28 +25,22 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "universal_include.h"
-
-#include "Game/game.h"
+#ifndef __scripting_lua_h_included
+#define __scripting_lua_h_included
 
 #include "Scripting/scripting.h"
 
-Game::Game()
- :  m_playing(true)
+class LuaScripting : public Scripting
 {
-}
+protected:
+    lua_State *m_luaState;
 
-Game::~Game()
-{
-}
+public:
+    LuaScripting();
 
-bool Game::Playing()
-{
-    return m_playing;
-}
+    virtual ~LuaScripting();
 
-void Game::Update()
-{
-}
+    virtual bool RunScript(const char *_scriptName);
+};
 
-Game *g_game;
+#endif
