@@ -27,26 +27,36 @@
 
 #include "universal_include.h"
 
-#include "Game/game.h"
+#include "Scripting/scripting_lua.h"
 
-#include "Scripting/scripting.h"
-
-Game::Game()
- :  m_playing(true)
+LuaScripting::LuaScripting()
+ : Scripting(".lua")
 {
+    m_luaState = lua_open();
+
+    luaL_openlibs(m_luaState);
 }
 
-Game::~Game()
+LuaScripting::~LuaScripting()
 {
+    lua_close(m_luaState);
 }
 
-bool Game::Playing()
+bool LuaScripting::RunScript(const char *_scriptPath)
 {
-    return m_playing;
-}
+    char file[1024];
+    strcpy(file, m_scriptDir);
+    strcat(file, _scriptPath);
+    strcat(file, m_extension);
 
-void Game::Update()
-{
-}
+    int s = luaL_dofile(m_luaState, file);
+    if (s != 0) {
+        g_console->WriteLine();
+        g_console->WriteLine("Error occurred while trying to run Lua script.");
+        g_console->WriteLine("  File: %s", file);
+        g_console->WriteLine("  Error: %s", lua_tostring(m_luaState, -1));
+        return false;
+    }
 
-Game *g_game;
+    return true;
+}

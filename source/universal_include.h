@@ -88,6 +88,13 @@
 #endif
 //********************** SOUND **********************
 
+//******************* SCRIPTING *********************
+#define USE_LUA
+
+#if !( defined(USE_LUA) )
+#    error You must select one and ONLY one scripting engine.
+#endif
+//******************* SCRIPTING *********************
 
 //******************* NETWORKING ********************
 #ifdef ENABLE_NETWORKING
@@ -157,6 +164,14 @@
 #    include <unistd.h>
 #    include <signal.h>
 #endif
+
+extern "C" {
+#ifdef USE_LUA
+#    include <lua.h>
+#    include <lualib.h>
+#    include <lauxlib.h>
+#endif
+}
 
 using namespace std;
 using namespace CrissCross;

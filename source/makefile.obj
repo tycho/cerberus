@@ -32,6 +32,8 @@ OBJECTS = \
     Network/net.o \
     Network/net_crisscross.o \
     Network/packet.o \
+    Scripting/scripting.o \
+    Scripting/scripting_lua.o \
     Sound/soundsystem.o \
     Sound/soundsystem_null.o \
     Sound/soundsystem_openal.o \

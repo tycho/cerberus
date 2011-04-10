@@ -25,28 +25,27 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "universal_include.h"
+#ifndef __scripting_h_included
+#define __scripting_h_included
 
-#include "Game/game.h"
-
-#include "Scripting/scripting.h"
-
-Game::Game()
- :  m_playing(true)
+class Scripting
 {
-}
+protected:
+    char *m_extension;
+    char *m_scriptDir;
 
-Game::~Game()
-{
-}
+public:
+    Scripting ();
 
-bool Game::Playing()
-{
-    return m_playing;
-}
+    Scripting(const char *_extension);
 
-void Game::Update()
-{
-}
+    virtual ~Scripting();
 
-Game *g_game;
+    virtual bool RunScript(const char *_scriptName);
+};
+
+extern Scripting *g_scripting;
+
+#include "Scripting/scripting_lua.h"
+
+#endif

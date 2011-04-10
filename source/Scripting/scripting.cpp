@@ -27,26 +27,31 @@
 
 #include "universal_include.h"
 
-#include "Game/game.h"
+#include "App/app.h"
 
 #include "Scripting/scripting.h"
 
-Game::Game()
- :  m_playing(true)
+Scripting::Scripting()
 {
 }
 
-Game::~Game()
+Scripting::Scripting(const char *_extension)
 {
+    m_extension = cc_strdup(_extension);
+    m_scriptDir = new char[1024];
+    sprintf(m_scriptDir, "%sdata/scripts/%s/",
+            g_app->GetApplicationSupportPath(), m_extension + 1);
 }
 
-bool Game::Playing()
+Scripting::~Scripting()
 {
-    return m_playing;
+    delete m_scriptDir;
+    m_scriptDir = NULL;
 }
 
-void Game::Update()
+bool Scripting::RunScript(const char *_scriptName)
 {
+    return true;
 }
 
-Game *g_game;
+Scripting *g_scripting;
