@@ -30,15 +30,26 @@
 
 #include <universal_include.h>
 
+#include "Entity/entity.h"
+
+#include "Graphics/scene.h"
+
 class Game
 {
 protected:
 	bool m_playing;
 
+    Scene *m_scene;
+
+    Entity m_entity;
 public:
     Game();
     virtual ~Game();
     virtual bool Playing();
+
+    virtual void HandleInput(SDL_Event &event);
+
+    virtual void Render();
 
     virtual void Update();
 };

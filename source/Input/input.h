@@ -1,5 +1,6 @@
 /*
- * Copyright (c) 2011 Eddie Ringle <eddie@eringle.net>
+ * Copyright (c) 2011 Steven Noonan <steven@uplinklabs.net>
+ *                and Miah Clayton <miah@ferrousmoon.com>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -24,22 +25,30 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __scripting_lua_h_included
-#define __scripting_lua_h_included
+#ifndef __input_h_included
+#define __input_h_included
 
-#include "Scripting/scripting.h"
-
-class LuaScripting : public Scripting
+class Input
 {
 protected:
-    lua_State *m_luaState;
+	int   m_mouseX;
+	int   m_mouseY;
+	Uint8 m_lastButtonState;
+	Uint8 m_buttonState;
 
 public:
-    LuaScripting();
+    Input();
+    virtual ~Input();
 
-    virtual ~LuaScripting();
+	virtual int MouseX                     () const;
+	virtual int MouseY                     () const;
+	virtual bool MouseLeft                 () const;
+	virtual bool MouseRight                () const;
+	virtual bool MouseLeftEdge             () const;
+	virtual bool MouseRightEdge            () const;
 
-    virtual bool RunScript(const char *_scriptName);
+    virtual void Update ();
 };
 
+extern Input *g_input;
 #endif

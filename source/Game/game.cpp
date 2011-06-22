@@ -32,12 +32,26 @@
 #include "Scripting/scripting.h"
 
 Game::Game()
- :  m_playing(true)
+ :  m_playing(true),
+    m_scene(new Scene())
 {
+    m_entity.SetTextureBitmap("darwinian.png");
+    int w = m_entity.GetTexture()->GetWidth();
+    int h = m_entity.GetTexture()->GetHeight();
+    Vertex verts[] = {
+        { 0, 0, 0, 1, 0, 0, 1, 0, 0, {0, 0, 0} },
+        { w, 0, 0, 0, 1, 0, 1, w, 0, {0, 0, 0} },
+        { w, h, 0, 0, 0, 1, 1, w, h, {0, 0, 0} },
+        { 0, h, 0, 1, 1, 1, 1, 0, h, {0, 0, 0} }
+    };
+    m_entity.SetVertices(verts, 4);
+    m_scene->AddEntity(&m_entity);
 }
 
 Game::~Game()
 {
+    delete m_scene;
+    m_scene = NULL;
 }
 
 bool Game::Playing()
@@ -45,8 +59,23 @@ bool Game::Playing()
     return m_playing;
 }
 
+void Game::HandleInput(SDL_Event &event)
+{
+    if (event.type == SDL_KEYDOWN) {
+
+    } else if (event.type == SDL_KEYUP) {
+
+    }
+}
+
+void Game::Render()
+{
+    m_scene->Render();
+}
+
 void Game::Update()
 {
+    m_scene->Update();
 }
 
 Game *g_game;

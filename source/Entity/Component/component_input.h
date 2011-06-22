@@ -24,22 +24,20 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __scripting_lua_h_included
-#define __scripting_lua_h_included
+#ifndef __component_input_h_included
+#define __component_input_h_included
 
-#include "Scripting/scripting.h"
+#include <universal_include.h>
 
-class LuaScripting : public Scripting
+#include "Entity/entity.h"
+
+class InputComponent : public Component
 {
-protected:
-    lua_State *m_luaState;
-
 public:
-    LuaScripting();
+    InputComponent();
+    virtual ~InputComponent();
 
-    virtual ~LuaScripting();
-
-    virtual bool RunScript(const char *_scriptName);
+    virtual void Update(Entity *_entity);
 };
 
 #endif

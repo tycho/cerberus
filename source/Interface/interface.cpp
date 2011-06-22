@@ -30,17 +30,14 @@
 #include "App/app.h"
 #include "App/preferences.h"
 #include "Graphics/graphics.h"
+#include "Input/input.h"
 #include "Interface/interface.h"
 
 Interface::Interface()
  : m_dragWindow(NULL),
    m_activeWidget(NULL),
    m_fpsWidget(NULL),
-   m_rendererWidget(NULL),
-   m_mouseX(0),
-   m_mouseY(0),
-   m_lastButtonState(0),
-   m_buttonState(0)
+   m_rendererWidget(NULL)
 {
 }
 
@@ -58,9 +55,7 @@ Interface::~Interface()
 
 void Interface::Update ()
 {
-    m_buttonState = SDL_GetMouseState ( &m_mouseX, &m_mouseY );
     SetWidgetFocus(MouseUpdate());
-    m_lastButtonState = m_buttonState;
 }
 
 void Interface::SetDragWindow ( Window *_window )
@@ -94,6 +89,9 @@ Widget *Interface::InsideWidget ( int _mouseX, int _mouseY )
 
 void Interface::AddWidget ( Widget *_widget )
 {
+    if (_widget->GetInterface() == NULL) {
+        _widget->SetInterface(this);
+    }
     m_widgetList.insert ( _widget );
 }
 
@@ -151,7 +149,7 @@ Widget *Interface::MouseUpdate ()
         for ( int i = m_widgetList.size() - 1; i >= 0; i-- )
         {
             Widget *widget = m_widgetList[i];
-            if ( !widget->IsInsideWidget(m_mouseX, m_mouseY) )
+            if ( !widget->IsInsideWidget(g_input->MouseX(), g_input->MouseY()) )
                 continue;
             Widget *acceptedMessage = widget->MouseUpdate ();
             if (acceptedMessage)
@@ -159,38 +157,6 @@ Widget *Interface::MouseUpdate ()
         }
         return NULL;
     }
-}
-
-int Interface::MouseX () const
-{
-    return m_mouseX;
-}
-
-int Interface::MouseY () const
-{
-    return m_mouseY;
-}
-
-bool Interface::MouseLeft () const
-{
-    return (m_buttonState & SDL_BUTTON(1)) != 0;
-}
-
-bool Interface::MouseRight () const
-{
-    return (m_buttonState & SDL_BUTTON(3)) != 0;
-}
-
-bool Interface::MouseLeftEdge () const
-{
-    return (m_buttonState & SDL_BUTTON(1)) !=
-            (m_lastButtonState & SDL_BUTTON(1));
-}
-
-bool Interface::MouseRightEdge () const
-{
-    return (m_buttonState & SDL_BUTTON(3)) !=
-           (m_lastButtonState & SDL_BUTTON(3));
 }
 
 void Interface::UpdateRendererWidget ()
@@ -256,5 +222,3 @@ void Interface::InitWidgets ()
 		m_widgetList[i]->Initialise();
     }
 }
-
-Interface *g_interface;

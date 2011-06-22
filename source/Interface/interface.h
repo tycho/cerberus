@@ -46,11 +46,6 @@ protected:
 
     Uint32 m_mousePointer;
 
-	int   m_mouseX;
-	int   m_mouseY;
-	Uint8 m_lastButtonState;
-	Uint8 m_buttonState;
-
 public:
     Interface();
     virtual ~Interface();
@@ -72,16 +67,7 @@ public:
     virtual Widget *MouseUpdate            ();
     virtual int SendEnterKey               ();
 
-	virtual int MouseX                     () const;
-	virtual int MouseY                     () const;
-	virtual bool MouseLeft                 () const;
-	virtual bool MouseRight                () const;
-	virtual bool MouseLeftEdge             () const;
-	virtual bool MouseRightEdge            () const;
-
     virtual void Update ();
 };
-
-extern Interface *g_interface;
 
 #endif

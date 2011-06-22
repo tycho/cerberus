@@ -24,22 +24,35 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __scripting_lua_h_included
-#define __scripting_lua_h_included
+#ifndef __included_scene_h
+#define __included_scene_h
 
-#include "Scripting/scripting.h"
+#include "Entity/entity.h"
 
-class LuaScripting : public Scripting
+#include "Interface/interface.h"
+
+class Scene
 {
 protected:
-    lua_State *m_luaState;
+    Scene *m_overlay;
+    Data::DArray<Entity *> m_entities;
 
+    Interface *m_interface;
 public:
-    LuaScripting();
+    Scene();
+    Scene(Scene *_overlay);
+    Scene(Interface *_interface);
+    Scene(Scene *_overlay, Interface *_interface);
+    virtual ~Scene();
 
-    virtual ~LuaScripting();
-
-    virtual bool RunScript(const char *_scriptName);
+    void AddEntity(Entity *_entity);
+    Interface *GetInterface();
+    Scene *GetOverlay();
+    void RemoveEntity(Entity *_entity);
+    void Render();
+    void SetInterface(Interface *_interface);
+    void SetOverlay(Scene *_overlay);
+    void Update();
 };
 
 #endif

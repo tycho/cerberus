@@ -30,6 +30,8 @@
 
 #include "App/resource.h"
 
+#include "Graphics/scene.h"
+
 //! The application class.
 /*!
 	The App class handles some of the basic things needed to run
@@ -52,6 +54,7 @@ protected:
 
     bool m_running;
 
+    Scene *m_scene;
 public:
     Resource *m_resource;
 
@@ -85,6 +88,9 @@ public:
 		\return The location where any new application resources should be stored.
 	 */
     virtual const char *GetApplicationSupportPath ();
+
+    virtual Scene *GetScene();
+    virtual Interface *GetInterface();
 
     virtual void UpdateInputs ();
 

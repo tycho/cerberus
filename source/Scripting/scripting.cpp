@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2010 Steven Noonan <steven@uplinklabs.net>
- *                and Miah Clayton <miah@ferrousmoon.com>
+ * Copyright (c) 2011 Eddie Ringle <eddie@eringle.net>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -45,7 +44,8 @@ Scripting::Scripting(const char *_extension)
 
 Scripting::~Scripting()
 {
-    delete m_scriptDir;
+    free(m_extension);
+    delete[] m_scriptDir;
     m_scriptDir = NULL;
 }
 

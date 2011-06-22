@@ -9,7 +9,12 @@ OBJECTS = \
     App/resource.o \
     App/string_utils.o \
     App/text_stream_readers.o \
+    Entity/Component/component.o \
+    Entity/Component/component_input.o \
+    Entity/Component/component_render.o \
+    Entity/entity.o \
     Game/game.o \
+    Game/game_object.o \
     Graphics/Animation/animation.o \
     Graphics/Animation/expirewidget.o \
     Graphics/Animation/fade.o \
@@ -19,9 +24,11 @@ OBJECTS = \
     Graphics/graphics.o \
     Graphics/graphics_opengl.o \
     Graphics/opengl.o \
+    Graphics/scene.o \
     Graphics/surface.o \
     Graphics/texture.o \
     Graphics/texture_opengl.o \
+    Input/input.o \
     Interface/button.o \
     Interface/error_window.o \
     Interface/inputwidget.o \

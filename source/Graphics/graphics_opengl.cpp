@@ -32,9 +32,11 @@
 #include "App/app.h"
 #include "App/preferences.h"
 #include "App/version.h"
+#include "Entity/entity.h"
 #include "Graphics/font_opengl.h"
 #include "Graphics/graphics_opengl.h"
 #include "Graphics/opengl.h"
+#include "Graphics/vertex.h"
 
 OpenGLGraphics::OpenGLGraphics()
  : Graphics(),
@@ -159,6 +161,11 @@ void OpenGLGraphics::DrawRect ( SDL_Rect *_destRect, Color32 _color )
     ASSERT_OPENGL_ERRORS;
 }
 
+Texture *OpenGLGraphics::GetTexture ( Uint32 _id )
+{
+    return m_textures.get ( _id );
+}
+
 void OpenGLGraphics::ShowCursor ( bool _show )
 {
     SDL_ShowCursor ( _show );
@@ -260,14 +267,46 @@ Uint32 OpenGLGraphics::LoadImage ( const char *_filename )
     tex->Dispose();
     tex->Create ( targetW, targetH );
 
-    SDL_SetAlpha ( tex->m_sdlSurface, 0, SDL_ALPHA_OPAQUE );
+    ASSERT_OPENGL_ERRORS;
 
+    SDL_SetAlpha ( src, 0, 0 );
     SDL_BlitSurface ( src, NULL, tex->m_sdlSurface, NULL );
     SDL_FreeSurface ( src );
 
     tex->Damage();
 
     return ret;
+}
+
+void OpenGLGraphics::DrawEntity ( Entity *_entity )
+{
+    if ( _entity != NULL ) {
+        glEnable(GL_BLEND);
+        glPushMatrix();
+        glTranslatef(_entity->GetX(), _entity->GetY(), _entity->GetZ());
+        Texture *tex = _entity->GetTexture();
+        if (tex != NULL) {
+            glEnable(g_openGL->GetTextureTarget());
+            tex->Bind();
+        }
+        glBegin(GL_TRIANGLE_FAN);
+        int numVertices = _entity->GetNumVertices();
+        for (int i = 0; i < numVertices; i++) {
+            Vertex *vert = &(_entity->GetVertices()[i]);
+            if (tex != NULL) {
+                glTexCoord2f(vert->u, vert->v);
+            }
+            glColor4f(vert->r, vert->g, vert->b, vert->a);
+            glVertex3f(vert->x, vert->y, vert->z);
+            vert = NULL;
+        }
+        glEnd();
+        if (tex != NULL) {
+            glDisable(g_openGL->GetTextureTarget());
+        }
+        glPopMatrix();
+        glDisable(GL_BLEND);
+    }
 }
 
 int OpenGLGraphics::DeleteSurface ( Uint32 _surfaceID )
@@ -885,8 +924,9 @@ int OpenGLGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heigh
     glEnable ( GL_BLEND );
     glBlendFunc ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
     ASSERT_OPENGL_ERRORS;
-    glEnable ( GL_ALPHA_TEST );
-    glAlphaFunc ( GL_GREATER, 0.1f );
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glDisable ( GL_ALPHA_TEST );
+    //glAlphaFunc(GL_LESS, 0.005f);
 
     // We set this to GL_MODULATE to make the alpha blended textures render properly
     glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );

@@ -31,8 +31,7 @@
 #include "App/version.h"
 #include "Game/game.h"
 #include "Graphics/graphics.h"
-#include "Interface/interface.h"
-#include "Interface/window.h"
+#include "Input/input.h"
 #include "Network/net.h"
 #include "Scripting/scripting.h"
 #include "Sound/soundsystem.h"
@@ -46,7 +45,7 @@ bool bSound;
 void Init_App( char *apppath );
 void Init_Game();
 void Init_Graphics();
-void Init_Interface();
+void Init_Input();
 void Init_Scripting();
 void Init_Sound();
 
@@ -126,11 +125,12 @@ int main ( int argc, char **argv )
 
     Init_App(temp);
     Init_Graphics();
-    Init_Interface();
+    Init_Input();
     Init_Sound();
     Init_Scripting();
     Init_Game();
 
+    g_app->Initialise();
     g_app->Run ();
 
     // deconstruct the classes
@@ -139,7 +139,7 @@ int main ( int argc, char **argv )
 
     // free up the allocated memory
     delete g_game; g_game = NULL;
-    delete g_interface; g_interface = NULL;
+    delete g_input; g_input = NULL;
     delete g_graphics; g_graphics = NULL;
     delete g_soundSystem; g_soundSystem = NULL;
     delete g_scripting; g_scripting = NULL;
@@ -261,12 +261,10 @@ void Init_Graphics()
     g_graphics->ShowCursor ( true );
 }
 
-void Init_Interface()
+void Init_Input()
 {
-    g_interface = new Interface();
-    CrbReleaseAssert ( g_interface != NULL );
-
-	g_app->Initialise();
+    g_input = new Input();
+    CrbReleaseAssert ( g_input != NULL );
 }
 
 void Init_Scripting()

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010 Steven Noonan <steven@uplinklabs.net>
+ * Copyright (c) 2011 Steven Noonan <steven@uplinklabs.net>
  *                and Miah Clayton <miah@ferrousmoon.com>
  * All rights reserved.
  *
@@ -27,104 +27,58 @@
 
 #include "universal_include.h"
 
-#include "Graphics/entity.h"
+#include "App/app.h"
+#include "App/preferences.h"
+#include "Input/input.h"
 
-Entity::Entity()
- : m_static(false),
-   m_visible(true),
-   m_width(0),
-   m_height(0),
-   m_X(0),
-   m_Y(0),
-   m_Z(0),
-   m_Xvel(0),
-   m_Yvel(0),
-   m_Zvel(0)
+Input::Input()
+ : m_mouseX(0),
+   m_mouseY(0),
+   m_lastButtonState(0),
+   m_buttonState(0)
 {
 }
 
-Entity::Entity(int _width, int _height)
- : m_static(false),
-   m_visible(true),
-   m_width(_width),
-   m_height(_height),
-   m_X(0),
-   m_Y(0),
-   m_Z(0),
-   m_Xvel(0),
-   m_Yvel(0),
-   m_Zvel(0)
+Input::~Input()
 {
 }
 
-Entity::Entity(int _width, int _height, int _X, int _Y, int _Z)
- : m_static(false),
-   m_visible(true),
-   m_width(_width),
-   m_height(_height),
-   m_X(_X),
-   m_Y(_Y),
-   m_Z(_Z),
-   m_Xvel(0),
-   m_Yvel(0),
-   m_Zvel(0)
+void Input::Update ()
 {
+    m_buttonState = SDL_GetMouseState ( &m_mouseX, &m_mouseY );
+    m_lastButtonState = m_buttonState;
 }
 
-Entity::~Entity()
+int Input::MouseX () const
 {
+    return m_mouseX;
 }
 
-void Entity::setWidth(int _width)
+int Input::MouseY () const
 {
-    m_width = _width;
+    return m_mouseY;
 }
 
-void Entity::setHeight(int _height)
+bool Input::MouseLeft () const
 {
-    m_height = _height;
+    return (m_buttonState & SDL_BUTTON(1)) != 0;
 }
 
-void Entity::setPositionX(int _X)
+bool Input::MouseRight () const
 {
-    m_X = _X;
+    return (m_buttonState & SDL_BUTTON(3)) != 0;
 }
 
-void Entity::setPositionY(int _Y)
+bool Input::MouseLeftEdge () const
 {
-    m_Y = _Y;
+    return (m_buttonState & SDL_BUTTON(1)) !=
+            (m_lastButtonState & SDL_BUTTON(1));
 }
 
-void Entity::setPositionZ(int _Z)
+bool Input::MouseRightEdge () const
 {
-    m_Z = _Z;
+    return (m_buttonState & SDL_BUTTON(3)) !=
+           (m_lastButtonState & SDL_BUTTON(3));
 }
 
-void Entity::setPosition(int _X, int _Y, int _Z)
-{
-    m_X = _X;
-    m_Y = _Y;
-    m_Z = _Z;
-}
-
-void Entity::setVelocityX(int _Xvel)
-{
-    m_Xvel = _Xvel;
-}
-
-void Entity::setVelocityY(int _Yvel)
-{
-    m_Yvel = _Yvel;
-}
-
-void Entity::setVelocityZ(int _Zvel)
-{
-    m_Zvel = _Zvel;
-}
-
-void Entity::setVelocity(int _Xvel, int _Yvel, int _Zvel)
-{
-    m_Xvel = _Xvel;
-    m_Yvel = _Yvel;
-    m_Zvel = _Zvel;
-}
+Input *g_input;

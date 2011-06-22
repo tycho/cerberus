@@ -25,63 +25,29 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "universal_include.h"
+#ifndef __gameobject_h_included
+#define __gameobject_h_included
 
-#include "Graphics/entity.h"
+#include <universal_include.h>
 
-OpenGLEntity::OpenGLEntity()
- : Entity()
+class GameObject
 {
-}
+protected:
+    int m_x;
+    int m_y;
 
-OpenGLEntity::OpenGLEntity(int _width, int _height)
- : Entity(_width, _height)
-{
-}
+    int m_width;
+    int m_height;
 
-OpenGLEntity::OpenGLEntity(int _width, int _height, int _X, int _Y, int _Z)
- : Entity(_width, _height, _X, _Y, _Z)
-{
-}
+public:
+    GameObject(int _x, int _y, int _width, int _height);
+    virtual ~GameObject();
 
-OpenGLEntity::~OpenGLEntity()
-{
-}
+    virtual void HandleInput(SDL_Event &event) = 0;
 
-void OpenGLEntity::CreateVBO()
-{
-}
+    virtual void Render() = 0;
 
-void OpenGLEntity::LoadVBO()
-{
-}
+    virtual void Update() = 0;
+};
 
-void OpenGLEntity::DestroyVBO()
-{
-}
-
-void OpenGLEntity::LoadVertices(GLfloat *_vertices)
-{
-    m_vertices = _vertices;
-}
-
-void OpenGLEntity::LoadColors(GLfloat *_colors)
-{
-    m_colors = _colors;
-}
-
-void OpenGLEntity::LoadTextureCoords(GLfloat *_textureCoords)
-{
-    m_textureCoords = _textureCoords;
-}
-
-void OpenGLEntity::LoadIndices(GLfloat *_indices)
-{
-    m_indices = _indices;
-}
-
-void OpenGLEntity::Upload()
-{
-    CreateVBO();
-    LoadVBO();
-}
+#endif

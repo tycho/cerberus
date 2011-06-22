@@ -25,40 +25,18 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __entity_opengl_h_included
-#define __entity_opengl_h_included
+#include "universal_include.h"
 
-class OpenGLEntity : public Entity
+#include "Game/game_object.h"
+
+GameObject::GameObject(int _x, int _y, int _width, int _height)
+ : m_x(_x),
+   m_y(_y),
+   m_width(_width),
+   m_height(_height)
 {
-protected:
-    GLuint  m_vboId;
+}
 
-    GLfloat m_vertices[];
-    GLfloat m_colors[];
-    GLfloat m_textureCoords[];
-    GLfloat m_indices[];
-
-    virtual void CreateVBO();
-    virtual void LoadVBO();
-    virtual void DestroyVBO();
-
-public:
-    OpenGLEntity();
-    OpenGLEntity(int _width, int _height);
-    OpenGLEntity(int _width, int _height, int _X, int _Y, int _Z);
-
-    virtual ~Entity();
-
-    virtual void LoadVertices(GLfloat *vertices);
-    virtual void LoadColors(GLfloat *colors);
-    virtual void LoadTextureCoords(GLfloat *textureCoords);
-    virtual void LoadIndices(GLfloat *indices);
-
-    virtual void Upload();
-
-    virtual void Update() = 0;
-
-    virtual void Render();
-};
-
-#endif
+GameObject::~GameObject()
+{
+}

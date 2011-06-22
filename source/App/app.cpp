@@ -45,6 +45,7 @@
 #include "Interface/button.h"
 #include "Interface/interface.h"
 #include "Network/net.h"
+#include "Scripting/scripting.h"
 #include "Sound/soundsystem.h"
 
 #ifdef TARGET_OS_MACOSX
@@ -173,15 +174,29 @@ App::~App()
     m_appSupportPath = NULL;
     delete [] m_resourcePath;
     m_resourcePath = NULL;
+    delete m_scene;
+    m_scene = NULL;
+}
+
+Scene *App::GetScene()
+{
+    return m_scene;
+}
+
+Interface *App::GetInterface()
+{
+    return m_scene->GetInterface();
 }
 
 void App::Initialise()
 {
+    m_scene = new Scene(new Interface());
+
     TextUI *text = new TextUI (
         APP_NAME, Color32(255,0,0),
         g_graphics->GetScreenWidth () - 290,
         g_graphics->GetScreenHeight () - 38);
-    g_interface->AddWidget ( text );
+    GetInterface()->AddWidget ( text );
 
     char buffer[1024];
     sprintf(buffer, "For testing purposes only. v%s", Cerberus::Version::LongVersion());
@@ -190,7 +205,7 @@ void App::Initialise()
         buffer, Color32(255,0,0),
         g_graphics->GetScreenWidth () - 290,
         g_graphics->GetScreenHeight () - 25 );
-    g_interface->AddWidget ( text );
+    GetInterface()->AddWidget ( text );
 
 }
 
@@ -228,14 +243,17 @@ void App::Run ()
     System::Stopwatch lastFrame;
     lastFrame.Start();
 
-    CrbReleaseAssert ( g_interface != NULL );
+    CrbReleaseAssert ( GetInterface() != NULL );
     CrbReleaseAssert ( g_graphics != NULL );
 
     SDL_EnableUNICODE ( 1 );
 
-    g_interface->UpdateRendererWidget();
+    GetInterface()->UpdateRendererWidget();
 
     m_tmrGameSpeed.Start();
+
+    g_scripting->RunScript("sethello");
+    g_scripting->RunScript("printhello");
 
     while ( m_running )
     {
@@ -254,16 +272,17 @@ void App::Run ()
 
         UpdateInputs();
 
-        g_interface->Update();
+        GetInterface()->Update();
 
         if ( g_game->Playing() ) {
             g_game->Update();
         } else {
-
         }
 
-        g_interface->RenderMouse();
-        g_interface->RenderWidgets();
+        GetInterface()->RenderMouse();
+        GetInterface()->RenderWidgets();
+
+        g_game->Render();
 
         // Play any queued sounds.
         if ( g_soundSystem != NULL )
@@ -288,7 +307,7 @@ void App::Run ()
             }
         }
 
-        g_graphics->FillRect(SCREEN_SURFACE_ID, NULL, Color32(0,0,0));
+        g_graphics->FillRect(SCREEN_SURFACE_ID, NULL, Color32(150,150,255));
 
 		// We don't want the frame rate to affect game speed, so we use
 		// a timer to throttle it.
@@ -301,7 +320,7 @@ void App::Run ()
         m_tmrFPS.Stop();
         if ( m_tmrFPS.Elapsed() >= 1.0 )
         {
-            g_interface->UpdateFPS ( framesThisSecond );
+            GetInterface()->UpdateFPS ( framesThisSecond );
             framesThisSecond = 0;
             m_tmrFPS.Start();
         } else {
@@ -331,11 +350,13 @@ void App::UpdateInputs ()
         case SDL_QUIT:
             m_running = false;
             break;
-        case SDL_KEYDOWN:
-            {
+        case SDL_KEYUP:
+            if (event.key.keysym.sym == SDLK_ESCAPE) {
+                m_running = false;
             }
             break;
         }
+        g_game->HandleInput(event);
     }
 
     // Handle Command+Q on Mac OS X
@@ -351,12 +372,12 @@ void App::UpdateInputs ()
         {
 #if 0
             QuitWindow *quitWindow;
-            if ( (quitWindow = (QuitWindow *)g_interface->GetWidgetOfType ( WIDGET_QUIT_WINDOW )) != NULL )
+            if ( (quitWindow = (QuitWindow *)GetInterface()->GetWidgetOfType ( WIDGET_QUIT_WINDOW )) != NULL )
             {
-                g_interface->RemoveWidget ( quitWindow );
+                GetInterface()->RemoveWidget ( quitWindow );
             } else {
                 quitWindow = new QuitWindow();
-                g_interface->AddWidget ( quitWindow );
+                GetInterface()->AddWidget ( quitWindow );
                 quitWindow = NULL;
             }
 #endif

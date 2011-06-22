@@ -35,6 +35,7 @@
 #include "Interface/interface.h"
 #include "Interface/text.h"
 #include "Interface/window.h"
+#include "Input/input.h"
 
 #define TITLE_X 4
 #define TITLE_Y 6
@@ -78,13 +79,13 @@ Widget *Window::MouseUpdate ()
     // We don't accept messages while closing.
     if (m_closing) return NULL;
 
-	int x = g_interface->MouseX(),
-	    y = g_interface->MouseY();
-	if ( !m_dragging && g_interface->MouseLeft() )
+	int x = g_input->MouseX(),
+	    y = g_input->MouseY();
+	if ( !m_dragging && g_input->MouseLeft() )
 	{
 		// The mouse click is within the window, so this window
 		// should be moved to the foreground.
-		g_interface->SetWindowFocus(this);
+		GetInterface()->SetWindowFocus(this);
 	}
     if ( !m_dragging )
     {
@@ -101,21 +102,21 @@ Widget *Window::MouseUpdate ()
         }
     }
     if ( !m_dragging &&
-          g_interface->MouseLeft() &&
-          g_interface->MouseLeftEdge() )
+          g_input->MouseLeft() &&
+          g_input->MouseLeftEdge() )
     {
 		// Must click on the titlebar to drag.
 		if (y - m_position.y <= 20) {
-			g_interface->SetDragWindow ( this );
+			GetInterface()->SetDragWindow ( this );
 			m_dragging = true;
 			m_mouseXOffset = x - m_position.x;
 			m_mouseYOffset = y - m_position.y;
 		}
     } else if ( m_dragging ) {
-		if ( g_interface->MouseLeft() ) {
+		if ( g_input->MouseLeft() ) {
             SetPosition ( x - m_mouseXOffset, y - m_mouseYOffset );
 		} else {
-            g_interface->SetDragWindow ( NULL );
+            GetInterface()->SetDragWindow ( NULL );
             m_dragging = false;
         }
     }

@@ -43,7 +43,7 @@ CFOPTIMIZE := -O2 -parallel
 
 else
 
-CFOPTIMIZE := -O2
+CFOPTIMIZE := -O0 -ggdb
 
 endif # USE_ICC
 

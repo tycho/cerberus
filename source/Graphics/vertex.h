@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2010 Steven Noonan <steven@uplinklabs.net>
- *                and Miah Clayton <miah@ferrousmoon.com>
+ * Copyright (c) 2011 Eddie Ringle <eddie@eringle.net>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -25,53 +24,14 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __entity_h_included
-#define __entity_h_included
+#ifndef __vertex_h_included
+#define __vertex_h_included
 
-class Entity
-{
-protected:
-    bool m_static;
-	bool m_visible;
-
-    int m_width;
-    int m_height;
-
-    int m_X;
-    int m_Y;
-    int m_Z;
-
-    int m_Xvel;
-    int m_Yvel;
-    int m_Zvel;
-
-public:
-    Entity();
-    Entity(int _width, int _height);
-    Entity(int _width, int _height, int _X, int _Y, int _Z);
-
-    virtual ~Entity();
-
-    virtual void setStatic(bool _static);
-    virtual void setVisible(bool _visible);
-
-    virtual void setWidth(int _width);
-    virtual void setHeight(int _height);
-
-    virtual void setPositionX(int _X);
-    virtual void setPositionY(int _Y);
-    virtual void setPositionZ(int _Z);
-
-    virtual void setPosition(int _X, int _Y, int _Z);
-
-    virtual void setVelocityX(int _Xvel);
-    virtual void setVelocityY(int _Yvel);
-    virtual void setVelocityZ(int _Zvel);
-    virtual void setVelocity(int _Xvel, int _Yvel, int _Zvel);
-
-    virtual void Update() = 0;
-
-    virtual void Render() = 0;
-};
+typedef struct {
+    float x, y, z;
+    float r, g, b, a;
+    float u, v;
+    float padding[3];
+} Vertex;
 
 #endif

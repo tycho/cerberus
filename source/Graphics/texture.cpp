@@ -67,6 +67,14 @@ void Texture::Damage()
     m_damaged = true;
 }
 
+Uint16 Texture::GetWidth() {
+    return m_originalWidth;
+}
+
+Uint16 Texture::GetHeight() {
+    return m_originalHeight;
+}
+
 void Texture::SetPixel ( Uint16 _x, Uint16 _y, Color32 _pixel )
 {
     CrbReleaseAssert ( m_sdlSurface != NULL );

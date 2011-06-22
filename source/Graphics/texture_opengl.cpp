@@ -91,9 +91,10 @@ bool OpenGLTexture::Create ( Uint16 _width, Uint16 _height )
 #endif
 
     m_sdlSurface = SDL_CreateRGBSurface ( SDL_SWSURFACE, _width, _height, 32, rmask, gmask, bmask, amask );
+
     CrbReleaseAssert ( m_sdlSurface != NULL );
 
-    SDL_SetAlpha ( m_sdlSurface, 0, SDL_ALPHA_OPAQUE );
+    SDL_SetAlpha ( m_sdlSurface, 0, 0 );
 
     m_textureID = g_openGL->GetFreeTexture();
     CrbReleaseAssert ( m_textureID != 0 );
@@ -107,6 +108,10 @@ bool OpenGLTexture::Create ( Uint16 _width, Uint16 _height )
     glTexParameteri ( g_openGL->GetTextureTarget(), GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     ASSERT_OPENGL_ERRORS;
 #else
+    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE );
+    ASSERT_OPENGL_ERRORS;
+    glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
+    ASSERT_OPENGL_ERRORS;
     glTexParameteri ( g_openGL->GetTextureTarget(), GL_TEXTURE_MIN_FILTER, GL_NEAREST );
     ASSERT_OPENGL_ERRORS;
     glTexParameteri ( g_openGL->GetTextureTarget(), GL_TEXTURE_MAG_FILTER, GL_NEAREST );

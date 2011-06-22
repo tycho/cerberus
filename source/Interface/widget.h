@@ -40,6 +40,7 @@ typedef enum
 } WidgetClass;
 
 class Animation;
+class Interface;
 
 class Widget
 {
@@ -47,6 +48,7 @@ private:
     Data::LList<Widget *> m_widgets;
     Data::LList<Animation *> m_anims;
 
+    Interface *m_interface;
 protected:
     WidgetClass m_widgetClass;
 
@@ -94,6 +96,9 @@ public:
     virtual int SendEnterKey () = 0;
 
     virtual Data::LList<Widget *> *GetWidgetList();
+
+    virtual Interface *GetInterface();
+    virtual void SetInterface(Interface *_interface);
 
 	friend class Animation;
 	friend class ExpireWidget;

@@ -27,6 +27,12 @@
 #ifndef __included_universal_include_h
 #define __included_universal_include_h
 
+#define _DEBUG
+#undef NDEBUG
+
+#ifdef _DEBUG
+#    include <assert.h>
+#endif
 #ifdef __cplusplus
 #  include <crisscross/crisscross.h>
 #endif
@@ -161,6 +167,7 @@
 #include <zlib.h>
 
 #ifdef TARGET_OS_LINUX
+#    include <sys/types.h>
 #    include <unistd.h>
 #    include <signal.h>
 #endif

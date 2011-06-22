@@ -32,6 +32,7 @@
 #include "App/app.h"
 #include "Interface/interface.h"
 #include "Interface/inputwidget.h"
+#include "Input/input.h"
 
 InputWidget::InputWidget ( InputCallback _callback, Widget *_callbackParam,
                            Sint32 _x, Sint32 _y, Sint32 _w, Sint32 _h )
@@ -67,7 +68,7 @@ Widget *InputWidget::MouseUpdate ()
     if ( m_callback )
     {
         // It feels weird if it reacts on MouseDown instead of MouseUp
-        if ( g_interface->MouseLeftEdge() && !g_interface->MouseLeft() )
+        if ( g_input->MouseLeftEdge() && !g_input->MouseLeft() )
         {
             try {
                 m_callback ( m_callbackParam );

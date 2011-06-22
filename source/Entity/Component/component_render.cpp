@@ -24,22 +24,14 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __scripting_lua_h_included
-#define __scripting_lua_h_included
+#include <universal_include.h>
+#include <iostream>
 
-#include "Scripting/scripting.h"
+#include "Entity/Component/component_render.h"
 
-class LuaScripting : public Scripting
+#include "Graphics/graphics.h"
+
+void RenderComponent::Update(Entity *_entity)
 {
-protected:
-    lua_State *m_luaState;
-
-public:
-    LuaScripting();
-
-    virtual ~LuaScripting();
-
-    virtual bool RunScript(const char *_scriptName);
-};
-
-#endif
+    g_graphics->DrawEntity(_entity);
+}

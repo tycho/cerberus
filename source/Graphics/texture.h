@@ -28,7 +28,6 @@
 #ifndef __included_texture_h
 #define __included_texture_h
 
-#include "Graphics/opengl.h"
 #include "Graphics/graphics_opengl.h"
 
 class Texture
@@ -54,6 +53,9 @@ public:
 
     bool IsDamaged ();
     void Damage ();
+
+    Uint16 GetWidth();
+    Uint16 GetHeight();
 
     Color32 GetPixel ( Uint16 _x, Uint16 _y );
     void   SetPixel ( Uint16 _x, Uint16 _y, Color32 _color );
