@@ -8,6 +8,8 @@ else
 SUBDIRS += lua/src
 endif
 
+SUBDIRS += toluapp
+
 all:
 	@$(MAKE) $(SUBDIRS)
 
