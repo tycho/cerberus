@@ -41,7 +41,8 @@ Widget::Widget()
    m_enterKeyDefault(NULL),
    m_parentWidget(NULL),
    m_expired(false),
-   m_damaged(false)
+   m_damaged(false),
+   m_alpha(1.0f)
 {
     memset ( &m_position, 0, sizeof(m_position) );
 }
@@ -53,7 +54,8 @@ Widget::Widget ( Sint16 x, Sint16 y, Uint16 w, Uint16 h )
    m_enterKeyDefault(NULL),
    m_parentWidget(NULL),
    m_expired(false),
-   m_damaged(false)
+   m_damaged(false),
+   m_alpha(1.0f)
 {
     SetSize ( w, h );
     SetPosition ( x, y );
@@ -244,4 +246,21 @@ Interface *Widget::GetInterface()
 void Widget::SetInterface(Interface *_interface)
 {
     m_interface = _interface;
+}
+
+float Widget::GetAlpha()
+{
+    return m_alpha;
+}
+
+void Widget::SetAlpha(float _alpha)
+{
+    if (_alpha > 1.0f) {
+        m_alpha = 1.0f;
+    } else if (_alpha < 0.0f) {
+        m_alpha = 0.0f;
+    } else {
+        m_alpha = _alpha;
+    }
+    g_console->WriteLine("Alpha is now %f", m_alpha);
 }

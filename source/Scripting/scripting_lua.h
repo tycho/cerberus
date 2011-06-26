@@ -40,6 +40,8 @@ public:
     virtual ~LuaScripting();
 
     virtual bool RunScript(const char *_scriptName);
+
+    virtual lua_State *GetState();
 };
 
 #endif

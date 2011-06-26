@@ -33,14 +33,19 @@
 
 class Component
 {
+protected:
+    Entity *m_entity;
+
 public:
-    Component();
+    Component(Entity *_entity);
     virtual ~Component();
 
-    virtual void Update(Entity *_entity) = 0;
+    virtual void Update(float _delta) = 0;
 };
 
 #include "Entity/Component/component_input.h"
+#include "Entity/Component/component_physics.h"
 #include "Entity/Component/component_render.h"
+#include "Entity/Component/component_texture.h"
 
 #endif

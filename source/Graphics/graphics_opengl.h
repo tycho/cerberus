@@ -45,7 +45,6 @@ private:
 	static const int                     m_rendererVersionMinor = 0;
 
     OpenGLTexture                       *m_sdlScreen;
-    Data::DArray<OpenGLTexture *>        m_textures;
 
 #ifdef ENABLE_FONTS
 	Data::DArray<OpenGLFont *>           m_fonts;

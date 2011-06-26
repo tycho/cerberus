@@ -28,57 +28,31 @@
 
 #include "Entity/entity.h"
 
-class Texture;
-
 Entity::Entity()
  :  m_active(true),
-    m_X(0),
-    m_Y(0),
-    m_Z(0),
+    m_boundingBox({0, 0, 0, 0, 0, 0}),
     m_vertices(NULL),
     m_numVertices(0),
-    m_texture(NULL),
+    m_inputComponent(NULL),
+    m_physicsComponent(NULL),
     m_renderComponent(NULL)
 {
+    BuildVertices();
 }
 
-Entity::Entity(int _X, int _Y, int _Z)
+Entity::Entity(float _x, float _y, float _w, float _h, Color32 _color)
  :  m_active(true),
-    m_X(_X),
-    m_Y(_Y),
-    m_Z(_Z),
+    m_border(false),
+    m_boundingBox({_x, _y, 0, _w, _h, 0}),
+    m_color(_color),
+    m_borderColor(_color),
     m_vertices(NULL),
     m_numVertices(0),
-    m_texture(NULL),
+    m_inputComponent(NULL),
+    m_physicsComponent(NULL),
     m_renderComponent(NULL)
 {
-}
-
-Entity::Entity(int _X, int _Y, int _Z, Vertex _vertices[], int _numVertices)
- :  m_active(true),
-    m_X(_X),
-    m_Y(_Y),
-    m_Z(_Z),
-    m_vertices(NULL),
-    m_numVertices(0),
-    m_texture(NULL),
-    m_renderComponent(NULL)
-{
-    SetVertices(_vertices, _numVertices);
-}
-
-Entity::Entity(int _X, int _Y, int _Z, Vertex _vertices[], int _numVertices, const char *_textureFilename)
- :  m_active(true),
-    m_X(_X),
-    m_Y(_Y),
-    m_Z(_Z),
-    m_vertices(NULL),
-    m_numVertices(0),
-    m_texture(NULL),
-    m_renderComponent(NULL)
-{
-    SetVertices(_vertices, _numVertices);
-    SetTextureBitmap(_textureFilename);
+    BuildVertices();
 }
 
 Entity::~Entity()
@@ -87,13 +61,50 @@ Entity::~Entity()
         free(m_vertices);
         m_vertices = NULL;
     }
-    if (m_texture != NULL) {
-        m_texture->Dispose();
-        m_texture = NULL;
+    if (m_inputComponent != NULL) {
+        delete m_inputComponent;
+        m_inputComponent = NULL;
+    }
+    if (m_physicsComponent != NULL) {
+        delete m_physicsComponent;
+        m_physicsComponent = NULL;
     }
     if (m_renderComponent != NULL) {
         delete m_renderComponent;
         m_renderComponent = NULL;
+    }
+}
+
+/* Build each of the (currently 4) vertices for this entity */
+void Entity::BuildVertices()
+{
+    if (m_vertices != NULL) {
+        free(m_vertices);
+        m_vertices = NULL;
+    }
+    m_vertices = (Vertex *)calloc(sizeof(Vertex), 4);
+    int i = 0;
+    Vertex v;
+    for (; i < 4; i++) {
+        float x, y, z, r, g, b, a, u, v;
+        r = m_color.R();
+        g = m_color.G();
+        b = m_color.B();
+        a = m_color.A();
+        switch(i) {
+        case 0:
+            x = 0;
+            y = 0;
+            z = m_boundingBox.z;
+            break;
+        case 1:
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+        }
+        m_vertices[i] = v;
     }
 }
 
@@ -102,19 +113,54 @@ bool Entity::IsActive()
     return m_active;
 }
 
-int Entity::GetX()
+bool Entity::IsBorderEnabled()
 {
-    return m_X;
+    return m_border;
 }
 
-int Entity::GetY()
+float Entity::GetX()
 {
-    return m_Y;
+    return m_boundingBox.x;
 }
 
-int Entity::GetZ()
+float Entity::GetY()
 {
-    return m_Z;
+    return m_boundingBox.y;
+}
+
+float Entity::GetZ()
+{
+    return m_boundingBox.z;
+}
+
+float Entity::GetWidth()
+{
+    return m_boundingBox.w;
+}
+
+float Entity::GetHeight()
+{
+    return m_boundingBox.h;
+}
+
+float Entity::GetDepth()
+{
+    return m_boundingBox.d;
+}
+
+Color32 &Entity::GetColor()
+{
+    return m_color;
+}
+
+Color32 &Entity::GetBorderColor()
+{
+    return m_borderColor;
+}
+
+Visibility Entity::GetVisibility()
+{
+    return m_visibility;
 }
 
 Vertex *Entity::GetVertices()
@@ -127,14 +173,14 @@ int Entity::GetNumVertices()
     return m_numVertices;
 }
 
-Texture *Entity::GetTexture()
-{
-    return m_texture;
-}
-
 InputComponent *Entity::GetInputComponent()
 {
     return m_inputComponent;
+}
+
+PhysicsComponent *Entity::GetPhysicsComponent()
+{
+    return m_physicsComponent;
 }
 
 RenderComponent *Entity::GetRenderComponent()
@@ -142,19 +188,59 @@ RenderComponent *Entity::GetRenderComponent()
     return m_renderComponent;
 }
 
-void Entity::SetX(int _x)
+void Entity::SetActive(bool _isActive)
 {
-    m_X = _x;
+    m_active = _isActive;
 }
 
-void Entity::SetY(int _y)
+void Entity::SetBorderEnabled(bool _isBorderEnabled)
 {
-    m_Y = _y;
+    m_border = _isBorderEnabled;
 }
 
-void Entity::SetZ(int _z)
+void Entity::SetX(float _x)
 {
-    m_Z = _z;
+    m_boundingBox.x = _x;
+}
+
+void Entity::SetY(float _y)
+{
+    m_boundingBox.y = _y;
+}
+
+void Entity::SetZ(float _z)
+{
+    m_boundingBox.z = _z;
+}
+
+void Entity::SetWidth(float _w)
+{
+    m_boundingBox.w = _w;
+}
+
+void Entity::SetHeight(float _h)
+{
+    m_boundingBox.h = _h;
+}
+
+void Entity::SetDepth(float _d)
+{
+    m_boundingBox.d = _d;
+}
+
+void Entity::SetColor(Color32 _color)
+{
+    m_color = _color;
+}
+
+void Entity::SetBorderColor(Color32 _borderColor)
+{
+    m_borderColor = _borderColor;
+}
+
+void Entity::SetVisibility(Visibility _visibility)
+{
+    m_visibility = _visibility;
 }
 
 void Entity::SetVertices(Vertex _vertices[], int _count)
@@ -170,17 +256,9 @@ void Entity::SetVertices(Vertex _vertices[], int _count)
         }
         m_numVertices = _count;
         if (m_renderComponent == NULL) {
-            m_renderComponent = new RenderComponent();
+            m_renderComponent = new RenderComponent(this);
         }
     }
-}
-
-Uint32 Entity::SetTextureBitmap(const char *_filename)
-{
-    Uint32 offset = g_graphics->LoadImage(_filename);
-    m_texture = g_graphics->GetTexture(offset);
-    m_texture->Upload();
-    return offset;
 }
 
 void Entity::SetInputComponent(InputComponent *_inputComponent)
@@ -188,20 +266,29 @@ void Entity::SetInputComponent(InputComponent *_inputComponent)
     m_inputComponent = _inputComponent;
 }
 
+void Entity::SetPhysicsComponent(PhysicsComponent *_physicsComponent)
+{
+    m_physicsComponent = _physicsComponent;
+}
+
 void Entity::SetRenderComponent(RenderComponent *_renderComponent)
 {
     m_renderComponent = _renderComponent;
 }
 
-void Entity::Render()
+void Entity::Render(float _delta)
 {
     if (m_renderComponent != NULL) {
-        m_renderComponent->Update(this);
+        m_renderComponent->Update(_delta);
     }
 }
 
-void Entity::Update()
+void Entity::Update(float _delta)
 {
+    if (m_inputComponent != NULL) {
+        m_inputComponent->Update(_delta);
+    }
+    if (m_physicsComponent != NULL) {
+        m_physicsComponent->Update(_delta);
+    }
 }
-
-#include "Graphics/texture.h"

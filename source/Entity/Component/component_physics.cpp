@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2010 Steven Noonan <steven@uplinklabs.net>
- *                and Miah Clayton <miah@ferrousmoon.com>
+ * Copyright (c) 2011 Eddie Ringle <eddie@eringle.net>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -25,29 +24,61 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __gameobject_h_included
-#define __gameobject_h_included
-
 #include <universal_include.h>
 
-class GameObject
+#include "Entity/Component/component_physics.h"
+
+#include "Graphics/graphics.h"
+
+PhysicsComponent::PhysicsComponent(Entity *_entity)
+ : Component(_entity)
 {
-protected:
-    int m_x;
-    int m_y;
+}
 
-    int m_width;
-    int m_height;
+void PhysicsComponent::Update(float _delta)
+{
 
-public:
-    GameObject(int _x, int _y, int _width, int _height);
-    virtual ~GameObject();
+    float x = m_entity->GetX();
+    float y = m_entity->GetY();
+/*
+    m_xVelocity += m_xAcceleration * _delta;
+    m_yVelocity += m_yAcceleration * _delta;
 
-    virtual void HandleInput(SDL_Event &event) = 0;
+    if (m_xAcceleration == 0.0f) {
+        m_xVelocity = 0.0f;
+    }
+    if (m_yAcceleration == 0.0f) {
+        m_yVelocity = 0.0f;
+    }
 
-    virtual void Render() = 0;
+    if (m_xVelocity > 40.0f) {
+        m_xVelocity = 40.0f;
+    } else if (m_xVelocity < -40.0f) {
+        m_xVelocity = -40.0f;
+    }
+    if (m_yVelocity > 40.0f) {
+        m_yVelocity = 40.0f;
+    } else if (m_yVelocity < -40.0f) {
+        m_yVelocity = -40.0f;
+    }
 
-    virtual void Update() = 0;
-};
+    x += m_xVelocity * _delta;
+    y += m_yVelocity * _delta;
+*/
 
-#endif
+    x += m_xAcceleration * _delta;
+    y += m_yAcceleration * _delta;
+
+    m_entity->SetX(x);
+    m_entity->SetY(y);
+}
+
+void PhysicsComponent::SetCollisionType(int _collisionType)
+{
+    m_collisionType = _collisionType;
+}
+
+void PhysicsComponent::SetGravity(int _accDueToGravity)
+{
+    m_gravity = _accDueToGravity;
+}

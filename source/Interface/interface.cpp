@@ -111,6 +111,8 @@ void Interface::RemoveWidget ( Widget *_widget )
 {
     if ( _widget->HasWidget(m_activeWidget) )
         m_activeWidget = NULL;
+    if ( _widget->HasWidget(m_dragWindow) )
+        m_dragWindow = NULL;
 
     int id = m_widgetList.find ( _widget );
     if ( id == -1 )
@@ -142,7 +144,7 @@ void Interface::RenderMouse()
 
 Widget *Interface::MouseUpdate ()
 {
-    if ( m_dragWindow)
+    if (m_dragWindow != NULL)
     {
         return m_dragWindow->MouseUpdate ();
     } else {

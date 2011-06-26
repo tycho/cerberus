@@ -28,6 +28,8 @@
 #ifndef __input_h_included
 #define __input_h_included
 
+#include "universal_include.h"
+
 class Input
 {
 protected:
@@ -35,6 +37,9 @@ protected:
 	int   m_mouseY;
 	Uint8 m_lastButtonState;
 	Uint8 m_buttonState;
+	Uint8 *m_keyState;
+
+    Data::LList<SDL_Event> m_events;
 
 public:
     Input();
@@ -46,6 +51,8 @@ public:
 	virtual bool MouseRight                () const;
 	virtual bool MouseLeftEdge             () const;
 	virtual bool MouseRightEdge            () const;
+
+    virtual SDL_Event *GetEvent(size_t _index);
 
     virtual void Update ();
 };

@@ -38,10 +38,11 @@
  *     to.
  */
 
-class RenderComponent : Component
+class RenderComponent : public Component
 {
 public:
-    virtual void Update(Entity *_entity);
+    RenderComponent(Entity *_entity);
+    virtual void Update(float _delta);
 };
 
 #endif

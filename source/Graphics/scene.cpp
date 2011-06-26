@@ -30,7 +30,8 @@
 #include "Graphics/scene.h"
 
 Scene::Scene()
- : m_overlay(NULL)
+ : m_overlay(NULL),
+   m_interface(NULL)
 {
 }
 
@@ -93,15 +94,15 @@ void Scene::RemoveEntity(Entity *_entity)
     }
 }
 
-void Scene::Render()
+void Scene::Render(float _delta)
 {
     size_t i = 0;
     size_t size = m_entities.used();
     for (; i < size; i++) {
-        m_entities[i]->Render();
+        m_entities[i]->Render(_delta);
     }
     if (m_overlay != NULL) {
-        m_overlay->Render();
+        m_overlay->Render(_delta);
     }
 }
 
@@ -115,14 +116,14 @@ void Scene::SetOverlay(Scene *_overlay)
     m_overlay = _overlay;
 }
 
-void Scene::Update()
+void Scene::Update(float _delta)
 {
     size_t i = 0;
     size_t size = m_entities.used();
     for (; i < size; i++) {
-        m_entities[i]->Update();
+        m_entities[i]->Update(_delta);
     }
     if (m_overlay != NULL) {
-        m_overlay->Update();
+        m_overlay->Update(_delta);
     }
 }

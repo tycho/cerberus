@@ -92,8 +92,6 @@ public:
     virtual Scene *GetScene();
     virtual Interface *GetInterface();
 
-    virtual void UpdateInputs ();
-
     virtual double Speed();
 
     //! The main application loop.

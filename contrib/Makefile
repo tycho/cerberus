@@ -1,6 +1,6 @@
 PREFIX := install
 
-SUBDIRS = DirectX SDL SDL_image SDL_mixer glew smpeg crisscross/source FTGL freetype libpng zlib unrar
+SUBDIRS = SDL SDL_image SDL_mixer glew smpeg crisscross/source FTGL freetype libpng zlib unrar
 
 ifdef USE_LUAJIT
 SUBDIRS += luajit/src
@@ -43,10 +43,14 @@ $(SUBDIRS):
 	$(MAKE) all prefix=$(shell echo $@ | perl -pe 's/[^\/]+/../g')/$(PREFIX) && \
 	$(MAKE) install prefix=$(shell echo $@ | perl -pe 's/[^\/]+/../g')/$(PREFIX)
 
+crisscross/source: SDL SDL_image SDL_mixer smpeg
 FTGL: freetype
 libpng freetype: zlib
-SDL: DirectX
 SDL_image: SDL libpng
 SDL_mixer: smpeg
-
+ifdef USE_LUAJIT
+toluapp: luajit/src
+else
+toluapp: lua/src
+endif
 .PHONY: $(SUBDIRS)

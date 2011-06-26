@@ -33,10 +33,10 @@
 #include "App/preferences.h"
 #include "App/version.h"
 #include "Entity/entity.h"
+#include "Entity/sprite.h"
 #include "Graphics/font_opengl.h"
 #include "Graphics/graphics_opengl.h"
 #include "Graphics/opengl.h"
-#include "Graphics/vertex.h"
 
 OpenGLGraphics::OpenGLGraphics()
  : Graphics(),
@@ -69,7 +69,7 @@ OpenGLGraphics::~OpenGLGraphics()
     {
         if ( m_textures.valid(i) )
         {
-            OpenGLTexture *tex = m_textures[i];
+            OpenGLTexture *tex = dynamic_cast<OpenGLTexture*>(m_textures[i]);
             m_textures.remove ( i );
             delete tex;
         }
@@ -161,9 +161,9 @@ void OpenGLGraphics::DrawRect ( SDL_Rect *_destRect, Color32 _color )
     ASSERT_OPENGL_ERRORS;
 }
 
-Texture *OpenGLGraphics::GetTexture ( Uint32 _id )
+Texture *OpenGLGraphics::GetTexture(Uint32 _id)
 {
-    return m_textures.get ( _id );
+    return m_textures.get( _id );
 }
 
 void OpenGLGraphics::ShowCursor ( bool _show )
@@ -176,7 +176,7 @@ int OpenGLGraphics::SetSurfaceAlpha ( Uint32 _surfaceID, Uint8 alpha )
     CrbReleaseAssert ( m_sdlScreen != NULL );
     CrbReleaseAssert ( m_textures.valid ( _surfaceID ) );
 
-    m_textures.get ( _surfaceID )->SetAlpha ( alpha );
+    GetTexture ( _surfaceID )->SetAlpha ( alpha );
 
     return 0;
 }
@@ -199,7 +199,7 @@ void OpenGLGraphics::DrawLine ( Uint32 _surfaceID, Color32 _color, int _startX, 
 
 Color32 OpenGLGraphics::GetPixel ( Uint32 _surfaceID, int x, int y )
 {
-    OpenGLTexture *tex = m_textures.get ( _surfaceID );
+    OpenGLTexture *tex = dynamic_cast<OpenGLTexture*>(GetTexture(_surfaceID));
     return tex->GetPixel ( x, y );
 }
 
@@ -214,7 +214,7 @@ void OpenGLGraphics::SetPixel ( Uint32 _surfaceID, int x, int y, Color32 _color 
 #ifndef TARGET_OS_WINDOWS
         m_vertexArray[0] = x;
         m_vertexArray[1] = y;
-        _color.c.a = 255;
+        _color.SetA(255);
         glColor4f(_color.R(), _color.G(), _color.B(), _color.A());
         glDrawArrays ( GL_POINTS, 0, 1 );
 #else
@@ -229,7 +229,7 @@ void OpenGLGraphics::SetPixel ( Uint32 _surfaceID, int x, int y, Color32 _color 
     else
     {
         CrbReleaseAssert ( m_textures.valid ( _surfaceID ) );
-        OpenGLTexture *tex = m_textures.get ( _surfaceID );
+        OpenGLTexture *tex = dynamic_cast<OpenGLTexture*>(GetTexture(_surfaceID));
         tex->SetPixel ( x, y, _color );
         tex->Damage();
     }
@@ -284,21 +284,50 @@ void OpenGLGraphics::DrawEntity ( Entity *_entity )
         glEnable(GL_BLEND);
         glPushMatrix();
         glTranslatef(_entity->GetX(), _entity->GetY(), _entity->GetZ());
-        Texture *tex = _entity->GetTexture();
-        if (tex != NULL) {
-            glEnable(g_openGL->GetTextureTarget());
-            tex->Bind();
+        TextureRegion textureRegion;
+        Texture *tex = NULL;
+        if (_entity->GetTextureComponent()) {
+            textureRegion = _entity->GetTextureComponent->GetTextureRegion();
+            tex = GetTexture(textureRegion.textureId);
+            if (tex != NULL) {
+                glEnable(g_openGL->GetTextureTarget());
+                tex->Bind();
+            }
         }
         glBegin(GL_TRIANGLE_FAN);
         int numVertices = _entity->GetNumVertices();
-        for (int i = 0; i < numVertices; i++) {
-            Vertex *vert = &(_entity->GetVertices()[i]);
+        float u = 0, v = 0;
+        Color32 c = _entity->GetColor();
+        glColor4f(c.R(), c.G(), c.B(), c.A());
+
+        // Build vertices
+        float x = _entity->GetX();
+        float y = _entity->GetY();
+        float z = _entity->GetZ();
+        float w = _entity->GetWidth();
+        float h = _entity->GetHeight();
+        Vertex verts[] = {
+            {x, y, z},
+            {x + w, y, z},
+            {x + w, y + h, z},
+            {x, y + h, z}
+        }
+
+        for (int i = 0; i < 4; i++) {
             if (tex != NULL) {
-                glTexCoord2f(vert->u, vert->v);
+                u = (i == 0 || i == 3) ? textureRegion.x : textureRegion.x + textureRegion.w - 1;
+                v = (i == 0 || i == 1) ? textureRegion.y : textureRegion.y + textureRegion.h - 1;
+                if (g_openGL->GetTextureTarget() == GL_TEXTURE_2D) {
+                    u /= (float)tex->GetWidth();
+                    v /= (float)tex->GetHeight();
+                }
+                glTexCoord2f(u, v);
             }
-            glColor4f(vert->r, vert->g, vert->b, vert->a);
+            switch(i) {
+            case 0:
+                glVertex3f(_entity->GetX(), _entity->GetY())
+            }
             glVertex3f(vert->x, vert->y, vert->z);
-            vert = NULL;
         }
         glEnd();
         if (tex != NULL) {
@@ -313,7 +342,7 @@ int OpenGLGraphics::DeleteSurface ( Uint32 _surfaceID )
 {
     if ( !m_textures.valid ( _surfaceID ) ) return -1;
 
-    OpenGLTexture *tex = m_textures.get ( _surfaceID );
+    OpenGLTexture *tex = dynamic_cast<OpenGLTexture*>(GetTexture(_surfaceID));
     CrbReleaseAssert ( tex != NULL );
     delete tex;
     m_textures.remove ( _surfaceID );
@@ -377,10 +406,10 @@ int OpenGLGraphics::FillRect ( Uint32 _surfaceID, SDL_Rect *_destRect, Color32 _
     else
     {
         CrbReleaseAssert ( m_textures.valid ( _surfaceID ) );
-        OpenGLTexture *tex = m_textures.get ( _surfaceID );
+        OpenGLTexture *tex = dynamic_cast<OpenGLTexture*>(GetTexture(_surfaceID));
         CrbReleaseAssert ( tex != NULL );
 
-        int r = SDL_FillRect ( tex->m_sdlSurface, _destRect, _color.rgba );
+        int r = SDL_FillRect ( tex->m_sdlSurface, _destRect, _color.GetRGBA() );
 
         tex->Damage ();
 
@@ -409,14 +438,14 @@ int OpenGLGraphics::Blit ( Uint32 _sourceSurfaceID, SDL_Rect const *_sourceRect,
 
     // Get the SDL surface for the source surface.
     CrbReleaseAssert ( m_textures.valid ( _sourceSurfaceID ) );
-    fromSurface = m_textures.get ( _sourceSurfaceID );
+    fromSurface = dynamic_cast<OpenGLTexture*>(GetTexture(_sourceSurfaceID));
     CrbReleaseAssert ( fromSurface != NULL );
 
     // Get the SDL surface for the destination surface.
     if ( _destSurfaceID != SCREEN_SURFACE_ID )
     {
         CrbReleaseAssert ( m_textures.valid ( _destSurfaceID ) );
-        toSurface = m_textures.get ( _destSurfaceID );
+        toSurface = dynamic_cast<OpenGLTexture*>(GetTexture(_destSurfaceID));
         CrbReleaseAssert ( toSurface != NULL );
     } else {
         toSurface = m_sdlScreen;
@@ -560,7 +589,7 @@ void OpenGLGraphics::ReplaceColour ( Uint32 _surfaceID, SDL_Rect *_destRect, Col
     CrbReleaseAssert ( _surfaceID != SCREEN_SURFACE_ID );
     CrbReleaseAssert ( m_textures.valid ( _surfaceID ) );
 
-    m_textures.get ( _surfaceID )->ReplaceColour ( _destRect, findcolor, replacecolor );
+    GetTexture ( _surfaceID )->ReplaceColour ( _destRect, findcolor, replacecolor );
 
 }
 
@@ -572,7 +601,7 @@ SDL_PixelFormat *OpenGLGraphics::GetPixelFormat ( Uint32 _surfaceID )
         return m_sdlScreen->m_sdlSurface->format;
 
     CrbReleaseAssert ( m_textures.valid ( _surfaceID ) );
-    SDL_Surface *surface = m_textures.get ( _surfaceID )->m_sdlSurface;
+    SDL_Surface *surface = dynamic_cast<OpenGLTexture*>(GetTexture(_surfaceID))->m_sdlSurface;
     CrbReleaseAssert ( surface != NULL );
 
     return surface->format;
@@ -587,7 +616,7 @@ Uint32 OpenGLGraphics::GetSurfaceHeight ( Uint32 _surfaceID )
 
     CrbReleaseAssert ( m_textures.valid ( _surfaceID ) );
 
-    SDL_Surface *surface = m_textures.get ( _surfaceID )->m_sdlSurface;
+    SDL_Surface *surface = dynamic_cast<OpenGLTexture*>(GetTexture(_surfaceID))->m_sdlSurface;
     CrbReleaseAssert ( surface != NULL );
 
     return surface->h;
@@ -602,7 +631,7 @@ Uint32 OpenGLGraphics::GetSurfaceWidth ( Uint32 _surfaceID )
 
     CrbReleaseAssert ( m_textures.valid ( _surfaceID ) );
 
-    SDL_Surface *surface = m_textures.get ( _surfaceID )->m_sdlSurface;
+    SDL_Surface *surface = dynamic_cast<OpenGLTexture*>(GetTexture(_surfaceID))->m_sdlSurface;
     CrbReleaseAssert ( surface != NULL );
 
     return surface->w;

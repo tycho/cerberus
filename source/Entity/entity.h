@@ -29,67 +29,118 @@
 
 #include <universal_include.h>
 
-#include "Graphics/vertex.h"
+//tolua_begin
+enum Visibility {
+    VISIBLE, // Draw this entity and it's border (if it's enabled)
+    INVISIBLE, // Only draw this entity's border if it's enabled
+    GONE // Don't draw the entity or the border
+};
+//tolua_end
 
 class Component;
 class InputComponent;
+class PhysicsComponent;
 class RenderComponent;
-class Texture;
+class TextureComponent;
 
-class Entity
-{
+class Entity { //tolua_export
 protected:
-    bool m_active;
+    bool m_active; // Is the entity active?
+    bool m_border; // Should we enable this entity's border?
 
-    int m_X;
-    int m_Y;
-    int m_Z;
+    Rect m_boundingBox; // Entity's position and dimensions
 
-    Vertex *m_vertices;
-    int m_numVertices;
+    Color32 m_color; // Base color of the entity
+    Color32 m_borderColor; // Border color
 
-    Texture *m_texture;
+    Visibility m_visibility; // See Visibility enum
 
-    InputComponent *m_inputComponent;
-    RenderComponent *m_renderComponent;
+    Vertex *m_vertices; // Entity vertex data
+    int m_numVertices; // Number of Vertex objects in m_vertices
+
+    InputComponent *m_inputComponent; // Entity's InputComponent
+    PhysicsComponent *m_physicsComponent; // Entity's PhysicsComponent
+    RenderComponent *m_renderComponent; // Entity's RenderComponent
+    TextureComponent *m_textureComponent; // Entity's TextureComponent
+
+    virtual void BuildVertices();
 
 public:
     Entity();
-    Entity(int _X, int _Y, int _Z);
-    Entity(int _X, int _Y, int _Z, Vertex _vertices[], int _numVertices);
-    Entity(int _X, int _Y, int _Z, Vertex _vertices[], int _numVertices, const char *_textureFilename);
+    Entity(float _x, float _y, float _w, float _h, Color32 _color);
     
     virtual ~Entity();
 
-    virtual bool IsActive();
+    /**
+     * Getters
+     */
 
-    virtual int GetX();
-    virtual int GetY();
-    virtual int GetZ();
+    //tolua_begin
+
+    virtual bool IsActive();
+    virtual bool IsBorderEnabled();
+
+    virtual float GetX();
+    virtual float GetY();
+    virtual float GetZ();
+
+    virtual float GetWidth();
+    virtual float GetHeight();
+    virtual float GetDepth();
+
+    virtual Color32 &GetColor();
+    virtual Color32 &GetBorderColor();
+
+    virtual Visibility GetVisibility();
+
+    //tolua_end
 
     virtual Vertex *GetVertices();
     virtual int GetNumVertices();
-    virtual Texture *GetTexture();
 
     virtual InputComponent *GetInputComponent();
+    virtual PhysicsComponent *GetPhysicsComponent();
     virtual RenderComponent *GetRenderComponent();
+    virtual TextureComponent *GetTextureComponent();
 
-    virtual void SetX(int _x);
-    virtual void SetY(int _y);
-    virtual void SetZ(int _z);
+    /**
+     * Setters
+     */
+
+    //tolua_begin
+    virtual void SetActive(bool _isActive);
+    virtual void SetBorderEnabled(bool _isBorderEnabled);
+
+    virtual void SetX(float _x);
+    virtual void SetY(float _y);
+    virtual void SetZ(float _z);
+
+    virtual void SetWidth(float _x);
+    virtual void SetHeight(float _y);
+    virtual void SetDepth(float _z);
+
+    virtual void SetColor(Color32 _color);
+    virtual void SetBorderColor(Color32 _borderColor);
+
+    virtual void SetVisibility(Visibility _visibility);
+
+    //tolua_end
 
     virtual void SetVertices(Vertex _vertices[], int _count);
-    virtual Uint32 SetTextureBitmap(const char *_filename);
 
     virtual void SetInputComponent(InputComponent *_inputComponent);
+    virtual void SetPhysicsComponent(PhysicsComponent *_physicsComponent);
     virtual void SetRenderComponent(RenderComponent *_renderComponent);
+    virtual void SetTextureComponent(TextureComponent *_textureComponent);
 
-    virtual void Render();
+    /**
+     * Lifecycle functions
+     */
+    virtual void Render(float _delta);
 
-    virtual void Update();
-};
+    virtual void Update(float _delta);
+}; //tolua_export
 
 #include "Entity/Component/component.h"
-#include "Graphics/texture.h"
 
 #endif

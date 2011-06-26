@@ -35,13 +35,14 @@
 class Fade : public Animation
 {
 protected:
+    Widget *m_widget;
 	float m_alpha;
 	float m_end;
 	float m_rate;
     char m_dir;
-
 public:
     Fade (float _start, float _end, float _rate);
+    Fade (Widget *_widget, float _start, float _end, float _rate);
     virtual ~Fade();
 
 	virtual void Update();

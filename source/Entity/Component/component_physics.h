@@ -24,15 +24,31 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#ifndef __component_physics_h_included
+#define __component_physics_h_included
+
 #include <universal_include.h>
 
-#include "Entity/Component/component.h"
+#include "Entity/entity.h"
 
-Component::Component(Entity *_entity)
- : m_entity(_entity)
+class PhysicsComponent : Component
 {
-}
+protected:
+    float m_gravity;
+    int m_collisionType;
+    float m_xVelocity;
+    float m_yVelocity;
+    float m_xAcceleration;
+    float m_yAcceleration;
 
-Component::~Component()
-{
-}
+public:
+    PhysicsComponent(Entity *_entity);
+    virtual void Update(float _delta);
+
+    virtual void SetCollisionType(int _collisionType);
+    virtual void SetGravity(int _accDueToGravity);
+
+    friend class InputComponent;
+};
+
+#endif

@@ -24,19 +24,49 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <universal_include.h>
+#include "universal_include.h"
 
 #include "Entity/Component/component_input.h"
+#include "Input/input.h"
 
-InputComponent::InputComponent()
+InputComponent::InputComponent(Entity *_entity)
+ : Component(_entity)
 {
 }
 
-InputComponent::~InputComponent()
+void InputComponent::Update(float _delta)
 {
-}
-
-void InputComponent::Update(Entity *_entity)
-{
-  /* Handle input */
+    // Handle input
+    SDL_Event *event = NULL;
+    PhysicsComponent *entityPhysics = m_entity->GetPhysicsComponent();
+    if (entityPhysics) {
+        event = g_input->GetEvent(0);
+        for (size_t i = 0; event != NULL;) {
+            switch (event->type) {
+            case SDL_KEYDOWN:
+                if (event->key.keysym.sym == SDLK_UP) {
+                    entityPhysics->m_yAcceleration += -20.0f;
+                } else if (event->key.keysym.sym == SDLK_DOWN) {
+                    entityPhysics->m_yAcceleration += 20.0f;
+                } else if (event->key.keysym.sym == SDLK_LEFT) {
+                    entityPhysics->m_xAcceleration += -20.0f;
+                } else if (event->key.keysym.sym == SDLK_RIGHT) {
+                    entityPhysics->m_xAcceleration += 20.0f;
+                }
+                break;
+            case SDL_KEYUP:
+                if (event->key.keysym.sym == SDLK_UP) {
+                    entityPhysics->m_yAcceleration -= -20.0f;
+                } else if (event->key.keysym.sym == SDLK_DOWN) {
+                    entityPhysics->m_yAcceleration -= 20.0f;
+                } else if (event->key.keysym.sym == SDLK_LEFT) {
+                    entityPhysics->m_xAcceleration -= -20.0f;
+                } else if (event->key.keysym.sym == SDLK_RIGHT) {
+                    entityPhysics->m_xAcceleration -= 20.0f;
+                }
+                break;
+            }
+            event = g_input->GetEvent(++i);
+        }
+    }
 }

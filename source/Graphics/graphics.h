@@ -49,6 +49,8 @@ protected:
 
 	Uint32  m_defaultFont;
 
+    Data::DArray<Texture *> m_textures;
+
 public:
     Graphics ();
     virtual ~Graphics();

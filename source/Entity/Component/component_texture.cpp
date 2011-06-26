@@ -26,13 +26,28 @@
 
 #include <universal_include.h>
 
-#include "Entity/Component/component.h"
+#include "Entity/Component/component_texture.h"
 
-Component::Component(Entity *_entity)
- : m_entity(_entity)
+TextureComponent::TextureComponent(Entity *_entity)
+ : Component(_entity)
 {
 }
 
-Component::~Component()
+TextureComponent::TextureComponent(Entity *_entity, float _tX, float _tY, float _tW, float _tH, Uint32 _tId)
+ : Component(_entity)
+{
+    m_textureRegion.x = _tX;
+    m_textureRegion.y = _tY;
+    m_textureRegion.w = _tW;
+    m_textureRegion.h = _tH;
+    m_textureRegion.textureId = _tId;
+}
+
+TextureRegion &TextureComponent::GetTextureRegion()
+{
+    return m_textureRegion;
+}
+
+void TextureComponent::Update(float _delta)
 {
 }

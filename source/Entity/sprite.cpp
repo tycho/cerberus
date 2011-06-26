@@ -24,19 +24,79 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __component_input_h_included
-#define __component_input_h_included
-
 #include "universal_include.h"
 
 #include "Entity/entity.h"
+#include "Entity/sprite.h"
 
-class InputComponent : public Component
+class Texture;
+
+Sprite::Sprite()
+ :  Entity(),
+    m_texture(NULL)
 {
-public:
-    InputComponent(Entity *_entity);
+}
 
-    virtual void Update(float _delta);
-};
+Sprite::Sprite(float _x, float _y, float _w, float _h)
+ :  Entity(_x, _y, _w, _h),
+    m_texture(NULL)
+{
+}
 
-#endif
+Sprite::Sprite(float _x, float _y, float _z, float _w, float _h, float _d)
+ :  Entity(_x, _y, _z, _w, _h, _d),
+    m_texture(NULL)
+{
+}
+
+Sprite::Sprite(Rect &_position)
+ :  Entity(_position),
+    m_texture(NULL)
+{
+}
+
+Sprite::Sprite(Rect &_position, Vertex _vertices[], int _numVertices)
+ :  Entity(_position, _vertices, _numVertices),
+    m_texture(NULL)
+{
+}
+
+Sprite::Sprite(Rect &_position, Vertex _vertices[], int _numVertices, const char *_textureFilename)
+ :  Entity(_position, _vertices, _numVertices),
+    m_texture(NULL)
+{
+    SetTextureBitmap(_textureFilename);
+}
+
+Sprite::~Sprite()
+{
+    if (m_texture != NULL) {
+        m_texture->Dispose();
+        m_texture = NULL;
+    }
+}
+
+Texture *Sprite::GetTexture()
+{
+    return m_texture;
+}
+
+Uint32 Sprite::SetTextureBitmap(const char *_filename)
+{
+    Uint32 offset = g_graphics->LoadImage(_filename);
+    m_texture = g_graphics->GetTexture(offset);
+    m_texture->Upload();
+    return offset;
+}
+
+void Sprite::Render(float _delta)
+{
+    Entity::Render(_delta);
+}
+
+void Sprite::Update(float _delta)
+{
+    Entity::Update(_delta);
+}
+
+#include "Graphics/texture.h"

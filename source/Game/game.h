@@ -31,6 +31,7 @@
 #include <universal_include.h>
 
 #include "Entity/entity.h"
+#include "Entity/sprite.h"
 
 #include "Graphics/scene.h"
 
@@ -41,17 +42,17 @@ protected:
 
     Scene *m_scene;
 
+    Sprite m_sprite;
+
     Entity m_entity;
 public:
     Game();
     virtual ~Game();
     virtual bool Playing();
 
-    virtual void HandleInput(SDL_Event &event);
+    virtual void Render(float _delta);
 
-    virtual void Render();
-
-    virtual void Update();
+    virtual void Update(float _delta);
 };
 
 extern Game *g_game;

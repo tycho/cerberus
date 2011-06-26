@@ -27,22 +27,33 @@
 
 #include "universal_include.h"
 
+#include "App/app.h"
 #include "Game/game.h"
-
 #include "Scripting/scripting.h"
 
 Game::Game()
  :  m_playing(true),
     m_scene(new Scene())
 {
-    m_entity.SetTextureBitmap("darwinian.png");
-    int w = m_entity.GetTexture()->GetWidth();
-    int h = m_entity.GetTexture()->GetHeight();
+    m_sprite.SetTextureBitmap("darwinian.png");
+    int w = m_sprite.GetTexture()->GetWidth();
+    int h = m_sprite.GetTexture()->GetHeight();
     Vertex verts[] = {
-        { 0, 0, 0, 1, 0, 0, 1, 0, 0, {0, 0, 0} },
-        { w, 0, 0, 0, 1, 0, 1, w, 0, {0, 0, 0} },
-        { w, h, 0, 0, 0, 1, 1, w, h, {0, 0, 0} },
+        { 0, 0, 0, 1, 1, 1, 1, 0, 0, {0, 0, 0} },
+        { w, 0, 0, 1, 1, 1, 1, w, 0, {0, 0, 0} },
+        { w, h, 0, 1, 1, 1, 1, w, h, {0, 0, 0} },
         { 0, h, 0, 1, 1, 1, 1, 0, h, {0, 0, 0} }
+    };
+    m_sprite.SetVertices(verts, 4);
+    m_sprite.SetInputComponent(new InputComponent(&m_sprite));
+    m_sprite.SetPhysicsComponent(new PhysicsComponent(&m_sprite));
+    m_scene->AddEntity(&m_sprite);
+
+    verts = {
+        { 0, 0, 0, 1, 0, 0, 1, 0, 0, {0, 0, 0} },
+        { w, 0, 0, 1, 0, 1, 1, w, 0, {0, 0, 0} },
+        { w, h, 0, 0, 1, 1, 1, w, h, {0, 0, 0} },
+        { 0, h, 0, 0, 1, 0, 1, 0, h, {0, 0, 0} }
     };
     m_entity.SetVertices(verts, 4);
     m_scene->AddEntity(&m_entity);
@@ -59,23 +70,14 @@ bool Game::Playing()
     return m_playing;
 }
 
-void Game::HandleInput(SDL_Event &event)
+void Game::Render(float _delta)
 {
-    if (event.type == SDL_KEYDOWN) {
-
-    } else if (event.type == SDL_KEYUP) {
-
-    }
+    m_scene->Render(_delta);
 }
 
-void Game::Render()
+void Game::Update(float _delta)
 {
-    m_scene->Render();
-}
-
-void Game::Update()
-{
-    m_scene->Update();
+    m_scene->Update(_delta);
 }
 
 Game *g_game;

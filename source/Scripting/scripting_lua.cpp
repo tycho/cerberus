@@ -50,12 +50,68 @@ bool LuaScripting::RunScript(const char *_scriptPath)
 
     int s = luaL_dofile(m_luaState, file);
     if (s != 0) {
-        g_console->WriteLine();
-        g_console->WriteLine("Error occurred while trying to run Lua script.");
+        g_console->WriteLine("\nError occurred while trying to run Lua script.");
         g_console->WriteLine("  File: %s", file);
-        g_console->WriteLine("  Error: %s", lua_tostring(m_luaState, -1));
+        g_console->WriteLine("  Error: %s\n", lua_tostring(m_luaState, -1));
         return false;
     }
 
     return true;
 }
+
+lua_State *LuaScripting::GetState()
+{
+    return m_luaState;
+}
+
+
+/**
+ * Make a function call to lua
+ * Example: CallFunction("aLuaFunction", "%d, %s", 4, "aString");
+ */
+/*
+int LuaScripting::CallFunction(const char *_functionName, const char *_functionArgFormat, ...)
+{
+    lua_getglobal(m_luaState, _functionName);
+    if (!lua_isfunction(m_luaState, -1)) {
+        lua_pop(m_luaState, 1);
+        return -1;
+    }
+    if (_functionArgFormat != NULL && *_functionArgFormat != '\0') {
+        int argc = 0;
+        size_t len = strlen(_functionArgFormat);
+        for (int i = 0; i < len; i++) {
+            if (_functionArgFormat[i] == '%') argc++;
+        }
+        if (argc > 0) {
+            char *pch = strtok(_functionArgFormat, "%, ");
+            va_list ap;
+            va_start(ap, argc);
+            while (pch != NULL) {
+                if (pch[0] != NULL && pch[0] != '\0') {
+                    switch (pch[0]) {
+                    case 'n':
+                        break;
+                    case 's':
+                        break;
+                    case 'b':
+                        break;
+                    case 't':
+                        break;
+                    }
+                }
+                pch = strtok(NULL, "%, ");
+            }
+            va_end(ap);
+        }
+    }
+}
+
+int LuaScripting::CallFunction(const char *_functionName)
+{
+    return CallFunction(_functionName, NULL);
+}
+
+const char *LuaScripting::CallStringFunction(const char *_functionName)
+
+*/

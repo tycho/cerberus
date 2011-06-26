@@ -49,10 +49,10 @@ public:
     Interface *GetInterface();
     Scene *GetOverlay();
     void RemoveEntity(Entity *_entity);
-    void Render();
+    void Render(float _delta);
     void SetInterface(Interface *_interface);
     void SetOverlay(Scene *_overlay);
-    void Update();
+    void Update(float _delta);
 };
 
 #endif

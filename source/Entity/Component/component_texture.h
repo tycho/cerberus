@@ -24,15 +24,26 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#ifndef __component_texture_h_included
+#define __component_texture_h_included
+
 #include <universal_include.h>
 
-#include "Entity/Component/component.h"
+#include "Entity/entity.h"
+#include "Graphics/texture_region.h"
 
-Component::Component(Entity *_entity)
- : m_entity(_entity)
+class TextureComponent : public Component
 {
-}
+protected:
+    TextureRegion m_textureRegion;
 
-Component::~Component()
-{
-}
+public:
+    TextureComponent(Entity *_entity);
+    TextureComponent(Entity *_entity, float _tX, float _tY, float _tW, float _tH, Uint32 _tId);
+
+    virtual TextureRegion &GetTextureRegion();
+
+    virtual void Update(float _delta);
+};
+
+#endif

@@ -140,6 +140,7 @@ int main ( int argc, char **argv )
     // free up the allocated memory
     delete g_game; g_game = NULL;
     delete g_input; g_input = NULL;
+    delete g_app; g_app = NULL;
     delete g_graphics; g_graphics = NULL;
     delete g_soundSystem; g_soundSystem = NULL;
     delete g_scripting; g_scripting = NULL;
@@ -150,7 +151,6 @@ int main ( int argc, char **argv )
     g_prefsManager->Save();
 
     delete g_prefsManager; g_prefsManager = NULL;
-    delete g_app; g_app = NULL;
     delete g_console; g_console = NULL;
 
     // success!

@@ -29,6 +29,7 @@
 
 #include "App/app.h"
 #include "App/preferences.h"
+#include "Game/game.h"
 #include "Input/input.h"
 
 Input::Input()
@@ -47,6 +48,55 @@ void Input::Update ()
 {
     m_buttonState = SDL_GetMouseState ( &m_mouseX, &m_mouseY );
     m_lastButtonState = m_buttonState;
+
+    m_events.empty();
+
+    SDL_Event event;
+    while ( SDL_PollEvent ( &event ) )
+    {
+        switch ( event.type )
+        {
+        case SDL_QUIT:
+            g_app->Quit();
+            break;
+        case SDL_KEYUP:
+            if (event.key.keysym.sym == SDLK_ESCAPE) {
+                g_app->Quit();
+            }
+            break;
+        }
+        m_events.insert(event);
+    }
+
+    int arraySz = 0;
+    m_keyState = SDL_GetKeyState(&arraySz);
+
+    // Handle Command+Q on Mac OS X
+#ifdef TARGET_OS_MACOSX
+    static bool cmdQ = false;
+    if ( !cmdQ && ( m_keyState[SDLK_LMETA] || m_keyState[SDLK_RMETA] ) && m_keyState[SDLK_q] )
+    {
+        cmdQ = true;
+        if ( g_game->Playing() )
+        {
+#if 0
+            QuitWindow *quitWindow;
+            if ( (quitWindow = (QuitWindow *)g_app->GetInterface()->GetWidgetOfType ( WIDGET_QUIT_WINDOW )) != NULL )
+            {
+                g_app->GetInterface()->RemoveWidget ( quitWindow );
+            } else {
+                quitWindow = new QuitWindow();
+                g_app->GetInterface()->AddWidget ( quitWindow );
+                quitWindow = NULL;
+            }
+#endif
+        } else {
+            g_app->Quit();
+        }
+    } else if ( cmdQ && ( !m_keyState[SDLK_LMETA] && !m_keyState[SDLK_RMETA] ) || !m_keyState[SDLK_q] ) {
+        cmdQ = false;
+    }
+#endif
 }
 
 int Input::MouseX () const
@@ -79,6 +129,15 @@ bool Input::MouseRightEdge () const
 {
     return (m_buttonState & SDL_BUTTON(3)) !=
            (m_lastButtonState & SDL_BUTTON(3));
+}
+
+SDL_Event *Input::GetEvent(size_t _index)
+{
+    if (_index < m_events.size()) {
+        return &m_events[_index];
+    } else {
+        return NULL;
+    }
 }
 
 Input *g_input;

@@ -24,15 +24,15 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <universal_include.h>
+#ifndef __texture_region_h_included
+#define __texture_region_h_included
 
-#include "Entity/Component/component.h"
+#include "universal_include.h"
 
-Component::Component(Entity *_entity)
- : m_entity(_entity)
-{
-}
+typedef struct {
+    float x, y;
+    float w, h;
+    Uint32 textureId;
+} TextureRegion;
 
-Component::~Component()
-{
-}
+#endif

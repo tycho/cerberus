@@ -25,13 +25,17 @@
  */
 
 #include <universal_include.h>
-#include <iostream>
 
 #include "Entity/Component/component_render.h"
 
 #include "Graphics/graphics.h"
 
-void RenderComponent::Update(Entity *_entity)
+RenderComponent::RenderComponent(Entity *_entity)
+ : Component(_entity)
 {
-    g_graphics->DrawEntity(_entity);
+}
+
+void RenderComponent::Update(float _delta)
+{
+    g_graphics->DrawEntity(m_entity);
 }

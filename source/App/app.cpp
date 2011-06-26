@@ -40,6 +40,7 @@
 #include "App/version.h"
 #include "Game/game.h"
 #include "Graphics/graphics.h"
+#include "Input/input.h"
 #include "Interface/error_window.h"
 #include "Interface/text.h"
 #include "Interface/button.h"
@@ -207,6 +208,9 @@ void App::Initialise()
         g_graphics->GetScreenHeight () - 25 );
     GetInterface()->AddWidget ( text );
 
+    Window *win = new Window ( "", 30, 200, 250, 250 );
+    GetInterface()->AddWidget ( win );
+
 }
 
 void App::CreateDirectory ( const char *_path )
@@ -236,6 +240,7 @@ const char *App::GetApplicationSupportPath ()
 void App::Run ()
 {
     int framesThisSecond = 0;
+    float timeDelta = 0.0f;
     bool deviceLost = false;
 
     m_tmrFPS.Start();
@@ -257,32 +262,37 @@ void App::Run ()
 
     while ( m_running )
     {
+
+        // Get time since last frame
+        lastFrame.Stop();
+        timeDelta = lastFrame.Elapsed();
+
         // Force 60fps max.
 #ifndef FORCE_VSYNC
         if ( g_prefsManager->GetInt ( "WaitVerticalRetrace", 1 ) != 0 )
 #endif
         {
             int sleepTime;
-            lastFrame.Stop();
-            sleepTime = (int)( ( 1000.0 / 60.0 ) - ( lastFrame.Elapsed() * 1000.0 ) );
+            sleepTime = (int)( ( 1000.0 / 60.0 ) - ( timeDelta * 1000.0 ) );
             if ( sleepTime > 0 )
                 System::ThreadSleep ( sleepTime );
-            lastFrame.Start();
         }
+        lastFrame.Start();
 
-        UpdateInputs();
+        g_input->Update();
 
         GetInterface()->Update();
 
         if ( g_game->Playing() ) {
-            g_game->Update();
+            g_game->Update(timeDelta);
         } else {
         }
 
+        g_game->Render(timeDelta);
+
+        // Always render application interface above everything else
         GetInterface()->RenderMouse();
         GetInterface()->RenderWidgets();
-
-        g_game->Render();
 
         // Play any queued sounds.
         if ( g_soundSystem != NULL )
@@ -338,56 +348,6 @@ void App::Quit()
 double App::Speed()
 {
     return m_gameSpeed;
-}
-
-void App::UpdateInputs ()
-{
-    SDL_Event event;
-    while ( SDL_PollEvent ( &event ) )
-    {
-        switch ( event.type )
-        {
-        case SDL_QUIT:
-            m_running = false;
-            break;
-        case SDL_KEYUP:
-            if (event.key.keysym.sym == SDLK_ESCAPE) {
-                m_running = false;
-            }
-            break;
-        }
-        g_game->HandleInput(event);
-    }
-
-    // Handle Command+Q on Mac OS X
-#ifdef TARGET_OS_MACOSX
-    int arraySz = 0;
-    Uint8 *keyState = SDL_GetKeyState(&arraySz);
-
-    static bool cmdQ = false;
-    if ( !cmdQ && ( keyState[SDLK_LMETA] || keyState[SDLK_RMETA] ) && keyState[SDLK_q] )
-    {
-        cmdQ = true;
-        if ( g_game->Playing() )
-        {
-#if 0
-            QuitWindow *quitWindow;
-            if ( (quitWindow = (QuitWindow *)GetInterface()->GetWidgetOfType ( WIDGET_QUIT_WINDOW )) != NULL )
-            {
-                GetInterface()->RemoveWidget ( quitWindow );
-            } else {
-                quitWindow = new QuitWindow();
-                GetInterface()->AddWidget ( quitWindow );
-                quitWindow = NULL;
-            }
-#endif
-        } else {
-            m_running = false;
-        }
-    } else if ( cmdQ && ( !keyState[SDLK_LMETA] && !keyState[SDLK_RMETA] ) || !keyState[SDLK_q] ) {
-        cmdQ = false;
-    }
-#endif
 }
 
 App *g_app;

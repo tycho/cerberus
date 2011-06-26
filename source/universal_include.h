@@ -213,6 +213,8 @@ __inline Uint32 nearestPowerOfTwo ( Uint32 v ) { return (Uint32)pow( 2.0, ceil( 
 extern Uint32 fontid;
 
 #include "Graphics/color.h"
+#include "Graphics/rect.h"
+#include "Graphics/vertex.h"
 
 #endif // __cplusplus
 

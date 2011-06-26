@@ -11,10 +11,12 @@ OBJECTS = \
     App/text_stream_readers.o \
     Entity/Component/component.o \
     Entity/Component/component_input.o \
+    Entity/Component/component_physics.o \
     Entity/Component/component_render.o \
+    Entity/Component/component_texture.o \
     Entity/entity.o \
+    Entity/sprite.o \
     Game/game.o \
-    Game/game_object.o \
     Graphics/Animation/animation.o \
     Graphics/Animation/expirewidget.o \
     Graphics/Animation/fade.o \

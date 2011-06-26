@@ -93,7 +93,7 @@ void Texture::SetPixel ( Uint16 _x, Uint16 _y, Color32 _pixel )
 
     switch(bpp) {
     case 4:
-        *(Uint32 *)p = _pixel.rgba;
+        *(Uint32 *)p = _pixel.GetRGBA();
         break;
 	default:
 		CrbReleaseAbort("Whoops, we don't have < 32-bit color implemented.");

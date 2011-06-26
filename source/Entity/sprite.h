@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2010 Steven Noonan <steven@uplinklabs.net>
- *                and Miah Clayton <miah@ferrousmoon.com>
+ * Copyright (c) 2011 Eddie Ringle <eddie@eringle.net>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -25,18 +24,55 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "universal_include.h"
+#ifndef __sprite_h_included
+#define __sprite_h_included
 
-#include "Game/game_object.h"
+#include <universal_include.h>
 
-GameObject::GameObject(int _x, int _y, int _width, int _height)
- : m_x(_x),
-   m_y(_y),
-   m_width(_width),
-   m_height(_height)
-{
-}
+class Texture;
 
-GameObject::~GameObject()
-{
-}
+class Sprite : public Entity { //tolua_export
+protected:
+    Texture *m_texture; // Sprite's texture object
+
+public:
+    Sprite();
+    Sprite(float _x, float _y, float _w, float _h);
+    Sprite(float _x, float _y, float _z, float _w, float _h, float _d);
+    Sprite(Rect &_position);
+    Sprite(Rect &_position, Vertex _vertices[], int _numVertices);
+    Sprite(Rect &_position, Vertex _vertices[], int _numVertices, const char *_textureFilename);
+    
+    virtual ~Sprite();
+
+    /**
+     * Getters
+     */
+
+    //tolua_begin
+
+    //tolua_end
+
+    virtual Texture *GetTexture();
+
+    /**
+     * Setters
+     */
+
+    //tolua_begin
+
+    //tolua_end
+
+    virtual Uint32 SetTextureBitmap(const char *_filename);
+
+    /**
+     * Lifecycle functions
+     */
+    virtual void Render(float _delta);
+
+    virtual void Update(float _delta);
+}; //tolua_export
+
+#include "Graphics/texture.h"
+
+#endif

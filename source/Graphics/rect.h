@@ -24,15 +24,12 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <universal_include.h>
+#ifndef __rect_h_included
+#define __rect_h_included
 
-#include "Entity/Component/component.h"
+typedef struct {
+    float x, y, z;
+    float w, h, d;
+} Rect;
 
-Component::Component(Entity *_entity)
- : m_entity(_entity)
-{
-}
-
-Component::~Component()
-{
-}
+#endif

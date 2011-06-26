@@ -31,7 +31,13 @@
 #include "Graphics/Animation/fade.h"
 
 Fade::Fade(float _start, float _end, float _rate)
- : m_alpha(_start), m_end(_end), m_rate(_rate)
+ : m_widget(NULL), m_alpha(_start), m_end(_end), m_rate(_rate)
+{
+    m_dir = (_start > _end) ? -1 : 1;
+}
+
+Fade::Fade(Widget *_widget, float _start, float _end, float _rate)
+ : m_widget(_widget), m_alpha(_start), m_end(_end), m_rate(_rate)
 {
     m_dir = (_start > _end) ? -1 : 1;
 }
@@ -49,26 +55,37 @@ void Fade::Update()
 	if (m_dir > 0 && m_alpha >= m_end) {
 		m_alpha = m_end;
 	}
+	if (m_widget != NULL) {
+	    m_widget->SetAlpha(m_alpha);
+	}
 }
 
 void Fade::Begin()
 {
-    /*
-     * Basically, we want to use diffuse lighting (which is the only type of lighting
-     * which cares about the alpha value) to make the object become transparent. To do
-     * so, we set glColor to only set the ambient color (via glColorMaterial), and let
-     * the lighting manage the alpha value.
-     */
-    GLfloat global_ambient[] = {0.7f, 0.7f, 0.7f, m_alpha};
-    glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient);
-    glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT);
-    glMaterialfv(GL_FRONT, GL_DIFFUSE, global_ambient);
-    glEnable(GL_COLOR_MATERIAL);
-    glEnable(GL_LIGHTING);
+    if (m_widget == NULL) {
+        /*
+         * Basically, we want to use diffuse lighting (which is the only type of lighting
+         * which cares about the alpha value) to make the object become transparent. To do
+         * so, we set glColor to only set the ambient color (via glColorMaterial), and let
+         * the lighting manage the alpha value.
+         */
+        GLfloat global_ambient[] = {0.7f, 0.7f, 0.7f, m_alpha};
+        glLightModelfv(GL_LIGHT_MODEL_AMBIENT, global_ambient);
+        glColorMaterial(GL_FRONT_AND_BACK, GL_AMBIENT);
+        glMaterialfv(GL_FRONT, GL_DIFFUSE, global_ambient);
+        glEnable(GL_COLOR_MATERIAL);
+        glEnable(GL_LIGHTING);
+    } else {
+        m_widget->SetAlpha(m_alpha);
+    }
 }
 
 void Fade::End()
 {
-    glDisable(GL_LIGHTING);
-    glDisable(GL_COLOR_MATERIAL);
+    if (m_widget == NULL) {
+        glDisable(GL_LIGHTING);
+        glDisable(GL_COLOR_MATERIAL);
+    } else {
+        m_widget->SetAlpha(m_end);
+    }
 }
