@@ -74,6 +74,7 @@ OpenGLGraphics::~OpenGLGraphics()
             delete tex;
         }
     }
+    m_textureFiles.empty();
 	m_fonts.flush();
     delete m_sdlScreen; m_sdlScreen = NULL;
     delete g_openGL;
@@ -240,6 +241,13 @@ Uint32 OpenGLGraphics::LoadImage ( const char *_filename )
 
     CrbReleaseAssert ( _filename != NULL );
 
+    // Check to see if this image is already loaded
+    Uint32 fileIndex = m_textureFiles.find(_filename);
+    if (fileIndex > -1) {
+        // Just return the index of the already loaded texture
+        return fileIndex;
+    }
+
     // Load the image from RAM.
     SDL_Surface* src = g_app->m_resource->GetImage ( _filename ); // use SDL_Image to load the image
     CrbReleaseAssert ( src != NULL );
@@ -263,6 +271,7 @@ Uint32 OpenGLGraphics::LoadImage ( const char *_filename )
 
     OpenGLTexture *tex = new OpenGLTexture();
     Uint32 ret = m_textures.insert ( tex );
+    m_textureFiles.insert(_filename, ret);
 
     tex->Dispose();
     tex->Create ( targetW, targetH );
@@ -343,6 +352,7 @@ int OpenGLGraphics::DeleteSurface ( Uint32 _surfaceID )
     CrbReleaseAssert ( tex != NULL );
     delete tex;
     m_textures.remove ( _surfaceID );
+    m_textureFiles.remove ( _surfaceID );
 
     return 0;
 }

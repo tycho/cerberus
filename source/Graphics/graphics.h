@@ -50,6 +50,7 @@ protected:
 	Uint32  m_defaultFont;
 
     Data::DArray<Texture *> m_textures;
+    Data::DArray<const char *> m_textureFiles;
 
 public:
     Graphics ();
