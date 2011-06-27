@@ -68,6 +68,7 @@ protected:
 public:
     Entity();
     Entity(float _x, float _y, float _w, float _h, Color32 _color);
+    Entity(float _x, float _y, float _w, float _h, Color32 _color, const char *_textureFilename);
     
     virtual ~Entity();
 
@@ -125,8 +126,6 @@ public:
     virtual void SetVisibility(Visibility _visibility);
 
     //tolua_end
-
-    virtual void SetVertices(Vertex _vertices[], int _count);
 
     virtual void SetInputComponent(InputComponent *_inputComponent);
     virtual void SetPhysicsComponent(PhysicsComponent *_physicsComponent);

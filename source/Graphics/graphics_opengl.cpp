@@ -33,7 +33,7 @@
 #include "App/preferences.h"
 #include "App/version.h"
 #include "Entity/entity.h"
-#include "Entity/sprite.h"
+#include "Game/game.h"
 #include "Graphics/font_opengl.h"
 #include "Graphics/graphics_opengl.h"
 #include "Graphics/opengl.h"
@@ -284,10 +284,13 @@ void OpenGLGraphics::DrawEntity ( Entity *_entity )
         glEnable(GL_BLEND);
         glPushMatrix();
         glTranslatef(_entity->GetX(), _entity->GetY(), _entity->GetZ());
+
+        Vertex *vertices = _entity->GetVertices();
+
         TextureRegion textureRegion;
         Texture *tex = NULL;
         if (_entity->GetTextureComponent()) {
-            textureRegion = _entity->GetTextureComponent->GetTextureRegion();
+            textureRegion = _entity->GetTextureComponent()->GetTextureRegion();
             tex = GetTexture(textureRegion.textureId);
             if (tex != NULL) {
                 glEnable(g_openGL->GetTextureTarget());
@@ -295,44 +298,38 @@ void OpenGLGraphics::DrawEntity ( Entity *_entity )
             }
         }
         glBegin(GL_TRIANGLE_FAN);
-        int numVertices = _entity->GetNumVertices();
-        float u = 0, v = 0;
-        Color32 c = _entity->GetColor();
-        glColor4f(c.R(), c.G(), c.B(), c.A());
-
-        // Build vertices
-        float x = _entity->GetX();
-        float y = _entity->GetY();
-        float z = _entity->GetZ();
-        float w = _entity->GetWidth();
-        float h = _entity->GetHeight();
-        Vertex verts[] = {
-            {x, y, z},
-            {x + w, y, z},
-            {x + w, y + h, z},
-            {x, y + h, z}
-        }
+        Color32 entityColor = _entity->GetColor();
+        glColor4f(entityColor.R(), entityColor.G(), entityColor.B(), entityColor.A());
 
         for (int i = 0; i < 4; i++) {
+            Vertex vert = vertices[i];
             if (tex != NULL) {
-                u = (i == 0 || i == 3) ? textureRegion.x : textureRegion.x + textureRegion.w - 1;
-                v = (i == 0 || i == 1) ? textureRegion.y : textureRegion.y + textureRegion.h - 1;
-                if (g_openGL->GetTextureTarget() == GL_TEXTURE_2D) {
-                    u /= (float)tex->GetWidth();
-                    v /= (float)tex->GetHeight();
+                if (g_openGL->GetTextureTarget() == GL_TEXTURE_RECTANGLE_ARB) {
+                    glTexCoord2f(vert.u, vert.v);
+                } else {
+                    glTexCoord2f(vert.u / (float)textureRegion.w,
+                            vert.v / (float)textureRegion.h);
                 }
-                glTexCoord2f(u, v);
             }
-            switch(i) {
-            case 0:
-                glVertex3f(_entity->GetX(), _entity->GetY())
-            }
-            glVertex3f(vert->x, vert->y, vert->z);
+            glVertex3f(vert.x, vert.y, vert.z);
         }
         glEnd();
         if (tex != NULL) {
             glDisable(g_openGL->GetTextureTarget());
         }
+
+        // Draw border if it's enabled
+        if (_entity->IsBorderEnabled() && g_game->EntityBordersEnabled()) {
+            glBegin(GL_LINE_LOOP);
+            Color32 borderColor = _entity->GetBorderColor();
+            glColor4f(borderColor.R(), borderColor.G(), borderColor.B(), borderColor.A());
+            for (int i = 0; i < 4; i++) {
+                Vertex vert = vertices[i];
+                glVertex3f(vert.x, vert.y, vert.z);
+            }
+            glEnd();
+        }
+
         glPopMatrix();
         glDisable(GL_BLEND);
     }

@@ -31,7 +31,6 @@
 #include <universal_include.h>
 
 #include "Entity/entity.h"
-#include "Entity/sprite.h"
 
 #include "Graphics/scene.h"
 
@@ -40,15 +39,19 @@ class Game
 protected:
 	bool m_playing;
 
+    bool m_drawEntityBorders;
+
     Scene *m_scene;
 
-    Sprite m_sprite;
-
-    Entity m_entity;
+    Entity *m_entity;
 public:
     Game();
     virtual ~Game();
+
     virtual bool Playing();
+    virtual bool EntityBordersEnabled();
+
+    virtual void SetEntityBorders(bool _borders);
 
     virtual void Render(float _delta);
 

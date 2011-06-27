@@ -15,7 +15,6 @@ OBJECTS = \
     Entity/Component/component_render.o \
     Entity/Component/component_texture.o \
     Entity/entity.o \
-    Entity/sprite.o \
     Game/game.o \
     Graphics/Animation/animation.o \
     Graphics/Animation/expirewidget.o \

@@ -43,6 +43,16 @@ TextureComponent::TextureComponent(Entity *_entity, float _tX, float _tY, float 
     m_textureRegion.textureId = _tId;
 }
 
+TextureComponent::TextureComponent(Entity *_entity, TextureRegion &_textureRegion)
+ : Component(_entity)
+{
+    m_textureRegion.x = _textureRegion.x;
+    m_textureRegion.y = _textureRegion.y;
+    m_textureRegion.w = _textureRegion.w;
+    m_textureRegion.h = _textureRegion.h;
+    m_textureRegion.textureId = _textureRegion.textureId;
+}
+
 TextureRegion &TextureComponent::GetTextureRegion()
 {
     return m_textureRegion;

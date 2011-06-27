@@ -40,6 +40,7 @@ protected:
 public:
     TextureComponent(Entity *_entity);
     TextureComponent(Entity *_entity, float _tX, float _tY, float _tW, float _tH, Uint32 _tId);
+    TextureComponent(Entity *_entity, TextureRegion &_textureRegion);
 
     virtual TextureRegion &GetTextureRegion();
 

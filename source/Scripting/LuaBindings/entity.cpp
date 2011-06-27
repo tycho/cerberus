@@ -1,6 +1,6 @@
 /*
 ** Lua binding: entity
-** Generated automatically by tolua++-1.0.92 on Sat Jun 25 01:09:58 2011.
+** Generated automatically by tolua++-1.0.92 on Sun Jun 26 22:04:13 2011.
 */
 
 #ifndef __cplusplus
@@ -14,18 +14,6 @@
 TOLUA_API int  tolua_entity_open (lua_State* tolua_S);
 
 #include "../../Entity/entity.h"
-
-/* function to release collected object via destructor */
-#ifdef __cplusplus
-
-static int tolua_collect_Color32 (lua_State* tolua_S)
-{
- Color32* self = (Color32*) tolua_tousertype(tolua_S,1,0);
-	Mtolua_delete(self);
-	return 0;
-}
-#endif
-
 
 /* function to register type */
 static void tolua_reg_types (lua_State* tolua_S)
@@ -309,18 +297,8 @@ static int tolua_entity_Entity_GetColor00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'GetColor'", NULL);
 #endif
   {
-   Color32 tolua_ret = (Color32)  self->GetColor();
-   {
-#ifdef __cplusplus
-    void* tolua_obj = Mtolua_new((Color32)(tolua_ret));
-     tolua_pushusertype(tolua_S,tolua_obj,"Color32");
-    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
-#else
-    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(Color32));
-     tolua_pushusertype(tolua_S,tolua_obj,"Color32");
-    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
-#endif
-   }
+   Color32& tolua_ret = (Color32&)  self->GetColor();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"Color32");
   }
  }
  return 1;
@@ -351,18 +329,8 @@ static int tolua_entity_Entity_GetBorderColor00(lua_State* tolua_S)
   if (!self) tolua_error(tolua_S,"invalid 'self' in function 'GetBorderColor'", NULL);
 #endif
   {
-   Color32 tolua_ret = (Color32)  self->GetBorderColor();
-   {
-#ifdef __cplusplus
-    void* tolua_obj = Mtolua_new((Color32)(tolua_ret));
-     tolua_pushusertype(tolua_S,tolua_obj,"Color32");
-    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
-#else
-    void* tolua_obj = tolua_copy(tolua_S,(void*)&tolua_ret,sizeof(Color32));
-     tolua_pushusertype(tolua_S,tolua_obj,"Color32");
-    tolua_register_gc(tolua_S,lua_gettop(tolua_S));
-#endif
-   }
+   Color32& tolua_ret = (Color32&)  self->GetBorderColor();
+    tolua_pushusertype(tolua_S,(void*)&tolua_ret,"Color32");
   }
  }
  return 1;

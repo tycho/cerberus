@@ -33,41 +33,40 @@
 
 Game::Game()
  :  m_playing(true),
-    m_scene(new Scene())
+    m_drawEntityBorders(false),
+    m_scene(new Scene()),
+    m_entity(NULL)
 {
-    m_sprite.SetTextureBitmap("darwinian.png");
-    int w = m_sprite.GetTexture()->GetWidth();
-    int h = m_sprite.GetTexture()->GetHeight();
-    Vertex verts[] = {
-        { 0, 0, 0, 1, 1, 1, 1, 0, 0, {0, 0, 0} },
-        { w, 0, 0, 1, 1, 1, 1, w, 0, {0, 0, 0} },
-        { w, h, 0, 1, 1, 1, 1, w, h, {0, 0, 0} },
-        { 0, h, 0, 1, 1, 1, 1, 0, h, {0, 0, 0} }
-    };
-    m_sprite.SetVertices(verts, 4);
-    m_sprite.SetInputComponent(new InputComponent(&m_sprite));
-    m_sprite.SetPhysicsComponent(new PhysicsComponent(&m_sprite));
-    m_scene->AddEntity(&m_sprite);
-
-    verts = {
-        { 0, 0, 0, 1, 0, 0, 1, 0, 0, {0, 0, 0} },
-        { w, 0, 0, 1, 0, 1, 1, w, 0, {0, 0, 0} },
-        { w, h, 0, 0, 1, 1, 1, w, h, {0, 0, 0} },
-        { 0, h, 0, 0, 1, 0, 1, 0, h, {0, 0, 0} }
-    };
-    m_entity.SetVertices(verts, 4);
-    m_scene->AddEntity(&m_entity);
+    m_entity = new Entity(0, 0, 31, 32, Color32(255, 255, 255, 255), "darwinian.png");
+    m_entity->SetBorderEnabled(true);
+    m_entity->SetInputComponent(new InputComponent(m_entity));
+    m_entity->SetPhysicsComponent(new PhysicsComponent(m_entity));
+    m_entity->SetRenderComponent(new RenderComponent(m_entity));
+    m_scene->AddEntity(m_entity);
 }
 
 Game::~Game()
 {
     delete m_scene;
     m_scene = NULL;
+
+    delete m_entity;
+    m_entity = NULL;
 }
 
 bool Game::Playing()
 {
     return m_playing;
+}
+
+bool Game::EntityBordersEnabled()
+{
+    return m_drawEntityBorders;
+}
+
+void Game::SetEntityBorders(bool _borders)
+{
+    m_drawEntityBorders = _borders;
 }
 
 void Game::Render(float _delta)

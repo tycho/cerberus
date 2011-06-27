@@ -62,6 +62,12 @@ void Input::Update ()
         case SDL_KEYUP:
             if (event.key.keysym.sym == SDLK_ESCAPE) {
                 g_app->Quit();
+            } else if (event.key.keysym.sym == SDLK_b) {
+                if (g_game->EntityBordersEnabled()) {
+                    g_game->SetEntityBorders(false);
+                } else {
+                    g_game->SetEntityBorders(true);
+                }
             }
             break;
         }
