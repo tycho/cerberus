@@ -50,6 +50,8 @@ protected:
 
     Rect m_boundingBox; // Entity's position and dimensions
 
+    float m_orientation; // Angle of orientation
+
     Color32 m_color; // Base color of the entity
     Color32 m_borderColor; // Border color
 
@@ -62,6 +64,9 @@ protected:
     PhysicsComponent *m_physicsComponent; // Entity's PhysicsComponent
     RenderComponent *m_renderComponent; // Entity's RenderComponent
     TextureComponent *m_textureComponent; // Entity's TextureComponent
+
+    Entity *m_parent; // parent entity of this entity
+    Data::LList<Entity *> m_children; // linked list of child entities
 
     virtual void BuildVertices();
 
@@ -81,6 +86,8 @@ public:
     virtual bool IsActive();
     virtual bool IsBorderEnabled();
 
+    virtual Rect &GetBoundingBox();
+
     virtual float GetX();
     virtual float GetY();
     virtual float GetZ();
@@ -89,10 +96,14 @@ public:
     virtual float GetHeight();
     virtual float GetDepth();
 
+    virtual float GetOrientation();
+
     virtual Color32 &GetColor();
     virtual Color32 &GetBorderColor();
 
     virtual Visibility GetVisibility();
+
+    virtual Entity *GetParentEntity();
 
     //tolua_end
 
@@ -120,10 +131,20 @@ public:
     virtual void SetHeight(float _y);
     virtual void SetDepth(float _z);
 
+    virtual void SetOrientation(float _orientation);
+
     virtual void SetColor(Color32 _color);
     virtual void SetBorderColor(Color32 _borderColor);
 
     virtual void SetVisibility(Visibility _visibility);
+
+    /**
+     * Child entities
+     */
+    virtual void AttachChild(Entity *_child);
+    virtual Entity *GetChild(int _index);
+    virtual void RemoveChild(Entity *_child);
+    virtual void RemoveAllChildren();
 
     //tolua_end
 
@@ -131,6 +152,8 @@ public:
     virtual void SetPhysicsComponent(PhysicsComponent *_physicsComponent);
     virtual void SetRenderComponent(RenderComponent *_renderComponent);
     virtual void SetTextureComponent(TextureComponent *_textureComponent);
+
+    virtual void ReceiveEvent(SDL_Event _event);
 
     /**
      * Lifecycle functions

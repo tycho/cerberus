@@ -14,6 +14,7 @@ OBJECTS = \
     Entity/Component/component_physics.o \
     Entity/Component/component_render.o \
     Entity/Component/component_texture.o \
+    Entity/behavior.o \
     Entity/entity.o \
     Game/game.o \
     Graphics/Animation/animation.o \

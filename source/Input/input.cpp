@@ -42,34 +42,25 @@ Input::Input()
 
 Input::~Input()
 {
+    m_observers.empty();
 }
 
 void Input::Update ()
 {
-    m_buttonState = SDL_GetMouseState ( &m_mouseX, &m_mouseY );
     m_lastButtonState = m_buttonState;
+    m_buttonState = SDL_GetMouseState(&m_mouseX, &m_mouseY);
 
     m_events.empty();
+
+    bool mouseEvent = false;
 
     SDL_Event event;
     while ( SDL_PollEvent ( &event ) )
     {
-        switch ( event.type )
-        {
-        case SDL_QUIT:
-            g_app->Quit();
-            break;
-        case SDL_KEYUP:
-            if (event.key.keysym.sym == SDLK_ESCAPE) {
-                g_app->Quit();
-            } else if (event.key.keysym.sym == SDLK_b) {
-                if (g_game->EntityBordersEnabled()) {
-                    g_game->SetEntityBorders(false);
-                } else {
-                    g_game->SetEntityBorders(true);
-                }
+        for (size_t i = 0; i < m_observers.size(); i++) {
+            if (event.type == m_observers[i].eventType) {
+                m_observers[i].observer->ReceiveEvent(event);
             }
-            break;
         }
         m_events.insert(event);
     }
@@ -146,4 +137,12 @@ SDL_Event *Input::GetEvent(size_t _index)
     }
 }
 
+void Input::RegisterEventObserver(Uint8 _type, Entity *_observer)
+{
+    EventObserver e;
+    e.eventType = _type;
+    e.observer = _observer;
+
+    m_observers.insert(e);
+}
 Input *g_input;

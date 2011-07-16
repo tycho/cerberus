@@ -110,11 +110,10 @@ Widget *Window::MouseUpdate ()
         }
     }
     if ( !m_dragging &&
-          g_input->MouseLeft() )
-          //&&
-          //g_input->MouseLeftEdge() )
+          g_input->MouseLeft()
+          &&
+          g_input->MouseLeftEdge() )
     {
-        Close();
 		// Must click on the titlebar to drag. (if titlebar is present, anyway)
 		if ((y - m_position.y <= 20) || m_title == NULL ) {
 			GetInterface()->SetDragWindow ( this );

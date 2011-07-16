@@ -197,7 +197,7 @@ void App::Initialise()
         APP_NAME, Color32(255,0,0),
         g_graphics->GetScreenWidth () - 290,
         g_graphics->GetScreenHeight () - 38);
-    GetInterface()->AddWidget ( text );
+    GetInterface()->AddEntity ( text );
 
     char buffer[1024];
     sprintf(buffer, "For testing purposes only. v%s", Cerberus::Version::LongVersion());
@@ -206,10 +206,10 @@ void App::Initialise()
         buffer, Color32(255,0,0),
         g_graphics->GetScreenWidth () - 290,
         g_graphics->GetScreenHeight () - 25 );
-    GetInterface()->AddWidget ( text );
+    GetInterface()->AddEntity ( text );
 
     Window *win = new Window ( "", 30, 200, 250, 250 );
-    GetInterface()->AddWidget ( win );
+    GetInterface()->AddEntity ( win );
 
 }
 
@@ -260,6 +260,15 @@ void App::Run ()
     g_scripting->RunScript("sethello");
     g_scripting->RunScript("printhello");
 
+    GLfloat m[16];
+    glGetFloatv(GL_MODELVIEW_MATRIX, m);
+    for (int i = 0; i < 4; i++) {
+        for(int j = 0; j < 4; j++) {
+            g_console->Write("%f ", m[j + (i * 4)]);
+        }
+        g_console->WriteLine();
+    }
+
     while ( m_running )
     {
 
@@ -281,7 +290,21 @@ void App::Run ()
 
         g_input->Update();
 
-        GetInterface()->Update();
+        SDL_Event *event = g_input->GetEvent(0);
+        for (size_t i = 0; event != NULL; event = g_input->GetEvent(++i)) {
+            switch (event->type) {
+            case SDL_QUIT:
+                Quit();
+                break;
+            case SDL_KEYUP:
+                if (event->key.keysym.sym == SDLK_ESCAPE) {
+                    Quit();
+                }
+                break;
+            }
+        }
+
+        GetInterface()->Update(timeDelta);
 
         if ( g_game->Playing() ) {
             g_game->Update(timeDelta);
@@ -292,7 +315,7 @@ void App::Run ()
 
         // Always render application interface above everything else
         GetInterface()->RenderMouse();
-        GetInterface()->RenderWidgets();
+        GetInterface()->Render(timeDelta);
 
         // Play any queued sounds.
         if ( g_soundSystem != NULL )

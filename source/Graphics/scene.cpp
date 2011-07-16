@@ -31,31 +31,38 @@
 
 Scene::Scene()
  : m_overlay(NULL),
-   m_interface(NULL)
+   m_interface(NULL),
+   m_showing(true)
 {
 }
 
 Scene::Scene(Scene *_overlay)
  : m_overlay(_overlay),
-   m_interface(NULL)
+   m_interface(NULL),
+   m_showing(true)
 {
 }
 
 Scene::Scene(Interface *_interface)
  : m_overlay(NULL),
-   m_interface(_interface)
+   m_interface(_interface),
+   m_showing(true)
 {
 }
 
 Scene::Scene(Scene *_overlay, Interface *_interface)
  : m_overlay(_overlay),
-   m_interface(_interface)
+   m_interface(_interface),
+   m_showing(true)
 {
 }
 
 Scene::~Scene()
 {
-    m_entities.empty();
+    while(m_entities.valid(0)) {
+        delete m_entities[0];
+        m_entities.remove(0);
+    }
 
     if (m_overlay != NULL) {
         delete m_overlay;
@@ -75,6 +82,11 @@ void Scene::AddEntity(Entity *_entity)
     }
 }
 
+bool Scene::IsShowing()
+{
+    return m_showing;
+}
+
 Interface *Scene::GetInterface()
 {
     return m_interface;
@@ -88,21 +100,28 @@ Scene *Scene::GetOverlay()
 void Scene::RemoveEntity(Entity *_entity)
 {
     if (_entity != NULL) {
-        if (size_t index = m_entities.find(_entity) > (size_t)-1) {
+        int index = m_entities.find(_entity);
+        if (index > -1) {
             m_entities.remove(index);
+        } else {
+            g_console->SetColour ( IO::Console::FG_YELLOW | IO::Console::FG_INTENSITY );
+            g_console->WriteLine ( "WARNING: Tried to remove entity '%08x' from list but it wasn't found!", (void *)_entity );
+            g_console->SetColour ();
         }
     }
 }
 
 void Scene::Render(float _delta)
 {
-    size_t i = 0;
-    size_t size = m_entities.used();
-    for (; i < size; i++) {
-        m_entities[i]->Render(_delta);
-    }
-    if (m_overlay != NULL) {
-        m_overlay->Render(_delta);
+    if (m_showing) {
+        size_t i = 0;
+        size_t size = m_entities.size();
+        for (; i < size; i++) {
+            m_entities[i]->Render(_delta);
+        }
+        if (m_overlay != NULL) {
+            m_overlay->Render(_delta);
+        }
     }
 }
 
@@ -116,12 +135,20 @@ void Scene::SetOverlay(Scene *_overlay)
     m_overlay = _overlay;
 }
 
+void Scene::SetShowing(bool _showing)
+{
+    m_showing = _showing;
+}
+
 void Scene::Update(float _delta)
 {
     size_t i = 0;
-    size_t size = m_entities.used();
+    size_t size = m_entities.size();
     for (; i < size; i++) {
         m_entities[i]->Update(_delta);
+    }
+    if (m_interface != NULL) {
+        m_interface->Update(_delta);
     }
     if (m_overlay != NULL) {
         m_overlay->Update(_delta);

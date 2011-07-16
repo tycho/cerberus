@@ -34,12 +34,14 @@ Entity::Entity()
  :  m_active(true),
     m_border(false),
     m_boundingBox({0, 0, 0, 0, 0, 0}),
+    m_orientation(0),
     m_vertices(NULL),
     m_numVertices(0),
     m_inputComponent(NULL),
     m_physicsComponent(NULL),
     m_renderComponent(NULL),
-    m_textureComponent(NULL)
+    m_textureComponent(NULL),
+    m_parent(NULL)
 {
     BuildVertices();
 }
@@ -48,6 +50,7 @@ Entity::Entity(float _x, float _y, float _w, float _h, Color32 _color)
  :  m_active(true),
     m_border(false),
     m_boundingBox({_x, _y, 0, _w, _h, 0}),
+    m_orientation(0),
     m_color(_color),
     m_borderColor(Color32(255, 0, 255)),
     m_vertices(NULL),
@@ -55,7 +58,8 @@ Entity::Entity(float _x, float _y, float _w, float _h, Color32 _color)
     m_inputComponent(NULL),
     m_physicsComponent(NULL),
     m_renderComponent(NULL),
-    m_textureComponent(NULL)
+    m_textureComponent(NULL),
+    m_parent(NULL)
 {
     BuildVertices();
 }
@@ -64,6 +68,7 @@ Entity::Entity(float _x, float _y, float _w, float _h, Color32 _color, const cha
  :  m_active(true),
     m_border(false),
     m_boundingBox({_x, _y, 0, _w, _h, 0}),
+    m_orientation(0),
     m_color(_color),
     m_borderColor(Color32(255, 0, 255)),
     m_vertices(NULL),
@@ -71,7 +76,8 @@ Entity::Entity(float _x, float _y, float _w, float _h, Color32 _color, const cha
     m_inputComponent(NULL),
     m_physicsComponent(NULL),
     m_renderComponent(NULL),
-    m_textureComponent(NULL)
+    m_textureComponent(NULL),
+    m_parent(NULL)
 {
     TextureRegion textureRegion;
     textureRegion.textureId = g_graphics->LoadImage(_textureFilename);
@@ -106,6 +112,10 @@ Entity::~Entity()
         delete m_textureComponent;
         m_textureComponent = NULL;
     }
+    while (m_children.valid(0)) {
+        delete m_children[0];
+        m_children.remove(0);
+    }
 }
 
 /* Build each of the (currently 4) vertices for this entity */
@@ -131,11 +141,14 @@ void Entity::BuildVertices()
     vert.a = m_color.A();
     vert.u = 0;
     vert.v = 0;
+
     for (; i < 4; i++) {
         switch(i) {
         case 0:
             vert.x = 0;
             vert.y = 0;
+//            vert.x = vert.x * cos(TORADIANS(45.0)) - vert.y * sin(TORADIANS(45.0));
+//            vert.y = vert.x * sin(TORADIANS(45.0)) + vert.y * cos(TORADIANS(45.0));
             vert.z = m_boundingBox.z;
             if (texReg != NULL) {
                 vert.u = texReg->x;
@@ -170,6 +183,7 @@ void Entity::BuildVertices()
             }
             break;
         }
+
         m_vertices[i] = vert;
     }
 }
@@ -182,6 +196,11 @@ bool Entity::IsActive()
 bool Entity::IsBorderEnabled()
 {
     return m_border;
+}
+
+Rect &Entity::GetBoundingBox()
+{
+    return m_boundingBox;
 }
 
 float Entity::GetX()
@@ -214,6 +233,11 @@ float Entity::GetDepth()
     return m_boundingBox.d;
 }
 
+float Entity::GetOrientation()
+{
+    return m_orientation;
+}
+
 Color32 &Entity::GetColor()
 {
     return m_color;
@@ -227,6 +251,11 @@ Color32 &Entity::GetBorderColor()
 Visibility Entity::GetVisibility()
 {
     return m_visibility;
+}
+
+Entity *Entity::GetParentEntity()
+{
+    return m_parent;
 }
 
 Vertex *Entity::GetVertices()
@@ -299,6 +328,11 @@ void Entity::SetDepth(float _d)
     m_boundingBox.d = _d;
 }
 
+void Entity::SetOrientation(float _orientation)
+{
+    m_orientation = _orientation;
+}
+
 void Entity::SetColor(Color32 _color)
 {
     m_color = _color;
@@ -312,6 +346,40 @@ void Entity::SetBorderColor(Color32 _borderColor)
 void Entity::SetVisibility(Visibility _visibility)
 {
     m_visibility = _visibility;
+}
+
+void Entity::AttachChild(Entity *_child)
+{
+    if (_child != NULL) {
+        m_children.insert(_child);
+    }
+}
+
+Entity *Entity::GetChild(int _index)
+{
+    if (m_children.valid(_index)) {
+        return m_children[_index];
+    } else {
+        return NULL;
+    }
+}
+
+void Entity::RemoveChild(Entity *_child)
+{
+    if (_child != NULL) {
+        size_t i = m_children.find(_child);
+        if (m_children.valid(i)) {
+            m_children.remove(i);
+        }
+    }
+}
+
+void Entity::RemoveAllChildren()
+{
+    while (m_children.valid(0)) {
+        delete m_children[0];
+        m_children.remove(0);
+    }
 }
 
 void Entity::SetInputComponent(InputComponent *_inputComponent)
@@ -334,11 +402,21 @@ void Entity::SetTextureComponent(TextureComponent *_textureComponent)
     m_textureComponent = _textureComponent;
 }
 
+void Entity::ReceiveEvent(SDL_Event _event)
+{
+    m_inputComponent->ReceiveEvent(_event);
+}
+
 void Entity::Render(float _delta)
 {
     if (m_renderComponent != NULL) {
         m_renderComponent->Update(_delta);
     }
+    /*
+    for (int i = 0; m_children.valid(i); i++) {
+        m_children[i]->Render(_delta);
+    }
+    */
 }
 
 void Entity::Update(float _delta)
@@ -346,7 +424,12 @@ void Entity::Update(float _delta)
     if (m_inputComponent != NULL) {
         m_inputComponent->Update(_delta);
     }
+
     if (m_physicsComponent != NULL) {
         m_physicsComponent->Update(_delta);
+    }
+
+    for (int i = 0; m_children.valid(i); i++) {
+        m_children[i]->Update(_delta);
     }
 }

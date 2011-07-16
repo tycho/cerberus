@@ -202,13 +202,15 @@ __inline bool isPowerOfTwo ( Uint32 v ) { return !(v & (v - 1)) && v; }
 __inline Uint32 nearestPowerOfTwo ( Uint32 v ) { return (Uint32)pow( 2.0, ceil( log( (double)v ) / log( 2.0 ) ) ); }
 
 #ifndef PI
-#    define PI 3.1415926535
+#    define PI 3.14159265358979323846
 #endif
 
 #define DIV180BYPI 180.0 / PI
 #define TWOPI PI * 2.0
 #define DIVBY360 1.0 / 360.0
 #define DIV360MULTPI DIVBY360 * TWOPI
+#define TORADIANS(d) DIV360MULTPI * d
+#define TODEGREES(x) DIV180BYPI * x
 
 extern Uint32 fontid;
 

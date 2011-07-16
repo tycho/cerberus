@@ -30,6 +30,11 @@
 
 #include "universal_include.h"
 
+typedef struct {
+    Uint8 eventType;
+    Entity *observer;
+} EventObserver;
+
 class Input
 {
 protected:
@@ -39,6 +44,7 @@ protected:
 	Uint8 m_buttonState;
 	Uint8 *m_keyState;
 
+    Data::LList<EventObserver> m_observers;
     Data::LList<SDL_Event> m_events;
 
 public:
@@ -53,6 +59,8 @@ public:
 	virtual bool MouseRightEdge            () const;
 
     virtual SDL_Event *GetEvent(size_t _index);
+
+    virtual void RegisterEventObserver(Uint8 _type, Entity *_observer);
 
     virtual void Update ();
 };

@@ -33,8 +33,15 @@
 
 class InputComponent : public Component
 {
+protected:
+    Data::LList<SDL_Event> m_events;
+
 public:
     InputComponent(Entity *_entity);
+
+    virtual ~InputComponent();
+
+    virtual void ReceiveEvent(SDL_Event _event);
 
     virtual void Update(float _delta);
 };

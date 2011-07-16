@@ -29,15 +29,17 @@
 
 #include "Entity/entity.h"
 
-#include "Interface/interface.h"
+class Interface;
 
 class Scene
 {
 protected:
     Scene *m_overlay;
-    Data::DArray<Entity *> m_entities;
+    Data::LList<Entity *> m_entities;
 
     Interface *m_interface;
+
+    bool m_showing;
 public:
     Scene();
     Scene(Scene *_overlay);
@@ -45,14 +47,18 @@ public:
     Scene(Scene *_overlay, Interface *_interface);
     virtual ~Scene();
 
-    void AddEntity(Entity *_entity);
+    virtual void AddEntity(Entity *_entity);
+    bool IsShowing();
     Interface *GetInterface();
     Scene *GetOverlay();
-    void RemoveEntity(Entity *_entity);
-    void Render(float _delta);
+    virtual void RemoveEntity(Entity *_entity);
+    virtual void Render(float _delta);
     void SetInterface(Interface *_interface);
     void SetOverlay(Scene *_overlay);
-    void Update(float _delta);
+    void SetShowing(bool _showing);
+    virtual void Update(float _delta);
 };
+
+#include "Interface/interface.h"
 
 #endif

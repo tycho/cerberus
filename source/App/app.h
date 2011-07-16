@@ -54,6 +54,8 @@ protected:
 
     bool m_running;
 
+    bool m_showInterface;
+
     Scene *m_scene;
 public:
     Resource *m_resource;

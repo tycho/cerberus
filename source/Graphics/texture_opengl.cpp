@@ -112,9 +112,9 @@ bool OpenGLTexture::Create ( Uint16 _width, Uint16 _height )
     ASSERT_OPENGL_ERRORS;
     glTexParameterf( GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE );
     ASSERT_OPENGL_ERRORS;
-    glTexParameteri ( g_openGL->GetTextureTarget(), GL_TEXTURE_MIN_FILTER, GL_NEAREST );
+    glTexParameteri ( g_openGL->GetTextureTarget(), GL_TEXTURE_MIN_FILTER, GL_LINEAR );
     ASSERT_OPENGL_ERRORS;
-    glTexParameteri ( g_openGL->GetTextureTarget(), GL_TEXTURE_MAG_FILTER, GL_NEAREST );
+    glTexParameteri ( g_openGL->GetTextureTarget(), GL_TEXTURE_MAG_FILTER, GL_LINEAR );
     ASSERT_OPENGL_ERRORS;
 #endif
 

@@ -32,6 +32,18 @@
 InputComponent::InputComponent(Entity *_entity)
  : Component(_entity)
 {
+    g_input->RegisterEventObserver(SDL_KEYDOWN, _entity);
+    g_input->RegisterEventObserver(SDL_KEYUP, _entity);
+}
+
+InputComponent::~InputComponent()
+{
+    m_events.empty();
+}
+
+void InputComponent::ReceiveEvent(SDL_Event _event)
+{
+    m_events.insert(_event);
 }
 
 void InputComponent::Update(float _delta)
@@ -40,33 +52,38 @@ void InputComponent::Update(float _delta)
     SDL_Event *event = NULL;
     PhysicsComponent *entityPhysics = m_entity->GetPhysicsComponent();
     if (entityPhysics) {
-        event = g_input->GetEvent(0);
-        for (size_t i = 0; event != NULL;) {
+        for (size_t i = 0; i < m_events.size(); i++) {
+            event = &m_events[i];
             switch (event->type) {
             case SDL_KEYDOWN:
                 if (event->key.keysym.sym == SDLK_UP) {
-                    entityPhysics->m_yAcceleration += -20.0f;
+                    entityPhysics->m_yAcceleration += -40.0f;
                 } else if (event->key.keysym.sym == SDLK_DOWN) {
-                    entityPhysics->m_yAcceleration += 20.0f;
+                    entityPhysics->m_yAcceleration += 40.0f;
                 } else if (event->key.keysym.sym == SDLK_LEFT) {
-                    entityPhysics->m_xAcceleration += -20.0f;
+                    entityPhysics->m_xAcceleration += -40.0f;
                 } else if (event->key.keysym.sym == SDLK_RIGHT) {
-                    entityPhysics->m_xAcceleration += 20.0f;
+                    entityPhysics->m_xAcceleration += 40.0f;
+                }
+                if (event->key.keysym.sym == SDLK_r) {
+                    m_entity->SetOrientation(m_entity->GetOrientation() + (15.0));
                 }
                 break;
             case SDL_KEYUP:
                 if (event->key.keysym.sym == SDLK_UP) {
-                    entityPhysics->m_yAcceleration -= -20.0f;
+                    entityPhysics->m_yAcceleration -= -40.0f;
                 } else if (event->key.keysym.sym == SDLK_DOWN) {
-                    entityPhysics->m_yAcceleration -= 20.0f;
+                    entityPhysics->m_yAcceleration -= 40.0f;
                 } else if (event->key.keysym.sym == SDLK_LEFT) {
-                    entityPhysics->m_xAcceleration -= -20.0f;
+                    entityPhysics->m_xAcceleration -= -40.0f;
                 } else if (event->key.keysym.sym == SDLK_RIGHT) {
-                    entityPhysics->m_xAcceleration -= 20.0f;
+                    entityPhysics->m_xAcceleration -= 40.0f;
                 }
                 break;
             }
-            event = g_input->GetEvent(++i);
         }
     }
+
+    event = NULL;
+    m_events.empty();
 }

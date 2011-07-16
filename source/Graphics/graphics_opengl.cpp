@@ -293,6 +293,7 @@ void OpenGLGraphics::DrawEntity ( Entity *_entity )
         glEnable(GL_BLEND);
         glPushMatrix();
         glTranslatef(_entity->GetX(), _entity->GetY(), _entity->GetZ());
+        glRotatef(_entity->GetOrientation(), 0, 0, 1);
 
         Vertex *vertices = _entity->GetVertices();
 
@@ -337,6 +338,10 @@ void OpenGLGraphics::DrawEntity ( Entity *_entity )
                 glVertex3f(vert.x, vert.y, vert.z);
             }
             glEnd();
+        }
+
+        for (int i = 0; _entity->GetChild(i) != NULL; i++) {
+            _entity->GetChild(i)->Render(0);
         }
 
         glPopMatrix();

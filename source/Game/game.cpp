@@ -29,6 +29,7 @@
 
 #include "App/app.h"
 #include "Game/game.h"
+#include "Input/input.h"
 #include "Scripting/scripting.h"
 
 Game::Game()
@@ -43,15 +44,17 @@ Game::Game()
     m_entity->SetPhysicsComponent(new PhysicsComponent(m_entity));
     m_entity->SetRenderComponent(new RenderComponent(m_entity));
     m_scene->AddEntity(m_entity);
+
+    Entity *santa = new Entity(7, -14, 16, 16, Color32(255, 255, 255, 255), "santahat.png");
+    santa->SetBorderEnabled(true);
+    santa->SetRenderComponent(new RenderComponent(santa));
+    m_entity->AttachChild(santa);
 }
 
 Game::~Game()
 {
     delete m_scene;
     m_scene = NULL;
-
-    delete m_entity;
-    m_entity = NULL;
 }
 
 bool Game::Playing()
@@ -76,7 +79,24 @@ void Game::Render(float _delta)
 
 void Game::Update(float _delta)
 {
-    m_scene->Update(_delta);
+    if (m_playing) {
+        SDL_Event *event = g_input->GetEvent(0);
+        for (size_t i = 0; event != NULL; event = g_input->GetEvent(++i)) {
+            switch (event->type) {
+            case SDL_KEYUP:
+                if (event->key.keysym.sym == SDLK_b) {
+                    if (m_drawEntityBorders) {
+                        m_drawEntityBorders = false;
+                    } else {
+                        m_drawEntityBorders = true;
+                    }
+                }
+                break;
+            }
+        }
+
+        m_scene->Update(_delta);
+    }
 }
 
 Game *g_game;

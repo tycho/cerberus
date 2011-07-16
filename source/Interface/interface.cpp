@@ -43,18 +43,33 @@ Interface::Interface()
 
 Interface::~Interface()
 {
-    while ( m_widgetList.valid(0) )
-    {
-        Widget *w = m_widgetList[0];
-        m_widgetList.remove ( 0 );
-        delete w;
-        w = NULL;
-    }
     m_fpsWidget = NULL; m_rendererWidget = NULL;
 }
 
-void Interface::Update ()
+Widget *Interface::GetWidget(int _index)
 {
+    if (m_entities.valid(_index)) {
+        return dynamic_cast<Widget *>(m_entities[_index]);
+    } else {
+        return NULL;
+    }
+}
+
+void Interface::Update (float _delta)
+{
+    Widget *widget = NULL;
+    for ( size_t i = 0; i < m_entities.size(); i++ )
+    {
+        widget = GetWidget(i);
+        if (widget == NULL) continue;
+        if (widget->Expired())
+        {
+            RemoveEntity(widget);
+            i--;
+            continue;
+        }
+        widget->Update();
+    }
     SetWidgetFocus(MouseUpdate());
 }
 
@@ -65,9 +80,9 @@ void Interface::SetDragWindow ( Window *_window )
 
 void Interface::SetWindowFocus ( Window *_window )
 {
-	int id = m_widgetList.find(_window);
-	m_widgetList.remove(id);
-	m_widgetList.insert(_window);
+	int id = m_entities.find(_window);
+	m_entities.remove(id);
+	m_entities.insert(_window);
 }
 
 void Interface::SetWidgetFocus ( Widget *_widget )
@@ -79,61 +94,65 @@ void Interface::SetWidgetFocus ( Widget *_widget )
 
 Widget *Interface::InsideWidget ( int _mouseX, int _mouseY )
 {
-    for ( int i = m_widgetList.size() - 1; i >= 0; i-- )
+    Widget *widget = NULL;
+
+    for ( int i = m_entities.size() - 1; i >= 0; i-- )
     {
-        if ( m_widgetList[i]->IsInsideWidget ( _mouseX, _mouseY ) )
-            return m_widgetList[i];
+        widget = GetWidget(i);
+        if (widget == NULL) continue;
+        if ( widget->IsInsideWidget ( _mouseX, _mouseY ) )
+            return widget;
     }
     return NULL;
 }
 
-void Interface::AddWidget ( Widget *_widget )
+void Interface::AddEntity ( Entity *_entity )
 {
-    if (_widget->GetInterface() == NULL) {
-        _widget->SetInterface(this);
+    Widget *widget = dynamic_cast<Widget *>(_entity);
+    if (widget == NULL) return;
+    if (widget->GetInterface() == NULL) {
+        widget->SetInterface(this);
     }
-    m_widgetList.insert ( _widget );
+    Scene::AddEntity(_entity);
 }
 
 Widget *Interface::GetWidgetOfType ( WidgetClass _widgetType )
 {
-    for ( int i = m_widgetList.size() - 1; i >= 0; i-- )
+    Widget *widget = NULL;
+    for ( int i = m_entities.size() - 1; i >= 0; i-- )
     {
-		if ( m_widgetList[i]->ClassID() == _widgetType )
+        widget = GetWidget(i);
+        if (widget == NULL) continue;
+		if ( widget->ClassID() == _widgetType )
         {
-            return m_widgetList[i];
+            return widget;
         }
     }
     return NULL;
 }
 
-void Interface::RemoveWidget ( Widget *_widget )
+void Interface::RemoveEntity ( Entity *_entity )
 {
-    if ( _widget->HasWidget(m_activeWidget) )
-        m_activeWidget = NULL;
-    if ( _widget->HasWidget(m_dragWindow) )
-        m_dragWindow = NULL;
-
-    int id = m_widgetList.find ( _widget );
-    if ( id == -1 )
-    {
-        g_console->SetColour ( IO::Console::FG_YELLOW | IO::Console::FG_INTENSITY );
-        g_console->WriteLine ( "WARNING: Tried to remove '%08x' from list but it wasn't found!", (void *)_widget );
-        g_console->SetColour ();
+    Widget *widget = dynamic_cast<Widget *>(_entity);
+    if (widget != NULL) {
+        if ( widget->HasWidget(m_activeWidget) )
+            m_activeWidget = NULL;
+        if ( widget->HasWidget(m_dragWindow) )
+            m_dragWindow = NULL;
     }
-    else
-        m_widgetList.remove ( id );
 
-    delete _widget;
+    Scene::RemoveEntity(_entity);
 }
 
 int Interface::SendEnterKey ()
 {
-    for ( int i = m_widgetList.size() - 1; i >= 0; i-- )
+    Widget *widget = NULL;
+    for ( int i = m_entities.size() - 1; i >= 0; i-- )
     {
-        Widget *widget = m_widgetList[i];
-        if ( widget->HasEnterKeyDefault() )
-            return widget->SendEnterKey ();
+        widget = GetWidget(i);
+        if (widget == NULL) continue;
+        if (widget->HasEnterKeyDefault())
+            return widget->SendEnterKey();
     }
     return 0;
 }
@@ -148,9 +167,11 @@ Widget *Interface::MouseUpdate ()
     {
         return m_dragWindow->MouseUpdate ();
     } else {
-        for ( int i = m_widgetList.size() - 1; i >= 0; i-- )
+        Widget *widget = NULL;
+        for ( int i = m_entities.size() - 1; i >= 0; i-- )
         {
-            Widget *widget = m_widgetList[i];
+            widget = GetWidget(i);
+            if (widget == NULL) continue;
             if ( !widget->IsInsideWidget(g_input->MouseX(), g_input->MouseY()) )
                 continue;
             Widget *acceptedMessage = widget->MouseUpdate ();
@@ -172,7 +193,7 @@ void Interface::UpdateRendererWidget ()
         m_rendererWidget = new TextUI(
 			speedCaption, Color32(255,255,255),
 			3, g_graphics->GetScreenHeight () - 29 );
-        m_widgetList.insert ( m_rendererWidget );
+        m_entities.insert ( m_rendererWidget );
     }
     m_rendererWidget->SetText ( speedCaption );
 }
@@ -195,32 +216,30 @@ void Interface::UpdateFPS ( unsigned int _fps )
         m_fpsWidget = new TextUI(
 			fpsCaption, color,
 			3, g_graphics->GetScreenHeight () - 40 );
-        m_widgetList.insert ( m_fpsWidget );
+        m_entities.insert ( m_fpsWidget );
     }
 	m_fpsWidget->SetColor ( color );
     m_fpsWidget->SetText ( fpsCaption );
 }
 
-void Interface::RenderWidgets()
+void Interface::Render(float _delta)
 {
-    for ( size_t i = 0; i < m_widgetList.size(); i++ )
+    Widget *widget = NULL;
+    for ( size_t i = 0; i < m_entities.size(); i++ )
     {
-        Widget *widget = m_widgetList[i];
-        if ( widget->Expired() )
-        {
-            RemoveWidget ( widget );
-            i--;
-            continue;
-        }
-        widget->Update();
+        widget = GetWidget(i);
+        if (widget == NULL) continue;
         widget->Render();
     }
 }
 
 void Interface::InitWidgets ()
 {
-    for ( size_t i = 0; i < m_widgetList.size(); i++ )
+    Widget *widget = NULL;
+    for ( size_t i = 0; i < m_entities.size(); i++ )
     {
-		m_widgetList[i]->Initialise();
+        widget = GetWidget(i);
+        if (widget == NULL) continue;
+		widget->Initialise();
     }
 }
