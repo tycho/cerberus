@@ -9,12 +9,15 @@ OBJECTS = \
     App/resource.o \
     App/string_utils.o \
     App/text_stream_readers.o \
-    Entity/Component/component.o \
-    Entity/Component/component_input.o \
-    Entity/Component/component_physics.o \
-    Entity/Component/component_render.o \
-    Entity/Component/component_texture.o \
+    Entity/Attributes/attribute_color.o \
+    Entity/Attributes/attribute_position.o \
+    Entity/Attributes/attribute_sprite.o \
+    Entity/Behaviors/behavior_input.o \
+    Entity/Behaviors/behavior_physics.o \
+    Entity/Behaviors/behavior_render.o \
+    Entity/attribute.o \
     Entity/behavior.o \
+    Entity/component.o \
     Entity/entity.o \
     Game/game.o \
     Graphics/Animation/animation.o \

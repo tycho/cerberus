@@ -24,15 +24,37 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <universal_include.h>
+#include "Entity/Behaviors/behavior_input.h"
+#include "Entity/entity.h"
+#include "Scripting/scripting.h"
 
-#include "Entity/Component/component.h"
-
-Component::Component(Entity *_entity)
- : m_entity(_entity)
+InputBehavior::InputBehavior(Entity *_entity)
+ : Behavior(Behavior::Names[INPUT], _entity)
 {
 }
 
-Component::~Component()
+void InputBehavior::ReceiveEvent(SDL_Event &_event)
 {
+    switch (_event.type) {
+    case SDL_KEYDOWN:
+        g_scripting->SendInput(GetEntity(), "onKeyDown", _event.key.keysym.sym);
+        break;
+    case SDL_KEYUP:
+        g_scripting->SendInput(GetEntity(), "onKeyUp", _event.key.keysym.sym);
+        break;
+    case SDL_MOUSEBUTTONDOWN:
+        g_scripting->SendInput(GetEntity(), "onMouseDown", _event.button.button);
+        break;
+    case SDL_MOUSEBUTTONUP:
+        g_scripting->SendInput(GetEntity(), "onMouseUp", _event.button.button);
+        break;
+    case SDL_MOUSEMOTION:
+        g_scripting->SendInput(GetEntity(), "onMouseOver", 0);
+        break;
+    }
+}
+
+void InputBehavior::Update(float _delta)
+{
+    // just a lonely stub...
 }

@@ -24,43 +24,28 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "universal_include.h"
+#include "Entity/component.h"
 
-#include "App/app.h"
-
-#include "Scripting/scripting.h"
-
-Scripting::Scripting()
+Component::Component(const char *_name, Entity *_entity)
+ : m_name(newStr(_name)),
+   m_entity(_entity)
 {
 }
 
-Scripting::Scripting(const char *_extension)
+Component::~Component()
 {
-    m_extension = cc_strdup(_extension);
-    m_scriptDir = new char[1024];
-    sprintf(m_scriptDir, "%sdata/scripts/%s/",
-            g_app->GetApplicationSupportPath(), m_extension + 1);
+    delete m_name;
+    m_name = NULL;
+
+    m_entity = NULL;
 }
 
-Scripting::~Scripting()
+const char *Component::GetName() const
 {
-    free(m_extension);
-    delete[] m_scriptDir;
-    m_scriptDir = NULL;
+    return m_name;
 }
 
-Entity *Scripting::LoadEntity(const char *_entityFile)
+Entity *Component::GetEntity()
 {
-    return NULL;
+    return m_entity;
 }
-
-bool Scripting::RunScript(const char *_scriptName)
-{
-    return false;
-}
-
-void Scripting::SendInput(Entity *_entity, const char *_hook, int _value)
-{
-}
-
-Scripting *g_scripting;

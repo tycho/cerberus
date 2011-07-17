@@ -52,13 +52,34 @@ void Input::Update ()
 
     m_events.empty();
 
-    bool mouseEvent = false;
-
     SDL_Event event;
     while ( SDL_PollEvent ( &event ) )
     {
         for (size_t i = 0; i < m_observers.size(); i++) {
             if (event.type == m_observers[i].eventType) {
+                PositionAttribute *pA = dynamic_cast<PositionAttribute *>(m_observers[i].observer->GetEntity()->GetAttribute(Attribute::Names[POSITION]));
+                if (pA != NULL) {
+                    // If mouse events, check if the mouse is within the entity's bounding box
+                    if (event.type == SDL_MOUSEMOTION ||
+                            event.type == SDL_MOUSEBUTTONDOWN ||
+                            event.type == SDL_MOUSEBUTTONUP) {
+                        int x = -1, y = -1;
+                        if (event.type == SDL_MOUSEMOTION) {
+                            x = event.motion.x;
+                            y = event.motion.y;
+                        } else {
+                            x = event.button.x;
+                            y = event.button.y;
+                        }
+                        Rect pos = pA->GetPosition();
+                        if (!(x <= (pos.x + pos.w) &&
+                                x >= (pos.x) &&
+                                y <= (pos.y) &&
+                                y <= (pos.y + pos.h))) {
+                            continue;
+                        }
+                    }
+                }
                 m_observers[i].observer->ReceiveEvent(event);
             }
         }
@@ -137,7 +158,7 @@ SDL_Event *Input::GetEvent(size_t _index)
     }
 }
 
-void Input::RegisterEventObserver(Uint8 _type, Entity *_observer)
+void Input::RegisterEventObserver(Uint8 _type, InputBehavior *_observer)
 {
     EventObserver e;
     e.eventType = _type;

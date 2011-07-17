@@ -24,26 +24,29 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __component_input_h_included
-#define __component_input_h_included
+#ifndef __behavior_h_included
+#define __behavior_h_included
 
-#include "universal_include.h"
+#include "Entity/component.h"
 
-#include "Entity/entity.h"
-
-class InputComponent : public Component
-{
-protected:
-    Data::LList<SDL_Event> m_events;
-
-public:
-    InputComponent(Entity *_entity);
-
-    virtual ~InputComponent();
-
-    virtual void ReceiveEvent(SDL_Event _event);
-
-    virtual void Update(float _delta);
+enum Behaviors {
+    INPUT,
+    PHYSICS,
+    RENDER
 };
+
+class Behavior : public Component
+{
+public:
+    Behavior(const char *_name, Entity *_entity);
+
+    virtual void Update(float _delta) = 0;
+
+    static const char *Names[];
+};
+
+#include "Entity/Behaviors/behavior_input.h"
+#include "Entity/Behaviors/behavior_physics.h"
+#include "Entity/Behaviors/behavior_render.h"
 
 #endif

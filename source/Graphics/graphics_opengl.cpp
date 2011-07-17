@@ -243,7 +243,7 @@ Uint32 OpenGLGraphics::LoadImage ( const char *_filename )
 
     // Check to see if this image is already loaded
     Uint32 fileIndex = m_textureFiles.find(_filename);
-    if (fileIndex > -1) {
+    if ((int)fileIndex > -1) {
         // Just return the index of the already loaded texture
         return fileIndex;
     }
@@ -289,9 +289,12 @@ Uint32 OpenGLGraphics::LoadImage ( const char *_filename )
 
 void OpenGLGraphics::DrawEntity ( Entity *_entity )
 {
-    if ( _entity != NULL ) {
+    if ( _entity != NULL ) { /*
         glEnable(GL_BLEND);
         glPushMatrix();
+        PositionAttribute *positionAttr =
+                dynamic_cast<PositionAttribute *>(_entity->GetAttribute(
+                        Attribute::Names[POSITION]));
         glTranslatef(_entity->GetX(), _entity->GetY(), _entity->GetZ());
         glRotatef(_entity->GetOrientation(), 0, 0, 1);
 
@@ -345,7 +348,7 @@ void OpenGLGraphics::DrawEntity ( Entity *_entity )
         }
 
         glPopMatrix();
-        glDisable(GL_BLEND);
+        glDisable(GL_BLEND);*/
     }
 }
 

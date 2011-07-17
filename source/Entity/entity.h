@@ -27,142 +27,58 @@
 #ifndef __entity_h_included
 #define __entity_h_included
 
-#include <universal_include.h>
+#include "universal_include.h"
 
-//tolua_begin
-enum Visibility {
-    VISIBLE, // Draw this entity and it's border (if it's enabled)
-    INVISIBLE, // Only draw this entity's border if it's enabled
-    GONE // Don't draw the entity or the border
-};
-//tolua_end
+#include "App/string_utils.h"
 
-class Component;
-class InputComponent;
-class PhysicsComponent;
-class RenderComponent;
-class TextureComponent;
+#include "Entity/component.h"
 
 class Entity { //tolua_export
 protected:
-    bool m_active; // Is the entity active?
-    bool m_border; // Should we enable this entity's border?
-
-    Rect m_boundingBox; // Entity's position and dimensions
-
-    float m_orientation; // Angle of orientation
-
-    Color32 m_color; // Base color of the entity
-    Color32 m_borderColor; // Border color
-
-    Visibility m_visibility; // See Visibility enum
-
-    Vertex *m_vertices; // Entity vertex data
-    int m_numVertices; // Number of Vertex objects in m_vertices
-
-    InputComponent *m_inputComponent; // Entity's InputComponent
-    PhysicsComponent *m_physicsComponent; // Entity's PhysicsComponent
-    RenderComponent *m_renderComponent; // Entity's RenderComponent
-    TextureComponent *m_textureComponent; // Entity's TextureComponent
-
-    Entity *m_parent; // parent entity of this entity
-    Data::LList<Entity *> m_children; // linked list of child entities
-
-    virtual void BuildVertices();
-
+    const char *m_name;
+    Data::HashTable<Behavior *> m_behaviors;
+    Data::HashTable<Attribute *> m_attributes;
+    Entity *m_parent;
+    Data::LList<Entity *> m_children;
 public:
-    Entity();
-    Entity(float _x, float _y, float _w, float _h, Color32 _color);
-    Entity(float _x, float _y, float _w, float _h, Color32 _color, const char *_textureFilename);
-    
+    Entity(const char *_name);
     virtual ~Entity();
 
-    /**
-     * Getters
-     */
-
     //tolua_begin
 
-    virtual bool IsActive();
-    virtual bool IsBorderEnabled();
-
-    virtual Rect &GetBoundingBox();
-
-    virtual float GetX();
-    virtual float GetY();
-    virtual float GetZ();
-
-    virtual float GetWidth();
-    virtual float GetHeight();
-    virtual float GetDepth();
-
-    virtual float GetOrientation();
-
-    virtual Color32 &GetColor();
-    virtual Color32 &GetBorderColor();
-
-    virtual Visibility GetVisibility();
-
-    virtual Entity *GetParentEntity();
-
-    //tolua_end
-
-    virtual Vertex *GetVertices();
-    virtual int GetNumVertices();
-
-    virtual InputComponent *GetInputComponent();
-    virtual PhysicsComponent *GetPhysicsComponent();
-    virtual RenderComponent *GetRenderComponent();
-    virtual TextureComponent *GetTextureComponent();
+    const char *GetName();
 
     /**
-     * Setters
+     * Behavior methods
      */
-
-    //tolua_begin
-    virtual void SetActive(bool _isActive);
-    virtual void SetBorderEnabled(bool _isBorderEnabled);
-
-    virtual void SetX(float _x);
-    virtual void SetY(float _y);
-    virtual void SetZ(float _z);
-
-    virtual void SetWidth(float _x);
-    virtual void SetHeight(float _y);
-    virtual void SetDepth(float _z);
-
-    virtual void SetOrientation(float _orientation);
-
-    virtual void SetColor(Color32 _color);
-    virtual void SetBorderColor(Color32 _borderColor);
-
-    virtual void SetVisibility(Visibility _visibility);
+    virtual bool HasBehavior(const char *_name);
+    virtual Behavior *GetBehavior(const char *_name);
+    virtual bool AddBehavior(const char *_name, Behavior *_behavior);
+    virtual bool RemoveBehavior(const char *_name);
 
     /**
-     * Child entities
+     * Attribute methods
      */
-    virtual void AttachChild(Entity *_child);
+    virtual bool HasAttribute(const char *_name);
+    virtual Attribute *GetAttribute(const char *_name);
+    virtual bool AddAttribute(const char *_name, Attribute *_attribute);
+    virtual bool RemoveAttribute(const char *_name);
+
+    /**
+     * Scene graph methods
+     */
+    virtual Entity *GetParent();
     virtual Entity *GetChild(int _index);
+    virtual void AttachChild(Entity *_child);
     virtual void RemoveChild(Entity *_child);
-    virtual void RemoveAllChildren();
 
     //tolua_end
 
-    virtual void SetInputComponent(InputComponent *_inputComponent);
-    virtual void SetPhysicsComponent(PhysicsComponent *_physicsComponent);
-    virtual void SetRenderComponent(RenderComponent *_renderComponent);
-    virtual void SetTextureComponent(TextureComponent *_textureComponent);
-
-    virtual void ReceiveEvent(SDL_Event _event);
-
     /**
-     * Lifecycle functions
+     * Lifecycle methods
      */
-    virtual void Render(float _delta);
-
     virtual void Update(float _delta);
+    virtual void Render(float _delta);
 }; //tolua_export
-
-#include "Entity/Component/component.h"
 
 #endif

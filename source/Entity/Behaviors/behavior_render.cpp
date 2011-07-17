@@ -24,28 +24,15 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __component_h_included
-#define __component_h_included
+#include "Entity/Behaviors/behavior_render.h"
+#include "Graphics/graphics.h"
 
-#include <universal_include.h>
-
-#include "Entity/entity.h"
-
-class Component
+RenderBehavior::RenderBehavior(Entity *_entity)
+ : Behavior(Behavior::Names[RENDER], _entity)
 {
-protected:
-    Entity *m_entity;
+}
 
-public:
-    Component(Entity *_entity);
-    virtual ~Component();
-
-    virtual void Update(float _delta) = 0;
-};
-
-#include "Entity/Component/component_input.h"
-#include "Entity/Component/component_physics.h"
-#include "Entity/Component/component_render.h"
-#include "Entity/Component/component_texture.h"
-
-#endif
+void RenderBehavior::Update(float _delta)
+{
+    g_graphics->DrawEntity(m_entity);
+}

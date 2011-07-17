@@ -24,43 +24,23 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "universal_include.h"
+#ifndef __attribute_sprite_h_included
+#define __attribute_sprite_h_included
 
-#include "App/app.h"
+#include "Entity/attribute.h"
 
-#include "Scripting/scripting.h"
-
-Scripting::Scripting()
+class SpriteAttribute : public Attribute
 {
-}
+protected:
+    const char *m_spritePath;
+public:
+    SpriteAttribute(Entity *_entity, const char *_spritePath);
+    virtual ~SpriteAttribute();
 
-Scripting::Scripting(const char *_extension)
-{
-    m_extension = cc_strdup(_extension);
-    m_scriptDir = new char[1024];
-    sprintf(m_scriptDir, "%sdata/scripts/%s/",
-            g_app->GetApplicationSupportPath(), m_extension + 1);
-}
+    const char *GetSpritePath();
+    void SetSpritePath(const char *_spritePath);
+};
 
-Scripting::~Scripting()
-{
-    free(m_extension);
-    delete[] m_scriptDir;
-    m_scriptDir = NULL;
-}
 
-Entity *Scripting::LoadEntity(const char *_entityFile)
-{
-    return NULL;
-}
+#endif /* __attribute_sprite_h_included */
 
-bool Scripting::RunScript(const char *_scriptName)
-{
-    return false;
-}
-
-void Scripting::SendInput(Entity *_entity, const char *_hook, int _value)
-{
-}
-
-Scripting *g_scripting;

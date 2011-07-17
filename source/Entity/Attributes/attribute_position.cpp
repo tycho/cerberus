@@ -24,61 +24,25 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <universal_include.h>
+#include "Entity/Attributes/attribute_position.h"
 
-#include "Entity/Component/component_physics.h"
-
-#include "Graphics/graphics.h"
-
-PhysicsComponent::PhysicsComponent(Entity *_entity)
- : Component(_entity)
+PositionAttribute::PositionAttribute(Entity *_entity, Rect &_position)
+ : Attribute(Attribute::Names[POSITION], _entity)
 {
+    SetPosition(_position);
 }
 
-void PhysicsComponent::Update(float _delta)
+Rect &PositionAttribute::GetPosition()
 {
-
-    float x = m_entity->GetX();
-    float y = m_entity->GetY();
-/*
-    m_xVelocity += m_xAcceleration * _delta;
-    m_yVelocity += m_yAcceleration * _delta;
-
-    if (m_xAcceleration == 0.0f) {
-        m_xVelocity = 0.0f;
-    }
-    if (m_yAcceleration == 0.0f) {
-        m_yVelocity = 0.0f;
-    }
-
-    if (m_xVelocity > 40.0f) {
-        m_xVelocity = 40.0f;
-    } else if (m_xVelocity < -40.0f) {
-        m_xVelocity = -40.0f;
-    }
-    if (m_yVelocity > 40.0f) {
-        m_yVelocity = 40.0f;
-    } else if (m_yVelocity < -40.0f) {
-        m_yVelocity = -40.0f;
-    }
-
-    x += m_xVelocity * _delta;
-    y += m_yVelocity * _delta;
-*/
-
-    x += m_xAcceleration * _delta;
-    y += m_yAcceleration * _delta;
-
-    m_entity->SetX(x);
-    m_entity->SetY(y);
+    return m_position;
 }
 
-void PhysicsComponent::SetCollisionType(int _collisionType)
+void PositionAttribute::SetPosition(Rect &_position)
 {
-    m_collisionType = _collisionType;
-}
-
-void PhysicsComponent::SetGravity(int _accDueToGravity)
-{
-    m_gravity = _accDueToGravity;
+    m_position.x = _position.x;
+    m_position.y = _position.y;
+    m_position.z = _position.z;
+    m_position.w = _position.w;
+    m_position.h = _position.h;
+    m_position.d = _position.d;
 }

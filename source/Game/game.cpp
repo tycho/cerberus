@@ -38,6 +38,7 @@ Game::Game()
     m_scene(new Scene()),
     m_entity(NULL)
 {
+    /*
     m_entity = new Entity(0, 0, 31, 32, Color32(255, 255, 255, 255), "darwinian.png");
     m_entity->SetBorderEnabled(true);
     m_entity->SetInputComponent(new InputComponent(m_entity));
@@ -49,6 +50,8 @@ Game::Game()
     santa->SetBorderEnabled(true);
     santa->SetRenderComponent(new RenderComponent(santa));
     m_entity->AttachChild(santa);
+    */
+    Entity *darwinian = g_scripting->LoadEntity("darwinian");
 }
 
 Game::~Game()

@@ -24,25 +24,15 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __component_render_h_included
-#define __component_render_h_included
+#include "Entity/behavior.h"
 
-#include <universal_include.h>
-
-#include "Entity/entity.h"
-
-/*
- * TODO: Idea for RenderComponent -
- *     Each instance of RenderComponent would hold specific graphics features to
- *     enable/disable for use with drawing the entity the component is attached
- *     to.
- */
-
-class RenderComponent : public Component
-{
-public:
-    RenderComponent(Entity *_entity);
-    virtual void Update(float _delta);
+const char *Behavior::Names[] = {
+    "input",
+    "physics",
+    "render"
 };
 
-#endif
+Behavior::Behavior(const char *_name, Entity *_entity)
+ : Component(_name, _entity)
+{
+}

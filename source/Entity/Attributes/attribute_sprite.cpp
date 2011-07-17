@@ -24,40 +24,27 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <universal_include.h>
+#include "Entity/Attributes/attribute_sprite.h"
 
-#include "Entity/Component/component_texture.h"
-
-TextureComponent::TextureComponent(Entity *_entity)
- : Component(_entity)
+SpriteAttribute::SpriteAttribute(Entity *_entity, const char *_spritePath)
+ : Attribute(Attribute::Names[SPRITE], _entity),
+   m_spritePath(newStr(_spritePath))
 {
 }
 
-TextureComponent::TextureComponent(Entity *_entity, float _tX, float _tY, float _tW, float _tH, Uint32 _tId)
- : Component(_entity)
+SpriteAttribute::~SpriteAttribute()
 {
-    m_textureRegion.x = _tX;
-    m_textureRegion.y = _tY;
-    m_textureRegion.w = _tW;
-    m_textureRegion.h = _tH;
-    m_textureRegion.textureId = _tId;
+    delete m_spritePath;
+    m_spritePath = NULL;
 }
 
-TextureComponent::TextureComponent(Entity *_entity, TextureRegion &_textureRegion)
- : Component(_entity)
+const char *SpriteAttribute::GetSpritePath()
 {
-    m_textureRegion.x = _textureRegion.x;
-    m_textureRegion.y = _textureRegion.y;
-    m_textureRegion.w = _textureRegion.w;
-    m_textureRegion.h = _textureRegion.h;
-    m_textureRegion.textureId = _textureRegion.textureId;
+    return m_spritePath;
 }
 
-TextureRegion &TextureComponent::GetTextureRegion()
+void SpriteAttribute::SetSpritePath(const char * _spritePath)
 {
-    return m_textureRegion;
-}
-
-void TextureComponent::Update(float _delta)
-{
+    delete m_spritePath;
+    m_spritePath = newStr(_spritePath);
 }

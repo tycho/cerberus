@@ -24,43 +24,19 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "universal_include.h"
+#ifndef __behavior_input_h_included
+#define __behavior_input_h_included
 
-#include "App/app.h"
+#include "Entity/behavior.h"
 
-#include "Scripting/scripting.h"
-
-Scripting::Scripting()
+class InputBehavior : public Behavior
 {
-}
+public:
+    InputBehavior(Entity *_entity);
 
-Scripting::Scripting(const char *_extension)
-{
-    m_extension = cc_strdup(_extension);
-    m_scriptDir = new char[1024];
-    sprintf(m_scriptDir, "%sdata/scripts/%s/",
-            g_app->GetApplicationSupportPath(), m_extension + 1);
-}
+    virtual void ReceiveEvent(SDL_Event &_event);
+    virtual void Update(float _delta);
+};
 
-Scripting::~Scripting()
-{
-    free(m_extension);
-    delete[] m_scriptDir;
-    m_scriptDir = NULL;
-}
+#endif /* __behavior_input_h_included */
 
-Entity *Scripting::LoadEntity(const char *_entityFile)
-{
-    return NULL;
-}
-
-bool Scripting::RunScript(const char *_scriptName)
-{
-    return false;
-}
-
-void Scripting::SendInput(Entity *_entity, const char *_hook, int _value)
-{
-}
-
-Scripting *g_scripting;

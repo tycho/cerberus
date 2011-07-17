@@ -24,43 +24,36 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "universal_include.h"
+#ifndef __behavior_physics_h_included
+#define __behavior_physics_h_included
 
-#include "App/app.h"
+#include "Entity/behavior.h"
 
-#include "Scripting/scripting.h"
+#include "Graphics/vector.h"
 
-Scripting::Scripting()
+class PhysicsBehavior : public Behavior
 {
-}
+protected:
+    float m_gravity;
+    bool m_collidable;
+    Vector m_velocity;
+    Vector m_acceleration;
 
-Scripting::Scripting(const char *_extension)
-{
-    m_extension = cc_strdup(_extension);
-    m_scriptDir = new char[1024];
-    sprintf(m_scriptDir, "%sdata/scripts/%s/",
-            g_app->GetApplicationSupportPath(), m_extension + 1);
-}
+public:
+    PhysicsBehavior(Entity *_entity);
 
-Scripting::~Scripting()
-{
-    free(m_extension);
-    delete[] m_scriptDir;
-    m_scriptDir = NULL;
-}
+    virtual void Update(float _delta);
 
-Entity *Scripting::LoadEntity(const char *_entityFile)
-{
-    return NULL;
-}
+    virtual bool IsCollidable();
+    virtual float GetGravity();
+    virtual Vector &GetVelocity();
+    virtual Vector &GetAcceleration();
 
-bool Scripting::RunScript(const char *_scriptName)
-{
-    return false;
-}
+    virtual void SetCollidable(bool _collidable);
+    virtual void SetGravity(float _gravity);
+    virtual void SetVelocity(Vector &_velocity);
+    virtual void SetAcceleration(Vector &_acceleration);
+};
 
-void Scripting::SendInput(Entity *_entity, const char *_hook, int _value)
-{
-}
+#endif /* __behavior_physics_h_included */
 
-Scripting *g_scripting;

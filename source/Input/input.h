@@ -30,9 +30,16 @@
 
 #include "universal_include.h"
 
+#include "Entity/Behaviors/behavior_input.h"
+
+enum MoreEventTypes {
+    MOUSE_OVER = 25,
+    MOUSE_LEAVE
+};
+
 typedef struct {
     Uint8 eventType;
-    Entity *observer;
+    InputBehavior *observer;
 } EventObserver;
 
 class Input
@@ -60,7 +67,7 @@ public:
 
     virtual SDL_Event *GetEvent(size_t _index);
 
-    virtual void RegisterEventObserver(Uint8 _type, Entity *_observer);
+    virtual void RegisterEventObserver(Uint8 _type, InputBehavior *_observer);
 
     virtual void Update ();
 };

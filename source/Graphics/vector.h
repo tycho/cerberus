@@ -31,40 +31,48 @@
 
 class Vector {
 public:
-    float i, j, k;
+    float x, y, z;
 
     Vector()
-     : i(0),
-       j(0),
-       k(0)
+     : x(0),
+       y(0),
+       z(0)
     {
     }
 
-    Vector(float _i, float _j)
-     : i(_i),
-       j(_j),
-       k(0)
+    Vector(float _x, float _y)
+     : x(_x),
+       y(_y),
+       z(0)
     {
     }
 
-    Vector(float _i, float _j, float _k)
-     : i(_i),
-       j(_j),
-       k(_k)
+    Vector(float _x, float _y, float _z)
+     : x(_x),
+       y(_y),
+       z(_z)
     {
+    }
+
+    Vector operator=(Vector &rhs) const {
+        Vector tmp = *this;
+        tmp.x = rhs.x;
+        tmp.y = rhs.y;
+        tmp.z = rhs.z;
+        return tmp;
     }
 };
 
 // Multiplies a vector by a scalar value
 inline Vector multv(Vector const &v, float s)
 {
-    return Vector(s * v.i, s * v.j, s * v.k);
+    return Vector(s * v.x, s * v.y, s * v.z);
 }
 
 // Returns magnitude of a given vector
 inline float magv(Vector const &v)
 {
-    return sqrt(v.i * v.i + v.j * v.j + v.k * v.k);
+    return sqrt(v.x * v.x + v.y * v.y + v.z * v.z);
 }
 
 // Normalizes a vector
@@ -76,7 +84,7 @@ inline Vector normalizev(Vector const &v)
 // Returns dot product of two given vectors
 inline float dotv(Vector const &u, Vector const &v)
 {
-    return u.i * v.i + u.j * v.j + u.k * v.k;
+    return u.x * v.x + u.y * v.y + u.z * v.z;
 }
 
 // Returns dot product of two vectors given their magnitude and angle (in degrees) between them
@@ -100,15 +108,15 @@ inline float projections(Vector const &u, Vector const &v)
 // Returns cross product of two vectors
 inline Vector crossv(Vector const &u, Vector const &v)
 {
-    return Vector(  u.j * v.k - u.k * v.j,
-                    -(u.i * v.k - u.k * v.i),
-                    u.i * v.j - u.j * v.i);
+    return Vector(  u.y * v.z - u.z * v.y,
+                    -(u.x * v.z - u.z * v.x),
+                    u.y * v.y - u.y * v.x);
 }
 
 // Returns vector perpendicular to a given vector
 inline Vector perpendicularv(Vector const &u)
 {
-    return Vector(-u.j, u.i, u.k);
+    return Vector(-u.y, u.x, u.z);
 }
 
 // Returns vector perpendicular to u and v (cross product alias)
@@ -122,4 +130,5 @@ inline float anglev(Vector const &u, Vector const &v)
 {
     return TODEGREES(acos(dotv(u, v) / (magv(u) * magv(v))));
 }
+
 #endif

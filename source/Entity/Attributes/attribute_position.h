@@ -24,18 +24,22 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include <universal_include.h>
+#ifndef __attribute_position_h_included
+#define __attribute_position_h_included
 
-#include "Entity/Component/component_render.h"
+#include "Entity/attribute.h"
+#include "Graphics/rect.h"
 
-#include "Graphics/graphics.h"
-
-RenderComponent::RenderComponent(Entity *_entity)
- : Component(_entity)
+class PositionAttribute : public Attribute
 {
-}
+protected:
+    Rect m_position;
+public:
+    PositionAttribute(Entity *_entity, Rect &_position);
 
-void RenderComponent::Update(float _delta)
-{
-    g_graphics->DrawEntity(m_entity);
-}
+    Rect &GetPosition();
+    void SetPosition(Rect &_position);
+};
+
+#endif /* __attribute_position_h_included */
+

@@ -29,6 +29,10 @@
 
 #include "Scripting/scripting.h"
 
+#include <tolua++.h>
+#include "Scripting/LuaBindings/color.h"
+#include "Scripting/LuaBindings/entity.h"
+
 class LuaScripting : public Scripting
 {
 protected:
@@ -39,7 +43,9 @@ public:
 
     virtual ~LuaScripting();
 
+    virtual Entity *LoadEntity(const char *_entityFile);
     virtual bool RunScript(const char *_scriptName);
+    virtual void SendInput(Entity *_entity, const char *_hook, int _value = 0);
 
     virtual lua_State *GetState();
 };

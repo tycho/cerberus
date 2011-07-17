@@ -167,15 +167,16 @@ bool AABBCollisionTest(Rect &a, Rect &b)
 
 bool OBBCollisionTest(Entity &a, Entity &b)
 {
+    /*
     // Do simple AABB collision first
     if (AABBCollisionTest(a.GetBoundingBox(), b.GetBoundingBox())) {
-        Vertex *aVerts = a.GetVertices();
-        Vertex *bVerts = b.GetVertices();
 
         return true;
     } else {
         return false;
     }
+    */
+    return true;
 }
 #if 0
 /*

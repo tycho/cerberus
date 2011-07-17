@@ -35,7 +35,7 @@
 #include "Interface/widget.h"
 
 Widget::Widget()
- : Entity(),
+ : Entity("widget"),
    m_interface(NULL),
    m_widgetClass(WIDGET_UNKNOWN),
    m_cachedSurfaceID(-1),
@@ -49,7 +49,7 @@ Widget::Widget()
 }
 
 Widget::Widget ( Sint16 x, Sint16 y, Uint16 w, Uint16 h )
- : Entity(),
+ : Entity("widget"),
    m_interface(NULL),
    m_widgetClass(WIDGET_UNKNOWN),
    m_cachedSurfaceID(-1),

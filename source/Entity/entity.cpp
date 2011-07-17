@@ -30,406 +30,129 @@
 
 #include "Graphics/graphics.h"
 
-Entity::Entity()
- :  m_active(true),
-    m_border(false),
-    m_boundingBox({0, 0, 0, 0, 0, 0}),
-    m_orientation(0),
-    m_vertices(NULL),
-    m_numVertices(0),
-    m_inputComponent(NULL),
-    m_physicsComponent(NULL),
-    m_renderComponent(NULL),
-    m_textureComponent(NULL),
-    m_parent(NULL)
+Entity::Entity(const char *_name)
+ : m_name(newStr(_name))
 {
-    BuildVertices();
-}
-
-Entity::Entity(float _x, float _y, float _w, float _h, Color32 _color)
- :  m_active(true),
-    m_border(false),
-    m_boundingBox({_x, _y, 0, _w, _h, 0}),
-    m_orientation(0),
-    m_color(_color),
-    m_borderColor(Color32(255, 0, 255)),
-    m_vertices(NULL),
-    m_numVertices(0),
-    m_inputComponent(NULL),
-    m_physicsComponent(NULL),
-    m_renderComponent(NULL),
-    m_textureComponent(NULL),
-    m_parent(NULL)
-{
-    BuildVertices();
-}
-
-Entity::Entity(float _x, float _y, float _w, float _h, Color32 _color, const char *_textureFilename)
- :  m_active(true),
-    m_border(false),
-    m_boundingBox({_x, _y, 0, _w, _h, 0}),
-    m_orientation(0),
-    m_color(_color),
-    m_borderColor(Color32(255, 0, 255)),
-    m_vertices(NULL),
-    m_numVertices(0),
-    m_inputComponent(NULL),
-    m_physicsComponent(NULL),
-    m_renderComponent(NULL),
-    m_textureComponent(NULL),
-    m_parent(NULL)
-{
-    TextureRegion textureRegion;
-    textureRegion.textureId = g_graphics->LoadImage(_textureFilename);
-    g_graphics->GetTexture(textureRegion.textureId)->Upload();
-    textureRegion.x = 0;
-    textureRegion.y = 0;
-    textureRegion.w = g_graphics->GetTexture(textureRegion.textureId)->GetWidth();
-    textureRegion.h = g_graphics->GetTexture(textureRegion.textureId)->GetHeight();
-    m_textureComponent = new TextureComponent(this, textureRegion);
-    BuildVertices();
 }
 
 Entity::~Entity()
 {
-    if (m_vertices != NULL) {
-        free(m_vertices);
-        m_vertices = NULL;
-    }
-    if (m_inputComponent != NULL) {
-        delete m_inputComponent;
-        m_inputComponent = NULL;
-    }
-    if (m_physicsComponent != NULL) {
-        delete m_physicsComponent;
-        m_physicsComponent = NULL;
-    }
-    if (m_renderComponent != NULL) {
-        delete m_renderComponent;
-        m_renderComponent = NULL;
-    }
-    if (m_textureComponent != NULL) {
-        delete m_textureComponent;
-        m_textureComponent = NULL;
-    }
-    while (m_children.valid(0)) {
-        delete m_children[0];
-        m_children.remove(0);
-    }
+    delete m_name;
+    m_name = NULL;
 }
 
-/* Build each of the (currently 4) vertices for this entity */
-void Entity::BuildVertices()
+const char *Entity::GetName()
 {
-    if (m_vertices != NULL) {
-        free(m_vertices);
-        m_vertices = NULL;
-    }
-    m_vertices = (Vertex *)calloc(sizeof(Vertex), 4);
-    int i = 0;
-    Vertex vert;
-    TextureRegion *texReg = NULL;
-    if (m_textureComponent != NULL) {
-        texReg = &(m_textureComponent->GetTextureRegion());
-    }
-    vert.x = 0;
-    vert.y = 0;
-    vert.z = 0;
-    vert.r = m_color.R();
-    vert.g = m_color.G();
-    vert.b = m_color.B();
-    vert.a = m_color.A();
-    vert.u = 0;
-    vert.v = 0;
+    return m_name;
+}
 
-    for (; i < 4; i++) {
-        switch(i) {
-        case 0:
-            vert.x = 0;
-            vert.y = 0;
-//            vert.x = vert.x * cos(TORADIANS(45.0)) - vert.y * sin(TORADIANS(45.0));
-//            vert.y = vert.x * sin(TORADIANS(45.0)) + vert.y * cos(TORADIANS(45.0));
-            vert.z = m_boundingBox.z;
-            if (texReg != NULL) {
-                vert.u = texReg->x;
-                vert.v = texReg->y;
-            }
-            break;
-        case 1:
-            vert.x = m_boundingBox.w;
-            vert.y = 0;
-            vert.z = m_boundingBox.z;
-            if (texReg != NULL) {
-                vert.u = texReg->x + texReg->w;
-                vert.v = texReg->y;
-            }
-            break;
-        case 2:
-            vert.x = m_boundingBox.w;
-            vert.y = m_boundingBox.h;
-            vert.z = m_boundingBox.z;
-            if (texReg != NULL) {
-                vert.u = texReg->x + texReg->w;
-                vert.v = texReg->y + texReg->h;
-            }
-            break;
-        case 3:
-            vert.x = 0;
-            vert.y = m_boundingBox.h;
-            vert.z = m_boundingBox.z;
-            if (texReg != NULL) {
-                vert.u = texReg->x;
-                vert.v = texReg->y + texReg->h;
-            }
-            break;
-        }
+/**
+ * Behavior methods
+ */
 
-        m_vertices[i] = vert;
+bool Entity::HasBehavior(const char *_name)
+{
+    return m_behaviors.exists(_name);
+}
+
+Behavior *Entity::GetBehavior(const char *_name)
+{
+    return m_behaviors.find(_name);
+}
+
+bool Entity::AddBehavior(const char *_name, Behavior *_behavior)
+{
+    return (int)m_behaviors.insert(_name, _behavior) > -1;
+}
+
+class Behavior;
+
+bool Entity::RemoveBehavior(const char *_name)
+{
+    if (m_behaviors.exists(_name)) {
+        delete m_behaviors.find(_name);
+        return m_behaviors.erase(_name);
+    } else {
+        return false;
     }
 }
 
-bool Entity::IsActive()
+/**
+ * Attribute methods
+ */
+
+bool Entity::HasAttribute(const char *_name)
 {
-    return m_active;
+    return m_attributes.exists(_name);
 }
 
-bool Entity::IsBorderEnabled()
+Attribute *Entity::GetAttribute(const char *_name)
 {
-    return m_border;
+    return m_attributes.find(_name);
 }
 
-Rect &Entity::GetBoundingBox()
+bool Entity::AddAttribute(const char *_name, Attribute *_attribute)
 {
-    return m_boundingBox;
+    return (int)m_attributes.insert(_name, _attribute) > -1;
 }
 
-float Entity::GetX()
+bool Entity::RemoveAttribute(const char *_name)
 {
-    return m_boundingBox.x;
+    if (m_attributes.exists(_name)) {
+        delete m_attributes.find(_name);
+        return m_attributes.erase(_name);
+    } else {
+        return false;
+    }
 }
 
-float Entity::GetY()
-{
-    return m_boundingBox.y;
-}
+/**
+ * Scene graph methods
+ */
 
-float Entity::GetZ()
-{
-    return m_boundingBox.z;
-}
-
-float Entity::GetWidth()
-{
-    return m_boundingBox.w;
-}
-
-float Entity::GetHeight()
-{
-    return m_boundingBox.h;
-}
-
-float Entity::GetDepth()
-{
-    return m_boundingBox.d;
-}
-
-float Entity::GetOrientation()
-{
-    return m_orientation;
-}
-
-Color32 &Entity::GetColor()
-{
-    return m_color;
-}
-
-Color32 &Entity::GetBorderColor()
-{
-    return m_borderColor;
-}
-
-Visibility Entity::GetVisibility()
-{
-    return m_visibility;
-}
-
-Entity *Entity::GetParentEntity()
+Entity *Entity::GetParent()
 {
     return m_parent;
 }
 
-Vertex *Entity::GetVertices()
+Entity *Entity::GetChild(int _index)
 {
-    return m_vertices;
-}
-
-int Entity::GetNumVertices()
-{
-    return m_numVertices;
-}
-
-InputComponent *Entity::GetInputComponent()
-{
-    return m_inputComponent;
-}
-
-PhysicsComponent *Entity::GetPhysicsComponent()
-{
-    return m_physicsComponent;
-}
-
-RenderComponent *Entity::GetRenderComponent()
-{
-    return m_renderComponent;
-}
-
-TextureComponent *Entity::GetTextureComponent()
-{
-    return m_textureComponent;
-}
-
-void Entity::SetActive(bool _isActive)
-{
-    m_active = _isActive;
-}
-
-void Entity::SetBorderEnabled(bool _isBorderEnabled)
-{
-    m_border = _isBorderEnabled;
-}
-
-void Entity::SetX(float _x)
-{
-    m_boundingBox.x = _x;
-}
-
-void Entity::SetY(float _y)
-{
-    m_boundingBox.y = _y;
-}
-
-void Entity::SetZ(float _z)
-{
-    m_boundingBox.z = _z;
-}
-
-void Entity::SetWidth(float _w)
-{
-    m_boundingBox.w = _w;
-}
-
-void Entity::SetHeight(float _h)
-{
-    m_boundingBox.h = _h;
-}
-
-void Entity::SetDepth(float _d)
-{
-    m_boundingBox.d = _d;
-}
-
-void Entity::SetOrientation(float _orientation)
-{
-    m_orientation = _orientation;
-}
-
-void Entity::SetColor(Color32 _color)
-{
-    m_color = _color;
-}
-
-void Entity::SetBorderColor(Color32 _borderColor)
-{
-    m_borderColor = _borderColor;
-}
-
-void Entity::SetVisibility(Visibility _visibility)
-{
-    m_visibility = _visibility;
+    return m_children.get(_index);
 }
 
 void Entity::AttachChild(Entity *_child)
 {
-    if (_child != NULL) {
-        m_children.insert(_child);
-    }
-}
-
-Entity *Entity::GetChild(int _index)
-{
-    if (m_children.valid(_index)) {
-        return m_children[_index];
-    } else {
-        return NULL;
-    }
+    m_children.insert(_child);
 }
 
 void Entity::RemoveChild(Entity *_child)
 {
-    if (_child != NULL) {
-        size_t i = m_children.find(_child);
-        if (m_children.valid(i)) {
-            m_children.remove(i);
+    int index = (int)m_children.find(_child);
+    if (index > -1) {
+        m_children.remove(index);
+    }
+}
+
+/**
+ * Lifecycle methods
+ */
+
+void Entity::Update(float _delta)
+{
+    size_t behaviorCount = m_behaviors.used();
+    for (size_t i = 0; i < behaviorCount; i++) {
+        if (strcmp(m_behaviors[i]->GetName(), Behavior::Names[RENDER]) == 0) {
+            continue;
+        } else {
+            m_behaviors[i]->Update(_delta);
         }
     }
 }
 
-void Entity::RemoveAllChildren()
-{
-    while (m_children.valid(0)) {
-        delete m_children[0];
-        m_children.remove(0);
-    }
-}
-
-void Entity::SetInputComponent(InputComponent *_inputComponent)
-{
-    m_inputComponent = _inputComponent;
-}
-
-void Entity::SetPhysicsComponent(PhysicsComponent *_physicsComponent)
-{
-    m_physicsComponent = _physicsComponent;
-}
-
-void Entity::SetRenderComponent(RenderComponent *_renderComponent)
-{
-    m_renderComponent = _renderComponent;
-}
-
-void Entity::SetTextureComponent(TextureComponent *_textureComponent)
-{
-    m_textureComponent = _textureComponent;
-}
-
-void Entity::ReceiveEvent(SDL_Event _event)
-{
-    m_inputComponent->ReceiveEvent(_event);
-}
-
 void Entity::Render(float _delta)
 {
-    if (m_renderComponent != NULL) {
-        m_renderComponent->Update(_delta);
-    }
-    /*
-    for (int i = 0; m_children.valid(i); i++) {
-        m_children[i]->Render(_delta);
-    }
-    */
-}
-
-void Entity::Update(float _delta)
-{
-    if (m_inputComponent != NULL) {
-        m_inputComponent->Update(_delta);
-    }
-
-    if (m_physicsComponent != NULL) {
-        m_physicsComponent->Update(_delta);
-    }
-
-    for (int i = 0; m_children.valid(i); i++) {
-        m_children[i]->Update(_delta);
+    Behavior *renderBehavior = m_behaviors.find(Behavior::Names[RENDER]);
+    if (renderBehavior != NULL) {
+        renderBehavior->Update(_delta);
     }
 }

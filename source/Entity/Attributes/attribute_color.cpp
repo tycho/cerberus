@@ -24,31 +24,31 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __component_physics_h_included
-#define __component_physics_h_included
+#include "Entity/Attributes/attribute_color.h"
 
-#include <universal_include.h>
-
-#include "Entity/entity.h"
-
-class PhysicsComponent : Component
+ColorAttribute::ColorAttribute(Entity *_entity, Color32 &_color, Color32 &_borderColor)
+ : Attribute(Attribute::Names[COLOR], _entity),
+   m_color(_color),
+   m_borderColor(_borderColor)
 {
-protected:
-    float m_gravity;
-    int m_collisionType;
-    float m_xVelocity;
-    float m_yVelocity;
-    float m_xAcceleration;
-    float m_yAcceleration;
+}
 
-public:
-    PhysicsComponent(Entity *_entity);
-    virtual void Update(float _delta);
+Color32 &ColorAttribute::GetColor()
+{
+    return m_color;
+}
 
-    virtual void SetCollisionType(int _collisionType);
-    virtual void SetGravity(int _accDueToGravity);
+Color32 &ColorAttribute::GetBorderColor()
+{
+    return m_borderColor;
+}
 
-    friend class InputComponent;
-};
+void ColorAttribute::SetColor(Color32 &_color)
+{
+    m_color = _color;
+}
 
-#endif
+void ColorAttribute::SetBorderColor(Color32 &_borderColor)
+{
+    m_borderColor = _borderColor;
+}
