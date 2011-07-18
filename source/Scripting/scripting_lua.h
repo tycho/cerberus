@@ -30,8 +30,13 @@
 #include "Scripting/scripting.h"
 
 #include <tolua++.h>
+#include "Scripting/LuaBindings/attribute.h"
+#include "Scripting/LuaBindings/behavior.h"
 #include "Scripting/LuaBindings/color.h"
+#include "Scripting/LuaBindings/component.h"
 #include "Scripting/LuaBindings/entity.h"
+#include "Scripting/LuaBindings/rect.h"
+#include "Scripting/LuaBindings/vector.h"
 
 class LuaScripting : public Scripting
 {

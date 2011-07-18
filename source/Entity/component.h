@@ -33,8 +33,7 @@
 
 class Entity;
 
-class Component
-{
+class Component { //tolua_export
 protected:
     const char *m_name;
     Entity *m_entity;
@@ -42,9 +41,11 @@ public:
     Component(const char *_name, Entity *_entity);
     virtual ~Component();
 
-    const char *GetName() const;
-    Entity *GetEntity();
-};
+    const char *GetName() const; //tolua_export
+    Entity *GetEntity(); //tolua_export
+
+    virtual void ReceiveMessage(const char *_type, void *_data);
+}; //tolua_export
 
 #include "Entity/behavior.h"
 #include "Entity/attribute.h"

@@ -57,7 +57,7 @@ void Input::Update ()
     {
         for (size_t i = 0; i < m_observers.size(); i++) {
             if (event.type == m_observers[i].eventType) {
-                PositionAttribute *pA = dynamic_cast<PositionAttribute *>(m_observers[i].observer->GetEntity()->GetAttribute(Attribute::Names[POSITION]));
+                PositionAttribute *pA = m_observers[i].observer->GetEntity()->GetAttribute<PositionAttribute>(Attribute::Names[POSITION]);
                 if (pA != NULL) {
                     // If mouse events, check if the mouse is within the entity's bounding box
                     if (event.type == SDL_MOUSEMOTION ||

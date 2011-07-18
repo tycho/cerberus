@@ -30,19 +30,17 @@
 #include "Entity/attribute.h"
 #include "Graphics/color.h"
 
-class ColorAttribute : public Attribute
-{
+class ColorAttribute : public Attribute { //tolua_export
 protected:
     Color32 m_color;
-    Color32 m_borderColor;
 public:
-    ColorAttribute(Entity *_entity, Color32 &_color, Color32 &_borderColor);
+    ColorAttribute(Entity *_entity, Color32 &_color);
 
+    //tolua_begin
     Color32 &GetColor();
-    Color32 &GetBorderColor();
     void SetColor(Color32 &_color);
-    void SetBorderColor(Color32 &_borderColor);
-};
+    //tolua_end
+}; //tolua_export
 
 #endif /* __attribute_color_h_included */
 

@@ -1,8 +1,8 @@
 /*
-** Lua binding: color
+** Lua binding: attribute
 ** Generated automatically by tolua++-1.0.92 on Sun Jul 17 20:15:41 2011.
 */
 
 /* Exported function */
-TOLUA_API int  tolua_color_open (lua_State* tolua_S);
+TOLUA_API int  tolua_attribute_open (lua_State* tolua_S);
 

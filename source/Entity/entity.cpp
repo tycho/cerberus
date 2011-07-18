@@ -55,17 +55,10 @@ bool Entity::HasBehavior(const char *_name)
     return m_behaviors.exists(_name);
 }
 
-Behavior *Entity::GetBehavior(const char *_name)
-{
-    return m_behaviors.find(_name);
-}
-
 bool Entity::AddBehavior(const char *_name, Behavior *_behavior)
 {
     return (int)m_behaviors.insert(_name, _behavior) > -1;
 }
-
-class Behavior;
 
 bool Entity::RemoveBehavior(const char *_name)
 {
@@ -86,11 +79,6 @@ bool Entity::HasAttribute(const char *_name)
     return m_attributes.exists(_name);
 }
 
-Attribute *Entity::GetAttribute(const char *_name)
-{
-    return m_attributes.find(_name);
-}
-
 bool Entity::AddAttribute(const char *_name, Attribute *_attribute)
 {
     return (int)m_attributes.insert(_name, _attribute) > -1;
@@ -103,6 +91,32 @@ bool Entity::RemoveAttribute(const char *_name)
         return m_attributes.erase(_name);
     } else {
         return false;
+    }
+}
+
+/**
+ * Messaging
+ */
+
+void Entity::SendMessage(const char *_type, void *_data)
+{
+    size_t observerCount = m_messageObservers.used();
+    for (size_t i = 0; i < observerCount; i++) {
+        if (!strcmp(_type, m_messageObservers[i].type)) {
+            if (m_messageObservers[i].observer != NULL) {
+                m_messageObservers[i].observer->ReceiveMessage(_type, _data);
+            }
+        }
+    }
+}
+
+void Entity::RegisterMessageObserver(const char *_type, Component *_observer)
+{
+    if (_observer != NULL) {
+        MessageObserver o;
+        o.type = _type;
+        o.observer = _observer;
+        m_messageObservers.insert(_type, o);
     }
 }
 

@@ -33,11 +33,17 @@
 
 #include "Entity/component.h"
 
+struct MessageObserver {
+    const char *type;
+    Component *observer;
+};
+
 class Entity { //tolua_export
 protected:
     const char *m_name;
     Data::HashTable<Behavior *> m_behaviors;
     Data::HashTable<Attribute *> m_attributes;
+    Data::HashTable<MessageObserver> m_messageObservers;
     Entity *m_parent;
     Data::LList<Entity *> m_children;
 public:
@@ -51,26 +57,38 @@ public:
     /**
      * Behavior methods
      */
-    virtual bool HasBehavior(const char *_name);
-    virtual Behavior *GetBehavior(const char *_name);
-    virtual bool AddBehavior(const char *_name, Behavior *_behavior);
-    virtual bool RemoveBehavior(const char *_name);
+    bool HasBehavior(const char *_name);
+    //tolua_end
+    template<typename B>
+    B *GetBehavior(const char *_name) { return dynamic_cast<B*>(m_behaviors.find(_name)); }
+    //tolua_begin
+    bool AddBehavior(const char *_name, Behavior *_behavior);
+    bool RemoveBehavior(const char *_name);
 
     /**
      * Attribute methods
      */
-    virtual bool HasAttribute(const char *_name);
-    virtual Attribute *GetAttribute(const char *_name);
-    virtual bool AddAttribute(const char *_name, Attribute *_attribute);
-    virtual bool RemoveAttribute(const char *_name);
+    bool HasAttribute(const char *_name);
+    //tolua_end
+    template<typename A>
+    A *GetAttribute(const char *_name) { return dynamic_cast<A*>(m_attributes.find(_name)); }
+    //tolua_begin
+    bool AddAttribute(const char *_name, Attribute *_attribute);
+    bool RemoveAttribute(const char *_name);
+
+    /**
+     * Messaging
+     */
+    void SendMessage(const char * _type, void *_data);
+    void RegisterMessageObserver(const char *_type, Component *_observer);
 
     /**
      * Scene graph methods
      */
-    virtual Entity *GetParent();
-    virtual Entity *GetChild(int _index);
-    virtual void AttachChild(Entity *_child);
-    virtual void RemoveChild(Entity *_child);
+    Entity *GetParent();
+    Entity *GetChild(int _index);
+    void AttachChild(Entity *_child);
+    void RemoveChild(Entity *_child);
 
     //tolua_end
 

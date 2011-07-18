@@ -35,14 +35,16 @@ enum Attributes {
     SPRITE
 };
 
-class Attribute : public Component
-{
+class ColorAttribute;
+class PositionAttribute;
+class SpriteAttribute;
+
+class Attribute : public Component { //tolua_export
 public:
     Attribute(const char *_name, Entity *_entity);
 
     static const char *Names[];
-};
-
+}; //tolua_export
 #include "Entity/Attributes/attribute_color.h"
 #include "Entity/Attributes/attribute_position.h"
 #include "Entity/Attributes/attribute_sprite.h"

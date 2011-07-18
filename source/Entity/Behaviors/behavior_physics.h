@@ -31,8 +31,7 @@
 
 #include "Graphics/vector.h"
 
-class PhysicsBehavior : public Behavior
-{
+class PhysicsBehavior : public Behavior { //tolua_export
 protected:
     float m_gravity;
     bool m_collidable;
@@ -44,6 +43,7 @@ public:
 
     virtual void Update(float _delta);
 
+    //tolua_begin
     virtual bool IsCollidable();
     virtual float GetGravity();
     virtual Vector &GetVelocity();
@@ -53,7 +53,8 @@ public:
     virtual void SetGravity(float _gravity);
     virtual void SetVelocity(Vector &_velocity);
     virtual void SetAcceleration(Vector &_acceleration);
-};
+    //tolua_end
+}; //tolua_export
 
 #endif /* __behavior_physics_h_included */
 

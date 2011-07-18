@@ -30,16 +30,17 @@
 #include "Entity/attribute.h"
 #include "Graphics/rect.h"
 
-class PositionAttribute : public Attribute
-{
+class PositionAttribute : public Attribute { //tolua_export
 protected:
     Rect m_position;
 public:
     PositionAttribute(Entity *_entity, Rect &_position);
 
+    //tolua_begin
     Rect &GetPosition();
     void SetPosition(Rect &_position);
-};
+    //tolua_end
+}; //tolua_export
 
 #endif /* __attribute_position_h_included */
 

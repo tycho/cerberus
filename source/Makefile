@@ -47,7 +47,7 @@ CFOPTIMIZE := -O0 -ggdb
 
 endif # USE_ICC
 
-CFOTHERS := -fno-strict-aliasing -pipe $(EXTERNAL_FLAGS)
+CFOTHERS := -fno-strict-aliasing -pipe $(EXTERNAL_FLAGS) -std=c++0x
 CFOTHERS_L := -fsigned-char
 CFWARN := -Wall
 CFWARN_L := -Wundef -Wno-long-long -Wno-variadic-macros -Wno-format -Wno-non-virtual-dtor

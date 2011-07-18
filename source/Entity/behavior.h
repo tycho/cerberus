@@ -35,15 +35,18 @@ enum Behaviors {
     RENDER
 };
 
-class Behavior : public Component
-{
+class InputBehavior;
+class PhysicsBehavior;
+class RenderBehavior;
+
+class Behavior : public Component { //tolua_export
 public:
     Behavior(const char *_name, Entity *_entity);
 
     virtual void Update(float _delta) = 0;
 
     static const char *Names[];
-};
+}; //tolua_export
 
 #include "Entity/Behaviors/behavior_input.h"
 #include "Entity/Behaviors/behavior_physics.h"

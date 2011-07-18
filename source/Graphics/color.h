@@ -133,4 +133,5 @@ public:
 	}
 	//tolua_end
 }; //tolua_export
+
 #endif

@@ -1,0 +1,4 @@
+$hfile "../../Entity/attribute.h"
+$hfile "../../Entity/Attributes/attribute_color.h"
+$hfile "../../Entity/Attributes/attribute_position.h"
+$hfile "../../Entity/Attributes/attribute_sprite.h"

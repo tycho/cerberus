@@ -37,6 +37,8 @@
 #  include <crisscross/crisscross.h>
 #endif
 
+#include <typeinfo>
+
 #if defined ( TARGET_COMPILER_VC ) || defined ( TARGET_COMPILER_ICC )
 #    pragma warning ( error: 4996 )
 #    pragma warning ( error: 4706 )

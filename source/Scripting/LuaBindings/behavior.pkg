@@ -1,0 +1,4 @@
+$hfile "../../Entity/behavior.h"
+$hfile "../../Entity/Behaviors/behavior_input.h"
+$hfile "../../Entity/Behaviors/behavior_physics.h"
+$hfile "../../Entity/Behaviors/behavior_render.h"

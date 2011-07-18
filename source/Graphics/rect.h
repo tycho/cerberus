@@ -27,9 +27,11 @@
 #ifndef __rect_h_included
 #define __rect_h_included
 
+//tolua_begin
 typedef struct {
     float x, y, z;
     float w, h, d;
 } Rect;
+//tolua_end
 
 #endif

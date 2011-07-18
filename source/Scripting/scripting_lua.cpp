@@ -26,8 +26,80 @@
 
 #include "universal_include.h"
 
+#include "Entity/attribute.h"
+#include "Entity/behavior.h"
+
 #include "Input/input.h"
 #include "Scripting/scripting_lua.h"
+
+static int GetAttribute(lua_State *L)
+{
+    int n = lua_gettop(L);
+    if (n != 2) {
+        return luaL_error(L, "Entity:GetAttribute() requires 1 parameter.");
+    }
+    Entity *entity = (Entity *)tolua_tousertype(L, 1, 0);
+    const char *attributeName = tolua_tostring(L, 2, 0);
+    g_console->WriteLine("Script requested %s attribute of %s entity.", attributeName, entity->GetName());
+
+    if (!strcmp(attributeName, Attribute::Names[COLOR])) {
+        ColorAttribute *attr = entity->GetAttribute<ColorAttribute>(attributeName);
+        if (attr != NULL) {
+            tolua_pushusertype(L, (void*)attr, "ColorAttribute");
+            return 1;
+        }
+    } else if (!strcmp(attributeName, Attribute::Names[POSITION])) {
+        PositionAttribute *attr = entity->GetAttribute<PositionAttribute>(attributeName);
+        if (attr != NULL) {
+            tolua_pushusertype(L, (void*)attr, "PositionAttribute");
+            return 1;
+        }
+    } else if (!strcmp(attributeName, Attribute::Names[SPRITE])) {
+        SpriteAttribute *attr = entity->GetAttribute<SpriteAttribute>(attributeName);
+        if (attr != NULL) {
+            tolua_pushusertype(L, (void*)attr, "SpriteAttribute");
+            return 1;
+        }
+    } else {
+        lua_pushnil(L);
+        return 1;
+    }
+    return 0;
+}
+
+static int GetBehavior(lua_State *L)
+{
+    int n = lua_gettop(L);
+    if (n != 2) {
+        return luaL_error(L, "Entity:GetBehavior() requires 1 parameter.");
+    }
+    Entity *entity = (Entity *)tolua_tousertype(L, 1, 0);
+    const char *behaviorName = tolua_tostring(L, 2, 0);
+    g_console->WriteLine("Script requested %s behavior of %s entity.", behaviorName, entity->GetName());
+    if (!strcmp(behaviorName, Behavior::Names[INPUT])) {
+        InputBehavior *b = entity->GetBehavior<InputBehavior>(behaviorName);
+        if (b != NULL) {
+            tolua_pushusertype(L, (void*)b, "InputBehavior");
+            return 1;
+        }
+    } else if (!strcmp(behaviorName, Behavior::Names[PHYSICS])) {
+        PhysicsBehavior *b = entity->GetBehavior<PhysicsBehavior>(behaviorName);
+        if (b != NULL) {
+            tolua_pushusertype(L, (void*)b, "PhysicsBehavior");
+            return 1;
+        }
+    } else if (!strcmp(behaviorName, Behavior::Names[RENDER])) {
+        RenderBehavior *b = entity->GetBehavior<RenderBehavior>(behaviorName);
+        if (b != NULL) {
+            tolua_pushusertype(L, (void*)b, "RenderBehavior");
+            return 1;
+        }
+    } else {
+        lua_pushnil(L);
+        return 1;
+    }
+    return 0;
+}
 
 LuaScripting::LuaScripting()
  : Scripting(".lua")
@@ -37,7 +109,21 @@ LuaScripting::LuaScripting()
     luaL_openlibs(m_luaState);
 
     tolua_color_open(m_luaState);
+    tolua_rect_open(m_luaState);
+    tolua_vector_open(m_luaState);
     tolua_entity_open(m_luaState);
+    tolua_attribute_open(m_luaState);
+    tolua_behavior_open(m_luaState);
+
+    lua_getglobal(m_luaState, "Entity");
+    if (lua_istable(m_luaState, -1)) {
+        if (lua_getmetatable(m_luaState, -1)) {
+            lua_pushcfunction(m_luaState, GetAttribute);
+            lua_setfield(m_luaState, -2, "GetAttribute");
+            lua_pushcfunction(m_luaState, GetBehavior);
+            lua_setfield(m_luaState, -3, "GetBehavior");
+        }
+    }
 }
 
 LuaScripting::~LuaScripting()
@@ -60,6 +146,11 @@ Entity *LuaScripting::LoadEntity(const char *_entityFile)
                     const char *attributeName = NULL;
                     if (!lua_isnumber(m_luaState, -2) && lua_isstring(m_luaState, -2)) {
                         attributeName = lua_tostring(m_luaState, -2);
+                        if (attributeName != NULL) {
+                            if (!strcmp(attributeName, "color")) {
+                                Uint8 r = 255, g = 255, b = 255, a = 255;
+                            }
+                        }
                     }
                     lua_pop(m_luaState, 1);
                 }
@@ -124,7 +215,7 @@ Entity *LuaScripting::LoadEntity(const char *_entityFile)
             }
             /* Look for input hooks */
             if (e->HasBehavior("input")) {
-                InputBehavior *b = dynamic_cast<InputBehavior *>(e->GetBehavior(Behavior::Names[INPUT]));
+                InputBehavior *b = e->GetBehavior<InputBehavior>(Behavior::Names[INPUT]);
                 if (b != NULL) {
                     /* onKeyUp */
                     lua_getglobal(m_luaState, "onKeyUp");

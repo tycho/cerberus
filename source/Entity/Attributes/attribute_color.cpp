@@ -26,10 +26,9 @@
 
 #include "Entity/Attributes/attribute_color.h"
 
-ColorAttribute::ColorAttribute(Entity *_entity, Color32 &_color, Color32 &_borderColor)
+ColorAttribute::ColorAttribute(Entity *_entity, Color32 &_color)
  : Attribute(Attribute::Names[COLOR], _entity),
-   m_color(_color),
-   m_borderColor(_borderColor)
+   m_color(_color)
 {
 }
 
@@ -38,17 +37,7 @@ Color32 &ColorAttribute::GetColor()
     return m_color;
 }
 
-Color32 &ColorAttribute::GetBorderColor()
-{
-    return m_borderColor;
-}
-
 void ColorAttribute::SetColor(Color32 &_color)
 {
     m_color = _color;
-}
-
-void ColorAttribute::SetBorderColor(Color32 &_borderColor)
-{
-    m_borderColor = _borderColor;
 }

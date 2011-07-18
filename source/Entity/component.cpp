@@ -49,3 +49,7 @@ Entity *Component::GetEntity()
 {
     return m_entity;
 }
+
+void Component::ReceiveMessage(const char *_type, void *_data)
+{
+}

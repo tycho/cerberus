@@ -29,17 +29,18 @@
 
 #include "Entity/attribute.h"
 
-class SpriteAttribute : public Attribute
-{
+class SpriteAttribute : public Attribute { //tolua_export
 protected:
     const char *m_spritePath;
 public:
     SpriteAttribute(Entity *_entity, const char *_spritePath);
     virtual ~SpriteAttribute();
 
+    //tolua_begin
     const char *GetSpritePath();
     void SetSpritePath(const char *_spritePath);
-};
+    //tolua_end
+}; //tolua_export
 
 
 #endif /* __attribute_sprite_h_included */

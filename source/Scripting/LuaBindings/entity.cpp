@@ -1,6 +1,6 @@
 /*
 ** Lua binding: entity
-** Generated automatically by tolua++-1.0.92 on Sat Jul 16 23:04:36 2011.
+** Generated automatically by tolua++-1.0.92 on Sun Jul 17 20:15:41 2011.
 */
 
 #ifndef __cplusplus
@@ -19,6 +19,7 @@ TOLUA_API int  tolua_entity_open (lua_State* tolua_S);
 static void tolua_reg_types (lua_State* tolua_S)
 {
  tolua_usertype(tolua_S,"Behavior");
+ tolua_usertype(tolua_S,"Component");
  tolua_usertype(tolua_S,"Attribute");
  tolua_usertype(tolua_S,"Entity");
 }
@@ -84,40 +85,6 @@ static int tolua_entity_Entity_HasBehavior00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'HasBehavior'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
-/* method: GetBehavior of class  Entity */
-#ifndef TOLUA_DISABLE_tolua_entity_Entity_GetBehavior00
-static int tolua_entity_Entity_GetBehavior00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Entity",0,&tolua_err) ||
-     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Entity* self = (Entity*)  tolua_tousertype(tolua_S,1,0);
-  const char* _name = ((const char*)  tolua_tostring(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'GetBehavior'", NULL);
-#endif
-  {
-   Behavior* tolua_ret = (Behavior*)  self->GetBehavior(_name);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Behavior");
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'GetBehavior'.",&tolua_err);
  return 0;
 #endif
 }
@@ -227,40 +194,6 @@ static int tolua_entity_Entity_HasAttribute00(lua_State* tolua_S)
 }
 #endif //#ifndef TOLUA_DISABLE
 
-/* method: GetAttribute of class  Entity */
-#ifndef TOLUA_DISABLE_tolua_entity_Entity_GetAttribute00
-static int tolua_entity_Entity_GetAttribute00(lua_State* tolua_S)
-{
-#ifndef TOLUA_RELEASE
- tolua_Error tolua_err;
- if (
-     !tolua_isusertype(tolua_S,1,"Entity",0,&tolua_err) ||
-     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
-     !tolua_isnoobj(tolua_S,3,&tolua_err)
- )
-  goto tolua_lerror;
- else
-#endif
- {
-  Entity* self = (Entity*)  tolua_tousertype(tolua_S,1,0);
-  const char* _name = ((const char*)  tolua_tostring(tolua_S,2,0));
-#ifndef TOLUA_RELEASE
-  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'GetAttribute'", NULL);
-#endif
-  {
-   Attribute* tolua_ret = (Attribute*)  self->GetAttribute(_name);
-    tolua_pushusertype(tolua_S,(void*)tolua_ret,"Attribute");
-  }
- }
- return 1;
-#ifndef TOLUA_RELEASE
- tolua_lerror:
- tolua_error(tolua_S,"#ferror in function 'GetAttribute'.",&tolua_err);
- return 0;
-#endif
-}
-#endif //#ifndef TOLUA_DISABLE
-
 /* method: AddAttribute of class  Entity */
 #ifndef TOLUA_DISABLE_tolua_entity_Entity_AddAttribute00
 static int tolua_entity_Entity_AddAttribute00(lua_State* tolua_S)
@@ -326,6 +259,76 @@ static int tolua_entity_Entity_RemoveAttribute00(lua_State* tolua_S)
 #ifndef TOLUA_RELEASE
  tolua_lerror:
  tolua_error(tolua_S,"#ferror in function 'RemoveAttribute'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: SendMessage of class  Entity */
+#ifndef TOLUA_DISABLE_tolua_entity_Entity_SendMessage00
+static int tolua_entity_Entity_SendMessage00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Entity",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isuserdata(tolua_S,3,0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Entity* self = (Entity*)  tolua_tousertype(tolua_S,1,0);
+  const char* _type = ((const char*)  tolua_tostring(tolua_S,2,0));
+  void* _data = ((void*)  tolua_touserdata(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'SendMessage'", NULL);
+#endif
+  {
+   self->SendMessage(_type,_data);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'SendMessage'.",&tolua_err);
+ return 0;
+#endif
+}
+#endif //#ifndef TOLUA_DISABLE
+
+/* method: RegisterMessageObserver of class  Entity */
+#ifndef TOLUA_DISABLE_tolua_entity_Entity_RegisterMessageObserver00
+static int tolua_entity_Entity_RegisterMessageObserver00(lua_State* tolua_S)
+{
+#ifndef TOLUA_RELEASE
+ tolua_Error tolua_err;
+ if (
+     !tolua_isusertype(tolua_S,1,"Entity",0,&tolua_err) ||
+     !tolua_isstring(tolua_S,2,0,&tolua_err) ||
+     !tolua_isusertype(tolua_S,3,"Component",0,&tolua_err) ||
+     !tolua_isnoobj(tolua_S,4,&tolua_err)
+ )
+  goto tolua_lerror;
+ else
+#endif
+ {
+  Entity* self = (Entity*)  tolua_tousertype(tolua_S,1,0);
+  const char* _type = ((const char*)  tolua_tostring(tolua_S,2,0));
+  Component* _observer = ((Component*)  tolua_tousertype(tolua_S,3,0));
+#ifndef TOLUA_RELEASE
+  if (!self) tolua_error(tolua_S,"invalid 'self' in function 'RegisterMessageObserver'", NULL);
+#endif
+  {
+   self->RegisterMessageObserver(_type,_observer);
+  }
+ }
+ return 0;
+#ifndef TOLUA_RELEASE
+ tolua_lerror:
+ tolua_error(tolua_S,"#ferror in function 'RegisterMessageObserver'.",&tolua_err);
  return 0;
 #endif
 }
@@ -474,13 +477,13 @@ TOLUA_API int tolua_entity_open (lua_State* tolua_S)
   tolua_beginmodule(tolua_S,"Entity");
    tolua_function(tolua_S,"GetName",tolua_entity_Entity_GetName00);
    tolua_function(tolua_S,"HasBehavior",tolua_entity_Entity_HasBehavior00);
-   tolua_function(tolua_S,"GetBehavior",tolua_entity_Entity_GetBehavior00);
    tolua_function(tolua_S,"AddBehavior",tolua_entity_Entity_AddBehavior00);
    tolua_function(tolua_S,"RemoveBehavior",tolua_entity_Entity_RemoveBehavior00);
    tolua_function(tolua_S,"HasAttribute",tolua_entity_Entity_HasAttribute00);
-   tolua_function(tolua_S,"GetAttribute",tolua_entity_Entity_GetAttribute00);
    tolua_function(tolua_S,"AddAttribute",tolua_entity_Entity_AddAttribute00);
    tolua_function(tolua_S,"RemoveAttribute",tolua_entity_Entity_RemoveAttribute00);
+   tolua_function(tolua_S,"SendMessage",tolua_entity_Entity_SendMessage00);
+   tolua_function(tolua_S,"RegisterMessageObserver",tolua_entity_Entity_RegisterMessageObserver00);
    tolua_function(tolua_S,"GetParent",tolua_entity_Entity_GetParent00);
    tolua_function(tolua_S,"GetChild",tolua_entity_Entity_GetChild00);
    tolua_function(tolua_S,"AttachChild",tolua_entity_Entity_AttachChild00);

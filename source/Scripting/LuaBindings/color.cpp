@@ -1,6 +1,6 @@
 /*
 ** Lua binding: color
-** Generated automatically by tolua++-1.0.92 on Sat Jul 16 23:04:36 2011.
+** Generated automatically by tolua++-1.0.92 on Sun Jul 17 20:15:41 2011.
 */
 
 #ifndef __cplusplus

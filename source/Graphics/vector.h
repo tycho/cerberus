@@ -29,6 +29,7 @@
 
 #include <universal_include.h>
 
+//tolua_begin
 class Vector {
 public:
     float x, y, z;
@@ -62,6 +63,7 @@ public:
         return tmp;
     }
 };
+//tolua_end
 
 // Multiplies a vector by a scalar value
 inline Vector multv(Vector const &v, float s)

@@ -24,6 +24,7 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
+#include "Entity/Attributes/attribute_position.h"
 #include "Entity/Behaviors/behavior_physics.h"
 
 #include "Entity/entity.h"
@@ -85,7 +86,7 @@ void PhysicsBehavior::Update(float _delta)
     m_velocity.z += m_acceleration.z * _delta;
 
     /* Update entity position (if it has one, which it should) */
-    PositionAttribute *posAttr = dynamic_cast<PositionAttribute *>(m_entity->GetAttribute(Attribute::Names[POSITION]));
+    PositionAttribute *posAttr = m_entity->GetAttribute<PositionAttribute>(Attribute::Names[POSITION]);
     if (posAttr != NULL) {
         Rect tmp = posAttr->GetPosition();
         tmp.x += m_velocity.x * _delta;
