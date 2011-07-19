@@ -80,7 +80,7 @@ App::App ()
 #elif defined ( TARGET_OS_LINUX )
 
     size_t ret = readlink ( "/proc/self/exe", tempPath, sizeof ( tempPath ) - 1 );
-    CrbDebugAssert(ret != -1);
+    CrbDebugAssert((int)ret != -1);
     if ( strlen(tempPath) )
     {
         char *ptr = &tempPath[strlen(tempPath)];
