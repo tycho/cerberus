@@ -60,7 +60,6 @@ Game::Game()
     */
     Entity *darwinian = g_scripting->LoadEntity("darwinian");
     m_scene->AddEntity(darwinian);
-    g_console->WriteLine("Entity added.");
 }
 
 Game::~Game()

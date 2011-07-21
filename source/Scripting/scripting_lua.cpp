@@ -202,7 +202,6 @@ Entity *LuaScripting::LoadEntity(const char *_entityFile)
     if (RunScript(_entityFile)) {
         lua_getglobal(m_luaState, "name");
         if (lua_isstring(m_luaState, -1)) {
-            g_console->WriteLine("Creating a new entity called %s.", lua_tostring(m_luaState, -1));
             Entity *e = new Entity(0, lua_tostring(m_luaState, -1));
             Vector position;
             position.x = position.y = 100;
@@ -218,7 +217,6 @@ Entity *LuaScripting::LoadEntity(const char *_entityFile)
                         propertyName = lua_tostring(m_luaState, -2);
                         int type = lua_type(m_luaState, -1);
                         if (propertyName != NULL) {
-                            g_console->WriteLine("Found property named '%s' of type %d.", propertyName, type);
                             switch (type) {
                             case LUA_TSTRING:
                                 e->SetProperty(propertyName, TYPE_STRING, (void*)lua_tostring(m_luaState, -1));
@@ -271,51 +269,42 @@ Entity *LuaScripting::LoadEntity(const char *_entityFile)
                         if (f == NULL) {
                             g_console->WriteLine("WARN: '%s' is not a registered behavior.", behaviorName);
                         } else {
-                            g_console->WriteLine("INFO: Adding '%s' behavior.", behaviorName);
                             e->AddBehavior(behaviorName, f);
                         }
                     }
                     lua_pop(m_luaState, 1);
                 }
-            } else {
-                g_console->WriteLine("INFO: No behaviors table found.");
             }
             /* Look for input hooks */
             /* onKeyUp */
             lua_getglobal(m_luaState, "onKeyUp");
             if (lua_isfunction(m_luaState, -1)) {
                 g_input->RegisterEventObserver(SDL_KEYUP, e);
-                g_console->WriteLine("Registered onKeyUp.");
             }
             /* onKeyDown */
             lua_getglobal(m_luaState, "onKeyDown");
             if (lua_isfunction(m_luaState, -1)) {
                 g_input->RegisterEventObserver(SDL_KEYDOWN, e);
-                g_console->WriteLine("Registered onKeyDown.");
             }
             /* onMouseDown */
             lua_getglobal(m_luaState, "onMouseDown");
             if (lua_isfunction(m_luaState, -1)) {
                 g_input->RegisterEventObserver(SDL_MOUSEBUTTONDOWN, e);
-                g_console->WriteLine("Registered onMouseDown.");
             }
             /* onMouseUp */
             lua_getglobal(m_luaState, "onMouseUp");
             if (lua_isfunction(m_luaState, -1)) {
                 g_input->RegisterEventObserver(SDL_MOUSEBUTTONUP, e);
-                g_console->WriteLine("Registered onMouseUp.");
             }
             /* onMouseOver */
             lua_getglobal(m_luaState, "onMouseOver");
             if (lua_isfunction(m_luaState, -1)) {
                 g_input->RegisterEventObserver(MOUSE_OVER, e);
-                g_console->WriteLine("Registered onMouseOver.");
             }
             /* onMouseLeave */
             lua_getglobal(m_luaState, "onMouseLeave");
             if (lua_isfunction(m_luaState, -1)) {
                 g_input->RegisterEventObserver(MOUSE_LEAVE, e);
-                g_console->WriteLine("Registered onMouseLeave.");
             }
             ResetEntityFileGlobals();
             return e;

@@ -271,7 +271,6 @@ void Init_Scripting()
 {
 #if defined(USE_LUA)
     g_scripting = new LuaScripting();
-    g_console->WriteLine("Using Lua as the scripting system.");
 #endif
     if ( !g_scripting )
         g_scripting = new Scripting();
