@@ -39,7 +39,7 @@ Scripting::Scripting(const char *_extension)
     m_extension = cc_strdup(_extension);
     m_scriptDir = new char[1024];
     sprintf(m_scriptDir, "%sdata/scripts/%s/",
-            g_app->GetApplicationSupportPath(), m_extension + 1);
+            g_app->GetApplicationPath(), m_extension + 1);
 }
 
 Scripting::~Scripting()
