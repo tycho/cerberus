@@ -31,6 +31,7 @@
 #include "App/preferences.h"
 #include "Game/game.h"
 #include "Input/input.h"
+#include "Scripting/scripting.h"
 
 Input::Input()
  : m_mouseX(0),
@@ -57,30 +58,49 @@ void Input::Update ()
     {
         for (size_t i = 0; i < m_observers.size(); i++) {
             if (event.type == m_observers[i].eventType) {
-                PositionAttribute *pA = m_observers[i].observer->GetEntity()->GetAttribute<PositionAttribute>(Attribute::Names[POSITION]);
-                if (pA != NULL) {
-                    // If mouse events, check if the mouse is within the entity's bounding box
-                    if (event.type == SDL_MOUSEMOTION ||
-                            event.type == SDL_MOUSEBUTTONDOWN ||
-                            event.type == SDL_MOUSEBUTTONUP) {
-                        int x = -1, y = -1;
-                        if (event.type == SDL_MOUSEMOTION) {
-                            x = event.motion.x;
-                            y = event.motion.y;
-                        } else {
-                            x = event.button.x;
-                            y = event.button.y;
-                        }
-                        Rect pos = pA->GetPosition();
-                        if (!(x <= (pos.x + pos.w) &&
-                                x >= (pos.x) &&
-                                y <= (pos.y) &&
-                                y <= (pos.y + pos.h))) {
-                            continue;
+                Vector *pos;
+                float w, h;
+                if (m_observers[i].observer->GetProperty("position", pos)) {
+                    if (m_observers[i].observer->GetProperty("width", w) &&
+                            m_observers[i].observer->GetProperty("height", h)) {
+                        // If mouse events, check if the mouse is within the entity's bounding box
+                        if (event.type == SDL_MOUSEMOTION ||
+                                event.type == SDL_MOUSEBUTTONDOWN ||
+                                event.type == SDL_MOUSEBUTTONUP) {
+                            float x = -1, y = -1;
+                            if (event.type == SDL_MOUSEMOTION) {
+                                x = (float)event.motion.x;
+                                y = (float)event.motion.y;
+                            } else {
+                                x = (float)event.button.x;
+                                y = (float)event.button.y;
+                            }
+                            if (!(x <= (pos->x + w) &&
+                                    x >= (pos->x) &&
+                                    y >= (pos->y) &&
+                                    y <= (pos->y + h))) {
+                                continue;
+                            }
                         }
                     }
                 }
-                m_observers[i].observer->ReceiveEvent(event);
+                switch(event.type) {
+                case SDL_KEYDOWN:
+                    g_scripting->ExecuteHook(m_observers[i].observer, "onKeyDown", event.key.keysym.sym);
+                    break;
+                case SDL_KEYUP:
+                    g_scripting->ExecuteHook(m_observers[i].observer, "onKeyUp", event.key.keysym.sym);
+                    break;
+                case SDL_MOUSEBUTTONDOWN:
+                    g_scripting->ExecuteHook(m_observers[i].observer, "onMouseDown", event.button.button);
+                    break;
+                case SDL_MOUSEBUTTONUP:
+                    g_scripting->ExecuteHook(m_observers[i].observer, "onMouseUp", event.button.button);
+                    break;
+                case SDL_MOUSEMOTION:
+                    g_scripting->ExecuteHook(m_observers[i].observer, "onMouseOver", event.button.button);
+                    break;
+                }
             }
         }
         m_events.insert(event);
@@ -158,12 +178,13 @@ SDL_Event *Input::GetEvent(size_t _index)
     }
 }
 
-void Input::RegisterEventObserver(Uint8 _type, InputBehavior *_observer)
+void Input::RegisterEventObserver(Uint8 _type, Entity *_observer)
 {
     EventObserver e;
     e.eventType = _type;
     e.observer = _observer;
 
+    g_console->WriteLine("Inserting new observer of type %d", _type);
     m_observers.insert(e);
 }
 Input *g_input;

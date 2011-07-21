@@ -260,15 +260,6 @@ void App::Run ()
     g_scripting->RunScript("sethello");
     g_scripting->RunScript("printhello");
 
-    GLfloat m[16];
-    glGetFloatv(GL_MODELVIEW_MATRIX, m);
-    for (int i = 0; i < 4; i++) {
-        for(int j = 0; j < 4; j++) {
-            g_console->Write("%f ", m[j + (i * 4)]);
-        }
-        g_console->WriteLine();
-    }
-
     while ( m_running )
     {
 

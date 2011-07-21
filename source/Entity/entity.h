@@ -31,63 +31,65 @@
 
 #include "App/string_utils.h"
 
-#include "Entity/component.h"
+#include "Entity/behaviors.h"
 
-struct MessageObserver {
-    const char *type;
-    Component *observer;
-};
+#include "Graphics/rect.h"
+#include "Graphics/vector.h"
+
+typedef enum {
+    TYPE_STRING,
+    TYPE_NUMBER,
+    TYPE_BOOLEAN,
+    TYPE_RECT,
+    TYPE_VECTOR,
+    TYPE_NONE
+} property_type_t;
+
+typedef struct {
+    property_type_t type;
+    void *value;
+} property_t;
 
 class Entity { //tolua_export
 protected:
+    unsigned int m_id;
     const char *m_name;
-    Data::HashTable<Behavior *> m_behaviors;
-    Data::HashTable<Attribute *> m_attributes;
-    Data::HashTable<MessageObserver> m_messageObservers;
+    Data::HashTable<behaviorFunc> m_behaviors;
+    Data::HashTable<property_t *> m_properties;
     Entity *m_parent;
     Data::LList<Entity *> m_children;
 public:
-    Entity(const char *_name);
+    Entity(unsigned int _id, const char *_name);
     virtual ~Entity();
 
-    //tolua_begin
-
-    const char *GetName();
+    unsigned int GetID() const; //tolua_export
+    const char *GetName() const; //tolua_export
 
     /**
      * Behavior methods
      */
-    bool HasBehavior(const char *_name);
-    //tolua_end
-    template<typename B>
-    B *GetBehavior(const char *_name) { return dynamic_cast<B*>(m_behaviors.find(_name)); }
-    //tolua_begin
-    bool AddBehavior(const char *_name, Behavior *_behavior);
+    bool AddBehavior(const char *_name, behaviorFunc _func = NULL);
     bool RemoveBehavior(const char *_name);
+    bool HasBehavior(const char *_name); //tolua_export
 
     /**
-     * Attribute methods
+     * Property methods
      */
-    bool HasAttribute(const char *_name);
-    //tolua_end
-    template<typename A>
-    A *GetAttribute(const char *_name) { return dynamic_cast<A*>(m_attributes.find(_name)); }
-    //tolua_begin
-    bool AddAttribute(const char *_name, Attribute *_attribute);
-    bool RemoveAttribute(const char *_name);
+    bool SetProperty(const char *_name, property_type_t _type, void *_value);
+    bool RemoveProperty(const char *_name); //tolua_export
+    int GetProperty(const char *_name, const char *&_val);
+    int GetProperty(const char *_name, float &_val);
+    int GetProperty(const char *_name, bool &_val);
+    int GetProperty(const char *_name, Rect *&_val);
+    int GetProperty(const char *_name, Vector *&_val);
+    bool HasProperty(const char *_name); //tolua_export
 
     /**
-     * Messaging
-     */
-    void SendMessage(const char * _type, void *_data);
-    void RegisterMessageObserver(const char *_type, Component *_observer);
-
-    /**
-     * Scene graph methods
+     * Scene graph-ish methods
      */
     Entity *GetParent();
     Entity *GetChild(int _index);
-    void AttachChild(Entity *_child);
+    void AddChild(Entity *_child);
     void RemoveChild(Entity *_child);
 
     //tolua_end

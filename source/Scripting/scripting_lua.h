@@ -30,10 +30,8 @@
 #include "Scripting/scripting.h"
 
 #include <tolua++.h>
-#include "Scripting/LuaBindings/attribute.h"
-#include "Scripting/LuaBindings/behavior.h"
+
 #include "Scripting/LuaBindings/color.h"
-#include "Scripting/LuaBindings/component.h"
 #include "Scripting/LuaBindings/entity.h"
 #include "Scripting/LuaBindings/rect.h"
 #include "Scripting/LuaBindings/vector.h"
@@ -50,7 +48,9 @@ public:
 
     virtual Entity *LoadEntity(const char *_entityFile);
     virtual bool RunScript(const char *_scriptName);
-    virtual void SendInput(Entity *_entity, const char *_hook, int _value = 0);
+    virtual void ExecuteHook(Entity *_entity, const char *_hook, int _value = 0);
+
+    void ResetEntityFileGlobals();
 
     virtual lua_State *GetState();
 };

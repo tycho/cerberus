@@ -287,59 +287,85 @@ Uint32 OpenGLGraphics::LoadImage ( const char *_filename )
     return ret;
 }
 
+bool OpenGLGraphics::LoadTexture(const char *_filename)
+{
+    Texture *tex = m_textures[LoadImage(_filename)];
+    if (unlikely(tex == NULL)) {
+        return false;
+    } else {
+        glEnable(g_openGL->GetTextureTarget());
+        if (!tex->Upload()) {
+            tex->Bind();
+        }
+        return true;
+    }
+}
+
+void OpenGLGraphics::UnloadTexture()
+{
+    glDisable(g_openGL->GetTextureTarget());
+}
+
 void OpenGLGraphics::DrawEntity ( Entity *_entity )
 {
-    if ( _entity != NULL ) { /*
+    Vector *position;
+    float width, height;
+    if ( _entity != NULL && _entity->GetProperty("position", position)
+            && _entity->GetProperty("width", width)
+            && _entity->GetProperty("height", height)) {
         glEnable(GL_BLEND);
         glPushMatrix();
-        PositionAttribute *positionAttr =
-                dynamic_cast<PositionAttribute *>(_entity->GetAttribute(
-                        Attribute::Names[POSITION]));
-        glTranslatef(_entity->GetX(), _entity->GetY(), _entity->GetZ());
-        glRotatef(_entity->GetOrientation(), 0, 0, 1);
+        glTranslatef(position->x, position->y, position->z);
+//        glRotatef(_entity->GetOrientation(), 0, 0, 1);
 
-        Vertex *vertices = _entity->GetVertices();
-
-        TextureRegion textureRegion;
-        Texture *tex = NULL;
-        if (_entity->GetTextureComponent()) {
-            textureRegion = _entity->GetTextureComponent()->GetTextureRegion();
-            tex = GetTexture(textureRegion.textureId);
-            if (tex != NULL) {
-                glEnable(g_openGL->GetTextureTarget());
-                tex->Bind();
-            }
+        const char *spritesheet;
+        if (_entity->GetProperty("spritesheet", spritesheet)) {
+            g_graphics->LoadTexture(spritesheet);
         }
         glBegin(GL_TRIANGLE_FAN);
-        Color32 entityColor = _entity->GetColor();
-        glColor4f(entityColor.R(), entityColor.G(), entityColor.B(), entityColor.A());
+//        Color32 entityColor = _entity->GetColor();
+//        glColor4f(entityColor.R(), entityColor.G(), entityColor.B(), entityColor.A());
+        glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
 
-        for (int i = 0; i < 4; i++) {
-            Vertex vert = vertices[i];
-            if (tex != NULL) {
-                if (g_openGL->GetTextureTarget() == GL_TEXTURE_RECTANGLE_ARB) {
-                    glTexCoord2f(vert.u, vert.v);
-                } else {
-                    glTexCoord2f(vert.u / (float)textureRegion.w,
-                            vert.v / (float)textureRegion.h);
-                }
+        if (spritesheet != NULL) {
+            if (g_openGL->GetTextureTarget() == GL_TEXTURE_RECTANGLE_ARB) {
+                glTexCoord2f(0, 0);
+                glVertex3f(-width/2.0, -height/2.0, 0);
+                glTexCoord2f(width, 0);
+                glVertex3f(width/2.0, -height/2.0, 0);
+                glTexCoord2f(width, height);
+                glVertex3f(width/2.0, height/2.0, 0);
+                glTexCoord2f(0, height);
+                glVertex3f(-width/2.0, height/2.0, 0);
+            } else {
+                glTexCoord2f(0, 0);
+                glVertex3f(-width/2.0, -height/2.0, 0);
+                glTexCoord2f(1, 0);
+                glVertex3f(width/2.0, -height/2.0, 0);
+                glTexCoord2f(1, 1);
+                glVertex3f(width/2.0, height/2.0, 0);
+                glTexCoord2f(0, 1);
+                glVertex3f(-width/2.0, height/2.0, 0);
             }
-            glVertex3f(vert.x, vert.y, vert.z);
+        } else {
+            glVertex3f(-width/2.0, -height/2.0, 0);
+            glVertex3f(width/2.0, -height/2.0, 0);
+            glVertex3f(width/2.0, height/2.0, 0);
+            glVertex3f(-width/2.0, height/2.0, 0);
         }
         glEnd();
-        if (tex != NULL) {
+        if (spritesheet != NULL) {
             glDisable(g_openGL->GetTextureTarget());
         }
 
         // Draw border if it's enabled
-        if (_entity->IsBorderEnabled() && g_game->EntityBordersEnabled()) {
+        if (g_game->EntityBordersEnabled()) {
             glBegin(GL_LINE_LOOP);
-            Color32 borderColor = _entity->GetBorderColor();
-            glColor4f(borderColor.R(), borderColor.G(), borderColor.B(), borderColor.A());
-            for (int i = 0; i < 4; i++) {
-                Vertex vert = vertices[i];
-                glVertex3f(vert.x, vert.y, vert.z);
-            }
+            glColor4f(1.0, 0.0, 1.0, 1.0);
+            glVertex3f(-width/2.0, -height/2.0, 0);
+            glVertex3f(width/2.0, -height/2.0, 0);
+            glVertex3f(width/2.0, height/2.0, 0);
+            glVertex3f(-width/2.0, height/2.0, 0);
             glEnd();
         }
 
@@ -348,7 +374,7 @@ void OpenGLGraphics::DrawEntity ( Entity *_entity )
         }
 
         glPopMatrix();
-        glDisable(GL_BLEND);*/
+        glDisable(GL_BLEND);
     }
 }
 

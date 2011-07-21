@@ -24,27 +24,24 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#include "Entity/Attributes/attribute_sprite.h"
+#ifndef __behaviors_h_included
+#define __behaviors_h_included
 
-SpriteAttribute::SpriteAttribute(Entity *_entity, const char *_spritePath)
- : Attribute(Attribute::Names[SPRITE], _entity),
-   m_spritePath(newStr(_spritePath))
-{
-}
+#include "universal_include.h"
 
-SpriteAttribute::~SpriteAttribute()
-{
-    delete m_spritePath;
-    m_spritePath = NULL;
-}
+class Entity;
 
-const char *SpriteAttribute::GetSpritePath()
-{
-    return m_spritePath;
-}
+typedef void(*behaviorFunc)(Entity*,float);
 
-void SpriteAttribute::SetSpritePath(const char * _spritePath)
-{
-    delete m_spritePath;
-    m_spritePath = newStr(_spritePath);
-}
+static Data::HashTable<behaviorFunc> behavior_map;
+
+int register_behavior(const char *_name, behaviorFunc _func);
+behaviorFunc get_behavior(const char *_name);
+int unregister_behavior(const char *_name);
+
+void behavior_moveable(Entity *_entity, float _delta);
+void behavior_physics(Entity *_entity, float _delta);
+void behavior_render(Entity* _entity, float _delta);
+
+#endif /* __behaviors_h_included */
+

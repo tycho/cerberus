@@ -59,7 +59,7 @@ bool Scripting::RunScript(const char *_scriptName)
     return false;
 }
 
-void Scripting::SendInput(Entity *_entity, const char *_hook, int _value)
+void Scripting::ExecuteHook(Entity *_entity, const char *_hook, int _value)
 {
 }
 

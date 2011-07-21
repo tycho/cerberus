@@ -28,6 +28,7 @@
 #include "universal_include.h"
 
 #include "App/app.h"
+#include "Entity/entity.h"
 #include "Game/game.h"
 #include "Input/input.h"
 #include "Scripting/scripting.h"
@@ -38,6 +39,10 @@ Game::Game()
     m_scene(new Scene()),
     m_entity(NULL)
 {
+    register_behavior("moveable", behavior_moveable);
+    register_behavior("physics", behavior_physics);
+    register_behavior("render", behavior_render);
+
     /*
     m_entity = new Entity(0, 0, 31, 32, Color32(255, 255, 255, 255), "darwinian.png");
     m_entity->SetBorderEnabled(true);
@@ -52,6 +57,8 @@ Game::Game()
     m_entity->AttachChild(santa);
     */
     Entity *darwinian = g_scripting->LoadEntity("darwinian");
+    m_scene->AddEntity(darwinian);
+    g_console->WriteLine("Entity added.");
 }
 
 Game::~Game()

@@ -29,7 +29,6 @@
 
 //tolua_begin
 typedef struct {
-    float x, y, z;
     float w, h, d;
 } Rect;
 //tolua_end

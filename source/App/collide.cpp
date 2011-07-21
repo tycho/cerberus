@@ -154,30 +154,6 @@ int SDL_CollideBoundingBox(SDL_Rect &a , SDL_Rect &b)
     return 1;                //bounding boxes intersect
 }
 
-bool AABBCollisionTest(Rect &a, Rect &b)
-{
-    if(b.x + b.w < a.x) return false;
-    if(b.x > a.x + a.w) return false;
-
-    if(b.y + b.h < a.y) return false;
-    if(b.y > a.y + a.h) return false;
-
-    return true;
-}
-
-bool OBBCollisionTest(Entity &a, Entity &b)
-{
-    /*
-    // Do simple AABB collision first
-    if (AABBCollisionTest(a.GetBoundingBox(), b.GetBoundingBox())) {
-
-        return true;
-    } else {
-        return false;
-    }
-    */
-    return true;
-}
 #if 0
 /*
     tests whether 2 circles intersect

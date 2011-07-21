@@ -66,6 +66,8 @@ public:
 
 	virtual void   DrawRect ( SDL_Rect *_pos, Color32 _color ) = 0;
 
+    virtual bool LoadTexture(const char *_filename) = 0;
+    virtual void UnloadTexture() = 0;
     virtual void DrawEntity ( Entity *_entity ) = 0;
 
     virtual Uint16 GetMaximumTextureSize() = 0;

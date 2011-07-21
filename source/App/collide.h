@@ -28,11 +28,6 @@
 #ifndef _SDL_COLLIDE_h
 #define _SDL_COLLIDE_h
 
-#include "Entity/entity.h"
-
-#include "Graphics/rect.h"
-#include "Graphics/vector.h"
-
 /*
     SDL surface test if offset (u,v) is a transparent pixel
 */
@@ -54,9 +49,6 @@ int SDL_CollideBoundingBox(SDL_Surface *sa , int ax , int ay ,
     SDL bounding box collision tests (works on SDL_Rect's)
 */
 int SDL_CollideBoundingBox(SDL_Rect &a , SDL_Rect &b);
-
-bool AABBCollisionTest(Rect &a, Rect &b);
-bool OBBCollisionTest(Entity &a, Entity &b);
 
 /*
     tests whether 2 circles intersect

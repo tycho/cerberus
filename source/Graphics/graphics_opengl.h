@@ -71,6 +71,8 @@ public:
     virtual int    DeleteSurface ( Uint32 _surfaceID );
     virtual Uint32 LoadImage ( const char *_filename );
 
+    virtual bool LoadTexture(const char *_filename);
+    virtual void UnloadTexture();
     virtual void DrawEntity ( Entity *_entity );
 
     virtual void   DrawLine ( Uint32 _surfaceID, Color32 _color, int _startX, int _startY, int _stopX, int _stopY );

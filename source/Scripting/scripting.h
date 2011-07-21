@@ -44,7 +44,7 @@ public:
 
     virtual Entity *LoadEntity(const char *_entityFile);
     virtual bool RunScript(const char *_scriptName);
-    virtual void SendInput(Entity *_entity, const char *_hook, int _value = 0);
+    virtual void ExecuteHook(Entity *_entity, const char *_hook, int _value = 0);
 };
 
 extern Scripting *g_scripting;

@@ -26,22 +26,60 @@
 
 #include "universal_include.h"
 
+#include "Entity/behaviors.h"
 #include "Entity/entity.h"
 
 #include "Graphics/graphics.h"
+#include "Graphics/vector.h"
 
-Entity::Entity(const char *_name)
- : m_name(newStr(_name))
+Entity::Entity(unsigned int _id, const char *_name)
+ : m_id(_id),
+   m_name(newStr(_name))
 {
 }
 
 Entity::~Entity()
 {
-    delete m_name;
+    delete[] m_name;
     m_name = NULL;
+
+    size_t propertyCount = m_properties.size();
+    for (size_t i = 0; i < propertyCount; i++) {
+        if (m_properties.valid(i)) {
+            property_t *prop = m_properties[i];
+            if (prop == NULL) {
+                continue;
+            }
+            switch (prop->type) {
+            case TYPE_STRING:
+                delete[] (const char *)prop->value;
+                break;
+            case TYPE_NUMBER:
+                delete (float *)prop->value;
+                break;
+            case TYPE_BOOLEAN:
+                delete (bool *)prop->value;
+                break;
+            case TYPE_RECT:
+                delete (Rect *)prop->value;
+                break;
+            case TYPE_VECTOR:
+                delete (Vector *)prop->value;
+                break;
+            case TYPE_NONE:
+                break;
+            }
+            delete prop;
+        }
+    }
 }
 
-const char *Entity::GetName()
+unsigned int Entity::GetID() const
+{
+    return m_id;
+}
+
+const char *Entity::GetName() const
 {
     return m_name;
 }
@@ -50,73 +88,235 @@ const char *Entity::GetName()
  * Behavior methods
  */
 
+bool Entity::AddBehavior(const char *_name, behaviorFunc _func)
+{
+    if (unlikely(_name == NULL)) {
+        return false;
+    } else {
+        behaviorFunc f = (_func == NULL) ? get_behavior(_name) : _func;
+        if (f != NULL) {
+            return m_behaviors.exists(_name) ^ m_behaviors.insert(_name, f);
+        } else {
+            return false;
+        }
+    }
+}
+
+bool Entity::RemoveBehavior(const char *_name)
+{
+    if (unlikely(_name == NULL)) {
+        return false;
+    } else {
+        return m_behaviors.erase(_name);
+    }
+}
+
 bool Entity::HasBehavior(const char *_name)
 {
     return m_behaviors.exists(_name);
 }
 
-bool Entity::AddBehavior(const char *_name, Behavior *_behavior)
-{
-    return (int)m_behaviors.insert(_name, _behavior) > -1;
-}
-
-bool Entity::RemoveBehavior(const char *_name)
-{
-    if (m_behaviors.exists(_name)) {
-        delete m_behaviors.find(_name);
-        return m_behaviors.erase(_name);
-    } else {
-        return false;
-    }
-}
-
 /**
- * Attribute methods
+ * Property methods
  */
 
-bool Entity::HasAttribute(const char *_name)
+bool Entity::SetProperty(const char *_name, property_type_t _type, void *_value)
 {
-    return m_attributes.exists(_name);
-}
-
-bool Entity::AddAttribute(const char *_name, Attribute *_attribute)
-{
-    return (int)m_attributes.insert(_name, _attribute) > -1;
-}
-
-bool Entity::RemoveAttribute(const char *_name)
-{
-    if (m_attributes.exists(_name)) {
-        delete m_attributes.find(_name);
-        return m_attributes.erase(_name);
-    } else {
-        return false;
-    }
-}
-
-/**
- * Messaging
- */
-
-void Entity::SendMessage(const char *_type, void *_data)
-{
-    size_t observerCount = m_messageObservers.used();
-    for (size_t i = 0; i < observerCount; i++) {
-        if (!strcmp(_type, m_messageObservers[i].type)) {
-            if (m_messageObservers[i].observer != NULL) {
-                m_messageObservers[i].observer->ReceiveMessage(_type, _data);
+    if (likely(_name != NULL)) {
+        property_t *prop = m_properties.find(_name, NULL);
+        bool overwritten = prop != NULL;
+        bool sametype = overwritten;
+        if (!overwritten) {
+            prop = new property_t;
+        } else if(prop->type != _type) {
+            sametype = false;
+            switch (prop->type) {
+            case TYPE_STRING:
+                delete[] (const char *)prop->value;
+                prop->value = NULL;
+                break;
+            case TYPE_NUMBER:
+                delete (float *)prop->value;
+                prop->value = NULL;
+                break;
+            case TYPE_BOOLEAN:
+                delete (bool *)prop->value;
+                prop->value = NULL;
+                break;
+            case TYPE_RECT:
+                delete (Rect *)prop->value;
+                prop->value = NULL;
+                break;
+            case TYPE_VECTOR:
+                delete (Vector *)prop->value;
+                prop->value = NULL;
+                break;
+            case TYPE_NONE:
+                break;
             }
+        }
+        prop->type = _type;
+        switch (_type) {
+        case TYPE_STRING:
+            if (!(overwritten && sametype)) {
+                prop->value = (void*)newStr((const char *)_value);
+            } else {
+                memmove(prop->value, _value, sizeof((const char *)_value));
+            }
+            break;
+        case TYPE_NUMBER: {
+            if (!(overwritten && sametype)) {
+                prop->value = (void*)(new float);
+            }
+            memmove(prop->value, _value, sizeof(float));
+            break;
+        }
+        case TYPE_BOOLEAN: {
+            if (!(overwritten && sametype)) {
+                prop->value = (void*)(new bool);
+            }
+            memmove(prop->value, _value, sizeof(bool));
+            break;
+        }
+        case TYPE_RECT: {
+            if (!(overwritten && sametype)) {
+                prop->value = (void*)(new Rect);
+            }
+            memmove(prop->value, _value, sizeof(Rect));
+            break;
+        }
+        case TYPE_VECTOR: {
+            if (!(overwritten && sametype)) {
+                prop->value = (void*)(new Vector);
+            }
+            memmove(prop->value, _value, sizeof(Vector));
+            break;
+        }
+        case TYPE_NONE:
+            break;
+        }
+        if (overwritten) {
+            return false;
+        } else {
+            return m_properties.insert(_name, prop);
+        }
+    } else {
+        return false;
+    }
+}
+
+bool Entity::RemoveProperty(const char *_name)
+{
+    if (unlikely(_name == NULL)) {
+        return false;
+    } else {
+        property_t *prop = m_properties.find(_name, NULL);
+        if (prop == NULL) {
+            return false;
+        }
+        switch (prop->type) {
+        case TYPE_STRING:
+            delete[] (const char *)prop->value;
+            break;
+        case TYPE_NUMBER:
+            delete (float *)prop->value;
+            break;
+        case TYPE_BOOLEAN:
+            delete (bool *)prop->value;
+            break;
+        case TYPE_RECT:
+            delete (Rect *)prop->value;
+            break;
+        case TYPE_VECTOR:
+            delete (Vector *)prop->value;
+            break;
+        case TYPE_NONE:
+            break;
+        }
+        return m_properties.erase(_name);
+    }
+}
+
+int Entity::GetProperty(const char *_name, const char *&_val)
+{
+    if (unlikely(_name == NULL)) {
+        return 0;
+    } else {
+        property_t *prop = m_properties.find(_name, NULL);
+        if (likely(prop != NULL && prop->type == TYPE_STRING)) {
+            _val = (const char *)prop->value;
+            return 1;
+        } else {
+            return 0;
         }
     }
 }
 
-void Entity::RegisterMessageObserver(const char *_type, Component *_observer)
+int Entity::GetProperty(const char *_name, float &_val)
 {
-    if (_observer != NULL) {
-        MessageObserver o;
-        o.type = _type;
-        o.observer = _observer;
-        m_messageObservers.insert(_type, o);
+    if (unlikely(_name == NULL)) {
+        return 0;
+    } else {
+        property_t *prop = m_properties.find(_name, NULL);
+        if (likely(prop != NULL && prop->type == TYPE_NUMBER)) {
+            memmove(&_val, prop->value, sizeof(float));
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+}
+
+int Entity::GetProperty(const char *_name, bool &_val)
+{
+    if (unlikely(_name == NULL)) {
+        return 0;
+    } else {
+        property_t *prop = m_properties.find(_name, NULL);
+        if (likely(prop != NULL && prop->type == TYPE_BOOLEAN)) {
+            memmove(&_val, prop->value, sizeof(bool));
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+}
+
+int Entity::GetProperty(const char *_name, Rect *&_val)
+{
+    if (unlikely(_name == NULL)) {
+        return 0;
+    } else {
+        property_t *prop = m_properties.find(_name, NULL);
+        if (likely(prop != NULL && prop->type == TYPE_RECT)) {
+            _val = (Rect*)prop->value;
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+}
+
+int Entity::GetProperty(const char *_name, Vector *&_val)
+{
+    if (unlikely(_name == NULL)) {
+        return 0;
+    } else {
+        property_t *prop = m_properties.find(_name, NULL);
+        if (likely(prop != NULL && prop->type == TYPE_VECTOR)) {
+            _val = (Vector*)prop->value;
+            return 1;
+        } else {
+            return 0;
+        }
+    }
+}
+bool Entity::HasProperty(const char *_name)
+{
+    if (unlikely(_name == NULL)) {
+        return false;
+    } else {
+        return m_properties.exists(_name);
     }
 }
 
@@ -134,7 +334,7 @@ Entity *Entity::GetChild(int _index)
     return m_children.get(_index);
 }
 
-void Entity::AttachChild(Entity *_child)
+void Entity::AddChild(Entity *_child)
 {
     m_children.insert(_child);
 }
@@ -153,20 +353,24 @@ void Entity::RemoveChild(Entity *_child)
 
 void Entity::Update(float _delta)
 {
-    size_t behaviorCount = m_behaviors.used();
-    for (size_t i = 0; i < behaviorCount; i++) {
-        if (strcmp(m_behaviors[i]->GetName(), Behavior::Names[RENDER]) == 0) {
-            continue;
-        } else {
-            m_behaviors[i]->Update(_delta);
+    size_t size = m_behaviors.size();
+    behaviorFunc renderBehavior = m_behaviors.find("render", NULL);
+    for (size_t i = 0; i < size; i++) {
+        if (m_behaviors.valid(i)) {
+            behaviorFunc f = m_behaviors[i];
+            if (unlikely(f == renderBehavior)) {
+                continue;
+            } else {
+                f(this, _delta);
+            }
         }
     }
 }
 
 void Entity::Render(float _delta)
 {
-    Behavior *renderBehavior = m_behaviors.find(Behavior::Names[RENDER]);
+    behaviorFunc renderBehavior = m_behaviors.find("render", NULL);
     if (renderBehavior != NULL) {
-        renderBehavior->Update(_delta);
+        renderBehavior(this, _delta);
     }
 }
