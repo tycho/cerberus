@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2010 Steven Noonan <steven@uplinklabs.net>
+ * Copyright (c) 2011 Steven Noonan <steven@uplinklabs.net>
  *                and Miah Clayton <miah@ferrousmoon.com>
  * All rights reserved.
  *
@@ -25,30 +25,52 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __fade_h_included
-#define __fade_h_included
+#ifndef __input_h_included
+#define __input_h_included
 
-#include "Graphics/graphics_opengl.h"
+#include "universal_include.h"
 
-#include "Graphics/Animation/animation.h"
+#include "Entity/entity.h"
 
-class Fade : public Animation
-{
-protected:
-    Widget *m_widget;
-	float m_alpha;
-	float m_end;
-	float m_rate;
-    char m_dir;
-public:
-    Fade (float _start, float _end, float _rate);
-    Fade (Widget *_widget, float _start, float _end, float _rate);
-    virtual ~Fade();
-
-	virtual void Update();
-
-	virtual void Begin();
-	virtual void End();
+enum MoreEventTypes {
+    MOUSE_OVER = 25,
+    MOUSE_LEAVE
 };
 
+typedef struct {
+    Uint8 eventType;
+    Entity *observer;
+} EventObserver;
+
+class Input
+{
+protected:
+	int   m_mouseX;
+	int   m_mouseY;
+	Uint8 m_lastButtonState;
+	Uint8 m_buttonState;
+	Uint8 *m_keyState;
+
+    Data::LList<EventObserver> m_observers;
+    Data::LList<SDL_Event> m_events;
+
+public:
+    Input();
+    virtual ~Input();
+
+	virtual int MouseX                     () const;
+	virtual int MouseY                     () const;
+	virtual bool MouseLeft                 () const;
+	virtual bool MouseRight                () const;
+	virtual bool MouseLeftEdge             () const;
+	virtual bool MouseRightEdge            () const;
+
+    virtual SDL_Event *GetEvent(size_t _index);
+
+    virtual void RegisterEventObserver(Uint8 _type, Entity *_observer);
+
+    virtual void Update ();
+};
+
+extern Input *g_input;
 #endif

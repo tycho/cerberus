@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2010 Steven Noonan <steven@uplinklabs.net>
- *                and Miah Clayton <miah@ferrousmoon.com>
+ * Copyright (c) 2011 Eddie Ringle <eddie@eringle.net>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -25,30 +24,24 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __fade_h_included
-#define __fade_h_included
+#ifndef __behaviors_h_included
+#define __behaviors_h_included
 
-#include "Graphics/graphics_opengl.h"
+#include "universal_include.h"
 
-#include "Graphics/Animation/animation.h"
+class Entity;
 
-class Fade : public Animation
-{
-protected:
-    Widget *m_widget;
-	float m_alpha;
-	float m_end;
-	float m_rate;
-    char m_dir;
-public:
-    Fade (float _start, float _end, float _rate);
-    Fade (Widget *_widget, float _start, float _end, float _rate);
-    virtual ~Fade();
+typedef void(*behaviorFunc)(Entity*,float);
 
-	virtual void Update();
+static Data::HashTable<behaviorFunc> behavior_map;
 
-	virtual void Begin();
-	virtual void End();
-};
+int register_behavior(const char *_name, behaviorFunc _func);
+behaviorFunc get_behavior(const char *_name);
+int unregister_behavior(const char *_name);
 
-#endif
+void behavior_moveable(Entity *_entity, float _delta);
+void behavior_physics(Entity *_entity, float _delta);
+void behavior_render(Entity* _entity, float _delta);
+
+#endif /* __behaviors_h_included */
+

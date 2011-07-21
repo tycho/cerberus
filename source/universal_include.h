@@ -27,9 +27,17 @@
 #ifndef __included_universal_include_h
 #define __included_universal_include_h
 
+#define _DEBUG
+#undef NDEBUG
+
+#ifdef _DEBUG
+#    include <assert.h>
+#endif
 #ifdef __cplusplus
 #  include <crisscross/crisscross.h>
 #endif
+
+#include <typeinfo>
 
 #if defined ( TARGET_COMPILER_VC ) || defined ( TARGET_COMPILER_ICC )
 #    pragma warning ( error: 4996 )
@@ -161,6 +169,7 @@
 #include <zlib.h>
 
 #ifdef TARGET_OS_LINUX
+#    include <sys/types.h>
 #    include <unistd.h>
 #    include <signal.h>
 #endif
@@ -195,17 +204,21 @@ __inline bool isPowerOfTwo ( Uint32 v ) { return !(v & (v - 1)) && v; }
 __inline Uint32 nearestPowerOfTwo ( Uint32 v ) { return (Uint32)pow( 2.0, ceil( log( (double)v ) / log( 2.0 ) ) ); }
 
 #ifndef PI
-#    define PI 3.1415926535
+#    define PI 3.14159265358979323846
 #endif
 
 #define DIV180BYPI 180.0 / PI
 #define TWOPI PI * 2.0
 #define DIVBY360 1.0 / 360.0
 #define DIV360MULTPI DIVBY360 * TWOPI
+#define TORADIANS(d) DIV360MULTPI * d
+#define TODEGREES(x) DIV180BYPI * x
 
 extern Uint32 fontid;
 
 #include "Graphics/color.h"
+#include "Graphics/rect.h"
+#include "Graphics/vertex.h"
 
 #endif // __cplusplus
 

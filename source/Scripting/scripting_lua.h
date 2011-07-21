@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2010 Steven Noonan <steven@uplinklabs.net>
- *                and Miah Clayton <miah@ferrousmoon.com>
+ * Copyright (c) 2011 Eddie Ringle <eddie@eringle.net>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -30,6 +29,13 @@
 
 #include "Scripting/scripting.h"
 
+#include <tolua++.h>
+
+#include "Scripting/LuaBindings/color.h"
+#include "Scripting/LuaBindings/entity.h"
+#include "Scripting/LuaBindings/rect.h"
+#include "Scripting/LuaBindings/vector.h"
+
 class LuaScripting : public Scripting
 {
 protected:
@@ -40,7 +46,13 @@ public:
 
     virtual ~LuaScripting();
 
+    virtual Entity *LoadEntity(const char *_entityFile);
     virtual bool RunScript(const char *_scriptName);
+    virtual void ExecuteHook(Entity *_entity, const char *_hook, int _value = 0);
+
+    void ResetEntityFileGlobals();
+
+    virtual lua_State *GetState();
 };
 
 #endif

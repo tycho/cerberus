@@ -30,6 +30,8 @@
 
 #include "App/resource.h"
 
+#include "Graphics/scene.h"
+
 //! The application class.
 /*!
 	The App class handles some of the basic things needed to run
@@ -52,6 +54,9 @@ protected:
 
     bool m_running;
 
+    bool m_showInterface;
+
+    Scene *m_scene;
 public:
     Resource *m_resource;
 
@@ -86,7 +91,8 @@ public:
 	 */
     virtual const char *GetApplicationSupportPath ();
 
-    virtual void UpdateInputs ();
+    virtual Scene *GetScene();
+    virtual Interface *GetInterface();
 
     virtual double Speed();
 

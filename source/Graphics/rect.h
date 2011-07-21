@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2010 Steven Noonan <steven@uplinklabs.net>
- *                and Miah Clayton <miah@ferrousmoon.com>
+ * Copyright (c) 2011 Eddie Ringle <eddie@eringle.net>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -25,30 +24,13 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __fade_h_included
-#define __fade_h_included
+#ifndef __rect_h_included
+#define __rect_h_included
 
-#include "Graphics/graphics_opengl.h"
-
-#include "Graphics/Animation/animation.h"
-
-class Fade : public Animation
-{
-protected:
-    Widget *m_widget;
-	float m_alpha;
-	float m_end;
-	float m_rate;
-    char m_dir;
-public:
-    Fade (float _start, float _end, float _rate);
-    Fade (Widget *_widget, float _start, float _end, float _rate);
-    virtual ~Fade();
-
-	virtual void Update();
-
-	virtual void Begin();
-	virtual void End();
-};
+//tolua_begin
+typedef struct {
+    float w, h, d;
+} Rect;
+//tolua_end
 
 #endif

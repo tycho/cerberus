@@ -9,6 +9,8 @@ OBJECTS = \
     App/resource.o \
     App/string_utils.o \
     App/text_stream_readers.o \
+    Entity/behaviors.o \
+    Entity/entity.o \
     Game/game.o \
     Graphics/Animation/animation.o \
     Graphics/Animation/expirewidget.o \
@@ -19,9 +21,11 @@ OBJECTS = \
     Graphics/graphics.o \
     Graphics/graphics_opengl.o \
     Graphics/opengl.o \
+    Graphics/scene.o \
     Graphics/surface.o \
     Graphics/texture.o \
     Graphics/texture_opengl.o \
+    Input/input.o \
     Interface/button.o \
     Interface/error_window.o \
     Interface/inputwidget.o \

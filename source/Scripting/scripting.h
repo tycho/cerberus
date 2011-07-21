@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2010 Steven Noonan <steven@uplinklabs.net>
- *                and Miah Clayton <miah@ferrousmoon.com>
+ * Copyright (c) 2011 Eddie Ringle <eddie@eringle.net>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -28,6 +27,8 @@
 #ifndef __scripting_h_included
 #define __scripting_h_included
 
+#include "Entity/entity.h"
+
 class Scripting
 {
 protected:
@@ -41,7 +42,9 @@ public:
 
     virtual ~Scripting();
 
+    virtual Entity *LoadEntity(const char *_entityFile);
     virtual bool RunScript(const char *_scriptName);
+    virtual void ExecuteHook(Entity *_entity, const char *_hook, int _value = 0);
 };
 
 extern Scripting *g_scripting;

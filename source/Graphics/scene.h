@@ -1,6 +1,5 @@
 /*
- * Copyright (c) 2010 Steven Noonan <steven@uplinklabs.net>
- *                and Miah Clayton <miah@ferrousmoon.com>
+ * Copyright (c) 2011 Eddie Ringle <eddie@eringle.net>
  * All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -25,30 +24,41 @@
  * THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-#ifndef __fade_h_included
-#define __fade_h_included
+#ifndef __included_scene_h
+#define __included_scene_h
 
-#include "Graphics/graphics_opengl.h"
+#include "Entity/entity.h"
 
-#include "Graphics/Animation/animation.h"
+class Interface;
 
-class Fade : public Animation
+class Scene
 {
 protected:
-    Widget *m_widget;
-	float m_alpha;
-	float m_end;
-	float m_rate;
-    char m_dir;
+    Scene *m_overlay;
+    Data::LList<Entity *> m_entities;
+
+    Interface *m_interface;
+
+    bool m_showing;
 public:
-    Fade (float _start, float _end, float _rate);
-    Fade (Widget *_widget, float _start, float _end, float _rate);
-    virtual ~Fade();
+    Scene();
+    Scene(Scene *_overlay);
+    Scene(Interface *_interface);
+    Scene(Scene *_overlay, Interface *_interface);
+    virtual ~Scene();
 
-	virtual void Update();
-
-	virtual void Begin();
-	virtual void End();
+    virtual void AddEntity(Entity *_entity);
+    bool IsShowing();
+    Interface *GetInterface();
+    Scene *GetOverlay();
+    virtual void RemoveEntity(Entity *_entity);
+    virtual void Render(float _delta);
+    void SetInterface(Interface *_interface);
+    void SetOverlay(Scene *_overlay);
+    void SetShowing(bool _showing);
+    virtual void Update(float _delta);
 };
+
+#include "Interface/interface.h"
 
 #endif

@@ -1,0 +1,20 @@
+#!/bin/bash
+# Tolua++ script
+
+cd `dirname $0`/../source/Scripting/LuaBindings
+
+echo "OBJECTS += \\" > makefile.obj
+
+TOLUAPP="../../../contrib/install/bin/toluapp"
+
+for f in $( find . -name '*.pkg' -print ); do
+	PKG=`basename ${f%.*}`
+	echo "Processing $PKG package..."
+	$TOLUAPP -n $PKG \
+		-o $PKG.cpp \
+		-H $PKG.h \
+		$f
+	if [ -f "$PKG.cpp" ]; then
+		echo "    Scripting/LuaBindings/$PKG.o \\" >> makefile.obj
+	fi
+done

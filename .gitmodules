@@ -40,3 +40,6 @@
 [submodule "contrib/smpeg"]
 	path = contrib/smpeg
 	url = git://git.uplinklabs.net/pub/scm/git/tycho/gamelibs/smpeg.git
+[submodule "contrib/toluapp"]
+	path = contrib/toluapp
+	url = git://github.com/eddieringle/toluapp.git

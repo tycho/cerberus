@@ -30,17 +30,32 @@
 
 #include <universal_include.h>
 
+#include "Entity/entity.h"
+
+#include "Graphics/scene.h"
+
 class Game
 {
 protected:
 	bool m_playing;
 
+    bool m_drawEntityBorders;
+
+    Scene *m_scene;
+
+    Entity *m_entity;
 public:
     Game();
     virtual ~Game();
-    virtual bool Playing();
 
-    virtual void Update();
+    virtual bool Playing();
+    virtual bool EntityBordersEnabled();
+
+    virtual void SetEntityBorders(bool _borders);
+
+    virtual void Render(float _delta);
+
+    virtual void Update(float _delta);
 };
 
 extern Game *g_game;
