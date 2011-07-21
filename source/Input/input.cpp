@@ -184,7 +184,6 @@ void Input::RegisterEventObserver(Uint8 _type, Entity *_observer)
     e.eventType = _type;
     e.observer = _observer;
 
-    g_console->WriteLine("Inserting new observer of type %d", _type);
     m_observers.insert(e);
 }
 Input *g_input;
