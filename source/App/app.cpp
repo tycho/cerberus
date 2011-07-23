@@ -197,6 +197,9 @@ void App::Initialise()
         APP_NAME, Color32(255,0,0),
         g_graphics->GetScreenWidth () - 290,
         g_graphics->GetScreenHeight () - 38);
+    text->AddBehavior("render");
+    Vector *position = new Vector(g_graphics->GetScreenWidth() - 290, g_graphics->GetScreenHeight() - 38);
+    text->SetProperty("position", TYPE_VECTOR, position);
     GetInterface()->AddEntity ( text );
 
     char buffer[1024];
@@ -290,6 +293,8 @@ void App::Run ()
             case SDL_KEYUP:
                 if (event->key.keysym.sym == SDLK_ESCAPE) {
                     Quit();
+                } else if (event->key.keysym.sym == SDLK_F12) {
+                    GetInterface()->SetShowing(!GetInterface()->IsShowing());
                 }
                 break;
             }

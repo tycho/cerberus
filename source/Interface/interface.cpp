@@ -34,7 +34,8 @@
 #include "Interface/interface.h"
 
 Interface::Interface()
- : m_dragWindow(NULL),
+ : Scene(),
+   m_dragWindow(NULL),
    m_activeWidget(NULL),
    m_fpsWidget(NULL),
    m_rendererWidget(NULL)
@@ -224,12 +225,14 @@ void Interface::UpdateFPS ( unsigned int _fps )
 
 void Interface::Render(float _delta)
 {
-    Widget *widget = NULL;
-    for ( size_t i = 0; i < m_entities.size(); i++ )
-    {
-        widget = GetWidget(i);
-        if (widget == NULL) continue;
-        widget->Render();
+    if (m_showing) {
+        Widget *widget = NULL;
+        for ( size_t i = 0; i < m_entities.size(); i++ )
+        {
+            widget = GetWidget(i);
+            if (widget == NULL) continue;
+            widget->Render();
+        }
     }
 }
 

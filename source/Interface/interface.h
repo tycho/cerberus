@@ -34,7 +34,7 @@
 #include "Interface/widget.h"
 #include "Interface/window.h"
 
-class Interface : Scene
+class Interface : public Scene
 {
 protected:
     Window *m_dragWindow;
@@ -44,8 +44,6 @@ protected:
     TextUI *m_rendererWidget;
 
     Uint32 m_mousePointer;
-
-    bool m_showing;
 
 public:
     Interface();
