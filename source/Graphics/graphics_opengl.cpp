@@ -84,7 +84,7 @@ const char *OpenGLGraphics::RendererName()
 	static char renderer[64] = {'\0'};
 	if ( !strlen ( renderer ) )
 	{
-		sprintf ( renderer, "OpenGL 1.1 (engine v%d.%d)",
+		sprintf ( renderer, "v%d.%d (OpenGL 1.1)",
 			m_rendererVersionMajor, m_rendererVersionMinor );
 	}
 	return renderer;
