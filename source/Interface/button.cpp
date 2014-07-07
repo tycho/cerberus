@@ -30,6 +30,7 @@
 #include "Graphics/graphics.h"
 #include "Interface/interface.h"
 #include "Interface/button.h"
+#include "Input/input.h"
 
 enum {
 	BUTTON_STATE_INACTIVE = 0,
@@ -76,8 +77,8 @@ void Button::Render()
 
 Widget *Button::MouseUpdate()
 {
-    if ( IsInsideWidget(g_interface->MouseX(), g_interface->MouseY()) ) {
-		if (g_interface->MouseLeft()) {
+    if ( IsInsideWidget(g_input->MouseX(), g_input->MouseY()) ) {
+		if (g_input->MouseLeft()) {
 			m_state = BUTTON_STATE_PRESSED;
 		} else {
 			m_state = BUTTON_STATE_HOVER;

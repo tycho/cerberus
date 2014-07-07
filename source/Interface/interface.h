@@ -28,16 +28,15 @@
 #ifndef __interface_h_included
 #define __interface_h_included
 
+#include "Graphics/scene.h"
 #include "Graphics/surface.h"
 #include "Interface/text.h"
 #include "Interface/widget.h"
 #include "Interface/window.h"
 
-class Interface
+class Interface : public Scene
 {
 protected:
-    Data::LList<Widget *> m_widgetList;
-
     Window *m_dragWindow;
     Widget *m_activeWidget;
 
@@ -46,17 +45,13 @@ protected:
 
     Uint32 m_mousePointer;
 
-	int   m_mouseX;
-	int   m_mouseY;
-	Uint8 m_lastButtonState;
-	Uint8 m_buttonState;
-
 public:
     Interface();
     virtual ~Interface();
 
-    virtual void AddWidget                 ( Widget *_widget );
+    virtual Widget *GetWidget(int _index);
 
+    virtual void AddEntity(Entity *_entity);
     virtual void SetDragWindow             ( Window *_window );
     virtual void SetWindowFocus            ( Window *_window );
     virtual void SetWidgetFocus            ( Widget *_widget );
@@ -65,23 +60,14 @@ public:
 	virtual void InitWidgets               ();
     virtual void UpdateFPS                 ( unsigned int _fps );
     virtual void UpdateRendererWidget      ();
+    virtual void RemoveEntity              ( Entity *_entity );
     virtual void RenderMouse               ();
-    virtual void RenderWidgets             ();
-    virtual void RemoveWidget              ( Widget *_widget );
+    virtual void Render(float _delta);
     virtual Widget *GetWidgetOfType        ( WidgetClass _widgetType );
     virtual Widget *MouseUpdate            ();
     virtual int SendEnterKey               ();
 
-	virtual int MouseX                     () const;
-	virtual int MouseY                     () const;
-	virtual bool MouseLeft                 () const;
-	virtual bool MouseRight                () const;
-	virtual bool MouseLeftEdge             () const;
-	virtual bool MouseRightEdge            () const;
-
-    virtual void Update ();
+    virtual void Update (float _delta);
 };
-
-extern Interface *g_interface;
 
 #endif

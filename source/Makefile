@@ -43,14 +43,14 @@ CFOPTIMIZE := -O2 -parallel
 
 else
 
-CFOPTIMIZE := -O2
+CFOPTIMIZE := -O0 -ggdb
 
 endif # USE_ICC
 
-CFOTHERS := -fno-strict-aliasing -pipe $(EXTERNAL_FLAGS)
+CFOTHERS := -fno-strict-aliasing -pipe $(EXTERNAL_FLAGS) -std=c++0x
 CFOTHERS_L := -fsigned-char
-CFWARN := -Wall
-CFWARN_L := -Wundef -Wno-long-long -Wno-variadic-macros -Wno-format -Wno-non-virtual-dtor
+CFWARN := -Wall -Wformat
+CFWARN_L := -Wundef -Wno-long-long -Wno-variadic-macros -Wno-non-virtual-dtor
 
 DEFINES := $(EXTERNAL_DEFINES)
 
@@ -95,6 +95,7 @@ LIBPNG := $(CONTRIB)/install/lib/libpng.a
 LIBSDLIMAGE := $(CONTRIB)/install/lib/libSDL_image.a
 LIBSDLMIXER := $(CONTRIB)/install/lib/libSDL_mixer.a
 LIBSMPEG := $(CONTRIB)/install/lib/libsmpeg.a
+LIBTOLUAPP := $(CONTRIB)/install/lib/libtolua++.a
 LIBUNRAR := $(CONTRIB)/install/lib/libunrar.a
 LIBZ := $(CONTRIB)/install/lib/libz.a
 
@@ -180,6 +181,7 @@ ifdef BUILD_ALL
 	BUILD_SDLIMAGE = YesPlease
 	BUILD_SDLMIXER = YesPlease
 	BUILD_SMPEG = YesPlease
+	BUILD_TOLUAPP = YesPlease
 	BUILD_LIBPNG = YesPlease
 	BUILD_ZLIB = YesPlease
 endif
@@ -483,6 +485,12 @@ CONTRIBS += lua/src
 endif
 CONTRIB_LIBS += $(LIBLUA)
 endif
+ifdef BUILD_TOLUAPP
+CONTRIBS += toluapp
+CONTRIB_LIBS += $(LIBTOLUAPP)
+else
+EXTRA_LIBS += -ltolua++
+endif
 ifdef BUILD_ZLIB
 CONTRIBS += zlib
 CONTRIB_LIBS += $(LIBZ)
@@ -497,6 +505,8 @@ endif
 ifdef PROFILE
 EXTRA_LIBS += -L/opt/perftools/lib -ltcmalloc
 endif
+
+-include Scripting/LuaBindings/makefile.obj
 
 EXTRA_OBJECTS += App/version.o
 

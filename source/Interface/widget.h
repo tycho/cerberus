@@ -28,6 +28,8 @@
 #ifndef __included_widget_h
 #define __included_widget_h
 
+#include "Entity/entity.h"
+
 typedef enum
 {
 	WIDGET_UNKNOWN,
@@ -40,13 +42,15 @@ typedef enum
 } WidgetClass;
 
 class Animation;
+class Interface;
 
-class Widget
+class Widget : public Entity
 {
 private:
     Data::LList<Widget *> m_widgets;
     Data::LList<Animation *> m_anims;
 
+    Interface *m_interface;
 protected:
     WidgetClass m_widgetClass;
 
@@ -62,6 +66,8 @@ protected:
 
 	void BeginAnims();
 	void EndAnims();
+
+    float m_alpha;
 
 public:
     Widget ();
@@ -94,6 +100,12 @@ public:
     virtual int SendEnterKey () = 0;
 
     virtual Data::LList<Widget *> *GetWidgetList();
+
+    virtual Interface *GetInterface();
+    virtual void SetInterface(Interface *_interface);
+
+    virtual float GetAlpha();
+    virtual void SetAlpha(float _alpha);
 
 	friend class Animation;
 	friend class ExpireWidget;

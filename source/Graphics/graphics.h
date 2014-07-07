@@ -28,6 +28,8 @@
 #ifndef __graphics_h_included
 #define __graphics_h_included
 
+class Entity;
+
 class Texture;
 class OpenGLTexture;
 class DirectXTexture;
@@ -47,6 +49,9 @@ protected:
 
 	Uint32  m_defaultFont;
 
+    Data::DArray<Texture *> m_textures;
+    Data::DArray<const char *> m_textureFiles;
+
 public:
     Graphics ();
     virtual ~Graphics();
@@ -60,6 +65,10 @@ public:
 	virtual void   TextRect ( Uint32 _font, const char *_text, SDL_Rect &_rect ) = 0;
 
 	virtual void   DrawRect ( SDL_Rect *_pos, Color32 _color ) = 0;
+
+    virtual bool LoadTexture(const char *_filename) = 0;
+    virtual void UnloadTexture() = 0;
+    virtual void DrawEntity ( Entity *_entity ) = 0;
 
     virtual Uint16 GetMaximumTextureSize() = 0;
 
@@ -83,6 +92,8 @@ public:
 
     virtual SDL_PixelFormat *GetPixelFormat ( Uint32 _surfaceID ) = 0;
     virtual void   ReplaceColour(Uint32 _surfaceID, SDL_Rect *_destRect, Color32 findcolor, Color32 replacecolor) = 0;
+
+    virtual Texture *GetTexture( Uint32 _id ) = 0;
 
     virtual Uint32 LoadImage ( const char *_filename ) = 0;
     virtual Uint32 CreateSurface ( Uint32 _width, Uint32 _height ) = 0;

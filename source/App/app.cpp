@@ -40,11 +40,13 @@
 #include "App/version.h"
 #include "Game/game.h"
 #include "Graphics/graphics.h"
+#include "Input/input.h"
 #include "Interface/error_window.h"
 #include "Interface/text.h"
 #include "Interface/button.h"
 #include "Interface/interface.h"
 #include "Network/net.h"
+#include "Scripting/scripting.h"
 #include "Sound/soundsystem.h"
 
 #ifdef TARGET_OS_MACOSX
@@ -65,8 +67,7 @@ App::App ()
     // Set up the Application Path variable
 #if defined ( TARGET_OS_WINDOWS )
 
-    int retval = GetModuleFileName ( NULL, tempPath, sizeof ( tempPath ) );
-    CrbDebugAssert ( retval != 0 );
+    CrbDebugAssert ( GetModuleFileName ( NULL, tempPath, sizeof ( tempPath ) ) != 0 );
     if ( strlen(tempPath) )
     {
         char *ptr = &tempPath[strlen(tempPath)];
@@ -78,8 +79,8 @@ App::App ()
 
 #elif defined ( TARGET_OS_LINUX )
 
-    int retval = readlink ( "/proc/self/exe", tempPath, sizeof ( tempPath ) );
-    CrbDebugAssert ( retval != -1 );
+    size_t ret = readlink ( "/proc/self/exe", tempPath, sizeof ( tempPath ) - 1 );
+    CrbDebugAssert((int)ret != -1);
     if ( strlen(tempPath) )
     {
         char *ptr = &tempPath[strlen(tempPath)];
@@ -125,8 +126,7 @@ App::App ()
 #if defined ( TARGET_OS_WINDOWS )
 
     memset ( tempPath, 0, sizeof(tempPath) );
-    retval = SHGetFolderPath ( NULL, CSIDL_LOCAL_APPDATA | CSIDL_FLAG_CREATE, NULL, 0, tempPath );
-    CrbDebugAssert ( retval != E_FAIL );
+    CrbDebugAssert ( SHGetFolderPath ( NULL, CSIDL_LOCAL_APPDATA | CSIDL_FLAG_CREATE, NULL, 0, tempPath ) != E_FAIL );
     strcat ( tempPath, "\\Cerberus\\" );
     m_appSupportPath = newStr ( tempPath );
 
@@ -175,15 +175,32 @@ App::~App()
     m_appSupportPath = NULL;
     delete [] m_resourcePath;
     m_resourcePath = NULL;
+    delete m_scene;
+    m_scene = NULL;
+}
+
+Scene *App::GetScene()
+{
+    return m_scene;
+}
+
+Interface *App::GetInterface()
+{
+    return m_scene->GetInterface();
 }
 
 void App::Initialise()
 {
+    m_scene = new Scene(new Interface());
+
     TextUI *text = new TextUI (
         APP_NAME, Color32(255,0,0),
         g_graphics->GetScreenWidth () - 290,
         g_graphics->GetScreenHeight () - 38);
-    g_interface->AddWidget ( text );
+    text->AddBehavior("render");
+    Vector *position = new Vector(g_graphics->GetScreenWidth() - 290, g_graphics->GetScreenHeight() - 38);
+    text->SetProperty("position", TYPE_VECTOR, position);
+    GetInterface()->AddEntity ( text );
 
     char buffer[1024];
     sprintf(buffer, "For testing purposes only. v%s", Cerberus::Version::LongVersion());
@@ -192,7 +209,10 @@ void App::Initialise()
         buffer, Color32(255,0,0),
         g_graphics->GetScreenWidth () - 290,
         g_graphics->GetScreenHeight () - 25 );
-    g_interface->AddWidget ( text );
+    GetInterface()->AddEntity ( text );
+
+    Window *win = new Window ( "", 30, 200, 250, 250 );
+    GetInterface()->AddEntity ( win );
 
 }
 
@@ -223,6 +243,7 @@ const char *App::GetApplicationSupportPath ()
 void App::Run ()
 {
     int framesThisSecond = 0;
+    float timeDelta = 0.0f;
     bool deviceLost = false;
 
     m_tmrFPS.Start();
@@ -230,42 +251,67 @@ void App::Run ()
     System::Stopwatch lastFrame;
     lastFrame.Start();
 
-    CrbReleaseAssert ( g_interface != NULL );
+    CrbReleaseAssert ( GetInterface() != NULL );
     CrbReleaseAssert ( g_graphics != NULL );
 
     SDL_EnableUNICODE ( 1 );
 
-    g_interface->UpdateRendererWidget();
+    GetInterface()->UpdateRendererWidget();
 
     m_tmrGameSpeed.Start();
 
+    g_scripting->RunScript("sethello");
+    g_scripting->RunScript("printhello");
+
     while ( m_running )
     {
+
+        // Get time since last frame
+        lastFrame.Stop();
+        timeDelta = lastFrame.Elapsed();
+
         // Force 60fps max.
 #ifndef FORCE_VSYNC
         if ( g_prefsManager->GetInt ( "WaitVerticalRetrace", 1 ) != 0 )
 #endif
         {
             int sleepTime;
-            lastFrame.Stop();
-            sleepTime = (int)( ( 1000.0 / 60.0 ) - ( lastFrame.Elapsed() * 1000.0 ) );
+            sleepTime = (int)( ( 1000.0 / 60.0 ) - ( timeDelta * 1000.0 ) );
             if ( sleepTime > 0 )
                 System::ThreadSleep ( sleepTime );
-            lastFrame.Start();
+        }
+        lastFrame.Start();
+
+        g_input->Update();
+
+        SDL_Event *event = g_input->GetEvent(0);
+        for (size_t i = 0; event != NULL; event = g_input->GetEvent(++i)) {
+            switch (event->type) {
+            case SDL_QUIT:
+                Quit();
+                break;
+            case SDL_KEYUP:
+                if (event->key.keysym.sym == SDLK_ESCAPE) {
+                    Quit();
+                } else if (event->key.keysym.sym == SDLK_F12) {
+                    GetInterface()->SetShowing(!GetInterface()->IsShowing());
+                }
+                break;
+            }
         }
 
-        UpdateInputs();
-
-        g_interface->Update();
+        GetInterface()->Update(timeDelta);
 
         if ( g_game->Playing() ) {
-            g_game->Update();
+            g_game->Update(timeDelta);
         } else {
-
         }
 
-        g_interface->RenderMouse();
-        g_interface->RenderWidgets();
+        g_game->Render(timeDelta);
+
+        // Always render application interface above everything else
+        GetInterface()->RenderMouse();
+        GetInterface()->Render(timeDelta);
 
         // Play any queued sounds.
         if ( g_soundSystem != NULL )
@@ -290,7 +336,7 @@ void App::Run ()
             }
         }
 
-        g_graphics->FillRect(SCREEN_SURFACE_ID, NULL, Color32(0,0,0));
+        g_graphics->FillRect(SCREEN_SURFACE_ID, NULL, Color32(150,150,255));
 
 		// We don't want the frame rate to affect game speed, so we use
 		// a timer to throttle it.
@@ -303,7 +349,7 @@ void App::Run ()
         m_tmrFPS.Stop();
         if ( m_tmrFPS.Elapsed() >= 1.0 )
         {
-            g_interface->UpdateFPS ( framesThisSecond );
+            GetInterface()->UpdateFPS ( framesThisSecond );
             framesThisSecond = 0;
             m_tmrFPS.Start();
         } else {
@@ -321,54 +367,6 @@ void App::Quit()
 double App::Speed()
 {
     return m_gameSpeed;
-}
-
-void App::UpdateInputs ()
-{
-    SDL_Event event;
-    while ( SDL_PollEvent ( &event ) )
-    {
-        switch ( event.type )
-        {
-        case SDL_QUIT:
-            m_running = false;
-            break;
-        case SDL_KEYDOWN:
-            {
-            }
-            break;
-        }
-    }
-
-    // Handle Command+Q on Mac OS X
-#ifdef TARGET_OS_MACOSX
-    int arraySz = 0;
-    Uint8 *keyState = SDL_GetKeyState(&arraySz);
-
-    static bool cmdQ = false;
-    if ( !cmdQ && ( keyState[SDLK_LMETA] || keyState[SDLK_RMETA] ) && keyState[SDLK_q] )
-    {
-        cmdQ = true;
-        if ( g_game->Playing() )
-        {
-#if 0
-            QuitWindow *quitWindow;
-            if ( (quitWindow = (QuitWindow *)g_interface->GetWidgetOfType ( WIDGET_QUIT_WINDOW )) != NULL )
-            {
-                g_interface->RemoveWidget ( quitWindow );
-            } else {
-                quitWindow = new QuitWindow();
-                g_interface->AddWidget ( quitWindow );
-                quitWindow = NULL;
-            }
-#endif
-        } else {
-            m_running = false;
-        }
-    } else if ( cmdQ && ( !keyState[SDLK_LMETA] && !keyState[SDLK_RMETA] ) || !keyState[SDLK_q] ) {
-        cmdQ = false;
-    }
-#endif
 }
 
 App *g_app;

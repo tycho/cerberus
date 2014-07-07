@@ -27,15 +27,45 @@
 
 #include "universal_include.h"
 
+#include "App/app.h"
+#include "Entity/entity.h"
 #include "Game/game.h"
+#include "Input/input.h"
+#include "Scripting/scripting.h"
+
+#include "Scripting/scripting.h"
 
 Game::Game()
- :  m_playing(false)
+ :  m_playing(true),
+    m_drawEntityBorders(false),
+    m_scene(new Scene()),
+    m_entity(NULL)
 {
+    register_behavior("moveable", behavior_moveable);
+    register_behavior("physics", behavior_physics);
+    register_behavior("render", behavior_render);
+
+    /*
+    m_entity = new Entity(0, 0, 31, 32, Color32(255, 255, 255, 255), "darwinian.png");
+    m_entity->SetBorderEnabled(true);
+    m_entity->SetInputComponent(new InputComponent(m_entity));
+    m_entity->SetPhysicsComponent(new PhysicsComponent(m_entity));
+    m_entity->SetRenderComponent(new RenderComponent(m_entity));
+    m_scene->AddEntity(m_entity);
+
+    Entity *santa = new Entity(7, -14, 16, 16, Color32(255, 255, 255, 255), "santahat.png");
+    santa->SetBorderEnabled(true);
+    santa->SetRenderComponent(new RenderComponent(santa));
+    m_entity->AttachChild(santa);
+    */
+    Entity *darwinian = g_scripting->LoadEntity("darwinian");
+    m_scene->AddEntity(darwinian);
 }
 
 Game::~Game()
 {
+    delete m_scene;
+    m_scene = NULL;
 }
 
 bool Game::Playing()
@@ -43,8 +73,41 @@ bool Game::Playing()
     return m_playing;
 }
 
-void Game::Update()
+bool Game::EntityBordersEnabled()
 {
+    return m_drawEntityBorders;
+}
+
+void Game::SetEntityBorders(bool _borders)
+{
+    m_drawEntityBorders = _borders;
+}
+
+void Game::Render(float _delta)
+{
+    m_scene->Render(_delta);
+}
+
+void Game::Update(float _delta)
+{
+    if (m_playing) {
+        SDL_Event *event = g_input->GetEvent(0);
+        for (size_t i = 0; event != NULL; event = g_input->GetEvent(++i)) {
+            switch (event->type) {
+            case SDL_KEYUP:
+                if (event->key.keysym.sym == SDLK_b) {
+                    if (m_drawEntityBorders) {
+                        m_drawEntityBorders = false;
+                    } else {
+                        m_drawEntityBorders = true;
+                    }
+                }
+                break;
+            }
+        }
+
+        m_scene->Update(_delta);
+    }
 }
 
 Game *g_game;

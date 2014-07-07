@@ -32,6 +32,8 @@
 #include "App/app.h"
 #include "App/preferences.h"
 #include "App/version.h"
+#include "Entity/entity.h"
+#include "Game/game.h"
 #include "Graphics/font_opengl.h"
 #include "Graphics/graphics_opengl.h"
 #include "Graphics/opengl.h"
@@ -67,11 +69,12 @@ OpenGLGraphics::~OpenGLGraphics()
     {
         if ( m_textures.valid(i) )
         {
-            OpenGLTexture *tex = m_textures[i];
+            OpenGLTexture *tex = dynamic_cast<OpenGLTexture*>(m_textures[i]);
             m_textures.remove ( i );
             delete tex;
         }
     }
+    m_textureFiles.empty();
 	m_fonts.flush();
     delete m_sdlScreen; m_sdlScreen = NULL;
     delete g_openGL;
@@ -159,6 +162,11 @@ void OpenGLGraphics::DrawRect ( SDL_Rect *_destRect, Color32 _color )
     ASSERT_OPENGL_ERRORS;
 }
 
+Texture *OpenGLGraphics::GetTexture(Uint32 _id)
+{
+    return m_textures.get( _id );
+}
+
 void OpenGLGraphics::ShowCursor ( bool _show )
 {
     SDL_ShowCursor ( _show );
@@ -169,7 +177,7 @@ int OpenGLGraphics::SetSurfaceAlpha ( Uint32 _surfaceID, Uint8 alpha )
     CrbReleaseAssert ( m_sdlScreen != NULL );
     CrbReleaseAssert ( m_textures.valid ( _surfaceID ) );
 
-    m_textures.get ( _surfaceID )->SetAlpha ( alpha );
+    GetTexture ( _surfaceID )->SetAlpha ( alpha );
 
     return 0;
 }
@@ -192,7 +200,7 @@ void OpenGLGraphics::DrawLine ( Uint32 _surfaceID, Color32 _color, int _startX, 
 
 Color32 OpenGLGraphics::GetPixel ( Uint32 _surfaceID, int x, int y )
 {
-    OpenGLTexture *tex = m_textures.get ( _surfaceID );
+    OpenGLTexture *tex = dynamic_cast<OpenGLTexture*>(GetTexture(_surfaceID));
     return tex->GetPixel ( x, y );
 }
 
@@ -207,7 +215,7 @@ void OpenGLGraphics::SetPixel ( Uint32 _surfaceID, int x, int y, Color32 _color 
 #ifndef TARGET_OS_WINDOWS
         m_vertexArray[0] = x;
         m_vertexArray[1] = y;
-        _color.c.a = 255;
+        _color.SetA(255);
         glColor4f(_color.R(), _color.G(), _color.B(), _color.A());
         glDrawArrays ( GL_POINTS, 0, 1 );
 #else
@@ -222,7 +230,7 @@ void OpenGLGraphics::SetPixel ( Uint32 _surfaceID, int x, int y, Color32 _color 
     else
     {
         CrbReleaseAssert ( m_textures.valid ( _surfaceID ) );
-        OpenGLTexture *tex = m_textures.get ( _surfaceID );
+        OpenGLTexture *tex = dynamic_cast<OpenGLTexture*>(GetTexture(_surfaceID));
         tex->SetPixel ( x, y, _color );
         tex->Damage();
     }
@@ -232,6 +240,13 @@ Uint32 OpenGLGraphics::LoadImage ( const char *_filename )
 {
 
     CrbReleaseAssert ( _filename != NULL );
+
+    // Check to see if this image is already loaded
+    Uint32 fileIndex = m_textureFiles.find(_filename);
+    if ((int)fileIndex > -1) {
+        // Just return the index of the already loaded texture
+        return fileIndex;
+    }
 
     // Load the image from RAM.
     SDL_Surface* src = g_app->m_resource->GetImage ( _filename ); // use SDL_Image to load the image
@@ -256,12 +271,14 @@ Uint32 OpenGLGraphics::LoadImage ( const char *_filename )
 
     OpenGLTexture *tex = new OpenGLTexture();
     Uint32 ret = m_textures.insert ( tex );
+    m_textureFiles.insert(_filename, ret);
 
     tex->Dispose();
     tex->Create ( targetW, targetH );
 
-    SDL_SetAlpha ( tex->m_sdlSurface, 0, SDL_ALPHA_OPAQUE );
+    ASSERT_OPENGL_ERRORS;
 
+    SDL_SetAlpha ( src, 0, 0 );
     SDL_BlitSurface ( src, NULL, tex->m_sdlSurface, NULL );
     SDL_FreeSurface ( src );
 
@@ -270,14 +287,106 @@ Uint32 OpenGLGraphics::LoadImage ( const char *_filename )
     return ret;
 }
 
+bool OpenGLGraphics::LoadTexture(const char *_filename)
+{
+    Texture *tex = m_textures[LoadImage(_filename)];
+    if (unlikely(tex == NULL)) {
+        return false;
+    } else {
+        glEnable(g_openGL->GetTextureTarget());
+        if (!tex->Upload()) {
+            tex->Bind();
+        }
+        return true;
+    }
+}
+
+void OpenGLGraphics::UnloadTexture()
+{
+    glDisable(g_openGL->GetTextureTarget());
+}
+
+void OpenGLGraphics::DrawEntity ( Entity *_entity )
+{
+    Vector *position;
+    float width, height;
+    if ( _entity != NULL && _entity->GetProperty("position", position)
+            && _entity->GetProperty("width", width)
+            && _entity->GetProperty("height", height)) {
+        glEnable(GL_BLEND);
+        glPushMatrix();
+        glTranslatef(position->x, position->y, position->z);
+//        glRotatef(_entity->GetOrientation(), 0, 0, 1);
+
+        const char *spritesheet;
+        if (_entity->GetProperty("spritesheet", spritesheet)) {
+            g_graphics->LoadTexture(spritesheet);
+        }
+        glBegin(GL_TRIANGLE_FAN);
+//        Color32 entityColor = _entity->GetColor();
+//        glColor4f(entityColor.R(), entityColor.G(), entityColor.B(), entityColor.A());
+        glColor4f(1.0f, 1.0f, 1.0f, 1.0f);
+
+        if (spritesheet != NULL) {
+            if (g_openGL->GetTextureTarget() == GL_TEXTURE_RECTANGLE_ARB) {
+                glTexCoord2f(0, 0);
+                glVertex3f(-width/2.0, -height/2.0, 0);
+                glTexCoord2f(width, 0);
+                glVertex3f(width/2.0, -height/2.0, 0);
+                glTexCoord2f(width, height);
+                glVertex3f(width/2.0, height/2.0, 0);
+                glTexCoord2f(0, height);
+                glVertex3f(-width/2.0, height/2.0, 0);
+            } else {
+                glTexCoord2f(0, 0);
+                glVertex3f(-width/2.0, -height/2.0, 0);
+                glTexCoord2f(1, 0);
+                glVertex3f(width/2.0, -height/2.0, 0);
+                glTexCoord2f(1, 1);
+                glVertex3f(width/2.0, height/2.0, 0);
+                glTexCoord2f(0, 1);
+                glVertex3f(-width/2.0, height/2.0, 0);
+            }
+        } else {
+            glVertex3f(-width/2.0, -height/2.0, 0);
+            glVertex3f(width/2.0, -height/2.0, 0);
+            glVertex3f(width/2.0, height/2.0, 0);
+            glVertex3f(-width/2.0, height/2.0, 0);
+        }
+        glEnd();
+        if (spritesheet != NULL) {
+            glDisable(g_openGL->GetTextureTarget());
+        }
+
+        // Draw border if it's enabled
+        if (g_game->EntityBordersEnabled()) {
+            glBegin(GL_LINE_LOOP);
+            glColor4f(1.0, 0.0, 1.0, 1.0);
+            glVertex3f(-width/2.0, -height/2.0, 0);
+            glVertex3f(width/2.0, -height/2.0, 0);
+            glVertex3f(width/2.0, height/2.0, 0);
+            glVertex3f(-width/2.0, height/2.0, 0);
+            glEnd();
+        }
+
+        for (int i = 0; _entity->GetChild(i) != NULL; i++) {
+            _entity->GetChild(i)->Render(0);
+        }
+
+        glPopMatrix();
+        glDisable(GL_BLEND);
+    }
+}
+
 int OpenGLGraphics::DeleteSurface ( Uint32 _surfaceID )
 {
     if ( !m_textures.valid ( _surfaceID ) ) return -1;
 
-    OpenGLTexture *tex = m_textures.get ( _surfaceID );
+    OpenGLTexture *tex = dynamic_cast<OpenGLTexture*>(GetTexture(_surfaceID));
     CrbReleaseAssert ( tex != NULL );
     delete tex;
     m_textures.remove ( _surfaceID );
+    m_textureFiles.remove ( _surfaceID );
 
     return 0;
 }
@@ -338,10 +447,10 @@ int OpenGLGraphics::FillRect ( Uint32 _surfaceID, SDL_Rect *_destRect, Color32 _
     else
     {
         CrbReleaseAssert ( m_textures.valid ( _surfaceID ) );
-        OpenGLTexture *tex = m_textures.get ( _surfaceID );
+        OpenGLTexture *tex = dynamic_cast<OpenGLTexture*>(GetTexture(_surfaceID));
         CrbReleaseAssert ( tex != NULL );
 
-        int r = SDL_FillRect ( tex->m_sdlSurface, _destRect, _color.rgba );
+        int r = SDL_FillRect ( tex->m_sdlSurface, _destRect, _color.GetRGBA() );
 
         tex->Damage ();
 
@@ -370,14 +479,14 @@ int OpenGLGraphics::Blit ( Uint32 _sourceSurfaceID, SDL_Rect const *_sourceRect,
 
     // Get the SDL surface for the source surface.
     CrbReleaseAssert ( m_textures.valid ( _sourceSurfaceID ) );
-    fromSurface = m_textures.get ( _sourceSurfaceID );
+    fromSurface = dynamic_cast<OpenGLTexture*>(GetTexture(_sourceSurfaceID));
     CrbReleaseAssert ( fromSurface != NULL );
 
     // Get the SDL surface for the destination surface.
     if ( _destSurfaceID != SCREEN_SURFACE_ID )
     {
         CrbReleaseAssert ( m_textures.valid ( _destSurfaceID ) );
-        toSurface = m_textures.get ( _destSurfaceID );
+        toSurface = dynamic_cast<OpenGLTexture*>(GetTexture(_destSurfaceID));
         CrbReleaseAssert ( toSurface != NULL );
     } else {
         toSurface = m_sdlScreen;
@@ -521,7 +630,7 @@ void OpenGLGraphics::ReplaceColour ( Uint32 _surfaceID, SDL_Rect *_destRect, Col
     CrbReleaseAssert ( _surfaceID != SCREEN_SURFACE_ID );
     CrbReleaseAssert ( m_textures.valid ( _surfaceID ) );
 
-    m_textures.get ( _surfaceID )->ReplaceColour ( _destRect, findcolor, replacecolor );
+    GetTexture ( _surfaceID )->ReplaceColour ( _destRect, findcolor, replacecolor );
 
 }
 
@@ -533,7 +642,7 @@ SDL_PixelFormat *OpenGLGraphics::GetPixelFormat ( Uint32 _surfaceID )
         return m_sdlScreen->m_sdlSurface->format;
 
     CrbReleaseAssert ( m_textures.valid ( _surfaceID ) );
-    SDL_Surface *surface = m_textures.get ( _surfaceID )->m_sdlSurface;
+    SDL_Surface *surface = dynamic_cast<OpenGLTexture*>(GetTexture(_surfaceID))->m_sdlSurface;
     CrbReleaseAssert ( surface != NULL );
 
     return surface->format;
@@ -548,7 +657,7 @@ Uint32 OpenGLGraphics::GetSurfaceHeight ( Uint32 _surfaceID )
 
     CrbReleaseAssert ( m_textures.valid ( _surfaceID ) );
 
-    SDL_Surface *surface = m_textures.get ( _surfaceID )->m_sdlSurface;
+    SDL_Surface *surface = dynamic_cast<OpenGLTexture*>(GetTexture(_surfaceID))->m_sdlSurface;
     CrbReleaseAssert ( surface != NULL );
 
     return surface->h;
@@ -563,7 +672,7 @@ Uint32 OpenGLGraphics::GetSurfaceWidth ( Uint32 _surfaceID )
 
     CrbReleaseAssert ( m_textures.valid ( _surfaceID ) );
 
-    SDL_Surface *surface = m_textures.get ( _surfaceID )->m_sdlSurface;
+    SDL_Surface *surface = dynamic_cast<OpenGLTexture*>(GetTexture(_surfaceID))->m_sdlSurface;
     CrbReleaseAssert ( surface != NULL );
 
     return surface->w;
@@ -885,8 +994,9 @@ int OpenGLGraphics::SetWindowMode ( bool _windowed, Sint16 _width, Sint16 _heigh
     glEnable ( GL_BLEND );
     glBlendFunc ( GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA );
     ASSERT_OPENGL_ERRORS;
-    glEnable ( GL_ALPHA_TEST );
-    glAlphaFunc ( GL_GREATER, 0.1f );
+    glClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+    glDisable ( GL_ALPHA_TEST );
+    //glAlphaFunc(GL_LESS, 0.005f);
 
     // We set this to GL_MODULATE to make the alpha blended textures render properly
     glTexEnvi ( GL_TEXTURE_ENV, GL_TEXTURE_ENV_MODE, GL_MODULATE );

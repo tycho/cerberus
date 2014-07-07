@@ -35,6 +35,7 @@
 #include "Interface/interface.h"
 #include "Interface/text.h"
 #include "Interface/window.h"
+#include "Input/input.h"
 
 #define TITLE_X 4
 #define TITLE_Y 6
@@ -45,8 +46,12 @@ Window::Window(const char *_title)
    m_closing(false)
 {
    m_widgetClass = WIDGET_WINDOW;
-   m_title = new TextUI(_title, Color32(255,0,0), TITLE_X, TITLE_Y);
-   AddWidget(m_title);
+   if (_title != NULL) {
+       m_title = new TextUI(_title, Color32(255,0,0), TITLE_X, TITLE_Y);
+       AddWidget(m_title);
+   } else {
+       m_title = NULL;
+   } 
 }
 
 Window::Window (const char *_title, Sint16 x, Sint16 y, Uint16 w, Uint16 h )
@@ -55,8 +60,12 @@ Window::Window (const char *_title, Sint16 x, Sint16 y, Uint16 w, Uint16 h )
    m_closing(false)
 {
    m_widgetClass = WIDGET_WINDOW;
-   m_title = new TextUI(_title, Color32(255,0,0), TITLE_X, TITLE_Y);
-   AddWidget(m_title);
+   if (_title != NULL) {
+       m_title = new TextUI(_title, Color32(255,0,0), TITLE_X, TITLE_Y);
+       AddWidget(m_title);
+   } else {
+       m_title = NULL;
+   } 
 }
 
 Window::~Window()
@@ -76,15 +85,15 @@ int Window::SendEnterKey ()
 Widget *Window::MouseUpdate ()
 {
     // We don't accept messages while closing.
-    if (m_closing) return NULL;
+    if (m_closing) return this;
 
-	int x = g_interface->MouseX(),
-	    y = g_interface->MouseY();
-	if ( !m_dragging && g_interface->MouseLeft() )
+	int x = g_input->MouseX(),
+	    y = g_input->MouseY();
+	if ( !m_dragging && g_input->MouseLeft() )
 	{
 		// The mouse click is within the window, so this window
 		// should be moved to the foreground.
-		g_interface->SetWindowFocus(this);
+		GetInterface()->SetWindowFocus(this);
 	}
     if ( !m_dragging )
     {
@@ -101,21 +110,22 @@ Widget *Window::MouseUpdate ()
         }
     }
     if ( !m_dragging &&
-          g_interface->MouseLeft() &&
-          g_interface->MouseLeftEdge() )
+          g_input->MouseLeft()
+          &&
+          g_input->MouseLeftEdge() )
     {
-		// Must click on the titlebar to drag.
-		if (y - m_position.y <= 20) {
-			g_interface->SetDragWindow ( this );
+		// Must click on the titlebar to drag. (if titlebar is present, anyway)
+		if ((y - m_position.y <= 20) || m_title == NULL ) {
+			GetInterface()->SetDragWindow ( this );
 			m_dragging = true;
 			m_mouseXOffset = x - m_position.x;
 			m_mouseYOffset = y - m_position.y;
 		}
     } else if ( m_dragging ) {
-		if ( g_interface->MouseLeft() ) {
+		if ( g_input->MouseLeft() ) {
             SetPosition ( x - m_mouseXOffset, y - m_mouseYOffset );
 		} else {
-            g_interface->SetDragWindow ( NULL );
+            GetInterface()->SetDragWindow ( NULL );
             m_dragging = false;
         }
     }
@@ -125,9 +135,9 @@ Widget *Window::MouseUpdate ()
 void Window::Close()
 {
     m_closing = true;
-	m_anims.insert(new Rotate(&m_position,0.0f, 45.0f, 0.9f));
-	m_anims.insert(new Fade(1.0f, 0.0f, 0.375f));
-	m_anims.insert(new ExpireWidget(this, 2.0f));
+	//m_anims.insert(new Rotate(&m_position,0.0f, 45.0f, 0.9f));
+	//m_anims.insert(new Fade(this, 1.0f, 0.0f, 0.375f));
+	m_anims.insert(new ExpireWidget(this, 0.5f));
 }
 
 void Window::Render()
@@ -135,17 +145,19 @@ void Window::Render()
 	BeginAnims();
 
 	// Frame
-	Color32 fillColor(50,0,0,191),
-			borderColor(255,0,0);
+	Color32 fillColor(50,0,0,191 * m_alpha),
+			borderColor(255,0,0, 255 * m_alpha);
 
 	g_graphics->FillRect(SCREEN_SURFACE_ID, &m_position, fillColor);
 
 	g_graphics->DrawRect(&m_position, borderColor);
 
-	// Titlebar bottom
-	g_graphics->DrawLine(SCREEN_SURFACE_ID, borderColor,
-		m_position.x, m_position.y + 21,
-		m_position.x + m_position.w, m_position.y + 21);
+    if (m_title != NULL) {
+	    // Titlebar bottom
+	    g_graphics->DrawLine(SCREEN_SURFACE_ID, borderColor,
+		    m_position.x, m_position.y + 21,
+		    m_position.x + m_position.w, m_position.y + 21);
+    }
 
 	// Render the window's contents
 	Widget::Render();

@@ -32,6 +32,8 @@
 
 #ifdef ENABLE_OPENGL
 
+class Entity;
+
 class Texture;
 class OpenGLTexture;
 class OpenGLFont;
@@ -43,7 +45,6 @@ private:
 	static const int                     m_rendererVersionMinor = 0;
 
     OpenGLTexture                       *m_sdlScreen;
-    Data::DArray<OpenGLTexture *>        m_textures;
 
 #ifdef ENABLE_FONTS
 	Data::DArray<OpenGLFont *>           m_fonts;
@@ -70,6 +71,10 @@ public:
     virtual int    DeleteSurface ( Uint32 _surfaceID );
     virtual Uint32 LoadImage ( const char *_filename );
 
+    virtual bool LoadTexture(const char *_filename);
+    virtual void UnloadTexture();
+    virtual void DrawEntity ( Entity *_entity );
+
     virtual void   DrawLine ( Uint32 _surfaceID, Color32 _color, int _startX, int _startY, int _stopX, int _stopY );
     virtual int    FillRect ( Uint32 _surfaceID, SDL_Rect *_destRect, Color32 _color );
     virtual Color32 GetPixel ( Uint32 _surfaceID, int x, int y );
@@ -81,6 +86,8 @@ public:
     virtual Uint32 GetScreen();
     virtual Uint32 GetSurfaceHeight ( Uint32 _surfaceID );
     virtual Uint32 GetSurfaceWidth ( Uint32 _surfaceID );
+
+    virtual Texture *GetTexture ( Uint32 _id );
 
     virtual void   ShowCursor ( bool _show );
 
