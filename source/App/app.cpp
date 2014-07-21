@@ -334,8 +334,8 @@ void App::UpdateInputs ()
             m_running = false;
             break;
         case SDL_KEYDOWN:
-            {
-            }
+            if (event.key.keysym.sym == SDLK_ESCAPE)
+                m_running = false;
             break;
         }
     }
