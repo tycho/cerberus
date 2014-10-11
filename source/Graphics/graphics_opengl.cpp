@@ -145,16 +145,43 @@ void OpenGLGraphics::DrawRect ( SDL_Rect *_destRect, Color32 _color )
 {
 	CoreAssert ( _destRect );
 
-    glColor4f(_color.R(), _color.G(), _color.B(), _color.A());
-    glDisable(g_openGL->GetTextureTarget());
+    // Create the vertex array from given SDL_Rect
+    GLfloat verts[] = {
+        _destRect->x, _destRect->y, 0.0f,
+        _destRect->x + _destRect->w, _destRect->y, 0.0f,
+        _destRect->x + _destRect->w, _destRect->y + _destRect->h, 0.0f,
+        _destRect->x, _destRect->y + _destRect->h, 0.0f
+    };
 
-	glEnable(GL_BLEND);
-	glBegin(GL_LINE_LOOP);
-		glVertex2i(_destRect->x, _destRect->y);
-		glVertex2i(_destRect->x + _destRect->w, _destRect->y);
-		glVertex2i(_destRect->x + _destRect->w, _destRect->y + _destRect->h);
-		glVertex2i(_destRect->x, _destRect->y + _destRect->h);
-	glEnd();
+    // Put color values into local variables
+    GLfloat r, g, b, a;
+    r = (GLfloat) _color.R();
+    g = (GLfloat) _color.G();
+    b = (GLfloat) _color.B();
+    a = (GLfloat) _color.A();
+
+    // Build color array
+    GLfloat colors[] = {
+        r, g, b, a,
+        r, g, b, a,
+        r, g, b, a,
+        r, g, b, a
+    };
+
+    glDisable(g_openGL->GetTextureTarget());
+    glEnable(GL_BLEND);
+
+    // Enable client states
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_COLOR_ARRAY);
+    // Set vertex and color pointers
+    glVertexPointer(3, GL_FLOAT, 0, verts);
+    glColorPointer(4, GL_FLOAT, 0, colors);
+    // Draw
+    glDrawArrays(GL_LINE_LOOP, 0, 4);
+    // Disable client states
+    glDisableClientState(GL_COLOR_ARRAY);
+    glDisableClientState(GL_VERTEX_ARRAY);
 
     ASSERT_OPENGL_ERRORS;
 }
@@ -178,14 +205,40 @@ void OpenGLGraphics::DrawLine ( Uint32 _surfaceID, Color32 _color, int _startX, 
 {
     CoreAssert ( _surfaceID == SCREEN_SURFACE_ID );
 
-    glColor4f(_color.R(), _color.G(), _color.B(), _color.A());
-    glDisable(g_openGL->GetTextureTarget());
+    // Build vertex array
+    GLfloat verts[] = {
+        _startX, _startY, 0.0f,
+        _stopX, _stopY, 0.0f
+    };
 
-	glEnable(GL_BLEND);
-	glBegin(GL_LINES);
-		glVertex2i(_startX, _startY);
-		glVertex2i(_stopX, _stopY);
-	glEnd();
+    // Put color values into local variables
+    GLfloat r, g, b, a;
+    r = (GLfloat) _color.R();
+    g = (GLfloat) _color.G();
+    b = (GLfloat) _color.B();
+    a = (GLfloat) _color.A();
+
+    // Build color array
+    GLfloat colors[] {
+        r, g, b, a,
+        r, g, b, a
+    };
+
+    glDisable(g_openGL->GetTextureTarget());
+    glEnable(GL_BLEND);
+
+    // Enable client states
+    glEnableClientState(GL_VERTEX_ARRAY);
+    glEnableClientState(GL_COLOR_ARRAY);
+    // Set vertex and color pointers
+    glVertexPointer(3, GL_FLOAT, 0, verts);
+    glColorPointer(4, GL_FLOAT, 0, colors);
+    // Draw
+    glDrawArrays(GL_LINE_LOOP, 0, 2);
+    // Disable client states
+    glDisableClientState(GL_COLOR_ARRAY);
+    glDisableClientState(GL_VERTEX_ARRAY);
+
     ASSERT_OPENGL_ERRORS;
 }
 
@@ -311,8 +364,6 @@ int OpenGLGraphics::FillRect ( Uint32 _surfaceID, SDL_Rect *_destRect, Color32 _
 			return 0;
 		}
 
-        // fill a rectangle on screen
-        glColor4f(_color.R(), _color.G(), _color.B(), _color.A());
         glDisable(g_openGL->GetTextureTarget());
 
 		SDL_Rect nullDestRect;
@@ -324,12 +375,40 @@ int OpenGLGraphics::FillRect ( Uint32 _surfaceID, SDL_Rect *_destRect, Color32 _
 			_destRect = &nullDestRect;
 		}
 
-		glBegin(GL_QUADS);
-			glVertex2i(_destRect->x, _destRect->y);
-			glVertex2i(_destRect->x + _destRect->w, _destRect->y);
-			glVertex2i(_destRect->x + _destRect->w, _destRect->y + _destRect->h);
-			glVertex2i(_destRect->x, _destRect->y + _destRect->h);
-		glEnd();
+        // Create the vertex array from given SDL_Rect
+        GLfloat verts[] = {
+            _destRect->x, _destRect->y, 0.0f,
+            _destRect->x + _destRect->w, _destRect->y, 0.0f,
+            _destRect->x + _destRect->w, _destRect->y + _destRect->h, 0.0f,
+            _destRect->x, _destRect->y + _destRect->h, 0.0f
+        };
+
+        // Put color values into local variables
+        GLfloat r, g, b, a;
+        r = (GLfloat) _color.R();
+        g = (GLfloat) _color.G();
+        b = (GLfloat) _color.B();
+        a = (GLfloat) _color.A();
+
+        // Build color array
+        GLfloat colors[] = {
+            r, g, b, a,
+            r, g, b, a,
+            r, g, b, a,
+            r, g, b, a
+        };
+
+        // Enable client states
+        glEnableClientState(GL_VERTEX_ARRAY);
+        glEnableClientState(GL_COLOR_ARRAY);
+        // Set vertex and color pointers
+        glVertexPointer(3, GL_FLOAT, 0, verts);
+        glColorPointer(4, GL_FLOAT, 0, colors);
+        // Draw
+        glDrawArrays(GL_QUADS, 0, 4);
+        // Disable client states
+        glDisableClientState(GL_COLOR_ARRAY);
+        glDisableClientState(GL_VERTEX_ARRAY);
 
         ASSERT_OPENGL_ERRORS;
 
@@ -924,3 +1003,4 @@ bool OpenGLGraphics::Flip()
 }
 
 #endif
+
